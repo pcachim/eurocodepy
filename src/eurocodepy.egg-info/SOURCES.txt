@@ -11,3 +11,5 @@ src/eurocodepy/ec2/__init__.py
 src/eurocodepy/ec2/fire/__init__.py
 src/eurocodepy/ec2/fire/ec2_fire_base.py
 src/eurocodepy/ec5/__init__.py
+src/eurocodepy/utils/__init__.py
+src/eurocodepy/utils/plotly_templates.py

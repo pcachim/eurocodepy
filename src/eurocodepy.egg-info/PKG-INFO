@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: eurocodepy
-Version: 0.0.6
+Version: 0.0.7
 Summary: A package for eurocode calculations
-Home-page: https://github.com/pypa/sampleproject
+Home-page: https://github.com/pcachim/eurocodepy
 Author: Paulo Cachim
 Author-email: pcachim@ua.pt
 License: UNKNOWN
-Project-URL: Bug Tracker, https://github.com/pypa/sampleproject/issues
+Project-URL: Bug Tracker, https://github.com/pcachim/eurocodepy/issues
 Description: # eurocodepy v0.1
         
         Functions to work with struuctural eurocodes. Material data is stored in a JSON file. Current materials in the database are:
