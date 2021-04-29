@@ -1,8 +1,10 @@
+MANIFEST.in
 README.md
 pyproject.toml
 setup.cfg
 src/eurocodepy/__init__.py
 src/eurocodepy/ec_base.py
+src/eurocodepy/eurocodes.json
 src/eurocodepy.egg-info/PKG-INFO
 src/eurocodepy.egg-info/SOURCES.txt
 src/eurocodepy.egg-info/dependency_links.txt
