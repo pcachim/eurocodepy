@@ -12,3 +12,10 @@ There are also some functions to work with material properties:
 * creep_coef
 * shrink_strain
 
+## Usage
+
+Install Eurocodespy via pip:
+>pip install eurocodespy
+
+To use Eurocodespy in a Python file:<br>
+>import eurocodespy as ec
