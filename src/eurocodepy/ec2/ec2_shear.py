@@ -1,6 +1,7 @@
 import math
 from typing import Tuple
 
+
 def shear_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float, asw_s: float, alpha: float) -> Tuple[float, float]:
     """Calculates the design shear strength Vrds and Vrd.max
 
@@ -48,3 +49,23 @@ def shear_asws(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: flo
 
     asw_s = ved / z / fyk * g_s / cott / 1000.0 if vrd_max >= ved else math.nan
     return asw_s, vrd_max
+
+
+def shear_vrdc(bw: float, d: float, fck: float, g_c: float, rho_l: float) -> Tuple[float, float, float]:
+    """[summary]
+
+    Args:
+        bw (float): [description]
+        d (float): [description]
+        fck (float): [description]
+        g_c (float): [description]
+        rho_l (float): [description]
+
+    Returns:
+        Tuple[float, float, float]: (vrd.min, vrd.c, vrd [min(vrd.mmin, vrd.c])
+    """
+    k = min(2.0, 1.0+math.sqrt(0.2/d))
+    vrd_min = 35.0 * math.pow(k, 1.5) * math.sqrt(fck) * bw * d
+    vrd_c = 180.0 / g_c * k * (100.0*rho_l*fck)**(1.0/3.0) * bw * d
+    vrd = max (vrd_min, vrd_c)
+    return vrd_min, vrd_c, vrd
