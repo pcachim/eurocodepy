@@ -7,16 +7,13 @@ Welcome to eurocodepy's documentation!
 ======================================
 
 
-.. automodule:: ec_base
-   :members:
-
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    install
    support
+   temporary
 
 Indices and tables
 ==================
