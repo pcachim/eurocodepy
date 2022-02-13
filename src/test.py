@@ -4,6 +4,8 @@ import json, os
 import pandas as pd
 
 def test_database():
+    """[summary]
+    """
     print ("Testing database\n")
 
     df = pd.DataFrame.from_dict(ec.PrestressClasses)

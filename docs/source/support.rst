@@ -9,5 +9,4 @@ The other good way is to open an issue on Github.
 The mailing list at https://groups.google.com/forum/#!forum/crawler 
 is also available for support.
 
-Freenode: irc://freenode.net
-Github: http://github.com/example/crawler/issues
+Github: http://github.com/pcachim/eurocdepy

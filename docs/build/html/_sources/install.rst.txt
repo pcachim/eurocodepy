@@ -1,10 +1,6 @@
 Installation
 ============
 
-At the command line:
+At the command line you can use pip:
 
-easy_install crawler
-
-Or, if you have pip installed:
-
-pip install crawler
+pip install eurocodepy

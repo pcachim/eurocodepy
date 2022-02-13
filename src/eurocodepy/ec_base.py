@@ -5,6 +5,7 @@ import importlib.resources as pkg_resources
 
 database = {}
 
+
 def get_database() -> dict:
     """[summary]
 
@@ -84,6 +85,7 @@ def get_reinforcement() -> dict:
     global database
     database = get_database2()
     return database["Eurocodes"]["Materials"]["Reinforcement"]
+
 
 Materials = get_materials()
 ConcreteClasses = pd.DataFrame.from_dict(get_concrete()["Classes"]) 
