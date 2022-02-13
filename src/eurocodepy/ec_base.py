@@ -6,6 +6,11 @@ import importlib.resources as pkg_resources
 database = {}
 
 def get_database() -> dict:
+    """[summary]
+
+    Returns:
+        dict: [description]
+    """
     global database
     f = pkg_resources.open_text(__package__, 'eurocodes.json')
     #f = open(filename, "r")
@@ -14,6 +19,11 @@ def get_database() -> dict:
 
 
 def get_database2() -> dict:
+    """[summary]
+
+    Returns:
+        dict: [description]
+    """
     global database
     f = open(os.path.join(os.path.dirname(__file__),'eurocodes.json'),'r')
     #f = open(filename, "r")
@@ -22,30 +32,55 @@ def get_database2() -> dict:
 
 
 def get_materials() -> dict:
+    """[summary]
+
+    Returns:
+        dict: [description]
+    """
     global database
     database = get_database2()
     return database["Eurocodes"]["Materials"]
 
 
 def get_timber() -> dict:
+    """[summary]
+
+    Returns:
+        dict: [description]
+    """
     global database
     database = get_database2()
     return database["Eurocodes"]["Materials"]["Timber"]
 
 
 def get_concrete() -> dict:
+    """[summary]
+
+    Returns:
+        dict: [description]
+    """
     global database
     database = get_database2()
     return database["Eurocodes"]["Materials"]["Concrete"]
 
 
 def get_prestress() -> dict:
+    """[summary]
+
+    Returns:
+        dict: [description]
+    """
     global database
     database = get_database2()
     return database["Eurocodes"]["Materials"]["Prestress"]
 
 
 def get_reinforcement() -> dict:
+    """[summary]
+
+    Returns:
+        dict: [description]
+    """
     global database
     database = get_database2()
     return database["Eurocodes"]["Materials"]["Reinforcement"]
