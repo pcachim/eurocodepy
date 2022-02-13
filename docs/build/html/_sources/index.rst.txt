@@ -6,6 +6,13 @@
 Welcome to eurocodepy's documentation!
 ======================================
 
+Eurocodepy are Python functions to work with structural eurocodes. Material data is stored in a JSON file. Current materials in the database are:
+
+* concrete (C20 to C90)
+* timber (C, D, GL)
+* reinforcement (S400, S500, A400, A500)
+* structural steel (not implemented yet)
+
 
 .. toctree::
    :maxdepth: 2
@@ -13,7 +20,7 @@ Welcome to eurocodepy's documentation!
 
    install
    support
-   temporary
+   modules
 
 Indices and tables
 ==================
