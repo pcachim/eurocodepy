@@ -1,5 +1,5 @@
-Temporary file
-==============
+Eurocodepy basic functions
+==========================
 
 .. automodule:: ec_base
    :members:
