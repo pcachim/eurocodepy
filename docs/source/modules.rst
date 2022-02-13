@@ -1,5 +1,5 @@
-Eurocodepy basic functions
-==========================
+Basic functions
+===============
 
 .. automodule:: ec_base
    :members:
