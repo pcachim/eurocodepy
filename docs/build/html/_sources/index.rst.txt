@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to eurocodepy's documentation!
-======================================
+Welcome to eurocodepy's docs!
+=============================
 
 Eurocodepy are Python functions to work with structural eurocodes. Material data is stored in a JSON file. Current materials in the database are:
 

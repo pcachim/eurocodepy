@@ -31,9 +31,10 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-ec_base">
-<span id="basic-functions"></span><h1>Basic functions<a class="headerlink" href="#module-ec_base" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
+  <div class="section" id="basic-functions">
+<h1>Basic functions<a class="headerlink" href="#basic-functions" title="Permalink to this headline">¶</a></h1>
+<p>A set of functions to get material properties</p>
+<span class="target" id="module-ec_base"></span><dl class="py function">
 <dt id="ec_base.get_concrete">
 <code class="sig-prename descclassname"><span class="pre">ec_base.</span></code><code class="sig-name descname"><span class="pre">get_concrete</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="reference internal" href="_modules/ec_base.html#get_concrete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ec_base.get_concrete" title="Permalink to this definition">¶</a></dt>
 <dd><p>[summary]</p>
@@ -104,8 +105,8 @@
 </dd></dl>
 
 </div>
-<div class="section" id="eurocode-1">
-<h1>Eurocode 1<a class="headerlink" href="#eurocode-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="eurocodes-0-and-1">
+<h1>Eurocodes 0 and 1<a class="headerlink" href="#eurocodes-0-and-1" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="module-ec2.uls.ec2_shear">
 <span id="eurocode-2"></span><h1>Eurocode 2<a class="headerlink" href="#module-ec2.uls.ec2_shear" title="Permalink to this headline">¶</a></h1>
@@ -181,6 +182,43 @@ fyk (float, optional): [description]. Defaults to 400.0.</p>
 </dl>
 </dd></dl>
 
+<span class="target" id="module-ec2.sls.ec2_longterm"></span><dl class="py function">
+<dt id="ec2.sls.ec2_longterm.creep_coef">
+<code class="sig-prename descclassname"><span class="pre">ec2.sls.ec2_longterm.</span></code><code class="sig-name descname"><span class="pre">creep_coef</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">65</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fck</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="_modules/ec2/sls/ec2_longterm.html#creep_coef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ec2.sls.ec2_longterm.creep_coef" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the creep coeficient.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>t (int, optional): _description_. Defaults to 28.
+h0 (int, optional): _description_. Defaults to 100.
+rh (int, optional): _description_. Defaults to 65.
+t0 (int, optional): _description_. Defaults to 10.
+fck (float, optional): _description_. Defaults to 20.0.
+cem (float, optional): _description_. Defaults to 0.0.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: _description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ec2.sls.ec2_longterm.shrink_strain">
+<code class="sig-prename descclassname"><span class="pre">ec2.sls.ec2_longterm.</span></code><code class="sig-name descname"><span class="pre">shrink_strain</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">65</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fck</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Type</span> <span class="pre">N'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="_modules/ec2/sls/ec2_longterm.html#shrink_strain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ec2.sls.ec2_longterm.shrink_strain" title="Permalink to this definition">¶</a></dt>
+<dd><p>_summary_</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>t (int, optional): _description_. Defaults to 28.
+h0 (int, optional): _description_. Defaults to 100.
+ts (int, optional): _description_. Defaults to 3.
+rh (int, optional): _description_. Defaults to 65.
+fck (float, optional): _description_. Defaults to 20.0.
+cem (str, optional): _description_. Defaults to ‘Type N’.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: the total shrinkage strain</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="eurocode-5">
+<h1>Eurocode 5<a class="headerlink" href="#eurocode-5" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -205,8 +243,9 @@ fyk (float, optional): [description]. Defaults to 400.0.</p>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Basic functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#eurocode-1">Eurocode 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#eurocodes-0-and-1">Eurocodes 0 and 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#module-ec2.uls.ec2_shear">Eurocode 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#eurocode-5">Eurocode 5</a></li>
 </ul>
 
 <div class="relations">

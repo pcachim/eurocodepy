@@ -8,7 +8,20 @@ cemprops = {
 }
 
 
-def creep_coef(t=28, h0=100,rh=65, t0=10, fck=20.0, cem=0.0):
+def creep_coef(t=28, h0=100,rh=65, t0=10, fck=20.0, cem=0.0)->float:
+    """Calculates the creep coeficient.
+
+    Args:
+        t (int, optional): _description_. Defaults to 28.
+        h0 (int, optional): _description_. Defaults to 100.
+        rh (int, optional): _description_. Defaults to 65.
+        t0 (int, optional): _description_. Defaults to 10.
+        fck (float, optional): _description_. Defaults to 20.0.
+        cem (float, optional): _description_. Defaults to 0.0.
+
+    Returns:
+        float: _description_
+    """
     fcm = fck+8
     alpha1 = (35/fcm)**0.7
     alpha2 = (35/fcm)**0.2
@@ -31,7 +44,20 @@ def creep_coef(t=28, h0=100,rh=65, t0=10, fck=20.0, cem=0.0):
     return phi
 
 
-def shrink_strain(t=28, h0=100, ts=3, rh=65, fck=20.0, cem='Type N'):
+def shrink_strain(t=28, h0=100, ts=3, rh=65, fck=20.0, cem='Type N')->float:
+    """_summary_
+
+    Args:
+        t (int, optional): _description_. Defaults to 28.
+        h0 (int, optional): _description_. Defaults to 100.
+        ts (int, optional): _description_. Defaults to 3.
+        rh (int, optional): _description_. Defaults to 65.
+        fck (float, optional): _description_. Defaults to 20.0.
+        cem (str, optional): _description_. Defaults to 'Type N'.
+
+    Returns:
+        float: the total shrinkage strain
+    """
     fcm = fck+8
     alpha1 = cemprops[cem][0]
     alpha2 = cemprops[cem][1]
