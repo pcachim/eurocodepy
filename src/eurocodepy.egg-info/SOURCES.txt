@@ -11,15 +11,14 @@ src/eurocodepy.egg-info/dependency_links.txt
 src/eurocodepy.egg-info/top_level.txt
 src/eurocodepy/ec1/__init__.py
 src/eurocodepy/ec2/__init__.py
-src/eurocodepy/ec2/ec2_torsion.py
 src/eurocodepy/ec2/fire/__init__.py
 src/eurocodepy/ec2/fire/ec2_fire_base.py
 src/eurocodepy/ec2/sls/__init__.py
 src/eurocodepy/ec2/sls/ec2_crack.py
 src/eurocodepy/ec2/sls/ec2_deformation.py
+src/eurocodepy/ec2/sls/ec2_longterm.py
 src/eurocodepy/ec2/uls/__init__.py
 src/eurocodepy/ec2/uls/ec2_bend_simple.py
-src/eurocodepy/ec2/uls/ec2_longterm.py
 src/eurocodepy/ec2/uls/ec2_punch.py
 src/eurocodepy/ec2/uls/ec2_shear.py
 src/eurocodepy/ec2/uls/ec2_torsion.py
