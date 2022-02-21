@@ -6,15 +6,15 @@ def shear_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: floa
     """Calculates the design shear strength Vrds and Vrd.max
 
     Args:
-        bw (float): [description]
-        d (float): [description]
-        fck (float): [description]
-        g_c (float): [description]
-        fyk (float): [description]
-        g_s (float): [description]
-        cott (float): [description]
-        asw_s (float): [description]
-        alpha (float): [description]
+        bw (float): beam width
+        d (float): beam depth
+        fck (float): concrete compressive strength
+        g_c (float): concrete partial safety coefficient
+        fyk (float): steel strength
+        g_s (float): steel partial safety coefficient
+        cott (float): truss inclination (cot)
+        asw_s (float): steel transverse area (Asw/s)
+        alpha (float): coefficient
 
     Returns:
         Tuple[float, float]: (shear reinforcement (Asw/s), Vrd.max)
@@ -30,18 +30,18 @@ def shear_asws(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: flo
     """Calculates the design shear reinforcement
 
     Args:
-        bw (float): shear width
-        d (float): [description]
-        fck (float): [description]
-        g_c (float): concrete safety coefficient
-        fyk (float): [description]
-        g_s (float): steel safety coefficient
-        cott (float): strut inclination [cot(theta)]
-        ved (float): [description]
-        alpha (float): [description]
+        bw (float): beam width
+        d (float): beam depth
+        fck (float): concrete compressive strength
+        g_c (float): concrete partial safety coefficient
+        fyk (float): steel strength
+        g_s (float): steel partial safety coefficient
+        cott (float): truss inclination (cot)
+        ved (float): design shear force
+        alpha (float): coefficient
 
     Returns:
-        Tuple[float, float]: (shear reinforcement (Asw/s), Vrd.max)
+        Tuple[float, float]: (shear reinforcement (Asw/s), maximum shear force Vrd.max)
     """
     z = 0.9 * d
     niu = 0.6*(1.0-fck/250)
@@ -52,14 +52,14 @@ def shear_asws(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: flo
 
 
 def shear_vrdc(bw: float, d: float, fck: float, g_c: float, rho_l: float) -> Tuple[float, float, float]:
-    """[summary]
+    """Shear strength withut shear reinforcement
 
     Args:
-        bw (float): [description]
-        d (float): [description]
-        fck (float): [description]
-        g_c (float): [description]
-        rho_l (float): [description]
+        bw (float): beam width
+        d (float): beam depth
+        fck (float): concrete compressive strength
+        g_c (float): concrete partial safety coefficient
+        rho_l (float): longitudinal reinforcement ratio (As/bd)
 
     Returns:
         Tuple[float, float, float]: (vrd.min, vrd.c, vrd [min(vrd.mmin, vrd.c])

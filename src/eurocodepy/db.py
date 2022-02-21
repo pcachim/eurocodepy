@@ -4,9 +4,9 @@ import pandas as pd
 import importlib.resources as pkg_resources
 
 database = {}
+db = json.loads(open(os.path.join(os.path.dirname(__file__),'eurocodes.json'),'r').read())["Eurocodes"]
 
-
-def get_database() -> dict:
+def _get_database() -> dict:
     """[summary]
 
     Returns:
@@ -19,7 +19,7 @@ def get_database() -> dict:
     return database
 
 
-def get_database2() -> dict:
+def _get_database2() -> dict:
     """[summary]
 
     Returns:
@@ -32,6 +32,12 @@ def get_database2() -> dict:
     return database
 
 
+def get_eurocodes() -> dict:
+    """
+    """
+    return _get_database2()["Eurocodes"]
+
+
 def get_materials() -> dict:
     """[summary]
 
@@ -39,7 +45,7 @@ def get_materials() -> dict:
         dict: [description]
     """
     global database
-    database = get_database2()
+    database = _get_database2()
     return database["Eurocodes"]["Materials"]
 
 
@@ -50,7 +56,7 @@ def get_timber() -> dict:
         dict: [description]
     """
     global database
-    database = get_database2()
+    database = _get_database2()
     return database["Eurocodes"]["Materials"]["Timber"]
 
 
@@ -61,7 +67,7 @@ def get_concrete() -> dict:
         dict: [description]
     """
     global database
-    database = get_database2()
+    database = _get_database2()
     return database["Eurocodes"]["Materials"]["Concrete"]
 
 
@@ -72,7 +78,7 @@ def get_prestress() -> dict:
         dict: [description]
     """
     global database
-    database = get_database2()
+    database = _get_database2()
     return database["Eurocodes"]["Materials"]["Prestress"]
 
 
@@ -83,12 +89,11 @@ def get_reinforcement() -> dict:
         dict: [description]
     """
     global database
-    database = get_database2()
+    database = _get_database2()
     return database["Eurocodes"]["Materials"]["Reinforcement"]
 
 
-Materials = get_materials()
-ConcreteClasses = pd.DataFrame.from_dict(get_concrete()["Classes"]) 
-PrestressClasses = get_prestress()["Classes"]
-ReinforcementClasses = get_reinforcement()["Classes"]
-ReinforcementBars = get_reinforcement()["Rebars"]
+ConcreteClasses = db["Materials"]["Concrete"]["Classes"]
+PrestressClasses = db["Materials"]["Prestress"]["Classes"]
+ReinforcementClasses = db["Materials"]["Reinforcement"]["Classes"]
+ReinforcementBars = db["Materials"]["Reinforcement"]["Rebars"]

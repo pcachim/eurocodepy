@@ -3,7 +3,7 @@ Basic functions
 
 A set of functions to get material properties
 
-.. automodule:: ec_base
+.. automodule:: db
    :members:
 
 Eurocodes 0 and 1
@@ -12,13 +12,13 @@ Eurocodes 0 and 1
 Eurocode 2
 ==========
 
-.. automodule:: ec2.uls.ec2_shear
+.. automodule:: ec2.uls.shear
    :members:
 
-.. automodule:: ec2.uls.ec2_bend_simple
+.. automodule:: ec2.uls.bend_simple
    :members:
 
-.. automodule:: ec2.sls.ec2_longterm
+.. automodule:: ec2.sls.longterm
    :members:
 
 Eurocode 5
