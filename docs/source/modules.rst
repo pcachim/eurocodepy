@@ -3,18 +3,9 @@ Package structure
 
 .. code-block:: python
 
-   euurocodepy
-      db
-      ec0
-      ec2
-         sls
-         uls
-            bend_simple
-            shear
-            punch
-         fire
-      ec5
+   import math
 
+   a = sqrt(2)
 
 Basic functions
 ===============
