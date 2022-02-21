@@ -226,3 +226,6 @@ cython_debug/
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
+.venv
+workhere.txt
+docs/workhere.txt
