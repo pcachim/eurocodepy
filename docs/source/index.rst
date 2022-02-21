@@ -13,6 +13,7 @@ Eurocodepy are Python functions to work with structural eurocodes. Material data
 * reinforcement (S400, S500, A400, A500)
 * structural steel (not implemented yet)
 
+The existing functions are listed in the page 'modules'. They are divided by eurocode
 
 .. toctree::
    :maxdepth: 2
