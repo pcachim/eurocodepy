@@ -1,6 +1,7 @@
 Package structure
 =================
 
+```
 euurocodepy
    db
    ec0
@@ -12,6 +13,7 @@ euurocodepy
          punch
       fire
    ec5
+```
 
 Basic functions
 ===============
