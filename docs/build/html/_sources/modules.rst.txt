@@ -3,9 +3,22 @@ Package structure
 
 .. code-block:: python
 
-   import math
-
-   a = sqrt(2)
+   eurocodepy
+      db
+      ec1
+      ec2
+         sls
+            longterm
+            deforrmation
+            crack
+         uls
+            bend_simple
+            shear
+            punch
+            torsion
+         fire
+            fire_base
+      ec5
 
 Basic functions
 ===============
