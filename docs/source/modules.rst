@@ -1,7 +1,22 @@
+Package structure
+=================
+
+euurocodepy
+   db
+   ec0
+   ec2
+      sls
+      uls
+         bend_simple
+         shear
+         punch
+      fire
+   ec5
+
 Basic functions
 ===============
 
-A set of functions to get material properties
+A set of functions to get material properties. Properties are stored in .json file. 
 
 .. automodule:: db
    :members:
