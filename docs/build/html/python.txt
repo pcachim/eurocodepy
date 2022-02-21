@@ -1,0 +1,9 @@
+Undocumented Python objects
+===========================
+ec2.uls.bend_simple
+-------------------
+Functions:
+ * bend_ast_asc
+ * bend_mrd
+ * bend_params
+
