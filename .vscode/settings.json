@@ -1,0 +1,10 @@
+{
+    "python.pythonPath": ".venv/bin/python3",
+    "python.terminal.activateEnvironment": true,
+    "python.testing.pytestArgs": [
+        "src"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "restructuredtext.confPath": "${workspaceFolder}/.venv/lib/python3.9/site-packages/django/urls",
+}
