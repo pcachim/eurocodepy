@@ -1,17 +1,19 @@
 Package structure
 =================
 
-euurocodepy
-   db
-   ec0
-   ec2
-      sls
-      uls
-         bend_simple
-         shear
-         punch
-      fire
-   ec5
+.. code-block :: python
+   euurocodepy
+      db
+      ec0
+      ec2
+         sls
+         uls
+            bend_simple
+            shear
+            punch
+         fire
+      ec5
+
 
 Basic functions
 ===============
