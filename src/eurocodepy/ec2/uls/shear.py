@@ -52,7 +52,7 @@ def shear_asws(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: flo
 
 
 def shear_vrdc(bw: float, d: float, fck: float, g_c: float, rho_l: float) -> Tuple[float, float, float]:
-    """Shear strength withut shear reinforcement
+    """Shear strength without shear reinforcement
 
     Args:
         bw (float): beam width
