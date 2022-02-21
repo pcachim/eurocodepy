@@ -18,7 +18,7 @@ Install Eurocodespy via pip:
 >pip install eurocodespy
 
 To use Eurocodespy in a Python file:<br>
-```python import eurocodespy as ec```
+>python import eurocodespy as ec
 
 ## Documentation
 
