@@ -1,7 +1,7 @@
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
 
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,git,python
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,git,python
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,macos,git
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,python,macos,git
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
@@ -222,10 +222,9 @@ cython_debug/
 
 # Support for Project snippet scope
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,git,python
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,macos,git
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
-.venv
 workhere.txt
 docs/workhere.txt

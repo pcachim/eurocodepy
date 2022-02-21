@@ -1,7 +1,0 @@
-# edit source/conf.py to update version
-
-# update eurocodepy package installation
-pip3 install --upgade eurocodepy
-
-# make documentation
-make html

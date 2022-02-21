@@ -1,7 +1,0 @@
-# edit setup.cfg to update version number
-
-# build package
-python3 -m build
-
-# upload package
-twine upload -u pcachim -p pacti6-qafhec-rarQen dist/*
