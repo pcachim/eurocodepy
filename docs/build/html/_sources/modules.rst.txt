@@ -6,6 +6,9 @@ Package structure
    eurocodepy
       db
       ec1
+         snow
+         wind
+            pressure
       ec2
          sls
             longterm
@@ -31,7 +34,8 @@ A set of functions to get material properties. Properties are stored in .json fi
 Eurocodes 0 and 1
 =================
 
-Nothing here yet... :-(
+.. automodule:: ec1.wind.pressure
+   :members:
 
 Eurocode 2
 ==========

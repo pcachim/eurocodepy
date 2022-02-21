@@ -1,5 +1,15 @@
 Undocumented Python objects
 ===========================
+ec1.wind.pressure
+-----------------
+Functions:
+ * I_v
+ * c_0
+ * c_r
+ * q_p
+ * v_b
+ * v_m
+
 ec2.uls.bend_simple
 -------------------
 Functions:
