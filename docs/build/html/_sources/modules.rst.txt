@@ -1,7 +1,8 @@
 Package structure
 =================
 
-.. code-block :: python
+.. code-block:: python
+
    euurocodepy
       db
       ec0
