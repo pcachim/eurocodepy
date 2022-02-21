@@ -20,8 +20,8 @@ The existing functions are listed in the page 'modules'. They are divided by eur
    :caption: Contents:
 
    install
-   support
    modules
+   support
 
 Indices and tables
 ==================
