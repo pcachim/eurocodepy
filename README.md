@@ -22,4 +22,4 @@ To use Eurocodespy in a Python file:<br>
 
 ## Documentation
 
-A more or less complete description of existing packages and modules can be found on [eurocodepy.readthedoocs.io](https://eurocodepy.readthedoocs.io)
+A more or less complete description of existing packages and modules can be found on [eurocodepy.readthedocs.io](https://eurocodepy.readthedocs.io)
