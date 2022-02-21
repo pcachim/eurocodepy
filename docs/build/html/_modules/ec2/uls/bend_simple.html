@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ec2.uls.bend_simple &#8212; eurocodepy 0.0.15 documentation</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for ec2.uls.bend_simple</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">eurocodepy</span> <span class="k">as</span> <span class="nn">ec</span>
+
+
+<div class="viewcode-block" id="bend_ast"><a class="viewcode-back" href="../../../modules.html#ec2.uls.bend_simple.bend_ast">[docs]</a><span class="k">def</span> <span class="nf">bend_ast</span><span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">med</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">fck</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">fyk</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">400.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;[summary]</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        b (float, optional): [description]. Defaults to 0.3.</span>
+<span class="sd">        d (float, optional): [description]. Defaults to 0.5.</span>
+<span class="sd">        med (float, optional): [description]. Defaults to 100.0.</span>
+<span class="sd">        fck (float, optional): [description]. Defaults to 20.0.</span>
+<span class="sd">        fyk (float, optional): [description]. Defaults to 400.0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[float, float, float, float]: [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fcd</span> <span class="o">=</span> <span class="n">fck</span><span class="o">/</span><span class="mf">1.5</span>
+    <span class="n">fyd</span> <span class="o">=</span> <span class="n">fyk</span><span class="o">/</span><span class="mf">1.15</span>
+    <span class="n">mmed</span> <span class="o">=</span> <span class="n">med</span>
+    <span class="n">bb</span> <span class="o">=</span> <span class="n">b</span>
+    <span class="n">dd</span> <span class="o">=</span> <span class="n">d</span>
+    <span class="n">miu</span> <span class="o">=</span> <span class="n">mmed</span><span class="o">/</span><span class="n">bb</span><span class="o">/</span><span class="n">d</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">fcd</span><span class="o">/</span><span class="mf">1000.0</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">omega</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">-</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">miu</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">omega</span> <span class="o">=</span> <span class="n">nan</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.25</span><span class="o">*</span><span class="n">omega</span>
+    <span class="n">ast</span> <span class="o">=</span> <span class="n">omega</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">d</span><span class="o">*</span><span class="n">fcd</span><span class="o">/</span><span class="n">fyd</span> <span class="o">*</span> <span class="mf">10000.0</span>
+    <span class="n">epss</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="mf">3.5</span><span class="o">/</span><span class="n">alpha</span>
+    <span class="k">return</span> <span class="n">ast</span><span class="p">,</span> <span class="n">epss</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">miu</span></div>
+
+
+<span class="k">def</span> <span class="nf">bend_ast_asc</span><span class="p">():</span>
+    <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">bend_mrd</span><span class="p">():</span>
+    <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">bend_params</span><span class="p">(</span><span class="n">conc</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;C20/25&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">ec</span><span class="o">.</span><span class="n">ConcreteClasses</span><span class="p">[</span><span class="n">conc</span><span class="p">][</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">epsc2</span> <span class="o">=</span> <span class="n">ec</span><span class="o">.</span><span class="n">ConcreteClasses</span><span class="p">[</span><span class="n">conc</span><span class="p">][</span><span class="s1">&#39;epsc2&#39;</span><span class="p">]</span>
+    <span class="n">epscu2</span> <span class="o">=</span> <span class="n">ec</span><span class="o">.</span><span class="n">ConcreteClasses</span><span class="p">[</span><span class="n">conc</span><span class="p">][</span><span class="s1">&#39;epscu2&#39;</span><span class="p">]</span>
+    <span class="n">epsc12</span> <span class="o">=</span> <span class="n">epsc2</span><span class="o">/</span><span class="n">epscu2</span>
+    <span class="n">chi1</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">-</span><span class="n">epsc12</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">chi2</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">-</span><span class="p">((</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span><span class="o">-</span><span class="n">epsc12</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">chi1</span><span class="p">)</span>
+    <span class="n">chi</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">chi1</span><span class="o">/</span><span class="n">chi2</span>
+    <span class="k">return</span> <span class="n">chi1</span><span class="p">,</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">chi</span>
+    
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">eurocodepy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Basic functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html#eurocodes-0-and-1">Eurocodes 0 and 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html#module-ec2.uls.shear">Eurocode 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html#eurocode-5">Eurocode 5</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Paulo Cachim.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
