@@ -1,4 +1,4 @@
-# eurocodepy v0.1
+# eurocodepy v0.0.15
 
 Functions to work with struuctural eurocodes. Material data is stored in a JSON file. Current materials in the database are:
 
@@ -18,4 +18,8 @@ Install Eurocodespy via pip:
 >pip install eurocodespy
 
 To use Eurocodespy in a Python file:<br>
->import eurocodespy as ec
+```python import eurocodespy as ec```
+
+## Documentation
+
+A more or less complete description of existing packages and modules can be found on [eurocodepy.readthedoocs.io](https://eurocodepy.readthedoocs.io)

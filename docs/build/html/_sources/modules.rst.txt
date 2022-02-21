@@ -14,13 +14,13 @@ Nothing here yet... :-(
 Eurocode 2
 ==========
 
+.. automodule:: ec2.sls.longterm
+   :members:
+
 .. automodule:: ec2.uls.shear
    :members:
 
 .. automodule:: ec2.uls.bend_simple
-   :members:
-
-.. automodule:: ec2.sls.longterm
    :members:
 
 Eurocode 5
