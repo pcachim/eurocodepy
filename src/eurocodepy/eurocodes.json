@@ -1849,6 +1849,38 @@
             },
             "Seismic": {
                 "Spectrum": {}
+            },
+            "Wind":{
+                "rho": 1.25,
+                "rho_units": "gk/m3",
+                "locale": {
+                    "PT": {
+                        "base velocity": {
+                            "A": { "vb0": 27.0, "desc": "A generalidade do território, excepto as regiões pertencentes à zona B"},
+                            "B": { "vb0": 30.0, "desc": "Os arquipélagos dos Açores e da Madeira e as regiões do continente situadas numa faixa costeira com 5 km de largura ou a altitudes superiores a 600 m."}
+                        },
+                        "zones": {
+                            "I": { "z0": 0.005, "zmin": 1.0 },
+                            "II": { "z0": 0.05, "zmin": 2.0 },
+                            "III": { "z0": 0.3, "zmin": 8.0 },
+                            "IV": { "z0":1.0, "zmin": 15.0 }
+                        },
+                        "cprob": {"K":0.11, "n":1.0}
+                    },
+                    "EU": {
+                        "base velocity": {
+                            "ad-hoc": { "vb0": 30.0, "desc": "A general wind velocity in Europe."}
+                        },
+                        "zones": {
+                            "0": { "z0": 0.003, "zmin": 1.0 },
+                            "I": { "z0": 0.01, "zmin": 1.0 },
+                            "II": { "z0": 0.05, "zmin": 2.0 },
+                            "III": { "z0": 0.3, "zmin": 5.0 },
+                            "IV": { "z0": 1.0, "zmin": 10.0 }
+                        },
+                        "cprob": {"K":0.2, "n":0.5}
+                    }
+                }
             }
         }
     }
