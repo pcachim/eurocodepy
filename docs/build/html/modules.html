@@ -118,6 +118,89 @@
 </section>
 <section id="module-ec1.wind.pressure">
 <span id="eurocodes-0-and-1"></span><h1>Eurocodes 0 and 1<a class="headerlink" href="#module-ec1.wind.pressure" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="ec1.wind.pressure.I_v">
+<span class="sig-prename descclassname"><span class="pre">ec1.wind.pressure.</span></span><span class="sig-name descname"><span class="pre">I_v</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/ec1/wind/pressure.html#I_v"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ec1.wind.pressure.I_v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the turbulence intensity, Iv(z), at height z.
+It is defined as the standard deviation of the turbulence divided by the mean wind velocity.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>z (float): vertical distance
+zone (str): the terrain category</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: turbulence intensity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ec1.wind.pressure.c_0">
+<span class="sig-prename descclassname"><span class="pre">ec1.wind.pressure.</span></span><span class="sig-name descname"><span class="pre">c_0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/ec1/wind/pressure.html#c_0"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ec1.wind.pressure.c_0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the orography factor, taken as 1,0
+Args:</p>
+<blockquote>
+<div><p>z (float): vertical distance</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: orography factor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ec1.wind.pressure.c_r">
+<span class="sig-prename descclassname"><span class="pre">ec1.wind.pressure.</span></span><span class="sig-name descname"><span class="pre">c_r</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/ec1/wind/pressure.html#c_r"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ec1.wind.pressure.c_r" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the roughness factor</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>z (float): vertical distance
+zone (str): the terrain category</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: the roughness factor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ec1.wind.pressure.q_p">
+<span class="sig-prename descclassname"><span class="pre">ec1.wind.pressure.</span></span><span class="sig-name descname"><span class="pre">q_p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vb0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/ec1/wind/pressure.html#q_p"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ec1.wind.pressure.q_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calcculates the peak velocity pressure, qp(z), at height z, 
+which includes mean and short-term velocity fluctuations.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>z (float): vertical distance
+vb0 (float): fundamental value of the basic wind velocity
+zone (str): the terrain category</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: peak velocity pressure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ec1.wind.pressure.v_b">
+<span class="sig-prename descclassname"><span class="pre">ec1.wind.pressure.</span></span><span class="sig-name descname"><span class="pre">v_b</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vb_0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/ec1/wind/pressure.html#v_b"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ec1.wind.pressure.v_b" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the basic wind velocity</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>vb_0 (float): fundamental value of the basic wind velocity</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: basic wind velocity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ec1.wind.pressure.v_m">
+<span class="sig-prename descclassname"><span class="pre">ec1.wind.pressure.</span></span><span class="sig-name descname"><span class="pre">v_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/ec1/wind/pressure.html#v_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ec1.wind.pressure.v_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mean wind velocity, vm(z), at a height z above the terrain.
+Depends on the terrain roughness and orography and on the basic wind velocity.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>z (float): vertical distance
+vb (float): basic wind velocity
+zone (str): the terrain category</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: mean wind velocity, vm(z)</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-ec2.sls.longterm">
 <span id="eurocode-2"></span><h1>Eurocode 2<a class="headerlink" href="#module-ec2.sls.longterm" title="Permalink to this headline">¶</a></h1>
