@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>db &#8212; eurocodepy 0.0.15 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for db</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">importlib.resources</span> <span class="k">as</span> <span class="nn">pkg_resources</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span><span class="s1">&#39;eurocodes.json&#39;</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())[</span><span class="s2">&quot;Eurocodes&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">_get_database</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;[summary]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">database</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">open_text</span><span class="p">(</span><span class="n">__package__</span><span class="p">,</span> <span class="s1">&#39;eurocodes.json&#39;</span><span class="p">)</span>
+    <span class="c1">#f = open(filename, &quot;r&quot;)</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">database</span>
+
+
+<span class="k">def</span> <span class="nf">_get_database2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;[summary]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">database</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span><span class="s1">&#39;eurocodes.json&#39;</span><span class="p">),</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="c1">#f = open(filename, &quot;r&quot;)</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">database</span>
+
+
+<div class="viewcode-block" id="get_eurocodes"><a class="viewcode-back" href="../modules.html#db.get_eurocodes">[docs]</a><span class="k">def</span> <span class="nf">get_eurocodes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_get_database2</span><span class="p">()[</span><span class="s2">&quot;Eurocodes&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_materials"><a class="viewcode-back" href="../modules.html#db.get_materials">[docs]</a><span class="k">def</span> <span class="nf">get_materials</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;[summary]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">database</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">_get_database2</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">database</span><span class="p">[</span><span class="s2">&quot;Eurocodes&quot;</span><span class="p">][</span><span class="s2">&quot;Materials&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_timber"><a class="viewcode-back" href="../modules.html#db.get_timber">[docs]</a><span class="k">def</span> <span class="nf">get_timber</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;[summary]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">database</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">_get_database2</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">database</span><span class="p">[</span><span class="s2">&quot;Eurocodes&quot;</span><span class="p">][</span><span class="s2">&quot;Materials&quot;</span><span class="p">][</span><span class="s2">&quot;Timber&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_concrete"><a class="viewcode-back" href="../modules.html#db.get_concrete">[docs]</a><span class="k">def</span> <span class="nf">get_concrete</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;[summary]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">database</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">_get_database2</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">database</span><span class="p">[</span><span class="s2">&quot;Eurocodes&quot;</span><span class="p">][</span><span class="s2">&quot;Materials&quot;</span><span class="p">][</span><span class="s2">&quot;Concrete&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_prestress"><a class="viewcode-back" href="../modules.html#db.get_prestress">[docs]</a><span class="k">def</span> <span class="nf">get_prestress</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;[summary]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">database</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">_get_database2</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">database</span><span class="p">[</span><span class="s2">&quot;Eurocodes&quot;</span><span class="p">][</span><span class="s2">&quot;Materials&quot;</span><span class="p">][</span><span class="s2">&quot;Prestress&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_reinforcement"><a class="viewcode-back" href="../modules.html#db.get_reinforcement">[docs]</a><span class="k">def</span> <span class="nf">get_reinforcement</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;[summary]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">database</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">_get_database2</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">database</span><span class="p">[</span><span class="s2">&quot;Eurocodes&quot;</span><span class="p">][</span><span class="s2">&quot;Materials&quot;</span><span class="p">][</span><span class="s2">&quot;Reinforcement&quot;</span><span class="p">]</span></div>
+
+
+<span class="n">ConcreteClasses</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;Materials&quot;</span><span class="p">][</span><span class="s2">&quot;Concrete&quot;</span><span class="p">][</span><span class="s2">&quot;Classes&quot;</span><span class="p">]</span>
+<span class="n">PrestressClasses</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;Materials&quot;</span><span class="p">][</span><span class="s2">&quot;Prestress&quot;</span><span class="p">][</span><span class="s2">&quot;Classes&quot;</span><span class="p">]</span>
+<span class="n">ReinforcementClasses</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;Materials&quot;</span><span class="p">][</span><span class="s2">&quot;Reinforcement&quot;</span><span class="p">][</span><span class="s2">&quot;Classes&quot;</span><span class="p">]</span>
+<span class="n">ReinforcementBars</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;Materials&quot;</span><span class="p">][</span><span class="s2">&quot;Reinforcement&quot;</span><span class="p">][</span><span class="s2">&quot;Rebars&quot;</span><span class="p">]</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">eurocodepy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Basic functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#eurocodes-0-and-1">Eurocodes 0 and 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#module-ec2.uls.shear">Eurocode 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#eurocode-5">Eurocode 5</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Paulo Cachim.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
