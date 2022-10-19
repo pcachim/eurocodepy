@@ -10,6 +10,7 @@ from .db import ReinforcementClasses
 from .db import ConcreteClasses
 
 from .db import db
+from .db import dbase as db2
 
 from . import ec2
 from . import ec5

@@ -7,6 +7,16 @@ database = {}
 db = json.loads(open(os.path.join(os.path.dirname(__file__),'eurocodes.json'),'r').read())["Eurocodes"]
 db["SteelProfiles"]["Euro"] = json.loads(open(os.path.join(os.path.dirname(__file__),'euro.prof.json'),'r').read())
 
+
+# Turns a dictionary into a class
+class Dict2Class(object):
+
+    def __init__(self, my_dict):
+        for key in my_dict:
+            setattr(self, key, my_dict[key])
+
+dbase = Dict2Class(db)
+
 def _get_database() -> dict:
     """[summary]
 

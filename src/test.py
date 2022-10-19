@@ -2,6 +2,8 @@ import eurocodepy as ec
 import json, os
 import pandas as pd
 
+from eurocodepy.db import SteelProofiles
+
 
 def test_database():
     """[summary]
@@ -21,9 +23,15 @@ def test_database():
     
     print(pd.DataFrame.from_dict(db["Materials"]["Reinforcement"]["Classes"]))
     print("\n")
-    
+
     fck = ec.ConcreteClasses['C20/25']
     print(fck)
+
+    print(SteelProofiles["I_SECTION"]["IPE200"]["S22POS"])
+    # print(pd.DataFrame.from_dict(SteelProofiles["I_SECTION"]["IPE200"]))
+    print("\n")
+    # db2 = ec.db2.Materials
+    # print (db2)
 
 
 def test_modules():
