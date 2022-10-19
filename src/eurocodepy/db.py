@@ -5,6 +5,7 @@ import importlib.resources as pkg_resources
 
 database = {}
 db = json.loads(open(os.path.join(os.path.dirname(__file__),'eurocodes.json'),'r').read())["Eurocodes"]
+db["SteelProfiles"]["Euro"] = json.loads(open(os.path.join(os.path.dirname(__file__),'euro.prof.json'),'r').read())
 
 def _get_database() -> dict:
     """[summary]
@@ -92,8 +93,8 @@ def get_reinforcement() -> dict:
     database = _get_database2()
     return database["Eurocodes"]["Materials"]["Reinforcement"]
 
-
 ConcreteClasses = db["Materials"]["Concrete"]["Classes"]
 PrestressClasses = db["Materials"]["Prestress"]["Classes"]
 ReinforcementClasses = db["Materials"]["Reinforcement"]["Classes"]
 ReinforcementBars = db["Materials"]["Reinforcement"]["Rebars"]
+SteelProofiles = db["SteelProfiles"]["Euro"]
