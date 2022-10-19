@@ -37,12 +37,37 @@
   <section id="welcome-to-eurocodepy-s-docs">
 <h1>Welcome to eurocodepy’s docs!<a class="headerlink" href="#welcome-to-eurocodepy-s-docs" title="Permalink to this heading">¶</a></h1>
 <p>Eurocodepy are Python functions to work with structural eurocodes. Material data is stored in a JSON file. Current materials in the database are:</p>
+<p>urrent materials in the database are:</p>
 <ul class="simple">
 <li><p>concrete (C20 to C90)</p></li>
 <li><p>timber (C, D, GL)</p></li>
-<li><p>reinforcement (S400, S500, A400, A500)</p></li>
-<li><p>structural steel (not implemented yet)</p></li>
+<li><p>reinforcement (B400, B500, A400, A500)</p></li>
+<li><p>structural steel (S235, S275, S355, S450)</p></li>
 </ul>
+<p>Available european steel profiles are:
+* IPE
+* HEA
+* HEB
+* HEM
+* L
+* C
+* T
+* Pipe
+* Box
+* Double L
+* Double C</p>
+<p>There are also some functions to work with material properties:</p>
+<ul class="simple">
+<li><p>creep_coef</p></li>
+<li><p>shrink_strain</p></li>
+</ul>
+<p>## Usage</p>
+<p>Install Eurocodespy via pip:
+&gt;pip install eurocodespy</p>
+<p>To use Eurocodespy in a Python file:&lt;br&gt;
+&gt;python import eurocodespy as ec</p>
+<p>To access the database:&lt;br&gt;
+&gt;db = ec.db</p>
 <p>The existing functions are listed in the page ‘modules’. They are divided by eurocode</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>

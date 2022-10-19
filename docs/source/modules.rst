@@ -22,6 +22,8 @@ Package structure
          fire
             fire_base
       ec5
+         sls
+         uls
 
 Basic functions
 ===============
