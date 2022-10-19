@@ -19,7 +19,6 @@ dbase = Dict2Class(db)
 
 def _get_database() -> dict:
     """[summary]
-
     Returns:
         dict: [description]
     """
@@ -32,7 +31,6 @@ def _get_database() -> dict:
 
 def _get_database2() -> dict:
     """[summary]
-
     Returns:
         dict: [description]
     """
@@ -51,7 +49,6 @@ def get_eurocodes() -> dict:
 
 def get_materials() -> dict:
     """[summary]
-
     Returns:
         dict: [description]
     """
@@ -62,7 +59,6 @@ def get_materials() -> dict:
 
 def get_timber() -> dict:
     """[summary]
-
     Returns:
         dict: [description]
     """
@@ -73,7 +69,6 @@ def get_timber() -> dict:
 
 def get_concrete() -> dict:
     """[summary]
-
     Returns:
         dict: [description]
     """
@@ -84,7 +79,6 @@ def get_concrete() -> dict:
 
 def get_prestress() -> dict:
     """[summary]
-
     Returns:
         dict: [description]
     """
@@ -95,7 +89,6 @@ def get_prestress() -> dict:
 
 def get_reinforcement() -> dict:
     """[summary]
-
     Returns:
         dict: [description]
     """

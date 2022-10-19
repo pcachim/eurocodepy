@@ -1,4 +1,4 @@
-# eurocodepy v0.1.00
+# eurocodepy v0.1.1
 
 Functions to work with struuctural eurocodes. Relevant data is stored in a JSON file 'eeurocodes.json'. 
 
@@ -10,6 +10,7 @@ Current materials in the database are:
 * structural steel (S235, S275, S355, S450)
 
 Available european steel profiles are:
+
 * IPE
 * HEA
 * HEB
