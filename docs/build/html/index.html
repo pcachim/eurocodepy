@@ -1,18 +1,20 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Welcome to eurocodepy’s docs! &#8212; eurocodepy 0.0.15 documentation</title>
+    <title>Welcome to eurocodepy’s docs! &#8212; eurocodepy 0.1.00 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Installation" href="install.html" />
@@ -33,7 +35,7 @@
           <div class="body" role="main">
             
   <section id="welcome-to-eurocodepy-s-docs">
-<h1>Welcome to eurocodepy’s docs!<a class="headerlink" href="#welcome-to-eurocodepy-s-docs" title="Permalink to this headline">¶</a></h1>
+<h1>Welcome to eurocodepy’s docs!<a class="headerlink" href="#welcome-to-eurocodepy-s-docs" title="Permalink to this heading">¶</a></h1>
 <p>Eurocodepy are Python functions to work with structural eurocodes. Material data is stored in a JSON file. Current materials in the database are:</p>
 <ul class="simple">
 <li><p>concrete (C20 to C90)</p></li>
@@ -47,16 +49,39 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Package structure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#basic-functions">Basic functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#module-ec1.wind.pressure">Eurocodes 0 and 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#module-ec2.sls.longterm">Eurocode 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#basic-functions">Basic functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#db.get_concrete"><code class="docutils literal notranslate"><span class="pre">get_concrete()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#db.get_eurocodes"><code class="docutils literal notranslate"><span class="pre">get_eurocodes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#db.get_materials"><code class="docutils literal notranslate"><span class="pre">get_materials()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#db.get_prestress"><code class="docutils literal notranslate"><span class="pre">get_prestress()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#db.get_reinforcement"><code class="docutils literal notranslate"><span class="pre">get_reinforcement()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#db.get_timber"><code class="docutils literal notranslate"><span class="pre">get_timber()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#module-ec1.wind.pressure">Eurocodes 0 and 1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec1.wind.pressure.I_v"><code class="docutils literal notranslate"><span class="pre">I_v()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec1.wind.pressure.c_0"><code class="docutils literal notranslate"><span class="pre">c_0()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec1.wind.pressure.c_r"><code class="docutils literal notranslate"><span class="pre">c_r()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec1.wind.pressure.q_p"><code class="docutils literal notranslate"><span class="pre">q_p()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec1.wind.pressure.v_b"><code class="docutils literal notranslate"><span class="pre">v_b()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec1.wind.pressure.v_m"><code class="docutils literal notranslate"><span class="pre">v_m()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#module-ec2.sls.longterm">Eurocode 2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec2.sls.longterm.creep_coef"><code class="docutils literal notranslate"><span class="pre">creep_coef()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec2.sls.longterm.shrink_strain"><code class="docutils literal notranslate"><span class="pre">shrink_strain()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec2.uls.shear.shear_asws"><code class="docutils literal notranslate"><span class="pre">shear_asws()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec2.uls.shear.shear_vrd"><code class="docutils literal notranslate"><span class="pre">shear_vrd()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#ec2.uls.shear.shear_vrdc"><code class="docutils literal notranslate"><span class="pre">shear_vrdc()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html#eurocode-5">Eurocode 5</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 </div>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
@@ -109,7 +134,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -126,7 +151,7 @@
       &copy;2022, Paulo Cachim.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

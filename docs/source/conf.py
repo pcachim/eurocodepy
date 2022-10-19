@@ -22,7 +22,7 @@ copyright = '2022, Paulo Cachim'
 author = 'Paulo Cachim'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.15'
+release = '0.1.00'
 
 
 # -- General configuration ---------------------------------------------------
