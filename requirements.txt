@@ -4,7 +4,7 @@
 #
 #    pip-compile requirements.in
 #
-numpy==1.22.3
+numpy==1.21.0
     # via
     #   -r requirements.in
     #   pandas
