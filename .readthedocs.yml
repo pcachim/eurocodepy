@@ -10,7 +10,7 @@ formats: all
 
 build:
   tools:
-    python: "3.9"
+    python: 3.9
 
   image: latest
 
