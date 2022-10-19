@@ -30,8 +30,8 @@ def test_database():
     print(SteelProofiles["I_SECTION"]["IPE200"]["S22POS"])
     # print(pd.DataFrame.from_dict(SteelProofiles["I_SECTION"]["IPE200"]))
     print("\n")
-    # db2 = ec.db2.Materials
-    # print (db2)
+    db2 = ec.db2.Materials.Concrete
+    print (db2)
 
 
 def test_modules():

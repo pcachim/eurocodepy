@@ -3,19 +3,28 @@ import os
 import pandas as pd
 import importlib.resources as pkg_resources
 
-database = {}
-db = json.loads(open(os.path.join(os.path.dirname(__file__),'eurocodes.json'),'r').read())["Eurocodes"]
-db["SteelProfiles"]["Euro"] = json.loads(open(os.path.join(os.path.dirname(__file__),'euro.prof.json'),'r').read())
-
 
 # Turns a dictionary into a class
-class Dict2Class(object):
+# declaringa a class
+class obj:
 
-    def __init__(self, my_dict):
-        for key in my_dict:
-            setattr(self, key, my_dict[key])
+    # constructor
+    def __init__(self, dict1):
+        self.__dict__.update(dict1)
 
-dbase = Dict2Class(db)
+
+def dict2obj(dict1):
+
+    # using json.loads method and passing json.dumps
+    # method and custom object hook as arguments
+    return json.loads(json.dumps(dict1), object_hook=obj)
+
+database = {}
+dirname = os.path.dirname(__file__)
+db = json.loads(open(os.path.join(dirname,'eurocodes.json'),'r').read())["Eurocodes"]
+db["SteelProfiles"]["Euro"] = json.loads(open(os.path.join(dirname,'euro.prof.json'),'r').read())
+
+dbase = dict2obj(db)
 
 def _get_database() -> dict:
     """[summary]
@@ -41,63 +50,47 @@ def _get_database2() -> dict:
     return database
 
 
-def get_eurocodes() -> dict:
-    """
-    """
-    return _get_database2()["Eurocodes"]
-
-
 def get_materials() -> dict:
-    """[summary]
+    """Gets all the materials in the database
     Returns:
-        dict: [description]
+        dict: all the materials in the database
     """
-    global database
-    database = _get_database2()
-    return database["Eurocodes"]["Materials"]
+    return db["Eurocodes"]["Materials"]
 
 
 def get_timber() -> dict:
-    """[summary]
+    """Gets the timber (solid and glulam) classes
     Returns:
-        dict: [description]
+        dict: the timber (solid and glulam) classes
     """
-    global database
-    database = _get_database2()
-    return database["Eurocodes"]["Materials"]["Timber"]
+    return db["Eurocodes"]["Materials"]["Timber"]
 
 
 def get_concrete() -> dict:
-    """[summary]
+    """Gets the concrete classes
     Returns:
-        dict: [description]
+        dict: the concrete classes
     """
-    global database
-    database = _get_database2()
-    return database["Eurocodes"]["Materials"]["Concrete"]
+    return db["Materials"]["Concrete"]["Classes"]
 
 
 def get_prestress() -> dict:
-    """[summary]
+    """Gets the prestrress steel classes
     Returns:
-        dict: [description]
+        dict: the prestrress steel classes
     """
-    global database
-    database = _get_database2()
-    return database["Eurocodes"]["Materials"]["Prestress"]
+    return db["Eurocodes"]["Materials"]["Prestress"]
 
 
 def get_reinforcement() -> dict:
-    """[summary]
+    """Gets the reinforcement steel classes
     Returns:
-        dict: [description]
+        dict: the reinforcement steel classes
     """
-    global database
-    database = _get_database2()
-    return database["Eurocodes"]["Materials"]["Reinforcement"]
+    return db["Eurocodes"]["Materials"]["Reinforcement"]
 
 ConcreteClasses = db["Materials"]["Concrete"]["Classes"]
 PrestressClasses = db["Materials"]["Prestress"]["Classes"]
 ReinforcementClasses = db["Materials"]["Reinforcement"]["Classes"]
 ReinforcementBars = db["Materials"]["Reinforcement"]["Rebars"]
-SteelProofiles = db["SteelProfiles"]["Euro"]
+SteelProfiles = db["SteelProfiles"]["Euro"]
