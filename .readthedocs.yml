@@ -9,11 +9,9 @@ version: 2
 formats: all
 
 build:
-  tools:
-    python: 3.9
-
   image: latest
 
 python:
+  version: "3.9"
   install:
     - requirements: requirements.txt
