@@ -50,6 +50,14 @@ def _get_database2() -> dict:
     return database
 
 
+def get_eurocodes() -> dict:
+    """Gets the euroocodes database
+    Returns:
+        dict: eurocodes database
+    """
+    return db["Eurocodes"]
+
+
 def get_materials() -> dict:
     """Gets all the materials in the database
     Returns:

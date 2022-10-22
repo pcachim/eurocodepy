@@ -2,7 +2,7 @@ import eurocodepy as ec
 import json, os
 import pandas as pd
 
-from eurocodepy.db import SteelProofiles
+from eurocodepy.db import SteelProfiles
 
 
 def test_database():
@@ -27,7 +27,7 @@ def test_database():
     fck = ec.ConcreteClasses['C20/25']
     print(fck)
 
-    print(SteelProofiles["I_SECTION"]["IPE200"]["S22POS"])
+    print(SteelProfiles["I_SECTION"]["IPE200"]["S22POS"])
     # print(pd.DataFrame.from_dict(SteelProofiles["I_SECTION"]["IPE200"]))
     print("\n")
     db2 = ec.db2.Materials.Concrete
