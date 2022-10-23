@@ -22,7 +22,7 @@ def dict2obj(dict1):
 database = {}
 dirname = os.path.dirname(__file__)
 db = json.loads(open(os.path.join(dirname,'eurocodes.json'),'r').read())["Eurocodes"]
-db["SteelProfiles"]["Euro"] = json.loads(open(os.path.join(dirname,'euro.prof.json'),'r').read())
+db["SteelProfiles"]["Euro"] = json.loads(open(os.path.join(dirname,'prof_euro.json'),'r').read())
 
 dbase = dict2obj(db)
 
