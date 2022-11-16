@@ -1,6 +1,8 @@
 import eurocodepy as ec
 import json, os
 import pandas as pd
+import numpy as np
+import timeit
 
 from eurocodepy.db import SteelProfiles
 
@@ -45,7 +47,27 @@ def test_modules():
     print (param)
 
 
+def test_ec2_uls_biaxial():
+    nxx = np.random.randint(-100, 100, 30000)
+    nyy = np.random.randint(-100, 100, 30000)
+    nxy = np.random.randint(-100, 100, 30000)
+    mxx = np.random.randint(-100, 100, 30000)
+    myy = np.random.randint(-100, 100, 30000)
+    mxy = np.random.randint(-100, 100, 30000)
+    asx = ec.ec2.as_shell(nxx, nyy, nxy, mxx, myy, mxy, 0.04, 0.3)
+    #asx = ec.ec2.uls.biaxial.as_shell(100, -100, 0, 0, 100, 0, 0.04, 0.3)
+    asx = np.stack( asx, axis=0 )
+    print(asx)
+    print(asx[6, 2])
+
+
 if __name__ == "__main__":
     print ("Testing 'eurocodepy'\n")
+    starttime = timeit.default_timer()
     test_database()
     test_modules()
+    print("\n")
+    #print(ec.ec2.uls.db)
+    test_ec2_uls_biaxial()
+    print("\nTotal execution time is :", timeit.default_timer() - starttime)
+    print("\n")

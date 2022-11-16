@@ -1,8 +1,10 @@
+from . import ec1
 from . import ec2
 from . import ec5
 from . import utils
 
 from .db import get_timber
+from .db import get_timber_classes
 from .db import get_concrete
 from .db import get_prestress
 from .db import get_reinforcement
@@ -15,3 +17,4 @@ from .db import ConcreteClasses
 from .db import SteelProfiles
 from .db import db
 from .db import dbase as db2
+

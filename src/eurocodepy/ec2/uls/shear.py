@@ -2,7 +2,7 @@ import math
 from typing import Tuple
 
 
-def shear_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float, asw_s: float, alpha: float) -> Tuple[float, float]:
+def shear_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float, asw_s: float, alpha: float) -> float:
     """Calculates the design shear strength Vrds and Vrd.max
 
     Args:
@@ -17,7 +17,7 @@ def shear_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: floa
         alpha (float): coefficient
 
     Returns:
-        Tuple[float, float]: (shear reinforcement (Asw/s), Vrd.max)
+        float: (shear reinforcement max(Asw/s), Vrd.max)
     """
     z = 0.9 * d
     vrd_s = asw_s * z * fyk / g_s * cott * 1000.0
