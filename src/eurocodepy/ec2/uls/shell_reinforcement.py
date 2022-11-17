@@ -48,6 +48,7 @@ def as_shell_plan(n_t_xx: float, n_t_yy: float, n_t_xy: float,
 
     return np.array(as_plan(n_t_xx, n_t_yy, n_t_xy) + as_plan(n_b_xx, n_b_yy, n_b_xy))
 
+
 def as_shell(n_xx: float, n_yy: float, n_xy: float, m_xx: float, m_yy: float, m_xy: float,
             rec: float, h: float) -> np.ndarray:
     """_summary_
@@ -81,5 +82,3 @@ def as_shell(n_xx: float, n_yy: float, n_xy: float, m_xx: float, m_yy: float, m_
     as_vect = np.vectorize(as_shell_plan, otypes=[np.ndarray])
     as_total = as_vect(n_t_xx, n_t_yy, n_t_xy, n_b_xx, n_b_yy, n_b_xy)
     return as_total
-
-    
