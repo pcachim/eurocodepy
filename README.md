@@ -1,4 +1,4 @@
-# eurocodepy v0.1.1
+# eurocodepy v0.1.6
 
 Functions to work with struuctural eurocodes. Relevant data is stored in a JSON file 'eeurocodes.json'. 
 
@@ -27,6 +27,10 @@ There are also some functions to work with material properties:
 
 * creep_coef
 * shrink_strain
+
+The **utils** package has some functions that can be useful:
+
+* stress: calculate the principal stresses and vectors, and the stress inavariants (I1, J2, J3, ...)
 
 ## Usage
 

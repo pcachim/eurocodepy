@@ -18,3 +18,5 @@ from .db import SteelProfiles
 from .db import db
 from .db import dbase as db2
 
+from .utils import stress
+

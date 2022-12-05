@@ -61,6 +61,20 @@ def test_ec2_uls_biaxial():
     print(asx[6, 2])
 
 
+def test_utils_stress():
+    # test stress module
+    print("\nTest stress module: principals:")
+    eval, evec = ec.utils.stress.principals(3.0, 2.0, -1.0, 0.0, 0.0, 0.0)
+    print(eval)
+    print(evec)
+    print("\nTest stress module: principal_vectors:")
+    evec = ec.utils.stress.principal_vectors(3.0, 2.0, -1.0, 0.0, 0.0, 0.0)
+    print(evec)
+    
+    print("\nTest stress module: stress invariants:")
+    u = ec.stress.invariants(3.0, 2.0, -1.0, 0.3, -0.4, 0.5)
+    print (u)
+
 if __name__ == "__main__":
     print ("Testing 'eurocodepy'\n")
     starttime = timeit.default_timer()
@@ -69,5 +83,8 @@ if __name__ == "__main__":
     print("\n")
     #print(ec.ec2.uls.db)
     test_ec2_uls_biaxial()
+    print("\n")
+    test_utils_stress()
     print("\nTotal execution time is :", timeit.default_timer() - starttime)
     print("\n")
+    
