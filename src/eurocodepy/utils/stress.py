@@ -91,6 +91,8 @@ def invariants(sigxx: float, sigyy: float, sigzz: float,
      lode_z = I1/math.sqrt(3.0)
 
      stresses = 3.0*math.sqrt(6.0)*np.linalg.det(sigma_dev/lode_r)
+     if stresses < -1: stresses = -1
+     if stresses > 1: stresses = 1
      lode_theta = 1.0/3.0*math.asin(stresses)
      cos3t = 2.5980762114*J3/(J2**1.5)
 

@@ -1,5 +1,4 @@
 import eurocodepy as ec
-import json, os
 import pandas as pd
 import numpy as np
 import timeit
@@ -75,9 +74,11 @@ def test_utils_stress():
     u = ec.stress.invariants(3.0, 2.0, -1.0, 0.3, -0.4, 0.5)
     print (u)
 
+
 if __name__ == "__main__":
     print ("Testing 'eurocodepy'\n")
     starttime = timeit.default_timer()
+
     test_database()
     test_modules()
     print("\n")
@@ -85,6 +86,10 @@ if __name__ == "__main__":
     test_ec2_uls_biaxial()
     print("\n")
     test_utils_stress()
+    
+    cr = ec.ec2.sls.crack.annexLL(2.2, 25.0, 2.201, 0.0, 0.0, 0.0, 0.0, 0.0)
+    print(f"Is cracked: {cr}")
+
     print("\nTotal execution time is :", timeit.default_timer() - starttime)
     print("\n")
     
