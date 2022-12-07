@@ -5,6 +5,7 @@ import math
 def principals(sigxx: float, sigyy: float, sigzz: float, 
                sigxy: float, sigyz: float, sigzx: float) -> np.ndarray:
      """Calculate the principal stresses and the normalized principal directions
+     Author. Paulo Cachim (2022)
 
      Args:
           sigxx (float): stress xx
@@ -25,6 +26,7 @@ def principals(sigxx: float, sigyy: float, sigzz: float,
 def principal_vectors(sigxx: float, sigyy: float, sigzz: float, 
                sigxy: float, sigyz: float, sigzx: float) -> np.ndarray:
      """Calculates the princcipal vectors (size proportional to principal stresses)
+     Author. Paulo Cachim (2022)
 
      Args:
           sigxx (float): stress xx
@@ -51,6 +53,7 @@ def principal_vectors(sigxx: float, sigyy: float, sigzz: float,
 def invariants(sigxx: float, sigyy: float, sigzz: float, 
                          sigxy: float, sigyz: float, sigzx: float) -> list:
      """Calculates the stress invariants
+     Author. Paulo Cachim (2022)
 
      Args:
           sigxx (float): stress xx

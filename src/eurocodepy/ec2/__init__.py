@@ -3,6 +3,10 @@ db = db.db
 
 from .. import utils
 stress = utils.stress
+from .. import ec1
+from .. import ec2
+from .. import ec5
+from .. import ec8
 
 from . import fire
 from . import sls
@@ -13,7 +17,7 @@ from .sls import longterm
 from .sls.longterm import cemprops
 from .sls.longterm import creep_coef
 from .sls.longterm import shrink_strain
-from .sls.crack import annexLL
+from .sls.crack import iscracked_annexLL
 
 from .uls.shear import shear_asws
 from .uls.shear import shear_vrd
