@@ -106,6 +106,7 @@ def invariants(sigxx: float, sigyy: float, sigzz: float,
 
 
 if __name__ == "__main__":
+
      print("\nTest stress module: principals:")
      eval, evec = principals(3.0, 2.0, -1.0, 0.0, 0.0, 0.0)
      print(eval)
@@ -113,7 +114,7 @@ if __name__ == "__main__":
      print("\nTest stress module: principal_vectors:")
      evec = principal_vectors(3.0, 2.0, -1.0, 0.0, 0.0, 0.0)
      print(evec)
-     
+
      print("\nTest stress module: stress invariants:")
      u = invariants(3.0, 2.0, -1.0, 0.3, -0.4, 0.5)
      print (u)

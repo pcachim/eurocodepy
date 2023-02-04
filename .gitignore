@@ -227,3 +227,5 @@ cython_debug/
 
 workhere.txt
 docs/workhere.txt
+
+src/eurocodepy/ec2/uls/bend_circ.py
