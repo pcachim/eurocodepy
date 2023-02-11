@@ -106,9 +106,32 @@ def get_reinforcement() -> dict:
     return db["Materials"]["Reinforcement"]
 
 
-ConcreteClasses = db["Materials"]["Concrete"]["Classes"]
-PrestressClasses = db["Materials"]["Prestress"]["Classes"]
-ReinforcementClasses = db["Materials"]["Reinforcement"]["Classes"]
-ReinforcementBars = db["Materials"]["Reinforcement"]["Rebars"]
+Reinforcement = db["Materials"]["Reinforcement"]
+ReinforcementClasses = Reinforcement["Classes"]
+ReinforcementBars = Reinforcement["Rebars"]
+ReinforcementParams = Reinforcement["Parameters"]
+#ReinforcementClasses = db["Materials"]["Reinforcement"]["Classes"]
+
+Concrete = db["Materials"]["Concrete"]
+ConcreteClasses = Concrete["Classes"]
+ConcreteParams = Concrete["Parameters"]
+
+Prestress = db["Materials"]["Prestress"]
+PrestressClasses = Prestress["Classes"]
+PrestressParams = Prestress["Parameters"]
+
+Timber = db["Materials"]["Timber"]
+TimberClasses = Timber["Classes"]
+TimberParams = Timber["Parameters"]
+TimberLoadDuration = Timber["LoadDuration"]
+
+Steel = db["Materials"]["Steel"]
+SteelClasses = Steel["Classes"]
+SteelParams = Steel["Parameters"]
+
+Bolts = db["Materials"]["Bolts"]
+BoltClasses = Bolts["Classes"]
+BoltDiameters = Bolts["Diameters"]
+
 SteelProfiles = db["SteelProfiles"]["Euro"]
-TimberClasses = db["Materials"]["Timber"]["Classes"]
+

@@ -8,7 +8,7 @@ cemprops = {
 }
 
 
-def creep_coef(t=28, h0=100,rh=65, t0=10, fck=20.0, cem=0.0)->float:
+def calc_creep_coef(t=28, h0=100,rh=65, t0=10, fck=20.0, cem=0.0)->float:
     """Calculates the creep coeficient.
 
     Args:
@@ -44,7 +44,7 @@ def creep_coef(t=28, h0=100,rh=65, t0=10, fck=20.0, cem=0.0)->float:
     return phi
 
 
-def shrink_strain(t=28, h0=100, ts=3, rh=65, fck=20.0, cem='Type N')->float:
+def calc_shrink_strain(t=28, h0=100, ts=3, rh=65, fck=20.0, cem='Type N')->float:
     """_summary_
 
     Args:
