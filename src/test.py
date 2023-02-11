@@ -42,7 +42,7 @@ def test_modules():
     print (asws)
     asws = ec.ec2.shear_asws(0.3, 0.5, 25, 1.5, 500, 1.15, 2.5, 300, 1.0)
     print (asws)
-    param = ec.ec2.bend_params()
+    param = ec.ec2.get_bend_params()
     print (param)
 
 
@@ -53,10 +53,12 @@ def test_ec2_uls_biaxial():
     mxx = np.random.randint(-100, 100, 30000)
     myy = np.random.randint(-100, 100, 30000)
     mxy = np.random.randint(-100, 100, 30000)
-    asx = ec.ec2.as_shell(nxx, nyy, nxy, mxx, myy, mxy, 0.04, 0.3)
+    asx = ec.ec2.calc_reinf_shell(nxx, nyy, nxy, mxx, myy, mxy, 0.04, 0.3)
     #asx = ec.ec2.uls.biaxial.as_shell(100, -100, 0, 0, 100, 0, 0.04, 0.3)
     asx = np.stack( asx, axis=0 )
+    print("Testing forces in shell elements for reinforcement")
     print(asx)
+    print("a single element")
     print(asx[6, 2])
 
 

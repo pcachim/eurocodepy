@@ -22,6 +22,8 @@ from .sls.crack import iscracked_annexLL
 from .uls.shear import shear_asws
 from .uls.shear import shear_vrd
 from .uls.shear import shear_vrdc
-from .uls.bend_simple import bend_params
-from .uls.shell_reinforcement import as_shell
+from .uls.bend_beam import get_bend_params
+from .uls.bend_beam import calc_mom_beam
+from .uls.bend_beam import calc_reinf_beam
+from .uls.bend_shell import calc_reinf_shell
 

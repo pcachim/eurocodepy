@@ -5,12 +5,15 @@ from .shear import shear_asws
 from .shear import shear_vrd
 from .shear import shear_vrdc
 
-from .bend_simple import bend_params
+from .bend_beam import get_bend_params
+from .bend_beam import calc_mom_beam
+from .bend_beam import calc_reinf_beam
 
-from .shell_reinforcement import as_shell
+from .bend_shell import calc_reinf_shell
+from .bend_shell import calc_reinf_plane
 
 from . import shear
-from . import bend_simple
-from . import shell_reinforcement
+from . import bend_beam
+from . import bend_shell
 
 

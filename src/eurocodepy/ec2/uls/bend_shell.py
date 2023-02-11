@@ -2,16 +2,16 @@ import math
 import numpy as np
 
 
-def as_plan(n_xx: float, n_yy:float, n_xy: float)->list:
-    """_summary_
+def calc_reinf_plane(n_xx: float, n_yy:float, n_xy: float)->list:
+    """Calculate the reinforcement in a plane element.
 
     Args:
-        n_xx (float): _description_
-        n_yy (float): _description_
-        n_xy (float): _description_
+        n_xx (float): axial force in x direction
+        n_yy (float): axial force in y direction
+        n_xy (float): shear force in xy direction
 
     Returns:
-        list: _description_
+        list: the reinforecment in both diretions and concrete stresses
     """
     abs_n_xy = abs(n_xy)
     n_xx_n_yy = n_xx * n_yy
@@ -43,25 +43,25 @@ def as_plan(n_xx: float, n_yy:float, n_xy: float)->list:
     return [asx, asy, asc, theta]
 
 
-def as_shell_plan(n_t_xx: float, n_t_yy: float, n_t_xy: float, 
-                  n_b_xx: float, n_b_yy: float, n_b_xy: float)->np.ndarray:
+def cal_reinf_shell_plan(n_t_xx: float, n_t_yy: float, n_t_xy: float, 
+                n_b_xx: float, n_b_yy: float, n_b_xy: float)->np.ndarray:
 
-    return np.array(as_plan(n_t_xx, n_t_yy, n_t_xy) + as_plan(n_b_xx, n_b_yy, n_b_xy))
+    return np.array(calc_reinf_plane(n_t_xx, n_t_yy, n_t_xy) + calc_reinf_plane(n_b_xx, n_b_yy, n_b_xy))
 
 
-def as_shell(n_xx: float, n_yy: float, n_xy: float, m_xx: float, m_yy: float, m_xy: float,
+def calc_reinf_shell(n_xx: float, n_yy: float, n_xy: float, m_xx: float, m_yy: float, m_xy: float,
             rec: float, h: float) -> np.ndarray:
-    """_summary_
+    """Calculate the forces to ccalculate the reinforcement in a shell element.
 
     Args:
-        n_xx (float): _description_
-        n_yy (float): _description_
-        n_xy (float): _description_
-        m_xx (float): _description_
-        m_yy (float): _description_
-        m_xy (float): _description_
-        rec (float): _description_
-        h (float): _description_
+        n_xx (float): axial force in x direction
+        n_yy (float): axial force in y direction
+        n_xy (float): shear force in xy direction
+        m_xx (float): moment in x direction (bending)
+        m_yy (float): moment in y direction (bending)
+        m_xy (float): moment in xy direction (torsion)
+        rec (float): cover to reinforcement
+        h (float): height of the shell
 
     Returns:
         np.array: the reinforecment in both diretions in top and bottom layer and concrete stresses
@@ -79,6 +79,6 @@ def as_shell(n_xx: float, n_yy: float, n_xy: float, m_xx: float, m_yy: float, m_
     n_b_yy = (0.5*n_yy - m_yy/z) / t
     n_b_xy = (0.5*n_xy + m_xy/z) / t
 
-    as_vect = np.vectorize(as_shell_plan, otypes=[np.ndarray])
+    as_vect = np.vectorize(cal_reinf_shell_plan, otypes=[np.ndarray])
     as_total = as_vect(n_t_xx, n_t_yy, n_t_xy, n_b_xx, n_b_yy, n_b_xy)
     return as_total
