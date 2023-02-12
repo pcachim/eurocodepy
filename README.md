@@ -1,4 +1,4 @@
-# eurocodepy v0.1.6
+# eurocodepy v0.1.17
 
 Functions to work with struuctural eurocodes. Relevant data is stored in a JSON file 'eeurocodes.json'. 
 
