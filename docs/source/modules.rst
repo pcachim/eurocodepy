@@ -24,6 +24,7 @@ Package structure
       ec5
          sls
          uls
+      ec8
 
 Basic functions
 ===============
@@ -45,10 +46,16 @@ Eurocode 2
 .. automodule:: ec2.sls.longterm
    :members:
 
+.. automodule:: ec2.sls.crack
+   :members:
+
 .. automodule:: ec2.uls.shear
    :members:
 
-.. automodule:: ec2.uls.bend_simple
+.. automodule:: ec2.uls.bend_beam
+   :members:
+
+.. automodule:: ec2.uls.bend_shell
    :members:
 
 Eurocode 5
@@ -58,4 +65,16 @@ Eurocode 5
    :members:
 
 .. automodule:: ec5.uls.shear
+   :members:
+
+Eurocode 8
+==========
+
+.. automodule:: ec8.spetrum
+   :members:
+
+Utils
+=====
+
+.. automodule:: utils.stress
    :members:
