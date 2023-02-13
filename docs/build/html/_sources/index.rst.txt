@@ -16,6 +16,7 @@ urrent materials in the database are:
 * structural steel (S235, S275, S355, S450)
 
 Available european steel profiles are:
+
 * IPE
 * HEA
 * HEB
@@ -33,16 +34,6 @@ There are also some functions to work with material properties:
 * creep_coef
 * shrink_strain
 
-## Usage
-
-Install Eurocodespy via pip:
->pip install eurocodespy
-
-To use Eurocodespy in a Python file:<br>
->python import eurocodespy as ec
-
-To access the database:<br>
->db = ec.db
 
 The existing functions are listed in the page 'modules'. They are divided by eurocode
 

@@ -54,4 +54,8 @@ Eurocode 2
 Eurocode 5
 ==========
 
-Nothing here yet... :-(
+.. automodule:: ec5.uls.bend
+   :members:
+
+.. automodule:: ec5.uls.shear
+   :members:
