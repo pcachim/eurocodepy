@@ -1,4 +1,4 @@
-print ("This is eurocodepy v0.1.17")
+print ("This is eurocodepy v0.1.18")
 
 from . import ec1
 from . import ec2
@@ -29,7 +29,7 @@ from .db import SteelProfiles
 from .db import SteelParams
 from .db import Bolts
 from .db import BoltClasses
-from .db import BoltDiamaters
+from .db import BoltDiameters
 
 from .db import db
 from .db import dbase as db2
