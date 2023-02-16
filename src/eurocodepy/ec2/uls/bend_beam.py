@@ -41,7 +41,7 @@ def calc_mom_beam(b: float, d: float, ast: float, fcd: float=20.0, fyd: float=40
         d (float): depth of the reinforced in beam in m.
         ast (float): reinforcement area in cm2.
         fcd (float, optional): concrete strength in MPa. Defaults to 20.0.
-        fyy (float, optional): reinforcement strength in MPa. Defaults to 400.0.
+        fyd (float, optional): reinforcement strength in MPa. Defaults to 400.0.
         iprint (bool, optional): print results. Defaults to False.
 
     Returns:

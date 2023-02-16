@@ -1,7 +1,0 @@
-Undocumented Python objects
-===========================
-db
---
-Classes:
- * Dict2Class
-

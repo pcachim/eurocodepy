@@ -228,5 +228,8 @@ cython_debug/
 build.me
 workhere.txt
 docs/workhere.txt
+/docs-Sphinx
+/docs
+
 
 src/eurocodepy/ec2/uls/bend_circ.py

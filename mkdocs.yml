@@ -1,0 +1,14 @@
+site_name: eurocodepy documentation
+
+theme:
+  name: "material"
+
+plugins:
+  - mkdocstrings
+
+nav:
+  - index.md
+  - tutorials.md
+  - How-To Guides: how-to-guides.md
+  - Reference: reference.md
+  - explanation.md
