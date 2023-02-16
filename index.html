@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#table-of-contents" class="md-skip">
+        <a href="#home" class="md-skip">
           Skip to content
         </a>
       
@@ -159,6 +159,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           Home
@@ -174,6 +176,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -197,8 +201,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.eurocodepy" class="md-nav__link">
-    src.eurocodepy
+  <a href="#eurocodepy" class="md-nav__link">
+    eurocodepy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    Support
   </a>
   
 </li>
@@ -272,7 +283,22 @@
   
     <li class="md-nav__item">
       <a href="explanation/" class="md-nav__link">
-        Explanation
+        Background
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="copyright/" class="md-nav__link">
+        Copyright
       </a>
     </li>
   
@@ -294,6 +320,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -317,8 +345,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#src.eurocodepy" class="md-nav__link">
-    src.eurocodepy
+  <a href="#eurocodepy" class="md-nav__link">
+    eurocodepy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    Support
   </a>
   
 </li>
@@ -346,8 +381,7 @@
 
 
 
-  <h1>Home</h1>
-
+<h1 id="home">Home</h1>
 <p>This site contains the project documentation for the
 <code>calculator</code> project that is a toy module used in the
 Real Python tutorial
@@ -355,6 +389,34 @@ Real Python tutorial
 Its aim is to give you a framework to build your
 project documentation using Python, MkDocs,
 mkdocstrings, and the Material for MkDocs theme.</p>
+<p>Eurocodepy are Python functions to work with structural eurocodes. Material data is stored in a JSON file. Current materials in the database are:</p>
+<p>urrent materials in the database are:</p>
+<ul>
+<li>concrete (C20 to C90)</li>
+<li>timber (C, D, GL)</li>
+<li>reinforcement (B400, B500, A400, A500)</li>
+<li>structural steel (S235, S275, S355, S450)</li>
+</ul>
+<p>Available european steel profiles are:</p>
+<ul>
+<li>IPE</li>
+<li>HEA</li>
+<li>HEB</li>
+<li>HEM</li>
+<li>L</li>
+<li>C</li>
+<li>T</li>
+<li>Pipe</li>
+<li>Box</li>
+<li>Double L</li>
+<li>Double C</li>
+</ul>
+<p>There are also some functions to work with material properties:</p>
+<ul>
+<li>creep_coef</li>
+<li>shrink_strain</li>
+</ul>
+<p>The existing functions are listed in the page '<a href="reference/">Reference</a>'. They are divided by eurocode.</p>
 <h2 id="table-of-contents">Table Of Contents</h2>
 <p>The documentation follows the best practice for
 project documentation as described by Daniele Procida
@@ -365,6 +427,7 @@ and consists of four separate parts:</p>
 <li><a href="how-to-guides/">How-To Guides</a></li>
 <li><a href="reference/">Reference</a></li>
 <li><a href="explanation/">Explanation</a></li>
+<li><a href="copyright/">License</a></li>
 </ol>
 <p>Quickly find what you're looking for depending on
 your use case by looking at the different pages.</p>
@@ -374,17 +437,18 @@ your use case by looking at the different pages.</p>
 <div class="doc doc-object doc-module">
 
 
-<a id="src.eurocodepy"></a>
+<a id="eurocodepy"></a>
   <div class="doc doc-contents first">
   
-      <p>Provide several sample eurocode functions.</p>
+      <p>Provide several functions to help designers working with Eurocodes.</p>
 <p>This module allows the user to make mathematical calculations.</p>
 <p>The module contains the following functions:</p>
 <ul>
-<li><code>add(a, b)</code> - Returns the sum of two numbers.</li>
-<li><code>subtract(a, b)</code> - Returns the difference of two numbers.</li>
-<li><code>multiply(a, b)</code> - Returns the product of two numbers.</li>
-<li><code>divide(a, b)</code> - Returns the quotient of two numbers.</li>
+<li><code>db</code>: Returns the database of the Eurocodes.</li>
+<li><code>ec1</code>: Returns the difference of two numbers.</li>
+<li><code>ec2</code> - Returns the product of two numbers.</li>
+<li><code>ec5</code> - Returns the quotient of two numbers.</li>
+<li><code>ec8</code> - Returns the quotient of two numbers.</li>
 </ul>
 
   
@@ -405,7 +469,10 @@ your use case by looking at the different pages.</p>
 
   </div>
 
-</div><h2 id="acknowledgements">Acknowledgements</h2>
+</div><h2 id="support">Support</h2>
+<p>If you need any help you can contact the developer via email.</p>
+<p>Github: [http://github.com/pcachim/eurocodepy]</p>
+<h2 id="acknowledgements">Acknowledgements</h2>
 <p>I want to thank my house plants for providing me with
 a negligible amount of oxygen each day. Also, I want
 to thank the sun for providing more than half of their
