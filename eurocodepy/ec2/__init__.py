@@ -2,6 +2,13 @@ from .. import db
 
 from .. import utils
 
+from . import material
+from .material import betacc
+from .material import betace
+from .material import cemprops
+from .material import calc_creep_coef
+from .material import calc_shrink_strain
+
 from . import fat
 from . import fire
 from . import sls

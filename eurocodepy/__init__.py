@@ -1,17 +1,18 @@
-# euroodepy/db.py
+# euroodepy
 
-"""Provide several sample eurocode functions.
+"""Provide several functions to help designers working with Eurocodes.
 
 This module allows the user to make mathematical calculations.
 
 The module contains the following functions:
 
-- `add(a, b)` - Returns the sum of two numbers.
-- `subtract(a, b)` - Returns the difference of two numbers.
-- `multiply(a, b)` - Returns the product of two numbers.
-- `divide(a, b)` - Returns the quotient of two numbers.
+- `db`: Returns the database of the Eurocodes.
+- `ec1`: Returns the difference of two numbers.
+- `ec2` - Returns the product of two numbers.
+- `ec5` - Returns the quotient of two numbers.
+- `ec8` - Returns the quotient of two numbers.
 """
-print ("This is eurocodepy v0.1.18")
+print ("This is eurocodepy v0.1.19")
 
 from . import ec1
 from . import ec2
