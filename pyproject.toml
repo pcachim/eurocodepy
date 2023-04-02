@@ -1,6 +1,23 @@
+
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
-]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "eurocodepy"
+version = "0.1.21"
+authors = [
+  { name="Paulo Cachim", email="pcachim@ua.pt" },
+]
+description = "A package for eurocode calculations"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/pcachim/eurocodepy"
+"Bug Tracker" = "https://github.com/pcachim/eurocodepy/issues"

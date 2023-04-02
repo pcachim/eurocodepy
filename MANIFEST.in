@@ -1,2 +1,2 @@
-include eurocodepy/eurocodes.json
-include eurocodepy/prof_euro.json
+include src/eurocodepy/eurocodes.json
+include src/eurocodepy/prof_euro.json

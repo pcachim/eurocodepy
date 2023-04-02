@@ -13,6 +13,8 @@ What your application does, \
 Why you used the technologies you used, \
 Some of the challenges you faced and features you hope to implement in the future.
 
+## Examples
+
 ### Calculate the resistance of a concrete section according to Eurocode 2
 
 resistance = ec2.concrete_section_resistance(fck=30, b=0.2, h=0.4, d=0.35, fyk=500)
