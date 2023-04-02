@@ -38,7 +38,7 @@ from eurocodepy import ec2
 
 EurocodePy includes a database of structural materials and steel profiles. The database is stored in a JSON file and can be easily updated or extended. The materials database includes properties such as the density, modulus of elasticity, and Poisson's ratio, while the steel profiles database includes properties such as the cross-sectional area, moment of inertia, and section modulus.
 
-The database is stored in a JSON file 'eurocodes.json'. This file is loaded when the package is impoorted, soo you can modified it to include you own properties. If you have some suggestions or materials to add to the database and want them to be included for all the coommunity, please contribute as described below in the [contributions](#Contributing)
+The database is stored in a JSON file 'eurocodes.json'. This file is loaded when the package is impoorted, soo you can modified it to include you own properties. If you have some suggestions or materials to add to the database and want them to be included for all the coommunity, please contribute as described below in the [contributions](#contributing)
  section. Steel profiles arre stored in a separate file 'prof_euro.json'
 
 The database can be accessed through a dictionary. There are also some aliases to easily access the database. The following code gives examples on how to use it.
@@ -115,14 +115,13 @@ A more or less complete description of existing packages and modules can be foun
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for details.
 
-
 ## Contributing
 
 We welcome contributions from everyone. Before getting started, please read our [Code of Conduct](CODE_OF_CONDUCT.md) and [Contributing Guidelines](CONTRIBUTING.md).
 
 ### Bug Reports and Feature Requests
 
-If you have found a bug or have a feature request, please submit an issue on our [GitHub issue tracker](https://github.com/pcachim/eurocodepy/issues). 
+If you have found a bug or have a feature request, please submit an issue on our [GitHub issue tracker](https://github.com/pcachim/eurocodepy/issues).
 
 ### Pull Requests
 
