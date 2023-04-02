@@ -12,30 +12,34 @@ def test_database():
     print ("Testing database\n")
     db = ec.db
 
+    print ("\nPrestress classes\n")
     df = pd.DataFrame.from_dict(ec.PrestressClasses)
     print(df)
-    print("\n")
+    print("\nReinforccement classes\n")
     df = pd.DataFrame.from_dict(ec.ReinforcementClasses)
     print(df)
-    print("\n")
-
-    print(ec.ConcreteClasses)
-    print("\n")
     
-    print(pd.DataFrame.from_dict(db["Materials"]["Reinforcement"]["Classes"]))
-    print("\n")
+    print("\nConcrete classes\n")
+    print(ec.ConcreteClasses)
 
+    print("\nReinforcement classes\n")    
+    print(pd.DataFrame.from_dict(db["Materials"]["Reinforcement"]["Classes"]))
+    
+    print("\nConcrete C20/25")
     fck = ec.ConcreteClasses['C20/25']
     print(fck)
 
-    print(SteelProfiles["I_SECTION"]["IPE200"]["S22POS"])
+    print("\nSteel profile IPE200\n")    
+    print(SteelProfiles["I_SECTION"]["IPE200"])
     # print(pd.DataFrame.from_dict(SteelProofiles["I_SECTION"]["IPE200"]))
-    print("\n")
-    db2 = ec.db2.Materials.Concrete
+    print("\nConcrete classes")
+    db2 = ec.dbase.Materials.Concrete.Classes
     print (db2)
+    print("\nEnd testing databasde\n\n")
 
 
 def test_modules():
+    print("Testing modules\n")
     asws = ec.ec2.uls.shear.shear_asws(0.3, 0.5, 25, 1.5, 500, 1.15, 2.5, 300, 1.0)
     print (asws)
     asws = ec.ec2.uls.shear_asws(0.3, 0.5, 25, 1.5, 500, 1.15, 2.5, 300, 1.0)

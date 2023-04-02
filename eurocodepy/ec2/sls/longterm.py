@@ -62,7 +62,7 @@ def calc_shrink_strain(t=28, h0=100, ts=3, rh=65, fck=20.0, cem='Type N')->float
     alpha1 = cemprops[cem][0]
     alpha2 = cemprops[cem][1]
 
-    eps_ca = 25.0e-6*(fck-10)
+    eps_ca = 25.0e-7*(fck-10)
     beta_as = 1.0-m.exp(-0.2*(t**0.5))
 
     beta_rh = 1.55*(1.0-(rh/100)**3)
