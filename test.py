@@ -93,7 +93,7 @@ if __name__ == "__main__":
     print("\n")
     test_utils_stress()
     
-    cr = ec.ec2.sls.crack.iscracked_annexLL(2.2, 25.0, 2.201, 0.0, 0.0, 0.0, 0.0, 0.0)
+    cr = eurocodepy.ec2.crack.iscracked_annexLL(2.2, 25.0, 2.201, 0.0, 0.0, 0.0, 0.0, 0.0)
     print(f"Is cracked: {cr}")
 
     print("\nTotal execution time is :", timeit.default_timer() - starttime)

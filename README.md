@@ -1,4 +1,4 @@
-# eurocodepy v0.1.21
+# eurocodepy v0.1.22
 
 EurocodePy is a Python package for calculating structures according to Eurocodes. It provides a collection of functions that enable engineers to design and analyze structures based on the Eurocode standards. In addition, it includes a database of structural materials and steel profiles, making it easy to design and analyze structures according to Eurocode standards.
 
@@ -13,10 +13,16 @@ The **utils** package has some functions that can be useful:
 
 ## Installation
 
-You can install EurocodePy using pip by running the following command::
+You can install EurocodePy using pip by running the following command:
 
 ```shell
 pip install eurocodepy
+```
+
+Too upgrade to the latest version use:
+
+```shell
+pip install eurocodepy --upgrade
 ```
 
 ## Usage

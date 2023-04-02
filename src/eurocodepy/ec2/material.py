@@ -8,7 +8,7 @@ cemprops = {
 }
 
 
-def betacc(t: float, s: float=0.25)->float:
+def beta_cc(t: float, s: float=0.25)->float:
     """Calculates the strength hardening coeficient
 
     Args:
@@ -25,7 +25,7 @@ def betacc(t: float, s: float=0.25)->float:
     return np.exp(s * (1 - np.sqrt(28.0/t)))
 
 
-def betace(t: float, s: float=0.25)->float:
+def beta_ce(t: float, s: float=0.25)->float:
     """Calculates the modulus of elasticity hardening coeficient
 
     Args:
@@ -42,7 +42,7 @@ def betace(t: float, s: float=0.25)->float:
     return (np.exp(s * (1 - np.sqrt(28.0/t))))**0.3
 
 
-def calc_creep_coef(t=28, h0=100,rh=65, t0=10, fck=20.0, cem=0.0)->float:
+def calc_creep_coef(t=1000000, h0=100, rh=65, t0=10, fck=20.0, cem=0.0)->float:
     """Calculates the creep coeficient.
 
     Args:
@@ -63,22 +63,22 @@ def calc_creep_coef(t=28, h0=100,rh=65, t0=10, fck=20.0, cem=0.0)->float:
     tt0 = t0*((1.0+9.0/(2.0+t0**1.2))**cem)
     phi_RH = (1.0-rh/100)/(0.1*(h0**0.33333333))
     phi_RH = 1.0+phi_RH if fcm <= 35 else (1.0+phi_RH*alpha1)*alpha2
-    beta_fcm = 16.8/m.sqrt(fcm)
+    beta_fcm = 16.8/math.sqrt(fcm)
     beta_t0 = 1.0/(0.1+tt0**0.2)
     phi_0 = beta_fcm*beta_t0*phi_RH
 
     try:        
-        betah = min(1500*alpha3, 1.5*(1.0+m.pow(0.012*rh,18))*h0+250*alpha3)
-        beta_cc = math.pow((t-t0)/(betah+t-t0), 0.3)
-        phi = beta_cc*phi_0    
+        betah = min(1500*alpha3, 1.5*(1.0+math.pow(0.012*rh,18))*h0+250*alpha3)
+        betacc = math.pow((t-t0)/(betah+t-t0), 0.3)
+        phi = betacc*phi_0    
     except:
-        beta_cc = 0.0
+        betacc = 0.0
         phi = 0.0
 
     return phi
 
 
-def calc_shrink_strain(t=28, h0=100, ts=3, rh=65, fck=20.0, cem='Type N')->float:
+def calc_shrink_strain(t=1000000, h0=100, ts=3, rh=65, fck=20.0, cem='Type N')->float:
     """Calculates the total shrinkage strain.
 
     Args:
@@ -97,10 +97,10 @@ def calc_shrink_strain(t=28, h0=100, ts=3, rh=65, fck=20.0, cem='Type N')->float
     alpha2 = cemprops[cem][1]
 
     eps_ca = 25.0e-6*(fck-10)
-    beta_as = 1.0-m.exp(-0.2*(t**0.5))
+    beta_as = 1.0-math.exp(-0.2*(t**0.5))
 
     beta_rh = 1.55*(1.0-(rh/100)**3)
-    eps_cd = beta_rh*0.85e-6*((220+110*alpha1)*m.exp(-alpha2*fcm/10.0))
+    eps_cd = beta_rh*0.85e-6*((220+110*alpha1)*math.exp(-alpha2*fcm/10.0))
     beta_ds = (t-ts)/((t-ts)+0.4*h0**1.5)
     
     return beta_as*eps_ca + beta_ds*eps_cd
