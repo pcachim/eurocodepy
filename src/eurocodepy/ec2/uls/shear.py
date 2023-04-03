@@ -2,7 +2,7 @@ import math
 from typing import Tuple
 
 
-def shear_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float, asw_s: float, alpha: float) -> float:
+def calc_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float, asw_s: float, alpha: float) -> float:
     """Calculates the design shear strength Vrds and Vrd.max
 
     Args:
@@ -26,7 +26,7 @@ def shear_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: floa
     return max(vrd_s, vrd_max)
 
 
-def shear_asws(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float, ved: float, alpha: float) -> Tuple[float, float]:
+def calc_asws(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float, ved: float, alpha: float) -> Tuple[float, float]:
     """Calculates the design shear reinforcement
 
     Args:
@@ -51,7 +51,7 @@ def shear_asws(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: flo
     return asw_s, vrd_max
 
 
-def shear_vrdc(bw: float, d: float, fck: float, g_c: float, rho_l: float) -> Tuple[float, float, float]:
+def calc_vrdc(bw: float, d: float, fck: float, g_c: float, rho_l: float) -> Tuple[float, float, float]:
     """Shear strength without shear reinforcement
 
     Args:

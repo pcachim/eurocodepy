@@ -1,4 +1,4 @@
-# eurocodepy v0.1.22
+# eurocodepy v0.1.30
 
 EurocodePy is a Python package for calculating structures according to Eurocodes. It provides a collection of functions that enable engineers to design and analyze structures based on the Eurocode standards. In addition, it includes a database of structural materials and steel profiles, making it easy to design and analyze structures according to Eurocode standards.
 
@@ -55,7 +55,7 @@ import eurocodepy as ec
 # To access the entire database
 db = ec.db
 
-# To access concrete class C20/25
+# To access concrete class C30/37
 conc = ec.db["Materials"]["Concrete"]["Classes"]["C30/37"] # Alternative 1
 conc = ec.Materials["Concrete"]["Classes"]["C30/37"] # Alternative 2
 conc = ec.Concrete["Classes"]["C30/37"] # Alternative 3

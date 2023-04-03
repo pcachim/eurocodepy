@@ -29,11 +29,6 @@ from .db import Bolts
 from .db import BoltClasses
 from .db import BoltDiameters
 
-from .db import Reinforcement
-from .db import ReinforcementBars
-from .db import ReinforcementClasses
-from .db import ReinforcementParams
-
 from .db import Concrete
 from .db import ConcreteClasses
 from .db import ConcreteParams
@@ -42,7 +37,13 @@ from .db import Prestress
 from .db import PrestressClasses
 from .db import PrestressParams
 
+from .db import Reinforcement
+from .db import ReinforcementBars
+from .db import ReinforcementClasses
+from .db import ReinforcementParams
+
 from .db import Steel
+from .db import SteelClasses
 from .db import SteelParams
 
 from .db import SteelProfiles

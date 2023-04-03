@@ -40,11 +40,11 @@ def test_database():
 
 def test_modules():
     print("Testing modules\n")
-    asws = ec.ec2.uls.shear.shear_asws(0.3, 0.5, 25, 1.5, 500, 1.15, 2.5, 300, 1.0)
+    asws = ec.ec2.uls.shear.calc_asws(0.3, 0.5, 25, 1.5, 500, 1.15, 2.5, 300, 1.0)
     print (asws)
-    asws = ec.ec2.uls.shear_asws(0.3, 0.5, 25, 1.5, 500, 1.15, 2.5, 300, 1.0)
+    asws = ec.ec2.uls.calc_asws(0.3, 0.5, 25, 1.5, 500, 1.15, 2.5, 300, 1.0)
     print (asws)
-    asws = ec.ec2.shear_asws(0.3, 0.5, 25, 1.5, 500, 1.15, 2.5, 300, 1.0)
+    asws = ec.ec2.calc_asws(0.3, 0.5, 25, 1.5, 500, 1.15, 2.5, 300, 1.0)
     print (asws)
     param = ec.ec2.get_bend_params()
     print (param)
@@ -68,33 +68,47 @@ def test_ec2_uls_biaxial():
 
 def test_utils_stress():
     # test stress module
-    print("\nTest stress module: principals:")
+    print("\nTest stress module: principals:\n")
     eval, evec = ec.utils.stress.principals(3.0, 2.0, -1.0, 0.0, 0.0, 0.0)
     print(eval)
     print(evec)
-    print("\nTest stress module: principal_vectors:")
+    print("\nTest stress module: principal_vectors:\n")
     evec = ec.utils.stress.principal_vectors(3.0, 2.0, -1.0, 0.0, 0.0, 0.0)
     print(evec)
     
-    print("\nTest stress module: stress invariants:")
+    print("\nTest stress module: stress invariants:\n")
     u = ec.stress.invariants(3.0, 2.0, -1.0, 0.3, -0.4, 0.5)
     print (u)
 
+
+def test_rcbeam():
+    # test RCBeam class
+    print("\nTest RCBeam:\n")
+    beam = ec.ec2.uls.RCBeam(0.3, 0.5, at=0.05, ac=0.05, conc="C30/37", reinf="A500NR")
+    asl, asc, a, epst, epsc = beam.calcBending(100.0)
+    print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
+    asl, asc, a, epst, epsc = beam.calcBending(500.0)
+    print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
+    asl, asc, a, epst, epsc = beam.calcBending(900.0)
+    print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
+    return
 
 if __name__ == "__main__":
     print ("Testing 'eurocodepy'\n")
     starttime = timeit.default_timer()
 
     test_database()
-    test_modules()
+    # test_modules()
     print("\n")
     #print(ec.ec2.uls.db)
     test_ec2_uls_biaxial()
     print("\n")
     test_utils_stress()
     
-    cr = eurocodepy.ec2.crack.iscracked_annexLL(2.2, 25.0, 2.201, 0.0, 0.0, 0.0, 0.0, 0.0)
+    cr = ec.ec2.crack.iscracked_annexLL(2.2, 25.0, 2.201, 0.0, 0.0, 0.0, 0.0, 0.0)
     print(f"Is cracked: {cr}")
+    
+    test_rcbeam()
 
     print("\nTotal execution time is :", timeit.default_timer() - starttime)
     print("\n")
