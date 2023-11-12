@@ -26,6 +26,23 @@ def calc_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float
     return max(vrd_s, vrd_max)
 
 
+def calc_vrdmax(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float) -> float:
+    """Calculates the design shear strength Vrd.max
+
+    Args:
+        bw (float): beam width
+        d (float): beam depth
+        fck (float): concrete compressive strength
+        g_c (float): concrete partial safety coefficient
+        fyk (float): steel strength
+        g_s (float): steel partial safety coefficient
+
+    Returns:
+        float: Vrd.max
+    """
+    return bw * 0.9 * d * 0.6*(1.0-fck/250) * fck / g_c * 100.0 / (cott + 1.0/cott)
+
+
 def calc_asws(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float, ved: float, alpha: float) -> Tuple[float, float]:
     """Calculates the design shear reinforcement
 

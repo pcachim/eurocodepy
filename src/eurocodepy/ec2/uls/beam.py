@@ -1,6 +1,24 @@
 import math
+import numpy as np
 from typing import Tuple, Dict, List
 import eurocodepy as ec
+
+
+def calc_vrdmax(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float) -> float:
+    """Calculates the design shear strength Vrd.max
+
+    Args:
+        bw (float): beam width
+        d (float): beam depth
+        fck (float): concrete compressive strength
+        g_c (float): concrete partial safety coefficient
+        fyk (float): steel strength
+        g_s (float): steel partial safety coefficient
+
+    Returns:
+        float: Vrd.max
+    """
+    return bw * 0.9 * d * 0.6*(1.0-fck/250) * fck / g_c * 100.0 / (cott + 1.0/cott)
 
 
 def calc_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float, asw_s: float, alpha: float) -> float:
@@ -174,6 +192,10 @@ class RCBeam:
         asws = 0.0
         vrdmax = 0.0
 
+        cotetas = np.arange(1.0, 2.5000000000000000000001, 0.1)
+        vrdmaxs = calc_vrdmax(self.b, self.d, self.fck, self.gammac, self.fyk, self.gammas, cotetas)
+        min_val = min(filter(lambda i: i > ved, vrdmaxs))
+
         asws = calc_asws(self.b, self.d, self.fck, self.gammac, self.fyk,self.gammas, ved)
         return aslt, aslc, alpha, epsst, epssc, asws, vrdmax
     
@@ -226,6 +248,7 @@ if __name__ == "__main__":
     # test RCBeam class
     print("\nTest RCBeam:\n")
     beam = RCBeam(0.3, 0.5, at=0.05, ac=0.05, conc="C70/85", reinf="A500NR")
+    a = beam.calcShear(100.0, 100.0)
     asl, asc, a, epst, epsc = beam.calcBending(100.0)
     print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
     asl, asc, a, epst, epsc = beam.calcBending(500.0)

@@ -89,7 +89,8 @@ def test_rcbeam():
     print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
     asl, asc, a, epst, epsc = beam.calcBending(500.0)
     print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
-    asl, asc, a, epst, epsc = beam.calcBending(900.0)
+    beam = ec.ec2.uls.RCBeam(0.3, 0.5, at=0.05, ac=0.05, conc="C90/105", reinf="A500NR")
+    asl, asc, a, epst, epsc = beam.calcBending(700.0)
     print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
     return
 
