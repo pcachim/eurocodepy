@@ -123,56 +123,58 @@ def v_b(vb_0: float, c_season: float=1.0, c_dir: float=1.0) -> float:
     return c_season * c_dir * vb_0
 
 
-def v_m(z: float, vb: float, zone: str) -> float:
+def v_m(z: float, vb: float, cr: float, co: float) -> float:
     """ Calculates the mean wind velocity, vm(z), at a height z above the terrain.
     Depends on the terrain roughness and orography and on the basic wind velocity.
 
     Args:
         z (float): vertical distance
         vb (float): basic wind velocity
-        zone (str): the terrain category
+        cr (float): terrain roughness factor.
+        co (float): orography factor.
 
     Returns:
         float: mean wind velocity, vm(z) 
     """
-    return c_r(z, zone) * c_0(z) * vb
+    return cr * co * vb
 
 
-def I_v(z: float, z_min: float=1.0, z_0: float= 0.01) -> float:
+def I_v(z: float, z_min: float, z_0: float, co: float) -> float:
     """Calculates the turbulence intensity, Iv(z), at height z.
     It is defined as the standard deviation of the turbulence divided by the mean wind velocity.
 
     Args:
         z (float): vertical distance
-        z_min (float, optional): minimum height. Defaults to 1.0.
-        z_0 (float, optional): roughness length. Defaults to 0.01.
+        z_min (float, optional): minimum height.
+        z_0 (float, optional): roughness length.
+        co (float): orography factor.
 
     Returns:
         float: turbulence intensity
     """
     zeff = z if z >= z_min else z_min
-    Iv = k_1 / c_0(z) / log(zeff/z_0)
+    Iv = k_1 / co / log(zeff/z_0)
     return Iv
 
 
-def q_p(z: float, vb0: float, z_min: float=1.0, z_0: float= 0.01, rho: float=1.25) -> float:
+def q_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float, rho: float=1.25) -> float:
     """Calcculates the peak velocity pressure, qp(z), at height z, 
     which includes mean and short-term velocity fluctuations.
 
     Args:
         z (float): vertical distance
-        vb0 (float): fundamental value of the basic wind velocity
-        z_min (float, optional): minimum height. Defaults to 1.0.
-        z_0 (float, optional): roughness length. Defaults to 0.01.
+        vb (float): fundamental value of the basic wind velocity
+        z_min (float, optional): minimum height.
+        z_0 (float, optional): roughness length.
+        cr (float): terrain roughness factor.
+        co (float): orography factor.
         rho (float, optional): air density. Defaults to 1.25 kg/m3.
 
     Returns:
         float: peak velocity pressure
     """
-    # v = v_m(z, v_b(vb0), zone)
-    v = c_r(z, z_min, z_0) * c_0(z) * vb0
+    v = cr * co * vb
     zeff = z if z >= z_min else z_min
-    # Iv = I_v(z, zone)
-    Iv = k_1 / c_0(z) / log(zeff/z_0)
+    Iv = k_1 / co / log(zeff/z_0)
     qp = 0.5 * (1.0 + 7*Iv) * v**2 * rho
     return qp
