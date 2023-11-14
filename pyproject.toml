@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "eurocodepy"
-version = "0.1.36"
+version = "0.1.37"
 authors = [
   { name="Paulo Cachim", email="pcachim@ua.pt" },
 ]

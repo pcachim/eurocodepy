@@ -157,8 +157,30 @@ def I_v(z: float, z_min: float, z_0: float, co: float) -> float:
     return Iv
 
 
+def v_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float) -> float:
+    """Calculates the peak velocity, vp(z), at height z, 
+    which includes mean and short-term velocity fluctuations.
+
+    Args:
+        z (float): vertical distance
+        vb (float): fundamental value of the basic wind velocity
+        z_min (float, optional): minimum height.
+        z_0 (float, optional): roughness length.
+        cr (float): terrain roughness factor.
+        co (float): orography factor.
+
+    Returns:
+        float: peak velocity pressure
+    """
+    v = cr * co * vb
+    zeff = z if z >= z_min else z_min
+    Iv = k_1 / co / log(zeff/z_0)
+    vp = (1.0 + 7*Iv) * v
+    return vp
+
+
 def q_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float, rho: float=1.25) -> float:
-    """Calcculates the peak velocity pressure, qp(z), at height z, 
+    """Calculates the peak velocity pressure, qp(z), at height z, 
     which includes mean and short-term velocity fluctuations.
 
     Args:
