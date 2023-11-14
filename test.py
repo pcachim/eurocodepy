@@ -94,22 +94,28 @@ def test_rcbeam():
     print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
     return
 
+
+def test_wind():
+    c0 = ec.ec1.wind.c_0(10.0, 0.0, 10.0, 10.0, 1000.0)
+    print(f"c_0 = {c0}")
+
 if __name__ == "__main__":
     print ("Testing 'eurocodepy'\n")
     starttime = timeit.default_timer()
 
-    test_database()
-    # test_modules()
-    print("\n")
-    #print(ec.ec2.uls.db)
-    test_ec2_uls_biaxial()
-    print("\n")
-    test_utils_stress()
+    # test_database()
+    # # test_modules()
+    # print("\n")
+    # #print(ec.ec2.uls.db)
+    # test_ec2_uls_biaxial()
+    # print("\n")
+    # test_utils_stress()
     
-    cr = ec.ec2.crack.iscracked_annexLL(2.2, 25.0, 2.201, 0.0, 0.0, 0.0, 0.0, 0.0)
-    print(f"Is cracked: {cr}")
+    # cr = ec.ec2.crack.iscracked_annexLL(2.2, 25.0, 2.201, 0.0, 0.0, 0.0, 0.0, 0.0)
+    # print(f"Is cracked: {cr}")
     
-    test_rcbeam()
+    # test_rcbeam()
+    test_wind()
 
     print("\nTotal execution time is :", timeit.default_timer() - starttime)
     print("\n")
