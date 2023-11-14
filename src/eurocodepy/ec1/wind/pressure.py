@@ -4,17 +4,32 @@ from math import log10, log, exp
 k_1 = 1.0 # coeficiente de turbulência
 
 z0 = {"EU": {"0": 0.003, "I": 0.01, "II": 0.05, "III": 0.3, "IV": 1},
-      "PT": {"I": 0.01, "II": 0.05, "III": 0.3, "IV": 1}}
+      "PT": {"I": 0.005, "II": 0.05, "III": 0.3, "IV": 1}}
 zmin = {"EU": {"0": 1, "I": 1, "II": 2, "III": 5, "IV": 10},
-        "PT": {"I": 1, "II": 2, "III": 5, "IV": 10}}
+        "PT": {"I": 1, "II": 3, "III": 8, "IV": 15}}
 
 zz0 = z0["EU"]
 zzmin = zmin["EU"]
 
 
-def s_coef(x: float, z: float, H: float, Lu: float, Ld: float=-1) -> float:
-    orography_type = 'hill' if Ld > 0 else 'cliff'
+def s_coef(x: float, z: float, H: float, Lu: float, Ld: float=1000) -> float:
+    """_summary_
+
+    Args:
+        x (float): horizontal distance
+        z (float): vertical distance
+        H (float): height of the hill/cliff
+        Lu (float): length of the hill/cliff
+        Ld (float, optional): length of the cliff. Defaults to 1000, meaning it's a cliff.
+    Returns:
+        float: _description_
+    """
+    phi0 = H/Ld
     phi = H/Lu
+    
+    if phi < 0.05: return 0.0
+    orography_type = 'hill' if phi0 > 0.05 else 'cliff'
+
     Le = H/0.3 if phi >= 0.3 else Lu
     x_Lu = x/Lu
     z_Le = z/Le
@@ -60,10 +75,14 @@ def s_coef(x: float, z: float, H: float, Lu: float, Ld: float=-1) -> float:
     return s
 
 
-def c_0(z: float, x: float=0, H: float=0, Lu: float=10, Ld: float=10) -> float:
+def c_0(z: float, x: float=0, H: float=0, Lu: float=10, Ld: float=1000) -> float:
     """Calculates the orography factor, taken as 1,0
     Args:
         z (float): vertical distance
+        x (float, optional): horizontal distance. Defaults to 0.
+        H (float, optional): height of the hill/cliff. Defaults to 0.
+        Lu (float, optional): length of the hill/cliff. Defaults to 10.
+        Ld (float, optional): length of the cliff. Defaults to 1000, meaning it's a cliff.
 
     Returns:
         float: orography factor
