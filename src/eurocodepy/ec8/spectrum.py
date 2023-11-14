@@ -8,6 +8,9 @@ def get_spectrum_parameters(code: str, coef_imp: str, soil: str, zone: str) -> l
 
     Args:
         code (str): code to be used (CEN-1, CEN-2, PT-1, PT-2, PT-A)
+                CEN-1, CEN-2: standard Eurocode spectrums
+                PT-1, PT-2, PT-A: Portuguese National Annex spectrums
+                    (PT-1 and PT-2, for continent and Madeira, PT-A for Azores)
         coef_imp (str): importance coefficient (i, ii, iii, iv)
         soil (str): soil type (A, B, C, D, E)
         zone (str): zone (1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 2.1, 2.2, 2.3, 2.4, 2.5, .1g, .2g, .3g, .4g, .5g, .6g, .7g, .8g, .9g, 1.0g)
@@ -170,13 +173,13 @@ def spectrum_user(a_g: float, S: float, q: float, TB: float, TC: float, TD: floa
     value = [get_spectrum(T, a_g, S, q, TB, TC, TD, beta) for T in periods]
     data = {'period': periods,
             'value': value}
-    
+
     spec = pd.DataFrame(data)
     spec.attrs['name'] = txt
     spec.attrs['S'] = S
     spec.attrs['a_g'] = round(a_g, 5)
     spec.attrs['q'] = q
-    
+
     return spec
 
 

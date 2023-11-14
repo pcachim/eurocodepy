@@ -12,7 +12,7 @@ Requires-Python: >=3.9
 Description-Content-Type: text/markdown
 License-File: LICENSE.md
 
-# eurocodepy v0.1.30
+# eurocodepy v0.1.31
 
 EurocodePy is a Python package for calculating structures according to Eurocodes. It provides a collection of functions that enable engineers to design and analyze structures based on the Eurocode standards. In addition, it includes a database of structural materials and steel profiles, making it easy to design and analyze structures according to Eurocode standards.
 
@@ -40,15 +40,6 @@ pip install eurocodepy --upgrade
 ```
 
 ## Usage
-
-EurocodePy is designed to be easy to use. Simply import the package and start using the functions. Here's an example of how to calculate the bending resistance of a steel beam:
-
-```python
-import eurocodepy as ec
-
-beam = ec.SteelBeam('HEA200')
-beam.check_bending_capacity(M=1000)
-```
 
 EurocodePy provides a range of functions for designing and analyzing structures according to Eurocodes. Here are some examples:
 
@@ -83,7 +74,7 @@ Current materials in the database are:
 
 * concrete (C20/25 to C90/105)
 * timber (C14 to C24, D18, GL24 to 36)
-* reinforcement - general (B400, B450, B500, B550, B600, B700, cclasses A, B and C: B400A etc.)
+* reinforcement - general (B400, B450, B500, B550, B600, B700, classes A, B and C: B400A etc.)
 * reinforcement - portuguese (A400NR, A400NRSD, A500NR, A500NRSD, A500ER, A500EL)
 * structural steel (S235, S275, S355, S450)
 
