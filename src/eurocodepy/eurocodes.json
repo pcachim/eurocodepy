@@ -2051,29 +2051,31 @@
                 "locale": {
                     "PT": {
                         "base velocity": {
-                            "A": { "vb0": 27.0, "desc": "A generalidade do território, excepto as regiões pertencentes à zona B"},
-                            "B": { "vb0": 30.0, "desc": "Os arquipélagos dos Açores e da Madeira e as regiões do continente situadas numa faixa costeira com 5 km de largura ou a altitudes superiores a 600 m."}
+                            "Zona A": { "vb0": 27.0, "desc": "A generalidade do território, excepto as regiões pertencentes à zona B"},
+                            "Zona B": { "vb0": 30.0, "desc": "Os arquipélagos dos Açores e da Madeira e as regiões do continente situadas numa faixa costeira com 5 km de largura ou a altitudes superiores a 600 m."}
                         },
-                        "zones": {
-                            "I": { "z0": 0.005, "zmin": 1.0 },
-                            "II": { "z0": 0.05, "zmin": 2.0 },
-                            "III": { "z0": 0.3, "zmin": 8.0 },
-                            "IV": { "z0":1.0, "zmin": 15.0 }
+                        "terrain": {
+                            "I": { "z0": 0.005, "zmin": 1.0, "desc": "Zona costeira exposta aos ventos de mar" },
+                            "II": { "z0": 0.05, "zmin": 2.0, "desc": "Zona de vegetação rasteira, tal como erva, e obstáculos isolados (árvores, edifícios) com separações entre si de, pelo menos, 20 vezes a sua altura"  },
+                            "III": { "z0": 0.3, "zmin": 8.0, "desc": "Zona com uma cobertura regular de vegetação ou edifícios, ou com obstáculos isolados com separações entre si de, no máximo, 20 vezes a sua altura (por exemplo: zonas suburbanas, florestas permanentes)"  },
+                            "IV": { "z0":1.0, "zmin": 15.0, "desc": "Zona na qual pelo menos 15 % da superfície está coberta por edifícios com uma altura média superior a 15 m"  }
                         },
-                        "cprob": {"K":0.11, "n":1.0}
+                        "cprob": {"K":0.11, "n":1.0},
+                        "k_I": 1.0
                     },
                     "EU": {
                         "base velocity": {
                             "ad-hoc": { "vb0": 30.0, "desc": "A general wind velocity in Europe."}
                         },
-                        "zones": {
-                            "0": { "z0": 0.003, "zmin": 1.0 },
-                            "I": { "z0": 0.01, "zmin": 1.0 },
-                            "II": { "z0": 0.05, "zmin": 2.0 },
-                            "III": { "z0": 0.3, "zmin": 5.0 },
-                            "IV": { "z0": 1.0, "zmin": 10.0 }
+                        "terrain": {
+                            "0": { "z0": 0.003, "zmin": 1.0, "desc": "Sea or coastal area exposed to the open sea"  },
+                            "I": { "z0": 0.01, "zmin": 1.0, "desc": "Lakes or flat and horizontal area with negligible vegetation and without obstacles"  },
+                            "II": { "z0": 0.05, "zmin": 2.0, "desc": "Area with low vegetation such as grass and isolated obstacles (trees, buildings) with separations of at least 20 obstacle heights"  },
+                            "III": { "z0": 0.3, "zmin": 5.0, "desc": "Area with regular cover of vegetation or buildings or with isolated obstacles with separations of maximum 20 obstacle heights (such as villages, suburban terrain, permanent forest)" },
+                            "IV": { "z0": 1.0, "zmin": 10.0, "desc": "Area in which at least 15 % of the surface is covered with buildings and their average height exceeds 15 m"  }
                         },
-                        "cprob": {"K":0.2, "n":0.5}
+                        "cprob": {"K":0.2, "n":0.5},
+                        "k_I": 1.0
                     }
                 }
             }

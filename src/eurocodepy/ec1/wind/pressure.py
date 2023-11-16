@@ -1,15 +1,16 @@
 from math import log10, log, exp
+from . import db
 
 
 k_1 = 1.0 # coeficiente de turbulência
 
-z0 = {"EU": {"0": 0.003, "I": 0.01, "II": 0.05, "III": 0.3, "IV": 1},
-      "PT": {"I": 0.005, "II": 0.05, "III": 0.3, "IV": 1}}
-zmin = {"EU": {"0": 1, "I": 1, "II": 2, "III": 5, "IV": 10},
-        "PT": {"I": 1, "II": 3, "III": 8, "IV": 15}}
+# z0 = {"EU": {"0": 0.003, "I": 0.01, "II": 0.05, "III": 0.3, "IV": 1},
+#       "PT": {"I": 0.005, "II": 0.05, "III": 0.3, "IV": 1}}
+# zmin = {"EU": {"0": 1, "I": 1, "II": 2, "III": 5, "IV": 10},
+#         "PT": {"I": 1, "II": 3, "III": 8, "IV": 15}}
 
-zz0 = z0["EU"]
-zzmin = zmin["EU"]
+# zz0 = z0["EU"]
+# zzmin = zmin["EU"]
 
 
 def s_coef(x: float, z: float, H: float, Lu: float, Ld: float=1000) -> float:
@@ -93,13 +94,14 @@ def c_0(z: float, x: float=0, H: float=0, Lu: float=10, Ld: float=1000) -> float
     return 1.0+2.0*s*phi if phi < 0.3 else 1.0+0.6*s
 
 
-def c_r(z: float, z_min: float=1.0, z_0: float= 0.01) -> float:
+def c_r(z: float, z_min: float, z_0: float, z_OII: float) -> float:
     """ Calculate the roughness factor
 
     Args:
-        z (float): vertical distance
-        z_min (float, optional): minimum height. Defaults to 1.0.
-        z_0 (float, optional): roughness length. Defaults to 0.01.
+        z (float): vertical distance.
+        z_min (float, optional): minimum height.
+        z_0 (float, optional): roughness length.
+        z_OII (float, optional): roughness length for terrain II.
 
     Returns:
         float: the roughness factor
@@ -139,7 +141,7 @@ def v_m(z: float, vb: float, cr: float, co: float) -> float:
     return cr * co * vb
 
 
-def I_v(z: float, z_min: float, z_0: float, co: float) -> float:
+def I_v(z: float, z_min: float, z_0: float, co: float, k_I:float=1) -> float:
     """Calculates the turbulence intensity, Iv(z), at height z.
     It is defined as the standard deviation of the turbulence divided by the mean wind velocity.
 
@@ -148,16 +150,17 @@ def I_v(z: float, z_min: float, z_0: float, co: float) -> float:
         z_min (float, optional): minimum height.
         z_0 (float, optional): roughness length.
         co (float): orography factor.
+        k_I (float, optional): turbulence intensity factor. Defaults to 1.
 
     Returns:
         float: turbulence intensity
     """
     zeff = z if z >= z_min else z_min
-    Iv = k_1 / co / log(zeff/z_0)
+    Iv = k_I / co / log(zeff/z_0)
     return Iv
 
 
-def v_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float) -> float:
+def v_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float, k_I:float=1) -> float:
     """Calculates the peak velocity, vp(z), at height z, 
     which includes mean and short-term velocity fluctuations.
 
@@ -168,35 +171,37 @@ def v_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float) -> 
         z_0 (float, optional): roughness length.
         cr (float): terrain roughness factor.
         co (float): orography factor.
+        k_I (float, optional): turbulence intensity factor. Defaults to 1.
 
     Returns:
         float: peak velocity pressure
     """
     v = cr * co * vb
     zeff = z if z >= z_min else z_min
-    Iv = k_1 / co / log(zeff/z_0)
+    Iv = k_I / co / log(zeff/z_0)
     vp = (1.0 + 7*Iv) * v
     return vp
 
 
-def q_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float, rho: float=1.25) -> float:
+def q_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float, rho: float=1.25, k_I:float=1) -> float:
     """Calculates the peak velocity pressure, qp(z), at height z, 
     which includes mean and short-term velocity fluctuations.
 
     Args:
-        z (float): vertical distance
-        vb (float): fundamental value of the basic wind velocity
+        z (float): vertical distance.
+        vb (float): fundamental value of the basic wind velocity.
         z_min (float, optional): minimum height.
         z_0 (float, optional): roughness length.
         cr (float): terrain roughness factor.
         co (float): orography factor.
         rho (float, optional): air density. Defaults to 1.25 kg/m3.
+        k_I (float, optional): turbulence intensity factor. Defaults to 1.
 
     Returns:
         float: peak velocity pressure
     """
     v = cr * co * vb
     zeff = z if z >= z_min else z_min
-    Iv = k_1 / co / log(zeff/z_0)
+    Iv = k_I / co / log(zeff/z_0)
     qp = 0.5 * (1.0 + 7*Iv) * v**2 * rho
     return qp
