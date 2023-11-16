@@ -1,8 +1,5 @@
 from math import log10, log, exp
-from . import db
 
-
-k_1 = 1.0 # coeficiente de turbulência
 
 # z0 = {"EU": {"0": 0.003, "I": 0.01, "II": 0.05, "III": 0.3, "IV": 1},
 #       "PT": {"I": 0.005, "II": 0.05, "III": 0.3, "IV": 1}}
