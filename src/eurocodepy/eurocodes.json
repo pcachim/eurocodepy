@@ -2058,7 +2058,7 @@
                             "I": { "z0": 0.005, "zmin": 1.0, "desc": "Zona costeira exposta aos ventos de mar" },
                             "II": { "z0": 0.05, "zmin": 2.0, "desc": "Zona de vegetação rasteira, tal como erva, e obstáculos isolados (árvores, edifícios) com separações entre si de, pelo menos, 20 vezes a sua altura"  },
                             "III": { "z0": 0.3, "zmin": 8.0, "desc": "Zona com uma cobertura regular de vegetação ou edifícios, ou com obstáculos isolados com separações entre si de, no máximo, 20 vezes a sua altura (por exemplo: zonas suburbanas, florestas permanentes)"  },
-                            "IV": { "z0":1.0, "zmin": 15.0, "desc": "Zona na qual pelo menos 15 % da superfície está coberta por edifícios com uma altura média superior a 15 m"  }
+                            "IV": { "z0":1.0, "zmin": 15.0, "desc": "Zona na qual pelo menos 15 % da superfície está coberta por edifícios com uma altura média superior a 15 m" }
                         },
                         "cprob": {"K":0.11, "n":1.0},
                         "k_I": 1.0

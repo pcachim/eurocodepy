@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: eurocodepy
-Version: 0.1.37
+Version: 0.1.38
 Summary: A package for eurocode calculations
 Author-email: Paulo Cachim <pcachim@ua.pt>
 Project-URL: Homepage, https://github.com/pcachim/eurocodepy
