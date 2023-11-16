@@ -94,7 +94,7 @@ def c_0(z: float, x: float=0, H: float=0, Lu: float=10, Ld: float=1000) -> float
     return 1.0+2.0*s*phi if phi < 0.3 else 1.0+0.6*s
 
 
-def c_r(z: float, z_min: float, z_0: float, z_OII: float) -> float:
+def c_r(z: float, z_min: float, z_0: float, z_0II: float) -> float:
     """ Calculate the roughness factor
 
     Args:
@@ -106,7 +106,7 @@ def c_r(z: float, z_min: float, z_0: float, z_OII: float) -> float:
     Returns:
         float: the roughness factor
     """
-    k_r = 0.19*((z_0/zz0["II"])**0.07)
+    k_r = 0.19*((z_0/z_0II)**0.07)
     zeff = z if z >= z_min else z_min
     return k_r * log(zeff/z_0)
 

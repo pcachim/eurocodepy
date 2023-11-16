@@ -96,3 +96,8 @@ BoltDiameters = Bolts["Diameters"]
 
 SteelProfiles = db["SteelProfiles"]["Euro"]
 
+Loads = db["Loads"]
+WindLoads = Loads["Wind"]
+DeadLoads = Loads["Dead"]
+SeismicLoads = Loads["Seismic"]
+
