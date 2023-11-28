@@ -1,6 +1,57 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import db
+
+
+def get_spec_params(locale:str, code: str, class_imp: str, soil: str, zone: str) -> list:
+    """Get the spectrum parameters
+
+    Args:
+        locale (str): country code (EU, PT)
+        code (str): 
+                CEN-1, CEN-2: standard Eurocode spectrums (EU)
+                PT-1, PT-2, PT-A: Portuguese National Annex spectrums (PT)
+                (PT-1 and PT-2, for continent and Madeira, PT-A for Azores)
+        class_imp (str): importance class  (i, ii, iii, iv)
+        soil (str): soil type (A, B, C, D, E)
+        zone (str): (1.1, 1.2, 1.3, 1.4, 1.5, 1.6) for "PT-1"
+                    (2.1, 2.2, 2.3, 2.4, 2.5) for "PT-2" and "PT-A"
+                    (.1g, .2g, .3g, .4g, .5g, .6g, .7g, .8g, .9g, 1.0g) for "CEN-1" and "CEN-2"
+    Raises:
+        ValueError: if locale is not available
+        ValueError: if code is not available
+        ValueError: if class_imp is not available
+
+    Returns:
+        list: soil amplification factor, acceleration, T_B, T_C, T_D
+    """
+    local = db.SeismicLoads["Locale"][locale]
+    if code not in local["Types"]:
+        raise ValueError(f"Code {code} not available for locale {locale}")
+    class_imp = str.lower(class_imp)
+    if class_imp not in local["ImportanecCoef"].keys():
+        raise ValueError(f"Class {class_imp} not available for locale {locale}")
+    importance_coef = local["ImportanecCoef"][class_imp]
+    if zone not in local["a_gR"].keys():
+        raise ValueError(f"Zone {zone} not available for locale {locale}")
+    a_gR = local["a_gR"][zone]
+    a_g = a_gR * importance_coef
+    soil = str.upper(soil)
+    TB = local["Spectrum"][code][soil]["T_B"]
+    TC = local["Spectrum"][code][soil]["T_C"]
+    TD = local["Spectrum"][code][soil]["T_D"]
+    Smax = local["Spectrum"][code][soil]["S_max"]
+    Smin = local["Spectrum"][code][soil]["S_min"]
+    ag1 = local["Spectrum"][code][soil]["a_g1"]
+    ag2 = local["Spectrum"][code][soil]["a_g2"]
+    if a_g <= ag1:
+        S = Smax
+    elif a_g >= ag2:
+        S = Smin
+    else:
+        S = Smax - (Smax - Smin) * (a_g - ag1) / (ag2 - ag1)
+    return S, a_g, TB, TC, TD
 
 
 def get_spectrum_parameters(code: str, coef_imp: str, soil: str, zone: str) -> list:
@@ -84,7 +135,7 @@ def get_spectrum_parameters(code: str, coef_imp: str, soil: str, zone: str) -> l
 
 
 def get_spectrum(T: float, a_g: float, S: float, q: float, TB: float, TC: float, TD: float, beta: float=0.2) -> float:
-    """Calculates the spectrum value for a given period
+    """Calculates the spectrum value for a given period, T
 
     Args:
         T (float): period (s)
