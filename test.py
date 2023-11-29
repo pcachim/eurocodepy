@@ -1,9 +1,12 @@
-import eurocodepy as ec
 import pandas as pd
 import numpy as np
 import timeit
 
-from eurocodepy.db import SteelProfiles
+from src import eurocodepy as ec
+SteelProfiles = ec.SteelProfiles
+db = ec.db
+# import eurocodepy as ec
+# from eurocodepy.db import SteelProfiles
 
 
 def test_database():
@@ -96,8 +99,15 @@ def test_rcbeam():
 
 
 def test_wind():
+    print("Testing wind")
     c0 = ec.ec1.wind.c_0(10.0, 0.0, 10.0, 10.0, 1000.0)
     print(f"c_0 = {c0}")
+    
+
+def test_seismic():
+    print("Testing seismic")
+    params = ec.ec8.spectrum.get_spec_params("PT", "PT-1", "ii", "A", "1.3")
+    print(f"params = {params}")
 
 if __name__ == "__main__":
     print ("Testing 'eurocodepy'\n")
@@ -116,6 +126,7 @@ if __name__ == "__main__":
     
     # test_rcbeam()
     test_wind()
+    test_seismic()
 
     print("\nTotal execution time is :", timeit.default_timer() - starttime)
     print("\n")

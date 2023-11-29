@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import db
+from .. import db
 
 
 def get_spec_params(locale:str, code: str, class_imp: str, soil: str, zone: str) -> list:
@@ -27,17 +27,25 @@ def get_spec_params(locale:str, code: str, class_imp: str, soil: str, zone: str)
         list: soil amplification factor, acceleration, T_B, T_C, T_D
     """
     local = db.SeismicLoads["Locale"][locale]
+
     if code not in local["Types"]:
         raise ValueError(f"Code {code} not available for locale {locale}")
+
     class_imp = str.lower(class_imp)
-    if class_imp not in local["ImportanecCoef"].keys():
+    if class_imp not in local["ImportanceClass"].keys():
         raise ValueError(f"Class {class_imp} not available for locale {locale}")
-    importance_coef = local["ImportanecCoef"][class_imp]
-    if zone not in local["a_gR"].keys():
+
+    if zone not in local["a_gR"][code].keys():
         raise ValueError(f"Zone {zone} not available for locale {locale}")
-    a_gR = local["a_gR"][zone]
-    a_g = a_gR * importance_coef
+    
     soil = str.upper(soil)
+    if soil not in local["SoilType"].keys():
+        raise ValueError(f"Soil {soil} not available for code {code}")
+
+    importance_coef = local["ImportanceCoef"][code][class_imp]
+    a_gR = local["a_gR"][code][zone]
+    a_g = a_gR * importance_coef
+
     TB = local["Spectrum"][code][soil]["T_B"]
     TC = local["Spectrum"][code][soil]["T_C"]
     TD = local["Spectrum"][code][soil]["T_D"]
