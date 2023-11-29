@@ -142,7 +142,7 @@ def get_spectrum_parameters(code: str, coef_imp: str, soil: str, zone: str) -> l
     return S, a_g, TB, TC, TD
 
 
-def get_spectrum(T: float, a_g: float, S: float, q: float, TB: float, TC: float, TD: float, beta: float=0.2) -> float:
+def calc_spectrum(T: float, a_g: float, S: float, q: float, TB: float, TC: float, TD: float, beta: float=0.2) -> float:
     """Calculates the spectrum value for a given period, T
 
     Args:
@@ -172,12 +172,13 @@ def get_spectrum(T: float, a_g: float, S: float, q: float, TB: float, TC: float,
     return spec
 
 
-def spectrum_ec8(code: str, coef_imp: str, soil: str, zone:str, behaviour: float) -> pd.DataFrame:
+def get_spectrum_ec8(locale: str, code: str, imp_class: str, soil: str, zone:str, behaviour: float) -> pd.DataFrame:
     """Generate the spectrum DataFrame for the given parameters
 
     Args:
+        locale (str): country code (EU, PT)
         code (str): the code of the spectrum (CEN-1, CEN-2, PT-1, PT-2, PT-A)
-        coef_imp (str): importance coefficient (I, II, III, IV)
+        imp_class (str): importance class (I, II, III, IV)
         soil (str): type of soil (A, B, C, D, E)
         zone (str): seismic zone 
         behaviour (float): behaviour factor
@@ -185,16 +186,16 @@ def spectrum_ec8(code: str, coef_imp: str, soil: str, zone:str, behaviour: float
     Returns:
         pd.DataFrame: the spectrum DataFrame
     """
-    txt = code + '_' + coef_imp + '_' + soil + '_' + zone + '_' + str(behaviour)
+    txt = code + '_' + imp_class + '_' + soil + '_' + zone + '_' + str(behaviour)
 
-    S, a_g, TB, TC, TD = get_spectrum_parameters(code, coef_imp, soil, zone)
+    S, a_g, TB, TC, TD = get_spec_params(locale, code, imp_class, soil, zone)
 
     periods = np.linspace(0.0, TB, 10, endpoint=False)
     periods = np.append(periods, np.linspace(TB, TC, 10, endpoint=False))
     periods = np.append(periods, np.linspace(TC, TD, 10, endpoint=False))
     periods = np.append(periods, np.linspace(TD, 10, 30))
 
-    value = [get_spectrum(T, a_g, S, behaviour, TB, TC, TD, 0.2) for T in periods]
+    value = [calc_spectrum(T, a_g, S, behaviour, TB, TC, TD, 0.2) for T in periods]
     data = {'period': periods,
             'value': value}
     
@@ -207,7 +208,7 @@ def spectrum_ec8(code: str, coef_imp: str, soil: str, zone:str, behaviour: float
     return spec
 
 
-def spectrum_user(a_g: float, S: float, q: float, TB: float, TC: float, TD: float, beta: float=0.2) -> pd.DataFrame:
+def get_spectrum_user(a_g: float, S: float, q: float, TB: float, TC: float, TD: float, beta: float=0.2) -> pd.DataFrame:
     """generate the spectrum DataFrame for the given parameters
 
     Args:
@@ -229,7 +230,7 @@ def spectrum_user(a_g: float, S: float, q: float, TB: float, TC: float, TD: floa
     periods = np.append(periods, np.linspace(TC, TD, 10, endpoint=False))
     periods = np.append(periods, np.linspace(TD, 10, 30))
 
-    value = [get_spectrum(T, a_g, S, q, TB, TC, TD, beta) for T in periods]
+    value = [calc_spectrum(T, a_g, S, q, TB, TC, TD, beta) for T in periods]
     data = {'period': periods,
             'value': value}
 
