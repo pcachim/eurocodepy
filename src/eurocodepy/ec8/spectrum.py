@@ -99,23 +99,23 @@ def get_spectrum_parameters(code: str, coef_imp: str, soil: str, zone: str) -> l
     code = str.upper(code)
     if code == 'CEN-1':
         data = {'S_max': [1.0 , 1.2, 1.15, 1.35, 1.4],
-                'T_B': [0.15, 0.15, 0.2, 0.3, 0.15],
+                'T_B': [0.15, 0.15, 0.2, 0.2, 0.15],
                 'T_C': [0.4, 0.5, 0.6, 0.8, 0.5],
                 'T_D': [2.0, 2.0, 2.0, 2.0, 2.0]
                 }
     elif code == 'CEN-2':
-        data = {'S_max': [1.0 , 1.35, 1.5, 1.88, 1.6],
+        data = {'S_max': [1.0 , 1.35, 1.5, 1.8, 1.6],
                 'T_B': [0.05, 0.05, 0.1, 0.1, 0.05],
                 'T_C': [0.25, 0.25, 0.25, 0.3, 0.25],
                 'T_D': [1.2, 1.2, 1.2, 1.2, 1.2]
                 }
-    elif code == 'PT-1':
+    elif code == 'PT-2'or code == 'PT-A':
         data = {'S_max': [1.0 , 1.35, 1.60, 2.0, 1.8],
                 'T_B': [0.1, 0.1, 0.1, 0.1, 0.1],
                 'T_C': [0.25, 0.25, 0.25, 0.3, 0.25],
                 'T_D': [2.0, 2.0, 2.0, 2.0, 2.0]
                 }
-    elif code == 'PT-2' or code == 'PT-A':
+    elif code == 'PT-1' :
         data = {'S_max': [1.0 , 1.35, 1.60, 2.0, 1.8],
                 'T_B': [0.1, 0.1, 0.1, 0.1, 0.1],
                 'T_C': [0.6, 0.6, 0.6, 0.8, 0.6],
@@ -243,7 +243,7 @@ def get_spectrum_user(a_g: float, S: float, q: float, TB: float, TC: float, TD: 
     return spec
 
 
-def write_spectrum_ec8(spectrum: pd.DataFrame, separator: str):
+def write_spectrum_ec8(spectrum: pd.DataFrame, separator: str = ','):
     """Generate a text file with the spectrum data
 
     Args:
