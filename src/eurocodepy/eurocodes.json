@@ -2011,10 +2011,31 @@
             },
             "Seismic": {
                 "accel_units": "m/s2",
-                "SoilType": ["A", "B", "C", "D", "E"],
-                "ImportanceClass": ["i", "ii", "iii", "iv"],
                 "Locale":{
                     "EU": {
+                        "SoilType": {
+                            "A": {
+                                "desc": "Rock or other rock-like geological formation, including at most 5 m of weaker material at the surface.", 
+                                "v_s30": ">800", "N_SPT": "-", "C_U": "-"},
+                            "B": {
+                                "desc": "Deposits of very dense sand, gravel, or very stiff clay, at least several tens of metres in thickness, characterised by a gradual increase of mechanical properties with depth.", 
+                                "v_s30": "360-800", "N_SPT": ">50", "C_U": ">250"},
+                            "C": {
+                                "desc": "Deep deposits of dense or medium- dense sand, gravel or stiff clay with thickness from several tens to many hundreds of metres.", 
+                                "v_s30": "180-360", "N_SPT": "15-50", "C_U": "70-250"},
+                            "D": {
+                                "desc": "Deposits of loose-to-medium cohesionless soil (with or without some soft cohesive layers), or of predominantly soft-to-firm cohesive soil.", 
+                                "v_s30": "<180", "N_SPT": "<15", "C_U": "<70"},
+                            "E": {
+                                "desc": "A soil profile consisting of a surface alluvium layer with vs values of type C or D and thickness varying between about 5 m and 20 m, underlain by stiffer material with vs > 800 m/s.", 
+                                "v_s30": "-", "N_SPT": "-", "C_U": "-"}
+                        },
+                        "ImportanceClass": {
+                            "i": {"desc": "Buildings of minor importance for public safety, e.g. agricultural buildings, etc."},
+                            "ii": {"desc": "Ordinary buildings, not belonging in the other categories."},
+                            "iii": {"desc": "Buildings whose seismic resistance is of importance in view of the consequences associated with a collapse, e.g. schools, assembly halls, cultural institutions etc."},
+                            "iv": {"desc": "Buildings whose integrity during earthquakes is of vital importance for civil protection, e.g. hospitals, fire stations, power plants, etc."}
+                        },
                         "Types": ["CEN-1", "CEN-2"],
                         "Spectrum": {
                             "CEN-1": {
@@ -2042,6 +2063,29 @@
                         }
                     },
                     "PT": {
+                        "SoilType": {
+                            "A": {
+                                "desc": "Rocha ou outra formação geológica de tipo rochoso, que inclua, no máximo, 5 m de material mais fraco à superfície.", 
+                                "v_s30": ">800", "N_SPT": "-", "C_U": "-"},
+                            "B": {
+                                "desc": "Depósitos de areia muito compacta, de seixo (cascalho) ou de argila muito rija, com uma espessura de, pelo menos, várias dezenas de metros, caracterizados por um aumento gradual das propriedades mecânicas com a profundidade.", 
+                                "v_s30": "360-800", "N_SPT": ">50", "C_U": ">250"},
+                            "C": {
+                                "desc": "Depósitos profundos de areia compacta ou medianamente compacta, de seixo (cascalho) ou de argila rija com uma espessura entre várias dezenas e muitas centenas de metros.", 
+                                "v_s30": "180-360", "N_SPT": "15-50", "C_U": "70-250"},
+                            "D": {
+                                "desc": "Depósitos de solos não coesivos de compacidade baixa a média (com ou sem alguns estratos de solos coesivos moles), ou de solos predominantemente coesivos de consistência mole a dura.", 
+                                "v_s30": "<180", "N_SPT": "<15", "C_U": "<70"},
+                            "E": {
+                                "desc": "Perfil de solo com um estrato aluvionar superficial com valores de vs do tipo C ou D e uma espessura entre cerca de 5 m e 20 m, situado sobre um estrato mais rígido com vs > 800 m/s.", 
+                                "v_s30": "-", "N_SPT": "-", "C_U": "-"}
+                        },
+                        "ImportanceClass": {
+                            "i": {"desc": "Edifícios de importância menor para a segurança pública, como por exemplo edifícios agrícolas, etc."},
+                            "ii": {"desc": "Edifícios correntes, não pertencentes às outras categorias."},
+                            "iii": {"desc": "Edifícios cuja resistência sísmica é importante tendo em vista as consequências associadas ao colapso, como por exemplo escolas, salas de reunião, instituições culturais, etc."},
+                            "iv": {"desc": "Edifícios cuja integridade em caso de sismo é de importância vital para a protecção civil, como por exemplo hospitais, quartéis de bombeiros, centrais eléctricas, etc."}
+                        },
                         "Types": ["PT-1", "PT-2", "PT-A"],
                         "Spectrum": {
                             "PT-1": {
