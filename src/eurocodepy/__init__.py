@@ -48,6 +48,11 @@ from .db import SteelParams
 
 from .db import SteelProfiles
 
+from .db import Loads
+from .db import WindLoads
+from .db import DeadLoads
+from .db import SeismicLoads
+
 from .utils import stress
 
 RECTANGULAR = 0
