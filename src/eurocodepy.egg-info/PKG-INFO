@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: eurocodepy
-Version: 0.2.0
+Version: 0.2.1
 Summary: A package for eurocode calculations
 Author-email: Paulo Cachim <pcachim@ua.pt>
 Project-URL: Homepage, https://github.com/pcachim/eurocodepy
@@ -12,7 +12,7 @@ Requires-Python: >=3.9
 Description-Content-Type: text/markdown
 License-File: LICENSE.md
 
-# eurocodepy v0.1.31
+# eurocodepy v0.2.1
 
 EurocodePy is a Python package for calculating structures according to Eurocodes. It provides a collection of functions that enable engineers to design and analyze structures based on the Eurocode standards. In addition, it includes a database of structural materials and steel profiles, making it easy to design and analyze structures according to Eurocode standards.
 
