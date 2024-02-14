@@ -6,18 +6,20 @@ This module allows the user to make mathematical calculations.
 
 The module contains the following functions:
 
-- `db`: Returns the database of the Eurocodes.
-- `ec1`: Returns the difference of two numbers.
-- `ec2` - Returns the product of two numbers.
-- `ec5` - Returns the quotient of two numbers.
-- `ec8` - Returns the quotient of two numbers.
+`db`: Returns the database of the Eurocodes.
+`ec1`: Returns functions for ec1 calculations.
+`ec2`: Returns functions for ec2 calculations.
+`ec5`: Returns functions for ec5 calculations.
+`ec7`: Returns functions for ec7 calculations.
+`ec8`: Returns functions for ec8 calculations.
 """
 
-# print ("This is eurocodepy v0.1.20")
+# print ("This is eurocodepy v0.2.2")
 
 from . import ec1
 from . import ec2
 from . import ec5
+from . import ec7
 from . import ec8
 from . import utils
 
@@ -61,5 +63,3 @@ TSECTION = 2
 LSECTION = 3
 INVTSECTION = 4
 POLYGONAL = 5
-
-
