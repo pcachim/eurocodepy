@@ -28,6 +28,9 @@ src/eurocodepy/ec5/__init__.py
 src/eurocodepy/ec5/sls/__init__.py
 src/eurocodepy/ec5/sls/deformation.py
 src/eurocodepy/ec5/sls/vibration.py
+src/eurocodepy/ec7/__init__.py
+src/eurocodepy/ec7/bearing_capacity.py
+src/eurocodepy/ec7/earth_pressures.py
 src/eurocodepy/ec8/__init__.py
 src/eurocodepy/ec8/spectrum.py
 src/eurocodepy/utils/__init__.py

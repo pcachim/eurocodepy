@@ -1,8 +1,16 @@
 import numpy as np
 
+soil_gamma_rd = {
+    "compact sand": 1.0,
+    "dry loose sand": 1.15,
+    "saturated loose sand": 1.5,
+    "non sensitive clay": 1.0,
+    "sensitive clay": 1.15
+}
 
-def bearing_resistance(phi, gamma, q, Bx, By, Hx, Hy, V, c=0, drained=True):
-    """calculates the bearing capacity of a shallow foundation according with Eurocode 7 (EN 1997-1:2004)
+
+def bearing_resistance(phi, gamma, q, Bx, By, Hx, Hy, N, c=0, drained=True):
+    """Calculates the bearing capacity of a shallow foundation according with Eurocode 7 (EN 1997-1:2004)
 
     Args:
         phi (float or numpy.array): effective soil friction angle
@@ -11,7 +19,7 @@ def bearing_resistance(phi, gamma, q, Bx, By, Hx, Hy, V, c=0, drained=True):
         By (float or numpy.array): effective length of the foundation
         Hx (float or numpy.array): horizontal load in X direction on the foundation
         Hy (float or numpy.array): horizontal load in Y direction on the foundation
-        V (float or numpy.array): vertical load on the foundation
+        N (float or numpy.array): vertical load on the foundation
         c (int or numpy.array, optional): effective cohesion. Defaults to 0.
         drained (bool, optional): drained or undrained conditions. if undrained c = cu. Defaults to True.
 
@@ -42,7 +50,7 @@ def bearing_resistance(phi, gamma, q, Bx, By, Hx, Hy, V, c=0, drained=True):
         sg = 1.0 - 0.3*(B/L)
         sc = (sq*Nq-1.0)/(Nq-1.0)
         
-        aux = (1.0 - H / (V + area*c/tanphi))
+        aux = (1.0 - H / (N + area*c/tanphi))
         iq = aux**m
         ig = aux**(m+1)
         ic = iq-(1.0-iq)/(Nc*tanphi)
@@ -59,6 +67,96 @@ def bearing_resistance(phi, gamma, q, Bx, By, Hx, Hy, V, c=0, drained=True):
     return bearing
 
 
+def seismic_bearing_resistance(phi, gamma, ag, avg_ahg, S, B, H, N, M, c=0.0, gamma_c=1.0, gamma_rd=1.5, soil_type="incoerente") -> np.array:
+    """Calculates the bearing capacity of a shallow foundation under seismic conditioonsd according with Eurocode 7 (EN 1997-5:2004)
+
+    Args:
+        phi (float or numpy.array): effective soil friction angle
+        gamma (float or numpy.array): unit weight of the soil
+        ag (float or numpy.array): soil acceleration
+        avg_ahg (float or numpy.array): ratio between the vertical and horizontal accelerations
+        B (float or numpy.array): width of the foundation
+        H (float or numpy.array): horizontal load in Y direction on the foundation
+        N (float or numpy.array): vertical load on the foundation
+        M (float or numpy.array): moment on the foundation
+        c (float or numpy.array, optional): effective cohesion. Defaults to 0.
+        gamma_c (float or numpy.array, optional): safety coefficient for coehesion. Defaults to 1.0
+        gamma_rd (float or numpy.array, optional): safety coefficient for bearing capacity. Defaults to 1.5
+        soil_type (str, optional): type of soil.
+
+    Returns:
+        np.array: values of the bearing capacity ratio
+    """
+
+    g = 9.80665
+    tanphi = np.tan(phi)
+    Nmax = np.array([0.0, 0.0])
+    F_ = 0.0
+
+    if soil_type == "coerente":
+        a = 0.7
+        b = 1.29
+        c = 2.14
+        d = 1.81
+        e = 0.21
+        f = 0.44
+        m = 0.21
+        k = 1.22
+        k_ = 1.0
+        ct = 2.0
+        cm = 2.0
+        c_m = 1.0
+        beta = 2.57
+        gamma = 1.87
+
+        F_ = gamma * ag * S * B / c
+        Nq = np.exp(np.pi*tanphi)*np.tan(np.pi/4 + phi/2)**2
+        Ng = 2.0*(Nq-1.0)*tanphi
+        Nmax = np.array([(np.pi+2.0) * c * B / gamma_c])
+
+    elif soil_type == "incoerente":
+        a = 0.92
+        b = 1.25
+        c = 0.92
+        d = 1.25
+        e = 0.41
+        f = 0.32
+        m = 0.96
+        k = 1.0
+        k_ = 0.39
+        ct = 1.14
+        cm = 1.01
+        c_m = 1.01
+        beta = 2.9
+        gamma = 2.8
+
+        F_ = ag / (g * tanphi)
+        Nq = np.exp(np.pi*tanphi)*np.tan(np.pi/4 + phi/2)**2
+        Ng = 2.0*(Nq-1.0)*tanphi
+        Nmax = np.array([   0.5 * gamma * g * (1.0 + avg_ahg * ag / g) * B**2 * Ng,
+                            0.5 * gamma * g * (1.0 - avg_ahg * ag / g) * B**2 * Ng])
+
+    ratio = np.array([])
+    for n in Nmax:
+        N_ = gamma_rd * N / n
+        V_ = gamma_rd * H / n
+        M_ = gamma_rd * M / n
+
+        if (N_ < 0.0 or 
+            ((soil_type == "incoerente" and N_ >= (1.0 - m*F_)**k_) or (soil_type == "coerente" and N_ >= 1.0))):
+            ratio.append(-1)
+            continue
+
+        val1 = (1.0 - e*F_)**ct * (beta*V_)**ct
+        val2 = N_**a * (( 1.0-m*F_**k)**k_ - N_)**b
+        val3 = (1.0-f*F_)**c_m*(gamma*M_)**cm
+        val4 = N_**a * (( 1.0-m*F_**k)**k_ - N_)**d
+
+        ratio.append(val1/val2 + val3/val4 -  1.0)
+        
+    return np.where(ratio < 0.0, True, False)
+
+
 if __name__ == "__main__":
     fhi = np.radians(np.array([32.5, 27, 32.5]))
     B = np.array([2.05, 2.63, 3.06])
@@ -67,7 +165,7 @@ if __name__ == "__main__":
     q = d*gamma
     H = np.array([274.6, 274.7, 202.0])
     V = np.array([716.4, 557.0, 530.5])
-    bearing = bearing_capacity(fhi, gamma, q, B, B, H, H, V, 0, True)
+    bearing = bearing_resistance(fhi, gamma, q, B, B, H, H, V, 0, True)
     print(f"Bearing capacity: {np.round(bearing, 1)} kN/m²")
     print(f"Bearing capacity: {np.round(bearing*B, 1)} kN")
 
