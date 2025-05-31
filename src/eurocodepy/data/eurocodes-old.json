@@ -125,9 +125,9 @@
                     }
                 },
                 "Parameters": {
-                    "gamma-cc": 1.5,
-                    "gamma-ct": 1.5,
-                    "gamma-0": 1.5,
+                    "gamma_cc": 1.5,
+                    "gamma_ct": 1.5,
+                    "gamma_0": 1.5,
                     "weigh": 25.0,
                     "poiss": 0.2,
                     "alpha": 1.0e-5
@@ -305,7 +305,7 @@
                     }
                 },
                 "Parameters": {
-                    "gamma-s": 1.15,
+                    "gamma_s": 1.15,
                     "weigh": 77.0
                 },
                 "Rebars": {
@@ -1473,7 +1473,7 @@
                     }
                 },
                 "Parameters": {
-                    "gamma-p": 1.15,
+                    "gamma_p": 1.15,
                     "weigh": 77.0
                 }
             },
@@ -1509,9 +1509,9 @@
                     }
                 },
                 "Parameters": {
-                    "gamma-M0": 1.0,
-                    "gamma-M1": 1.0,
-                    "gamma-M2": 1.25,
+                    "gamma_M0": 1.0,
+                    "gamma_M1": 1.0,
+                    "gamma_M2": 1.25,
                     "weigh": 77.0,
                     "poiss": 0.3,
                     "alpha": 1.2e-5                }
@@ -1745,9 +1745,9 @@
                     }
                 },
                 "ServiceClasses": [
-                    "Class 1",
-                    "Class 2",
-                    "Class 3"
+                    "SC1",
+                    "SC2",
+                    "SC3"
                 ],
                 "RiskClasses": [
                     "1",
@@ -1783,21 +1783,21 @@
                     },
                     "kmod": {
                         "timber": {
-                            "Class 1": [
+                            "SC1": [
                                 0.6,
                                 0.7,
                                 0.8,
                                 0.9,
                                 1.1
                             ],
-                            "Class 2": [
+                            "SC2": [
                                 0.6,
                                 0.7,
                                 0.8,
                                 0.9,
                                 1.1
                             ],
-                            "Class 3": [
+                            "SC3": [
                                 0.5,
                                 0.55,
                                 0.65,
@@ -1806,21 +1806,21 @@
                             ]
                         },
                         "glulam": {
-                            "Class 1": [
+                            "SC1": [
                                 0.6,
                                 0.7,
                                 0.8,
                                 0.9,
                                 1.1
                             ],
-                            "Class 2": [
+                            "SC2": [
                                 0.6,
                                 0.7,
                                 0.8,
                                 0.9,
                                 1.1
                             ],
-                            "Class 3": [
+                            "SC3": [
                                 0.5,
                                 0.55,
                                 0.65,
@@ -1829,21 +1829,21 @@
                             ]
                         },
                         "lvl": {
-                            "Class 1": [
+                            "SC1": [
                                 0.6,
                                 0.7,
                                 0.8,
                                 0.9,
                                 1.1
                             ],
-                            "Class 2": [
+                            "SC2": [
                                 0.6,
                                 0.7,
                                 0.8,
                                 0.9,
                                 1.1
                             ],
-                            "Class 3": [
+                            "SC3": [
                                 0.5,
                                 0.55,
                                 0.65,
@@ -1851,22 +1851,22 @@
                                 0.9
                             ]
                         },
-                        "plywood-3": {
-                            "Class 1": [
+                        "plywood_3": {
+                            "SC1": [
                                 0.6,
                                 0.7,
                                 0.8,
                                 0.9,
                                 1.1
                             ],
-                            "Class 2": [
+                            "SC2": [
                                 0.6,
                                 0.7,
                                 0.8,
                                 0.9,
                                 1.1
                             ],
-                            "Class 3": [
+                            "SC3": [
                                 0.5,
                                 0.55,
                                 0.65,
@@ -1877,24 +1877,24 @@
                     },
                     "kdef": {
                         "timber": {
-                            "Class 1": 0.6,
-                            "Class 2": 0.8,
-                            "Class 3": 2.0
+                            "SC1": 0.6,
+                            "SC2": 0.8,
+                            "SC3": 2.0
                         },
                         "glulam": {
-                            "Class 1": 0.6,
-                            "Class 2": 0.8,
-                            "Class 3": 2.0
+                            "SC1": 0.6,
+                            "SC2": 0.8,
+                            "SC3": 2.0
                         },
                         "lvl": {
-                            "Class 1": 0.6,
-                            "Class 2": 0.8,
-                            "Class 3": 2.0
+                            "SC1": 0.6,
+                            "SC2": 0.8,
+                            "SC3": 2.0
                         },
-                        "plywood-3": {
-                            "Class 1": 0.6,
-                            "Class 2": 0.8,
-                            "Class 3": 2.0
+                        "plywood_3": {
+                            "SC1": 0.6,
+                            "SC2": 0.8,
+                            "SC3": 2.0
                         }
                     }
                 }
@@ -2036,15 +2036,15 @@
                             "iii": {"desc": "Buildings whose seismic resistance is of importance in view of the consequences associated with a collapse, e.g. schools, assembly halls, cultural institutions etc."},
                             "iv": {"desc": "Buildings whose integrity during earthquakes is of vital importance for civil protection, e.g. hospitals, fire stations, power plants, etc."}
                         },
-                        "Types": ["CEN-1", "CEN-2"],
+                        "Types": ["CEN_1", "CEN_2"],
                         "Spectrum": {
-                            "CEN-1": {
+                            "CEN_1": {
                                 "A": {"S_max": 1.0 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.15, "T_C": 0.4, "T_D": 2.0},
                                 "B": {"S_max": 1.2 , "S_min": 1.2, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.15, "T_C": 0.5, "T_D": 2.0},
                                 "C": {"S_max": 1.15 , "S_min": 1.15, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.2, "T_C": 0.6, "T_D": 2.0},
                                 "D": {"S_max": 1.35 , "S_min": 1.35, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.2, "T_C": 0.8, "T_D": 2.0},
                                 "E": {"S_max": 1.4 , "S_min": 1.4, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.15, "T_C": 0.5, "T_D": 2.0}},
-                            "CEN-2": {
+                            "CEN_2": {
                                 "A": {"S_max": 1.0 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.05, "T_C": 0.25, "T_D": 1.2},
                                 "B": {"S_max": 1.35 , "S_min": 1.35, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.05, "T_C": 0.25, "T_D": 1.2},
                                 "C": {"S_max": 1.5 , "S_min": 1.5, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.25, "T_D": 1.2},
@@ -2052,17 +2052,17 @@
                                 "E": {"S_max": 1.6 , "S_min": 1.6, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.05, "T_C": 0.25, "T_D": 1.2}}
                         },
                         "ImportanceCoef": {
-                            "CEN-1": {"i": 0.8, "ii": 1.0, "iii": 1.2, "iv": 1.4},
-                            "CEN-2": {"i": 0.8, "ii": 1.0, "iii": 1.2, "iv": 1.4}
+                            "CEN_1": {"i": 0.8, "ii": 1.0, "iii": 1.2, "iv": 1.4},
+                            "CEN_2": {"i": 0.8, "ii": 1.0, "iii": 1.2, "iv": 1.4}
                         },
                         "a_gR": {
-                            "CEN-1": {".1g": 0.980665, ".2g": 1.96133, ".3g":  2.941995, ".4g": 3.92266, ".5g": 4.903325, 
+                            "CEN_1": {".1g": 0.980665, ".2g": 1.96133, ".3g":  2.941995, ".4g": 3.92266, ".5g": 4.903325, 
                                     ".6g": 5.88399, ".7g": 6.864655, ".8g": 7.84532, ".9g": 8.825985, "1.0g": 9.80665},
-                            "CEN-2": {".1g": 0.980665, ".2g": 1.96133, ".3g":  2.941995, ".4g": 3.92266, ".5g": 4.903325, 
+                            "CEN_2": {".1g": 0.980665, ".2g": 1.96133, ".3g":  2.941995, ".4g": 3.92266, ".5g": 4.903325, 
                                     ".6g": 5.88399, ".7g": 6.864655, ".8g": 7.84532, ".9g": 8.825985, "1.0g": 9.80665}},
                         "avg_ahg": {
-                            "CEN-1": 0.5,
-                            "CEN-2": 0.5
+                            "CEN_1": 0.5,
+                            "CEN_2": 0.5
                         }
                     },
                     "PT": {
@@ -2089,21 +2089,21 @@
                             "iii": {"desc": "Edifícios cuja resistência sísmica é importante tendo em vista as consequências associadas ao colapso, como por exemplo escolas, salas de reunião, instituições culturais, etc."},
                             "iv": {"desc": "Edifícios cuja integridade em caso de sismo é de importância vital para a protecção civil, como por exemplo hospitais, quartéis de bombeiros, centrais eléctricas, etc."}
                         },
-                        "Types": ["PT-1", "PT-2", "PT-A"],
+                        "Types": ["PT1", "PT2", "PTA"],
                         "Spectrum": {
-                            "PT-2": {
+                            "PT2": {
                                     "A": {"S_max": 1.0 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.25, "T_D": 2.0},
                                     "B": {"S_max": 1.35 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.25, "T_D": 2.0},
                                     "C": {"S_max": 1.60 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.25, "T_D": 2.0},
                                     "D": {"S_max": 2.0 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.30, "T_D": 2.0},
                                     "E": {"S_max": 1.8 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.25, "T_D": 2.0}},
-                            "PT-1": {
+                            "PT1": {
                                     "A": {"S_max": 1.0 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.6, "T_D": 2.0},
                                     "B": {"S_max": 1.35 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.6, "T_D": 2.0},
                                     "C": {"S_max": 1.60 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.6, "T_D": 2.0},
                                     "D": {"S_max": 2.0 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.8, "T_D": 2.0},
                                     "E": {"S_max": 1.8 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.6, "T_D": 2.0}},
-                            "PT-A": {
+                            "PTA": {
                                 "A": {"S_max": 1.0 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.25, "T_D": 2.0},
                                 "B": {"S_max": 1.35 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.25, "T_D": 2.0},
                                 "C": {"S_max": 1.60 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.25, "T_D": 2.0},
@@ -2111,19 +2111,19 @@
                                 "E": {"S_max": 1.8 , "S_min": 1.0, "a_g1": 1.0, "a_g2": 4.0, "T_B": 0.1, "T_C": 0.25, "T_D": 2.0}}
                         },
                         "ImportanceCoef": {
-                            "PT-1": {"i": 0.65, "ii": 1.0, "iii": 1.45, "iv": 1.95},
-                            "PT-2": {"i": 0.75, "ii": 1.0, "iii": 1.25, "iv": 1.50},
-                            "PT-A": {"i": 0.85, "ii": 1.0, "iii": 1.15, "iv": 1.35}
+                            "PT1": {"i": 0.65, "ii": 1.0, "iii": 1.45, "iv": 1.95},
+                            "PT2": {"i": 0.75, "ii": 1.0, "iii": 1.25, "iv": 1.50},
+                            "PTA": {"i": 0.85, "ii": 1.0, "iii": 1.15, "iv": 1.35}
                         },
                         "a_gR": {
-                            "PT-1": {"1.1": 2.5, "1.2": 2.0, "1.3": 1.5, "1.4": 1.0, "1.5": 0.6, "1.6": 0.35},
-                            "PT-2": {"2.1": 2.5, "2.2": 2.0, "2.3": 1.7, "2.4": 1.1, "2.5": 0.8},
-                            "PT-A": {"2.1": 2.5, "2.2": 2.0, "2.3": 1.7, "2.4": 1.1, "2.5": 0.8}
+                            "PT1": {"1.1": 2.5, "1.2": 2.0, "1.3": 1.5, "1.4": 1.0, "1.5": 0.6, "1.6": 0.35},
+                            "PT2": {"2.1": 2.5, "2.2": 2.0, "2.3": 1.7, "2.4": 1.1, "2.5": 0.8},
+                            "PTA": {"2.1": 2.5, "2.2": 2.0, "2.3": 1.7, "2.4": 1.1, "2.5": 0.8}
                         },
                         "avg_ahg": {
-                            "PT-1": 0.75,
-                            "PT-2": 0.95,
-                            "PT-A": 0.95
+                            "PT1": 0.75,
+                            "PT2": 0.95,
+                            "PTA": 0.95
                         }
                     }
                 }
@@ -2134,8 +2134,8 @@
                 "locale": {
                     "PT": {
                         "base velocity": {
-                            "Zona A": { "vb0": 27.0, "desc": "A generalidade do território, excepto as regiões pertencentes à zona B"},
-                            "Zona B": { "vb0": 30.0, "desc": "Os arquipélagos dos Açores e da Madeira e as regiões do continente situadas numa faixa costeira com 5 km de largura ou a altitudes superiores a 600 m."}
+                            "ZonaA": { "vb0": 27.0, "desc": "A generalidade do território, excepto as regiões pertencentes à zona B"},
+                            "ZonaB": { "vb0": 30.0, "desc": "Os arquipélagos dos Açores e da Madeira e as regiões do continente situadas numa faixa costeira com 5 km de largura ou a altitudes superiores a 600 m."}
                         },
                         "terrain": {
                             "I": { "z0": 0.005, "zmin": 1.0, "desc": "Zona costeira exposta aos ventos de mar" },
@@ -2148,7 +2148,7 @@
                     },
                     "EU": {
                         "base velocity": {
-                            "ad-hoc": { "vb0": 30.0, "desc": "A general wind velocity in Europe."}
+                            "ad_hoc": { "vb0": 30.0, "desc": "A general wind velocity in Europe."}
                         },
                         "terrain": {
                             "0": { "z0": 0.003, "zmin": 1.0, "desc": "Sea or coastal area exposed to the open sea"  },
