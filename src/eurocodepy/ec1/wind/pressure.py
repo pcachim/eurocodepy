@@ -72,9 +72,8 @@ def s_coef(x: float, z: float, H: float, Lu: float, Ld: float=1000) -> float:
                 s = 0.0
     return s
 
-
-def c_0(z: float, x: float=0, H: float=0, Lu: float=10, Ld: float=1000) -> float:
-    """Calculates the orography factor, taken as 1,0
+def c_o(z: float, x: float=0, H: float=0, Lu: float=10, Ld: float=1000) -> float:
+    """Calculates the orography factor
     Args:
         z (float): vertical distance
         x (float, optional): horizontal distance. Defaults to 0.
@@ -89,7 +88,6 @@ def c_0(z: float, x: float=0, H: float=0, Lu: float=10, Ld: float=1000) -> float
     if phi < 0.05: return 1.0
     s = s_coef(x, z, H, Lu, Ld)
     return 1.0+2.0*s*phi if phi < 0.3 else 1.0+0.6*s
-
 
 def c_r(z: float, z_min: float, z_0: float, z_0II: float) -> float:
     """ Calculate the roughness factor
@@ -107,7 +105,6 @@ def c_r(z: float, z_min: float, z_0: float, z_0II: float) -> float:
     zeff = z if z >= z_min else z_min
     return k_r * log(zeff/z_0)
 
-
 def v_b(vb_0: float, c_season: float=1.0, c_dir: float=1.0) -> float:
     """Calculates the basic wind velocity 
 
@@ -120,7 +117,6 @@ def v_b(vb_0: float, c_season: float=1.0, c_dir: float=1.0) -> float:
         float: basic wind velocity 
     """
     return c_season * c_dir * vb_0
-
 
 def v_m(z: float, vb: float, cr: float, co: float) -> float:
     """ Calculates the mean wind velocity, vm(z), at a height z above the terrain.
@@ -136,7 +132,6 @@ def v_m(z: float, vb: float, cr: float, co: float) -> float:
         float: mean wind velocity, vm(z) 
     """
     return cr * co * vb
-
 
 def I_v(z: float, z_min: float, z_0: float, co: float, k_I:float=1) -> float:
     """Calculates the turbulence intensity, Iv(z), at height z.
@@ -155,7 +150,6 @@ def I_v(z: float, z_min: float, z_0: float, co: float, k_I:float=1) -> float:
     zeff = z if z >= z_min else z_min
     Iv = k_I / co / log(zeff/z_0)
     return Iv
-
 
 def v_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float, k_I:float=1) -> float:
     """Calculates the peak velocity, vp(z), at height z, 
@@ -178,7 +172,6 @@ def v_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float, k_I
     Iv = k_I / co / log(zeff/z_0)
     vp = (1.0 + 7*Iv) * v
     return vp
-
 
 def q_p(z: float, vb: float, z_min: float, z_0: float, cr: float, co: float, rho: float=1.25, k_I:float=1) -> float:
     """Calculates the peak velocity pressure, qp(z), at height z, 

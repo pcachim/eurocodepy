@@ -11,13 +11,13 @@ def get_spec_params(locale:str, code: str, class_imp: str, soil: str, zone: str)
         locale (str): country code (EU, PT)
         code (str): 
                 CEN-1, CEN-2: standard Eurocode spectrums (EU)
-                PT-1, PT-2, PT-A: Portuguese National Annex spectrums (PT)
-                (PT-1 and PT-2, for continent and Madeira, PT-A for Azores)
+                PT1, PT2, PTA: Portuguese National Annex spectrums (PT)
+                (PT1 and PT2, for continent and Madeira, PTA for Azores)
         class_imp (str): importance class  (i, ii, iii, iv)
         soil (str): soil type (A, B, C, D, E)
-        zone (str): (1.1, 1.2, 1.3, 1.4, 1.5, 1.6) for "PT-1"
+        zone (str): (1_1, 1_2, 1_3, 1_4, 1_5, 1_6) for "PT-1"
                     (2.1, 2.2, 2.3, 2.4, 2.5) for "PT-2" and "PT-A"
-                    (.1g, .2g, .3g, .4g, .5g, .6g, .7g, .8g, .9g, 1.0g) for "CEN-1" and "CEN-2"
+                    (.1g, .2g, .3g, .4g, .5g, .6g, .7g, .8g, .9g, 1_0g) for "CEN-1" and "CEN-2"
     Raises:
         ValueError: if locale is not available
         ValueError: if code is not available
@@ -72,16 +72,16 @@ def get_spectrum_parameters(code: str, coef_imp: str, soil: str, zone: str) -> l
                     (PT-1 and PT-2, for continent and Madeira, PT-A for Azores)
         coef_imp (str): importance coefficient (i, ii, iii, iv)
         soil (str): soil type (A, B, C, D, E)
-        zone (str): zone (1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 2.1, 2.2, 2.3, 2.4, 2.5, .1g, .2g, .3g, .4g, .5g, .6g, .7g, .8g, .9g, 1.0g)
+        zone (str): zone (1_1, 1_2, 1_3, 1_4, 1_5, 1_6, 2.1, 2.2, 2.3, 2.4, 2.5, .1g, .2g, .3g, .4g, .5g, .6g, .7g, .8g, .9g, 1_0g)
 
     Returns:
         list: soil amplification factor, acceleration, T_B, T_C, T_D
     """
     # accelarations
-    a_gR = {'1.1': 2.5, '1.2': 2.0, '1.3': 1.5, '1.4': 1.0, '1.5': 0.6, '1.6': 0.35, 
+    a_gR = {'1_1': 2.5, '1_2': 2.0, '1_3': 1_5, '1_4': 1_0, '1_5': 0.6, '1_6': 0.35, 
             '2.1': 2.5, '2.2': 2.0, '2.3': 1.7, '2.4': 1.1, '2.5': 0.8,
             '.1g': 0.980665, '.2g': 1.96133, '.3g':  2.941995, '.4g': 3.92266, '.5g': 4.903325, 
-            '.6g': 5.88399, '.7g': 6.864655, '.8g': 7.84532, '.9g': 8.825985, '1.0g': 9.80665}
+            '.6g': 5.88399, '.7g': 6.864655, '.8g': 7.84532, '.9g': 8.825985, '1_0g': 9.80665}
     
     index1 = ['i', 'ii', 'iii', 'iv']
     gama_f = {'CEN-1': [0.8, 1.0, 1.2, 1.4], 
@@ -186,7 +186,7 @@ def get_spectrum_ec8(locale: str, code: str, imp_class: str, soil: str, zone:str
     Returns:
         pd.DataFrame: the spectrum DataFrame
     """
-    txt = code + '_' + imp_class + '_' + soil + '_' + zone + '_' + str(behaviour)
+    txt = code + '_' + imp_class + '_' + soil + '_' + str.replace(zone,'_','.') + '_' + str(behaviour)
 
     S, a_g, TB, TC, TD = get_spec_params(locale, code, imp_class, soil, zone)
 
@@ -243,7 +243,7 @@ def get_spectrum_user(a_g: float, S: float, q: float, TB: float, TC: float, TD: 
     return spec
 
 
-def write_spectrum_ec8(spectrum: pd.DataFrame, separator: str = ','):
+def write_spectrum_ec8(spectrum: pd.DataFrame, filename=None, separator: str = ','):
     """Generate a text file with the spectrum data
 
     Args:
@@ -251,10 +251,13 @@ def write_spectrum_ec8(spectrum: pd.DataFrame, separator: str = ','):
         separator (str): a string with the separator to be used in the text file
     """
     # separator was defined as ' ' (space) for SAP2000 compatibility. any other can be used
-    spectrum.to_csv('spectrum_' + spectrum.attrs['name'] + '.txt', index=False, sep=separator)
+    if filename is None:
+        filename = 'spectrum_' + spectrum.attrs['name'] + '.csv'
+
+    spectrum.to_csv(filename, index=False, sep=separator)
 
 
-def draw_spectrum_ec8(spectrum: pd.DataFrame):
+def draw_spectrum_ec8(spectrum: pd.DataFrame, save: bool = False, filename: str = None, show: bool = True):
     """Draw the spectrum using matplotlib
 
     Args:
@@ -262,7 +265,14 @@ def draw_spectrum_ec8(spectrum: pd.DataFrame):
     """
     # plot the spectrum
     plt.plot(spectrum['period'].to_numpy(), spectrum['value'].to_numpy())
-    s = spectrum.attrs['name'] + ':    S=' + str(spectrum.attrs['S']) + ' a_g=' + str(spectrum.attrs['a_g']) + ' q=' + str(spectrum.attrs['q'])
+    s = spectrum.attrs['name'] + ':    S=' + str(round(spectrum.attrs['S'],3)) + ' a_g=' + str(round(spectrum.attrs['a_g'], 3)) + ' q=' + str(spectrum.attrs['q'])
     plt.title(s)
     plt.xlabel('Period (s)')
     plt.ylabel('Spectrum value (m/s2)')
+    if save:
+        if filename is None:
+            filename = s + '.png'
+        plt.savefig(filename, dpi=300, bbox_inches='tight')
+    if show:
+        plt.show()
+
