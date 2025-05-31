@@ -1,0 +1,7 @@
+version = 1
+requires-python = ">=3.9"
+
+[[package]]
+name = "eurocodepy"
+version = "2024.5.14"
+source = { editable = "." }

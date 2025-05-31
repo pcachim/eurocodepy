@@ -9,6 +9,7 @@ The module contains the following functions:
 `db`: Returns the database of the Eurocodes.
 `ec1`: Returns functions for ec1 calculations.
 `ec2`: Returns functions for ec2 calculations.
+`ec3`: Returns functions for ec3 calculations.
 `ec5`: Returns functions for ec5 calculations.
 `ec7`: Returns functions for ec7 calculations.
 `ec8`: Returns functions for ec8 calculations.
