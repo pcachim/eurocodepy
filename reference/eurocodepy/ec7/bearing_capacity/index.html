@@ -1453,6 +1453,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../retaining_wall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    retaining_wall
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1818,6 +1841,15 @@
 <a id="eurocodepy.ec7.bearing_capacity"></a>
     <div class="doc doc-contents first">
 
+        <p>Soil Bearing Resistance Module</p>
+<p>This module provides functions to calculate the ultimate bearing capacity and factor of safety
+for shallow foundations based on classical geotechnical engineering methods such as Terzaghi's theory.</p>
+<p>Currently supported:</p>
+<ul>
+<li>Ultimate bearing capacity using EC7 method</li>
+<li>Ultimate bearing capacity for seismic loads using EC7 method</li>
+</ul>
+
 
 
 
@@ -2033,19 +2065,7 @@
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec7/bearing_capacity.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
 <span class="normal">25</span>
 <span class="normal">26</span>
 <span class="normal">27</span>
@@ -2088,7 +2108,19 @@
 <span class="normal">64</span>
 <span class="normal">65</span>
 <span class="normal">66</span>
-<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">bearing_resistance</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">Bx</span><span class="p">,</span> <span class="n">By</span><span class="p">,</span> <span class="n">Hx</span><span class="p">,</span> <span class="n">Hy</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">drained</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">bearing_resistance</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">Bx</span><span class="p">,</span> <span class="n">By</span><span class="p">,</span> <span class="n">Hx</span><span class="p">,</span> <span class="n">Hy</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">drained</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the bearing capacity of a shallow foundation according with Eurocode 7 (EN 1997-1:2004)</span>
 
 <span class="sd">    Args:</span>
@@ -2180,7 +2212,7 @@
                 <code>phi</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2196,7 +2228,7 @@
                 <code>gamma</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2212,7 +2244,7 @@
                 <code>ag</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2228,7 +2260,7 @@
                 <code>avg_ahg</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2244,7 +2276,7 @@
                 <code>B</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2260,7 +2292,7 @@
                 <code>H</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2276,7 +2308,7 @@
                 <code>N</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2292,7 +2324,7 @@
                 <code>M</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2308,7 +2340,7 @@
                 <code>c</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2324,7 +2356,7 @@
                 <code>gamma_c</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2340,7 +2372,7 @@
                 <code>gamma_rd</code>
             </td>
             <td>
-                  <code><span title="float">float</span> or <span title="numpy.array">array</span></code>
+                  <code><span title="float">float</span> or <span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2382,11 +2414,11 @@
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="numpy.array">array</span></code>
+                  <code><span title="numpy.ndarray">ndarray</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>np.array: values of the bearing capacity ratio</p>
+                <p>np.ndarray: values of the bearing capacity ratio</p>
               </div>
             </td>
           </tr>
@@ -2396,19 +2428,7 @@
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec7/bearing_capacity.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 70</span>
-<span class="normal"> 71</span>
-<span class="normal"> 72</span>
-<span class="normal"> 73</span>
-<span class="normal"> 74</span>
-<span class="normal"> 75</span>
-<span class="normal"> 76</span>
-<span class="normal"> 77</span>
-<span class="normal"> 78</span>
-<span class="normal"> 79</span>
-<span class="normal"> 80</span>
-<span class="normal"> 81</span>
-<span class="normal"> 82</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 82</span>
 <span class="normal"> 83</span>
 <span class="normal"> 84</span>
 <span class="normal"> 85</span>
@@ -2483,25 +2503,37 @@
 <span class="normal">154</span>
 <span class="normal">155</span>
 <span class="normal">156</span>
-<span class="normal">157</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">seismic_bearing_resistance</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">ag</span><span class="p">,</span> <span class="n">avg_ahg</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">gamma_c</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gamma_rd</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">soil_type</span><span class="o">=</span><span class="s2">&quot;incoerente&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">seismic_bearing_resistance</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">ag</span><span class="p">,</span> <span class="n">avg_ahg</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">gamma_c</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gamma_rd</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">soil_type</span><span class="o">=</span><span class="s2">&quot;incoerente&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the bearing capacity of a shallow foundation under seismic conditioonsd according with Eurocode 7 (EN 1997-5:2004)</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        phi (float or numpy.array): effective soil friction angle</span>
-<span class="sd">        gamma (float or numpy.array): unit weight of the soil</span>
-<span class="sd">        ag (float or numpy.array): soil acceleration</span>
-<span class="sd">        avg_ahg (float or numpy.array): ratio between the vertical and horizontal accelerations</span>
-<span class="sd">        B (float or numpy.array): width of the foundation</span>
-<span class="sd">        H (float or numpy.array): horizontal load in Y direction on the foundation</span>
-<span class="sd">        N (float or numpy.array): vertical load on the foundation</span>
-<span class="sd">        M (float or numpy.array): moment on the foundation</span>
-<span class="sd">        c (float or numpy.array, optional): effective cohesion. Defaults to 0.</span>
-<span class="sd">        gamma_c (float or numpy.array, optional): safety coefficient for coehesion. Defaults to 1.0</span>
-<span class="sd">        gamma_rd (float or numpy.array, optional): safety coefficient for bearing capacity. Defaults to 1.5</span>
+<span class="sd">        phi (float or numpy.ndarray): effective soil friction angle</span>
+<span class="sd">        gamma (float or numpy.ndarray): unit weight of the soil</span>
+<span class="sd">        ag (float or numpy.ndarray): soil acceleration</span>
+<span class="sd">        avg_ahg (float or numpy.ndarray): ratio between the vertical and horizontal accelerations</span>
+<span class="sd">        B (float or numpy.ndarray): width of the foundation</span>
+<span class="sd">        H (float or numpy.ndarray): horizontal load in Y direction on the foundation</span>
+<span class="sd">        N (float or numpy.ndarray): vertical load on the foundation</span>
+<span class="sd">        M (float or numpy.ndarray): moment on the foundation</span>
+<span class="sd">        c (float or numpy.ndarray, optional): effective cohesion. Defaults to 0.</span>
+<span class="sd">        gamma_c (float or numpy.ndarray, optional): safety coefficient for coehesion. Defaults to 1.0</span>
+<span class="sd">        gamma_rd (float or numpy.ndarray, optional): safety coefficient for bearing capacity. Defaults to 1.5</span>
 <span class="sd">        soil_type (str, optional): type of soil.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        np.array: values of the bearing capacity ratio</span>
+<span class="sd">        np.ndarray: values of the bearing capacity ratio</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">g</span> <span class="o">=</span> <span class="mf">9.80665</span>
