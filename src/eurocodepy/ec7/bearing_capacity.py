@@ -1,3 +1,15 @@
+"""
+Soil Bearing Resistance Module
+
+This module provides functions to calculate the ultimate bearing capacity and factor of safety
+for shallow foundations based on classical geotechnical engineering methods such as Terzaghi's theory.
+
+Currently supported:
+
+- Ultimate bearing capacity using EC7 method
+- Ultimate bearing capacity for seismic loads using EC7 method
+"""
+
 import numpy as np
 
 soil_gamma_rd = {
@@ -67,25 +79,25 @@ def bearing_resistance(phi, gamma, q, Bx, By, Hx, Hy, N, c=0, drained=True):
     return bearing
 
 
-def seismic_bearing_resistance(phi, gamma, ag, avg_ahg, S, B, H, N, M, c=0.0, gamma_c=1.0, gamma_rd=1.5, soil_type="incoerente") -> np.array:
+def seismic_bearing_resistance(phi, gamma, ag, avg_ahg, S, B, H, N, M, c=0.0, gamma_c=1.0, gamma_rd=1.5, soil_type="incoerente") -> np.ndarray:
     """Calculates the bearing capacity of a shallow foundation under seismic conditioonsd according with Eurocode 7 (EN 1997-5:2004)
 
     Args:
-        phi (float or numpy.array): effective soil friction angle
-        gamma (float or numpy.array): unit weight of the soil
-        ag (float or numpy.array): soil acceleration
-        avg_ahg (float or numpy.array): ratio between the vertical and horizontal accelerations
-        B (float or numpy.array): width of the foundation
-        H (float or numpy.array): horizontal load in Y direction on the foundation
-        N (float or numpy.array): vertical load on the foundation
-        M (float or numpy.array): moment on the foundation
-        c (float or numpy.array, optional): effective cohesion. Defaults to 0.
-        gamma_c (float or numpy.array, optional): safety coefficient for coehesion. Defaults to 1.0
-        gamma_rd (float or numpy.array, optional): safety coefficient for bearing capacity. Defaults to 1.5
+        phi (float or numpy.ndarray): effective soil friction angle
+        gamma (float or numpy.ndarray): unit weight of the soil
+        ag (float or numpy.ndarray): soil acceleration
+        avg_ahg (float or numpy.ndarray): ratio between the vertical and horizontal accelerations
+        B (float or numpy.ndarray): width of the foundation
+        H (float or numpy.ndarray): horizontal load in Y direction on the foundation
+        N (float or numpy.ndarray): vertical load on the foundation
+        M (float or numpy.ndarray): moment on the foundation
+        c (float or numpy.ndarray, optional): effective cohesion. Defaults to 0.
+        gamma_c (float or numpy.ndarray, optional): safety coefficient for coehesion. Defaults to 1.0
+        gamma_rd (float or numpy.ndarray, optional): safety coefficient for bearing capacity. Defaults to 1.5
         soil_type (str, optional): type of soil.
 
     Returns:
-        np.array: values of the bearing capacity ratio
+        np.ndarray: values of the bearing capacity ratio
     """
 
     g = 9.80665

@@ -1,3 +1,8 @@
+"""Eurocode 7 - Geotechnical design module
+This module provides functions and classes for geotechnical design according to Eurocode 7 (EN 1997-1:2004).
+It includes calculations for bearing capacity, earth pressures, and other geotechnical parameters.
+"""
+
 from .. import db
 from .. import utils
 
