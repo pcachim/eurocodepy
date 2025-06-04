@@ -1,12 +1,12 @@
 import math
 import numpy as np
 
+
 cemprops = {
     'Type S': [3, 0.13],
     'Type N': [4, 0.12],
     'Type R': [6, 0.11],
 }
-
 
 def beta_cc(t: float, s: float=0.25)->float:
     """Calculates the strength hardening coeficient
@@ -23,7 +23,6 @@ def beta_cc(t: float, s: float=0.25)->float:
         float: strength hardening coeficient
     """
     return np.exp(s * (1 - np.sqrt(28.0/t)))
-
 
 def beta_ce(t: float, s: float=0.25)->float:
     """Calculates the modulus of elasticity hardening coeficient
@@ -43,7 +42,10 @@ def beta_ce(t: float, s: float=0.25)->float:
 
 
 def calc_creep_coef(t=1000000, h0=100, rh=65, t0=10, fck=20.0, cem=0.0)->float:
-    """Calculates the creep coeficient.
+    """Calculates the creep coeficient. Uses EN1992-1:2004.
+    This function calculates the creep coefficient of concrete based on the time, effective height, relative humidity, initial time, concrete compressive strength, and cement parameter.
+    The creep coefficient is a measure of the time-dependent deformation of concrete under sustained load.
+    It is calculated using the coefficients defined for different concrete compressive strengths and the effects of relative humidity and time.
 
     Args:
         t (int, optional): time, in days. Defaults to 28.
@@ -79,7 +81,9 @@ def calc_creep_coef(t=1000000, h0=100, rh=65, t0=10, fck=20.0, cem=0.0)->float:
 
 
 def calc_shrink_strain(t=1000000, h0=100, ts=3, rh=65, fck=20.0, cem='Type N')->float:
-    """Calculates the total shrinkage strain.
+    """Calculates the total shrinkage strain. Uses EN1992-1:2004.
+    This function calculates the total shrinkage strain of concrete based on the time, effective height, time of shrinkage start, relative humidity, concrete compressive strength, and cement type.
+    The shrinkage strain is calculated using the coefficients defined for different cement types and the concrete compressive strength.
 
     Args:
         t (int, optional): time, in days. Defaults to 28.

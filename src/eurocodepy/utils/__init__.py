@@ -6,6 +6,7 @@ from .dict_tools import dict2obj
 from .stress import invariants
 from .stress import principals
 from .stress import principal_vectors
+from .stress import FailureCriteria
 
 from .section_properties import calc_section_T
 from .section_properties import calc_section_rectangular

@@ -17,8 +17,9 @@ The module contains the following functions:
 
 import pandas as pd 
 import os
+from enum import Enum
 
-__version__ = "2025.5.8"
+__version__ = "2025.6.1"
 print_version = "This is 'eurocodepy' version " + __version__
 
 from . import ec1
@@ -32,10 +33,11 @@ from . import utils
 # National parameters
 local_name = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 local_name = os.path.join(local_name, 'eurocode_data_portugal.csv')
-locale = {}
-locale["PT"] = pd.read_csv(local_name)
+locale = Enum("locale", ["EU", "PT"])
+locales = {}
+locales["PT"] = pd.read_csv(local_name)
 
-def get_national_params(local: str = "PT", concelho: str = "Lisboa") -> dict:
+def get_national_params(local: locale = locale.PT, concelho: str = "Lisboa") -> dict:
     """
 
     Args:
@@ -45,7 +47,7 @@ def get_national_params(local: str = "PT", concelho: str = "Lisboa") -> dict:
     Returns:
         dict: _description_
     """
-    pt_data = locale[str.upper(local)]
+    pt_data = locale[local.name]
     row = pt_data[pt_data['Concelho'] == concelho]
     # Convert to dict if found
     if not row.empty:
@@ -55,7 +57,6 @@ def get_national_params(local: str = "PT", concelho: str = "Lisboa") -> dict:
         result = None
         print("Concelho not found.")
     return result
-
 
 
 # Database imports

@@ -1,6 +1,33 @@
 import numpy as np
 import math
+from enum import Enum
 
+class FailureCriteria(Enum):
+     """Enum for failure criteria"""
+     MOHR_COULOMB = "Mohr-Coulomb"
+     MOHR_CIRCLE = "Mohr Circle"
+     MAX_SHEAR = "Max Shear Stress"
+     MAX_PRINCIPAL = "Max Principal Stress"
+     MIN_PRINCIPAL = "Min Principal Stress"
+     ELLIPTIC = "Elliptic"
+     HENCKY = "Hencky"
+     RANKINE = "Rankine"
+     VON_MISES = "Von Mises"
+     TREFFTZ = "Trefftz"
+     CONCRETE = "Concrete"
+
+class Invariant(Enum):
+     """Enum for stress invariants"""
+     I1 = "I1"
+     J2 = "J2"
+     J3 = "J3"
+     MEAN_STRESS = "Mean Stress"
+     EQV_STRESS = "Equivalent Stress"
+     LODE_R = "Lode R"
+     LODE_Z = "Lode Z"
+     LODE_THETA = "Lode Theta"
+     COS3T = "Cos(3Theta)"
+     TRIAXIALITY = "Triaxiality"
 
 def principals(sigxx: float, sigyy: float, sigzz: float, 
                sigxy: float, sigyz: float, sigzx: float) -> np.ndarray:
