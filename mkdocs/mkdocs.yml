@@ -9,7 +9,9 @@ plugins:
 nav:
   - index.md
   - tutorials.md
-  - How-To Guides: how-to-guides.md
+  - Modules: 
+    - EC1: ec1.md 
+    - EC7: ec7.md 
   - Reference: reference.md
   - Background: explanation.md
   - copyright.md
