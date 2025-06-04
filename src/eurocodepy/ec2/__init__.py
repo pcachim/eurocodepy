@@ -79,11 +79,12 @@ class Concrete:
         return Concrete("C25/30")  # Default concrete class
 
     @classmethod
-    def from_fck(cls, f_ck: int) -> 'Concrete':
+    def from_fck(cls, f_ck: int, name=None) -> 'Concrete':
         """
-        Create a ConcreteEC2 instance from class name like 'C25/30'.
-        :param class_name: String, e.g., 'C30/37'
-        :return: ConcreteEC2 instance
+        Create a Concrete instance from characteristic compressive strength, using EC2 relations.
+        :param f_ck: Characteristic compressive strength of concrete (MPa)
+        :type f_ck: int
+        :return: Concrete instance
         """
         fck = float(f_ck)
         cls.fck = round(fck, 1)  # MPa
@@ -92,10 +93,15 @@ class Concrete:
         cls.fctk_005 = round(0.7 * cls.fctm, 1)  # 5% fractile
         cls.fctk_095 = round(1.3 * cls.fctm, 1)  # 95% fractile
         cls.Ecm = round(22000 * (cls.fcm / 10)**0.3, 1)  # Modulus of elasticity (MPa)
-        cls.epsilon_c1 = 0.00175 if fck <= 50 else 0.0023
-        cls.epsilon_cu1 = 0.0035 if fck <= 50 else 0.0033
-        cls.n = 2.0  # Partial safety factor
-        cls.name = f"C{f_ck}"
+        cls.eps_c2 = 2.0 if fck <= 50 else 2.0 + 0.085 * (fck - 50) ** 0.53  # Strain at peak stress
+        cls.eps_cu2 = 3.5 if fck <= 50 else round(2.6+35*((90.0-fck)/100.0)**4, 1)
+        cls.n = 2.0 if fck <= 50 else round(1.4+23.4*((90.0-fck)/100.0)**4, 1)
+        if name is not None:
+            cls.name = name
+            cls.grade = name
+        else:
+            cls.name = f"C{f_ck}"
+            cls.grade = f"C{f_ck}"
 
         gamma_cc = db.ConcreteParams["gamma_cc"]  # Partial safety factor
         cls.fcd = round(cls.fck / gamma_cc, 1)  # Design yield strength (MPa)

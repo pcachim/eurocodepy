@@ -9,4 +9,11 @@ uv build
 
 ## Create documentation for EurocodePy
 
-mkdocs
+### install packages
+
+uv add mkdocs, mkdocs-material, mkdocstrings, mkdocstrings-python
+
+### create documentation
+
+cd mkdocs
+mkdocs build

@@ -24,6 +24,8 @@ dependencies = [
     "numpy>=2.0.2",
     "pandas>=2.2.3",
     "plotly>=6.1.2",
+    "mkdocstrings>=0.29.1",
+    "mkdocstrings-python>=1.16.12",
 ]
 
 [project.urls]
