@@ -17,3 +17,5 @@ uv add mkdocs, mkdocs-material, mkdocstrings, mkdocstrings-python
 
 cd mkdocs
 mkdocs build
+commit to github
+mkdocs gh-deploy
