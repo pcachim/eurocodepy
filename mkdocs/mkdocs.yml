@@ -10,8 +10,8 @@ nav:
   - index.md
   - tutorials.md
   - Modules: 
-    - EC1: ec1.md 
-    - EC7: ec7.md 
+    - EC1: modules/ec1.md 
+    - EC7: modules/ec7.md 
   - Reference: reference.md
   - Background: explanation.md
   - copyright.md
