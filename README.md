@@ -1,4 +1,4 @@
-# eurocodepy v0.2.1
+# eurocodepy v2025.6.1
 
 EurocodePy is a Python package for calculating structures according to Eurocodes. It provides a collection of functions that enable engineers to design and analyze structures based on the Eurocode standards. In addition, it includes a database of structural materials and steel profiles, making it easy to design and analyze structures according to Eurocode standards.
 
@@ -62,7 +62,7 @@ Current materials in the database are:
 * timber (C14 to C24, D18, GL24 to 36)
 * reinforcement - general (B400, B450, B500, B550, B600, B700, classes A, B and C: B400A etc.)
 * reinforcement - portuguese (A400NR, A400NRSD, A500NR, A500NRSD, A500ER, A500EL)
-* structural steel (S235, S275, S355, S450)
+* structural steel (S235, S275, S355, S460)
 
 Available european steel profiles are:
 
@@ -77,7 +77,7 @@ Available european steel profiles are:
 
 ## Documentation
 
-A more or less complete description of existing packages and modules can be found on [eurocodepy.readthedocs.io](https://eurocodepy.readthedocs.io)
+A more or less complete description of existing packages and modules can be found on [pcachim.github.io/eurocodepy](https://pcachim.github.io/eurocodepy/)
 
 ## License
 

@@ -14,10 +14,10 @@ LoadDuration = Enum("LoadDuration", db.Timber["LoadDuration"])
 TimberClass = Enum("TimberClass", list(db.TimberGrades.keys()))
 
 class Timber:
+    """
+    Eurocode 5 timber properties.
+    """
     def __init__(self, type_label: str = "C24"):
-        """
-        Eurocode 5 timber properties.
-        """
         
         if type_label not in db.TimberGrades.keys():
             raise ValueError(f"Steel type '{type_label}' not found in database. Steel type must be one of {list(db.TimberGrades.keys())}")
@@ -44,29 +44,36 @@ class Timber:
         self.kh = db.TimberParams["kh"][self.type]
     
     def k_mod(self, service_class: ServiceClass = ServiceClass.SC1, load_duratiom: LoadDuration = LoadDuration.Medium) -> float:
-        """
-        Returns the kmod value for serviceability limit state.
-        :param service_class: Service class (1, 2, or 3)
-        :return: kmod value
-        """
+        """ Returns the kmod value for serviceability limit state.
 
+        Args:
+            service_class (ServiceClass, optional): Service class (SC1, SC2, or SC3). Defaults to ServiceClass.SC1.
+            load_duratiom (LoadDuration, optional): Load duration (Perm, Long, Medium, Short, Inst). Defaults to LoadDuration.Medium.
+
+        Returns:
+            float: kmod value for the specified service class and load duration.
+        """
         return self.kmod[service_class.name][load_duratiom.value]
 
     def k_def(self, service_class: ServiceClass = ServiceClass.SC1) -> float:
-        """
-        Returns the kdef value for serviceability limit state.
-        :param service_class: Service class (1, 2, or 3)
-        :return: kdef value
+        """Returns the kdef value for serviceability limit state.
+
+        Args:
+            service_class (ServiceClass, optional): Service class (SC1, SC2, or SC3). Defaults to ServiceClass.SC1.
+
+        Returns:
+            float: kmod value for the specified service class.
         """
         return self.kdef[service_class.name]
 
 class SolidTimber(Timber):
-    def __init__(self, type_label: str = "C24"):
-        """
-        Eurocode 5 solid timber properties.
-        :param type_label: Solid timber type label (e.g., 'C24', 'C30')
-        """
+    """This class represents Eurocode 5 solid timber properties, which includes both softwood and hardwood types.
 
+    Args:
+        type_label (str): Timber grade label (e.g., 'C24', 'D30'). Defaults to 'C24'.
+    """
+    
+    def __init__(self, type_label: str = "C24"):
         grades_list = [item for item in db.TimberGrades.keys() if (item.startswith("C") or item.startswith("D"))]
         if type_label not in grades_list:
             raise ValueError(f"Softwood type '{type_label}' not found in database. Softwood type must be one of {grades_list}")
@@ -82,12 +89,12 @@ Hardwood = SolidTimber # Alias for SolidTimber, as it is commonly referred to as
 ST = SolidTimber # Alias for SolidTimber, as it is commonly referred to as ST in Eurocode 5
 
 class Glulam(Timber):
-    def __init__(self, type_label: str = "GL24h"):
-        """
-        Eurocode 5 glulam properties.
-        :param type_label: Glulam type label (e.g., 'GL24h', 'GL28c')
-        """
+    """
+    Eurocode 5 glulam properties.
+    :param type_label: Glulam type label (e.g., 'GL24h', 'GL28c')
+    """
 
+    def __init__(self, type_label: str = "GL24h"):
         grades_list = [item for item in db.TimberGrades.keys() if item.startswith("GL")]
 
         if not type_label.startswith("GL"):

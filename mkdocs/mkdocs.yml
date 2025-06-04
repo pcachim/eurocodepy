@@ -1,9 +1,16 @@
-site_name: eurocodepy documentation
+site_name: Documentation for eurocodepy
 
 theme:
   name: "material"
 
 plugins:
+  - search  
+  - gen-files:
+      scripts:
+      - scripts/gen_ref_pages.py  
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - section-index:
   - mkdocstrings
 
 nav:
@@ -11,7 +18,11 @@ nav:
   - tutorials.md
   - Modules: 
     - EC1: modules/ec1.md 
+    - EC2: modules/ec2.md 
+    - EC3: modules/ec3.md 
+    - EC5: modules/ec5.md 
     - EC7: modules/ec7.md 
-  - Reference: reference.md
-  - Background: explanation.md
-  - copyright.md
+    - EC8: modules/ec8.md 
+    - Utils: modules/utils.md 
+  - Code Reference: reference/
+  - Copyright & contributing: copyright.md

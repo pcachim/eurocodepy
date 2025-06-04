@@ -1,4 +1,4 @@
-# eurocodepy documentation
+# Home
 
 This site contains the project documentation for the
 [eurocodepy](https://github.com/pcachim/eurocodepy) project that is a python package for using Eurocodes.

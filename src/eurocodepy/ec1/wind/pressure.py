@@ -73,7 +73,7 @@ def s_coef(x: float, z: float, H: float, Lu: float, Ld: float=1000) -> float:
     return s
 
 def c_o(z: float, x: float=0, H: float=0, Lu: float=10, Ld: float=1000) -> float:
-    """Calculates the orography factor
+    """Calculates the orography factor.
     Args:
         z (float): vertical distance
         x (float, optional): horizontal distance. Defaults to 0.
