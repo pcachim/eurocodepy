@@ -1,0 +1,4134 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../plotly_templates/">
+      
+      
+        <link rel="next" href="../stress/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>section_properties - Documentation for eurocodepy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eurocodepy.utils.section_properties" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Documentation for eurocodepy" class="md-header__button md-logo" aria-label="Documentation for eurocodepy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation for eurocodepy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              section_properties
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Documentation for eurocodepy" class="md-nav__button md-logo" aria-label="Documentation for eurocodepy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation for eurocodepy
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec2.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec3.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec5.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC5
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC7
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec8.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC8
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/utils.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utils
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Code Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Code Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    eurocodepy
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            eurocodepy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    db
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec1
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_2" id="__nav_4_1_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            ec1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec1/snow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    snow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec1/wind/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    wind
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_2_2" id="__nav_4_1_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            wind
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec1/wind/pressure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    pressure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec2
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_3" id="__nav_4_1_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            ec2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/crack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec2/fire/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    fire
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_3_2" id="__nav_4_1_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            fire
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/fire/fire_base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fire_base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/material/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    material
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec2/sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_3_4" id="__nav_4_1_3_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/sls/creep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    creep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/sls/shrinkage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shrinkage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec2/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_3_5" id="__nav_4_1_3_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/uls/beam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    beam
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/uls/bend_circ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bend_circ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec2/uls/shell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ec3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec5
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_5" id="__nav_4_1_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            ec5
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_5_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec5/sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_5_1" id="__nav_4_1_5_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/sls/deformation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    deformation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/sls/vibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    vibration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec7/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec7
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_6" id="__nav_4_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            ec7
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec7/bearing_capacity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bearing_capacity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec7/earth_pressures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    earth_pressures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec8
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_7" id="__nav_4_1_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            ec8
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec8/spectrum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    spectrum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../params/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    params
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_9" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    utils
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_9" id="__nav_4_1_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1_9">
+            <span class="md-nav__icon md-icon"></span>
+            utils
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dict_tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dict_tools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotly_templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    plotly_templates
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    section_properties
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    section_properties
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      section_properties
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.calc_neutral_axis_cracked_T" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_neutral_axis_cracked_T
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.calc_section_T" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_section_T
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.calc_section_T_crack" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_section_T_crack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.calc_section_T_uncrack" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_section_T_uncrack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.calc_section_rectangular" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_section_rectangular
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.solve_cubic" class="md-nav__link">
+    <span class="md-ellipsis">
+      solve_cubic
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stress
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../copyright/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Copyright & contributing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      section_properties
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.calc_neutral_axis_cracked_T" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_neutral_axis_cracked_T
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.calc_section_T" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_section_T
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.calc_section_T_crack" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_section_T_crack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.calc_section_T_uncrack" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_section_T_uncrack
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.calc_section_rectangular" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_section_rectangular
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.utils.section_properties.solve_cubic" class="md-nav__link">
+    <span class="md-ellipsis">
+      solve_cubic
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>section_properties</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="eurocodepy.utils.section_properties"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.utils.section_properties.calc_neutral_axis_cracked_T" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_neutral_axis_cracked_T</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_E_s</span><span class="p">,</span> <span class="n">alpha_E_p</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculates the neutral axis of a cracked T-section.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>h</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Total height of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bw</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Web width of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bf</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Flange width of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>hf</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Flange height of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_s</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the tensioned reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_sc</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the compressed reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_p</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the prestressing tendon.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ds</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the tensioned reinforcement from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dsc</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the compressed reinforcement from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dp</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the prestressing tendon from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha_Es</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Equivalence factor of the passive steel.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha_Ep</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Equivalence factor of the prestressed steel.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>M</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Bending moment.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>P</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Prestressing normal force.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>display</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, displays the calculated results. Defaults to False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>float</code></td>            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>the neutral axis depth of a cracked T section.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/utils/section_properties.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_neutral_axis_cracked_T</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_E_s</span><span class="p">,</span> <span class="n">alpha_E_p</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the neutral axis of a cracked T-section.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        h (float): Total height of the section.</span>
+<span class="sd">        bw (float): Web width of the section.</span>
+<span class="sd">        bf (float): Flange width of the section.</span>
+<span class="sd">        hf (float): Flange height of the section.</span>
+<span class="sd">        A_s (float[]): Area of the tensioned reinforcement.</span>
+<span class="sd">        A_sc (float[]): Area of the compressed reinforcement.</span>
+<span class="sd">        A_p (float[]): Area of the prestressing tendon.</span>
+<span class="sd">        ds (float[]): Distance to the tensioned reinforcement from the top.</span>
+<span class="sd">        dsc (float[]): Distance to the compressed reinforcement from the top.</span>
+<span class="sd">        dp (float[]): Distance to the prestressing tendon from the top.</span>
+<span class="sd">        alpha_Es (float): Equivalence factor of the passive steel.</span>
+<span class="sd">        alpha_Ep (float): Equivalence factor of the prestressed steel.</span>
+<span class="sd">        M (float): Bending moment.</span>
+<span class="sd">        P (float): Prestressing normal force.</span>
+<span class="sd">        display (bool, optional): If True, displays the calculated results. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: the neutral axis depth of a cracked T section.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ds_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+    <span class="n">dp_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dp</span> <span class="o">*</span> <span class="n">A_p</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_p</span><span class="p">)</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_p</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">es</span> <span class="o">=</span> <span class="o">-</span><span class="n">M</span> <span class="o">/</span> <span class="n">P</span> <span class="o">-</span> <span class="p">(</span><span class="n">ds_ref</span> <span class="o">-</span> <span class="n">dp_ref</span><span class="p">)</span>  <span class="c1"># Excentricidade</span>
+
+    <span class="c1"># Calcular os coeficientes da equação cúbica</span>
+    <span class="n">a1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ds</span> <span class="o">+</span> <span class="n">es</span><span class="p">)</span>
+    <span class="n">a2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">6</span> <span class="o">/</span> <span class="n">bw</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">hf</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">bw</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">ds</span> <span class="o">+</span> <span class="n">es</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">hf</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">alpha_E_s</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_sc</span> <span class="o">*</span> <span class="p">(</span><span class="n">ds</span> <span class="o">+</span> <span class="n">es</span> <span class="o">-</span> <span class="n">dsc</span><span class="p">))</span> <span class="o">+</span>
+                    <span class="n">alpha_E_p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_p</span> <span class="o">*</span> <span class="p">(</span><span class="n">ds</span> <span class="o">+</span> <span class="n">es</span> <span class="o">-</span> <span class="n">dp</span><span class="p">))</span> <span class="o">+</span> <span class="n">alpha_E_s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_s</span> <span class="o">*</span> <span class="n">es</span><span class="p">))</span>
+    <span class="n">a3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span> <span class="o">/</span> <span class="n">bw</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">hf</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">bw</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">ds</span> <span class="o">+</span> <span class="n">es</span> <span class="o">-</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">hf</span><span class="p">))</span> <span class="o">+</span>
+                    <span class="p">(</span><span class="n">alpha_E_s</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">A_sc</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dsc</span> <span class="o">*</span> <span class="p">(</span><span class="n">ds</span> <span class="o">+</span> <span class="n">es</span> <span class="o">-</span> <span class="n">dsc</span><span class="p">))</span> <span class="o">+</span>
+                    <span class="n">alpha_E_p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_p</span> <span class="o">*</span> <span class="n">dp</span> <span class="o">*</span> <span class="p">(</span><span class="n">ds</span> <span class="o">+</span> <span class="n">es</span> <span class="o">-</span> <span class="n">dp</span><span class="p">))</span> <span class="o">+</span> <span class="n">alpha_E_s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_s</span> <span class="o">*</span> <span class="n">ds</span> <span class="o">*</span> <span class="n">es</span><span class="p">))</span>
+
+    <span class="n">a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+    <span class="n">a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+    <span class="n">a3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
+    <span class="c1"># Encontrar as raízes</span>
+    <span class="n">roots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">])</span>  <span class="c1"># np.roots resolve equações polinomiais</span>
+
+    <span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+        <span class="c1"># Exibir as soluções</span>
+        <span class="c1"># print(f&quot;\n&quot;)</span>
+        <span class="c1"># print(&quot;Coeficientes da equação cúbica:&quot;, (a1, a2, a3))</span>
+        <span class="c1"># print(&quot;Raízes da equação cúbica:&quot;, roots)</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># Plotar a função para visualização</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+    <span class="c1"># x_vals = np.linspace(-1, h+1, 1000)</span>
+    <span class="c1"># y_vals = cubic_equation(x_vals, a1, a2, a3)</span>
+
+    <span class="c1"># plt.figure(figsize=(8, 5))</span>
+    <span class="c1"># plt.plot(x_vals, y_vals, label=&quot;Equação Cúbica&quot;)</span>
+    <span class="c1"># plt.axhline(0, color=&#39;k&#39;, linestyle=&#39;--&#39;)</span>
+    <span class="c1"># plt.axvline(roots[0], color=&#39;g&#39;, linestyle=&#39;:&#39;, label=f&quot;Raiz 1: {roots[0]:.3f}&quot;)</span>
+    <span class="c1"># if len(roots) &gt; 1:</span>
+    <span class="c1">#     plt.axvline(roots[1], color=&#39;b&#39;, linestyle=&#39;:&#39;, label=f&quot;Raiz 2: {roots[1]:.3f}&quot;)</span>
+    <span class="c1"># if len(roots) &gt; 2:</span>
+    <span class="c1">#     plt.axvline(roots[2], color=&#39;orange&#39;, linestyle=&#39;:&#39;, label=f&quot;Raiz 3: {roots[2]:.3f}&quot;)</span>
+    <span class="c1"># plt.axvline(0, color=&#39;r&#39;, linestyle=&#39;:&#39;, label=f&quot;Top&quot;)</span>
+    <span class="c1"># plt.axvline(h, color=&#39;r&#39;, linestyle=&#39;:&#39;, label=f&quot;Bottom&quot;)</span>
+
+    <span class="c1"># plt.xlabel(&quot;x&quot;)</span>
+    <span class="c1"># plt.ylabel(&quot;f(x)&quot;)</span>
+    <span class="c1"># plt.title(&quot;Solução da Equação Cúbica&quot;)</span>
+    <span class="c1"># plt.legend()</span>
+    <span class="c1"># plt.grid(True)</span>
+    <span class="c1"># plt.show()</span>
+
+    <span class="c1"># Filtrar apenas raízes reais e dentro do intervalo (0, h)</span>
+    <span class="n">real_roots</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">real</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">roots</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isreal</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span> <span class="o">&lt;</span> <span class="n">h</span><span class="p">]</span>
+
+    <span class="c1"># Retorna a raiz válida ou None se não houver solução dentro do intervalo</span>
+    <span class="k">return</span> <span class="n">real_roots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">real_roots</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.utils.section_properties.calc_section_T" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_section_T</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;SECÇÃO EM T&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculates the area, center of gravity, bending modulus and moment of inertia of a T-section.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>h</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Total height of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bw</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Web width of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bf</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Flange width of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>hf</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Flange height of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_s</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the tensioned reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_sc</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the compressed reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_p</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the prestressing tendon.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ds</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the tensioned reinforcement from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dsc</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the compressed reinforcement from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dp</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the prestressing tendon from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha_Es</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Equivalence factor of the passive steel.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha_Ep</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Equivalence factor of the prestressed steel.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>M</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Bending moment.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>P</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Prestressing normal force.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>display</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, displays the calculated results. Defaults to False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>tuple</code></td>            <td>
+                  <code><span title="tuple">tuple</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A tuple containing two dictionaries, representing the properties of the uncracked
+and cracked sections respectively. Each dictionary contains the area, center of
+gravity, and moment of inertia.
+(prop_un, prop_cr)</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/utils/section_properties.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_section_T</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;SECÇÃO EM T&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the area, center of gravity, bending modulus and moment of inertia of a T-section.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        h (float): Total height of the section.</span>
+<span class="sd">        bw (float): Web width of the section.</span>
+<span class="sd">        bf (float): Flange width of the section.</span>
+<span class="sd">        hf (float): Flange height of the section.</span>
+<span class="sd">        A_s (float[]): Area of the tensioned reinforcement.</span>
+<span class="sd">        A_sc (float[]): Area of the compressed reinforcement.</span>
+<span class="sd">        A_p (float[]): Area of the prestressing tendon.</span>
+<span class="sd">        ds (float[]): Distance to the tensioned reinforcement from the top.</span>
+<span class="sd">        dsc (float[]): Distance to the compressed reinforcement from the top.</span>
+<span class="sd">        dp (float[]): Distance to the prestressing tendon from the top.</span>
+<span class="sd">        alpha_Es (float): Equivalence factor of the passive steel.</span>
+<span class="sd">        alpha_Ep (float): Equivalence factor of the prestressed steel.</span>
+<span class="sd">        M (float): Bending moment.</span>
+<span class="sd">        P (float): Prestressing normal force.</span>
+<span class="sd">        display (bool, optional): If True, displays the calculated results. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: A tuple containing two dictionaries, representing the properties of the uncracked</span>
+<span class="sd">            and cracked sections respectively. Each dictionary contains the area, center of</span>
+<span class="sd">            gravity, and moment of inertia.</span>
+<span class="sd">            (prop_un, prop_cr)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Altura total: </span><span class="si">{</span><span class="n">h</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Largura da alma: </span><span class="si">{</span><span class="n">bw</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Largura do banzo: </span><span class="si">{</span><span class="n">bf</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Altura do banzo: </span><span class="si">{</span><span class="n">hf</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Área da armadura tracionada: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_s</span><span class="p">)</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Área da armadura comprimida: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_sc</span><span class="p">)</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Área do cabo de pré-esforço: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_p</span><span class="p">)</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Distância da armadura tracionada: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Distância da armadura comprimida: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dsc</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Distância do cabo de pré-esforço: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Fator de equivalência do aço: </span><span class="si">{</span><span class="n">alpha_Es</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Fator de equivalência do pré-esforço: </span><span class="si">{</span><span class="n">alpha_Ep</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Momento fletor: </span><span class="si">{</span><span class="n">M</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Força normal de pré-esforço: </span><span class="si">{</span><span class="n">P</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">prop_un</span> <span class="o">=</span> <span class="n">calc_section_T_uncrack</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
+    <span class="n">prop_cr</span> <span class="o">=</span> <span class="n">calc_section_T_crack</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prop_un</span><span class="p">,</span> <span class="n">prop_cr</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.utils.section_properties.calc_section_T_crack" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_section_T_crack</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculates the area, center of gravity, bending modulus and moment of inertia of a cracked T-section.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>h</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Total height of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bw</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Web width of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bf</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Flange width of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>hf</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Flange height of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_s</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the tensioned reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_sc</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the compressed reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_p</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the prestressing tendon.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ds</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the tensioned reinforcement from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dsc</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the compressed reinforcement from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dp</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the prestressing tendon from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha_Es</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Equivalence factor of the passive steel.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha_Ep</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Equivalence factor of the prestressed steel.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>M</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Bending moment.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>P</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Prestressing normal force.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>display</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, displays the calculated results. Defaults to False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>dict</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>the properties of the cracked section. The dictionary contains the area, center of
+gravity, and moment of inertia.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/utils/section_properties.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_section_T_crack</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the area, center of gravity, bending modulus and moment of inertia of a cracked T-section.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        h (float): Total height of the section.</span>
+<span class="sd">        bw (float): Web width of the section.</span>
+<span class="sd">        bf (float): Flange width of the section.</span>
+<span class="sd">        hf (float): Flange height of the section.</span>
+<span class="sd">        A_s (float[]): Area of the tensioned reinforcement.</span>
+<span class="sd">        A_sc (float[]): Area of the compressed reinforcement.</span>
+<span class="sd">        A_p (float[]): Area of the prestressing tendon.</span>
+<span class="sd">        ds (float[]): Distance to the tensioned reinforcement from the top.</span>
+<span class="sd">        dsc (float[]): Distance to the compressed reinforcement from the top.</span>
+<span class="sd">        dp (float[]): Distance to the prestressing tendon from the top.</span>
+<span class="sd">        alpha_Es (float): Equivalence factor of the passive steel.</span>
+<span class="sd">        alpha_Ep (float): Equivalence factor of the prestressed steel.</span>
+<span class="sd">        M (float): Bending moment.</span>
+<span class="sd">        P (float): Prestressing normal force.</span>
+<span class="sd">        display (bool, optional): If True, displays the calculated results. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: the properties of the cracked section. The dictionary contains the area, center of</span>
+<span class="sd">            gravity, and moment of inertia.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># if np.sum(A_s) == 0 and np.sum(A_sc) == 0 and np.sum(A_p) == 0:</span>
+    <span class="c1">#     return {&quot;Area&quot;: 0.0, &quot;Inertia&quot;: 0.0, &quot;zGi&quot;: 0.0, &quot;zGs&quot;: 0.0, &quot;Wi&quot;: 0.0, &quot;Ws&quot;: 0.0, &quot;NeutralAxis&quot;: 0.0, &quot;e_p&quot;: 0.0}</span>
+
+    <span class="n">xi</span> <span class="o">=</span> <span class="n">calc_neutral_axis_cracked_T</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
+
+    <span class="c1"># Cálculo da área da secção fendilhada</span>
+    <span class="n">Aun</span> <span class="o">=</span> <span class="n">xi</span> <span class="o">*</span> <span class="n">bw</span> <span class="o">+</span> <span class="n">hf</span> <span class="o">*</span> <span class="p">(</span><span class="n">bf</span> <span class="o">-</span> <span class="n">bw</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">alpha_Es</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_sc</span><span class="p">)</span> <span class="o">+</span> <span class="n">alpha_Es</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_s</span><span class="p">)</span> <span class="o">+</span> <span class="n">alpha_Ep</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_p</span><span class="p">)</span>
+
+    <span class="c1"># Cálculo do centro de gravidade</span>
+    <span class="n">zgs</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">xi</span><span class="o">*</span><span class="n">xi</span> <span class="o">*</span> <span class="n">bw</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">hf</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">bf</span> <span class="o">-</span> <span class="n">bw</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">alpha_Es</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dsc</span> <span class="o">*</span> <span class="n">A_sc</span><span class="p">)</span> <span class="o">+</span>
+              <span class="n">alpha_Es</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ds</span> <span class="o">*</span> <span class="n">A_s</span><span class="p">)</span> <span class="o">+</span> <span class="n">alpha_Ep</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dp</span> <span class="o">*</span> <span class="n">A_p</span><span class="p">))</span> <span class="o">/</span> <span class="n">Aun</span>
+    <span class="n">zg</span> <span class="o">=</span> <span class="n">h</span> <span class="o">-</span> <span class="n">zgs</span>
+
+    <span class="k">if</span> <span class="n">zgs</span> <span class="o">&lt;</span> <span class="n">hf</span><span class="p">:</span>
+        <span class="c1"># Se o centro de gravidade estiver dentro da banzo, a secção é como retangular com bw = bf</span>
+        <span class="k">return</span> <span class="n">calc_section_T_crack</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
+
+    <span class="c1"># Cálculo do momento de inércia da secção fendilhada</span>
+    <span class="n">Iun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span> 
+           <span class="p">((</span><span class="n">bf</span> <span class="o">-</span> <span class="n">bw</span><span class="p">)</span> <span class="o">*</span> <span class="n">hf</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span> <span class="o">+</span> <span class="p">(</span><span class="n">bf</span> <span class="o">-</span> <span class="n">bw</span><span class="p">)</span> <span class="o">*</span> <span class="n">hf</span> <span class="o">*</span> <span class="p">(</span><span class="n">zgs</span> <span class="o">-</span> <span class="n">hf</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> 
+           <span class="p">(</span><span class="n">bw</span> <span class="o">*</span> <span class="n">xi</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span> <span class="o">+</span> <span class="p">(</span><span class="n">bw</span> <span class="o">*</span> <span class="n">xi</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">zgs</span> <span class="o">-</span> <span class="n">xi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> 
+           <span class="p">(</span><span class="n">alpha_Es</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_sc</span> <span class="o">*</span> <span class="p">(</span><span class="n">dsc</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> 
+           <span class="n">alpha_Es</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_s</span> <span class="o">*</span> <span class="p">(</span><span class="n">ds</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> 
+           <span class="n">alpha_Ep</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_p</span> <span class="o">*</span> <span class="p">(</span><span class="n">dp</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="n">e_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">dp</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">Ws</span> <span class="o">=</span> <span class="n">Iun</span><span class="o">/</span><span class="n">zgs</span>
+    <span class="n">Wi</span> <span class="o">=</span> <span class="n">Iun</span><span class="o">/</span><span class="n">zg</span>
+    <span class="n">sigma_cs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="o">-</span><span class="n">P</span><span class="o">/</span><span class="n">Aun</span> <span class="o">-</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">P</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">)</span> <span class="o">/</span> <span class="n">Ws</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sigma_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">alpha_Ep</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">P</span><span class="o">/</span><span class="n">Aun</span> <span class="o">+</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">P</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">)</span> <span class="o">/</span> <span class="n">Iun</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sigma_sc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">alpha_Es</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">P</span><span class="o">/</span><span class="n">Aun</span> <span class="o">+</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">P</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">)</span> <span class="o">/</span> <span class="n">Iun</span> <span class="o">*</span> <span class="p">(</span><span class="n">dsc</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sigma_st</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">alpha_Es</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">P</span><span class="o">/</span><span class="n">Aun</span> <span class="o">+</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">P</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">)</span> <span class="o">/</span> <span class="n">Iun</span> <span class="o">*</span> <span class="p">(</span><span class="n">ds</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)),</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Propriedades da secção fendilhada&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Área: </span><span class="si">{</span><span class="n">Aun</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Momento de inércia: </span><span class="si">{</span><span class="n">Iun</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Centro de gravidade (inf): </span><span class="si">{</span><span class="n">zg</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Centro de gravidade (sup): </span><span class="si">{</span><span class="n">zgs</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Módulo de flexão (sup): </span><span class="si">{</span><span class="n">Ws</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Módulo de flexão (inf): </span><span class="si">{</span><span class="n">Wi</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Profundidade do eixo neutro: </span><span class="si">{</span><span class="n">xi</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Excentricidade (P): </span><span class="si">{</span><span class="n">e_p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Sigma_cs: </span><span class="si">{</span><span class="n">sigma_cs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Sigma_sc: </span><span class="si">{</span><span class="n">sigma_sc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Sigma_st: </span><span class="si">{</span><span class="n">sigma_st</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Sigma_p: </span><span class="si">{</span><span class="n">sigma_p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Area&quot;</span><span class="p">:</span> <span class="n">Aun</span><span class="p">,</span> <span class="s2">&quot;Inertia&quot;</span><span class="p">:</span> <span class="n">Iun</span><span class="p">,</span> <span class="s2">&quot;zGi&quot;</span><span class="p">:</span> <span class="n">zg</span><span class="p">,</span> <span class="s2">&quot;zGs&quot;</span><span class="p">:</span> <span class="n">zgs</span><span class="p">,</span> <span class="s2">&quot;Wi&quot;</span><span class="p">:</span> <span class="n">Wi</span><span class="p">,</span> <span class="s2">&quot;Ws&quot;</span><span class="p">:</span> <span class="n">Ws</span><span class="p">,</span> <span class="s2">&quot;NeutralAxis&quot;</span><span class="p">:</span> <span class="n">xi</span><span class="p">,</span> <span class="s2">&quot;e_p&quot;</span><span class="p">:</span> <span class="n">e_p</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.utils.section_properties.calc_section_T_uncrack" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_section_T_uncrack</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">As</span><span class="p">,</span> <span class="n">Asc</span><span class="p">,</span> <span class="n">Ap</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculates the area, center of gravity, bending modulus and moment of inertia of a cracked T-section.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>h</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Total height of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bw</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Web width of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bf</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Flange width of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>hf</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Flange height of the section.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_s</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the tensioned reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_sc</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the compressed reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_p</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of the prestressing tendon.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ds</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the tensioned reinforcement from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dsc</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the compressed reinforcement from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dp</code>
+            </td>
+            <td>
+                  <code>float[]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to the prestressing tendon from the top.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha_Es</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Equivalence factor of the passive steel.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha_Ep</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Equivalence factor of the prestressed steel.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>M</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Bending moment.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>P</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Prestressing normal force.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>display</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, displays the calculated results. Defaults to False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>dict</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>the properties of the uncracked section. The dictionary contains the area, center of
+gravity, and moment of inertia.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/utils/section_properties.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_section_T_uncrack</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">hf</span><span class="p">,</span> <span class="n">As</span><span class="p">,</span> <span class="n">Asc</span><span class="p">,</span> <span class="n">Ap</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the area, center of gravity, bending modulus and moment of inertia of a cracked T-section.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        h (float): Total height of the section.</span>
+<span class="sd">        bw (float): Web width of the section.</span>
+<span class="sd">        bf (float): Flange width of the section.</span>
+<span class="sd">        hf (float): Flange height of the section.</span>
+<span class="sd">        A_s (float[]): Area of the tensioned reinforcement.</span>
+<span class="sd">        A_sc (float[]): Area of the compressed reinforcement.</span>
+<span class="sd">        A_p (float[]): Area of the prestressing tendon.</span>
+<span class="sd">        ds (float[]): Distance to the tensioned reinforcement from the top.</span>
+<span class="sd">        dsc (float[]): Distance to the compressed reinforcement from the top.</span>
+<span class="sd">        dp (float[]): Distance to the prestressing tendon from the top.</span>
+<span class="sd">        alpha_Es (float): Equivalence factor of the passive steel.</span>
+<span class="sd">        alpha_Ep (float): Equivalence factor of the prestressed steel.</span>
+<span class="sd">        M (float): Bending moment.</span>
+<span class="sd">        P (float): Prestressing normal force.</span>
+<span class="sd">        display (bool, optional): If True, displays the calculated results. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: the properties of the uncracked section. The dictionary contains the area, center of</span>
+<span class="sd">            gravity, and moment of inertia.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Cálculo da área equivalente em betão</span>
+    <span class="n">Aun</span> <span class="o">=</span> <span class="n">h</span> <span class="o">*</span> <span class="n">bw</span> <span class="o">+</span> <span class="n">hf</span> <span class="o">*</span> <span class="p">(</span><span class="n">bf</span> <span class="o">-</span> <span class="n">bw</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">alpha_Es</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">As</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Asc</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">alpha_Ep</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Ap</span><span class="p">)</span>
+
+    <span class="c1"># Cálculo do centro de gravidade</span>
+    <span class="n">zgs</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">bw</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">hf</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">bf</span> <span class="o">-</span> <span class="n">bw</span><span class="p">)</span> <span class="o">+</span> 
+           <span class="p">(</span><span class="n">alpha_Es</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ds</span> <span class="o">*</span> <span class="n">As</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dsc</span> <span class="o">*</span> <span class="n">Asc</span><span class="p">))</span> <span class="o">+</span> 
+           <span class="p">(</span><span class="n">alpha_Ep</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dp</span> <span class="o">*</span> <span class="n">Ap</span><span class="p">))</span> <span class="o">/</span> <span class="n">Aun</span>
+    <span class="n">zg</span> <span class="o">=</span> <span class="n">h</span> <span class="o">-</span> <span class="n">zgs</span>
+
+    <span class="c1"># Cálculo da inércia não fendilhada</span>
+    <span class="n">Iun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">bw</span> <span class="o">*</span> <span class="n">h</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">12</span> <span class="o">+</span> <span class="p">(</span><span class="n">bw</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> 
+        <span class="p">((</span><span class="n">bf</span> <span class="o">-</span> <span class="n">bw</span><span class="p">)</span> <span class="o">*</span> <span class="n">hf</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">12</span> <span class="o">+</span> <span class="p">(</span><span class="n">hf</span> <span class="o">*</span> <span class="p">(</span><span class="n">bf</span> <span class="o">-</span> <span class="n">bw</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">hf</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> 
+        <span class="p">(</span><span class="n">alpha_Es</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Asc</span> <span class="o">*</span> <span class="p">(</span><span class="n">dsc</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">As</span> <span class="o">*</span> <span class="p">(</span><span class="n">ds</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> 
+        <span class="p">(</span><span class="n">alpha_Ep</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Ap</span> <span class="o">*</span> <span class="p">(</span><span class="n">dp</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
+
+    <span class="n">root_un</span> <span class="o">=</span> <span class="n">zgs</span> <span class="o">+</span> <span class="n">P</span> <span class="o">/</span> <span class="n">Aun</span> <span class="o">/</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">P</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dp</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">))</span> <span class="o">*</span> <span class="n">Iun</span> 
+
+    <span class="n">e_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">dp</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">Ws</span> <span class="o">=</span> <span class="n">Iun</span><span class="o">/</span><span class="n">zgs</span>
+    <span class="n">Wi</span> <span class="o">=</span> <span class="n">Iun</span><span class="o">/</span><span class="n">zg</span>
+    <span class="n">sigma_cs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="o">-</span><span class="n">P</span><span class="o">/</span><span class="n">Aun</span> <span class="o">-</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">P</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">)</span> <span class="o">/</span> <span class="n">Ws</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sigma_ci</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="o">-</span><span class="n">P</span><span class="o">/</span><span class="n">Aun</span> <span class="o">+</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">P</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">)</span> <span class="o">/</span> <span class="n">Wi</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sigma_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">alpha_Ep</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">P</span><span class="o">/</span><span class="n">Aun</span> <span class="o">+</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">P</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">)</span> <span class="o">/</span> <span class="n">Iun</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sigma_sc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">alpha_Es</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">P</span><span class="o">/</span><span class="n">Aun</span> <span class="o">+</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">P</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">)</span> <span class="o">/</span> <span class="n">Iun</span> <span class="o">*</span> <span class="p">(</span><span class="n">dsc</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sigma_st</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">alpha_Es</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">P</span><span class="o">/</span><span class="n">Aun</span> <span class="o">+</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">P</span> <span class="o">*</span> <span class="n">e_p</span><span class="p">)</span> <span class="o">/</span> <span class="n">Iun</span> <span class="o">*</span> <span class="p">(</span><span class="n">ds</span> <span class="o">-</span> <span class="n">zgs</span><span class="p">)),</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Propriedades da secção não fendilhada&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Área: </span><span class="si">{</span><span class="n">Aun</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Momento de inércia: </span><span class="si">{</span><span class="n">Iun</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Centro de gravidade (inf): </span><span class="si">{</span><span class="n">zg</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Centro de gravidade (sup): </span><span class="si">{</span><span class="n">zgs</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Módulo de flexão (sup): </span><span class="si">{</span><span class="n">Ws</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Módulo de flexão (inf): </span><span class="si">{</span><span class="n">Wi</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Profundidade do eixo neutro: </span><span class="si">{</span><span class="n">root_un</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Excentricidade (P): </span><span class="si">{</span><span class="n">e_p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Sigma_cs: </span><span class="si">{</span><span class="n">sigma_cs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Sigma_ci: </span><span class="si">{</span><span class="n">sigma_ci</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Sigma_sc: </span><span class="si">{</span><span class="n">sigma_sc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Sigma_st: </span><span class="si">{</span><span class="n">sigma_st</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Sigma_p: </span><span class="si">{</span><span class="n">sigma_p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;Area&quot;</span><span class="p">:</span> <span class="n">Aun</span><span class="p">,</span> <span class="s2">&quot;Inertia&quot;</span><span class="p">:</span> <span class="n">Iun</span><span class="p">,</span> <span class="s2">&quot;zGi&quot;</span><span class="p">:</span> <span class="n">zg</span><span class="p">,</span> <span class="s2">&quot;zGs&quot;</span><span class="p">:</span> <span class="n">zgs</span><span class="p">,</span> <span class="s2">&quot;Wi&quot;</span><span class="p">:</span> <span class="n">Wi</span><span class="p">,</span> <span class="s2">&quot;Ws&quot;</span><span class="p">:</span> <span class="n">Ws</span><span class="p">,</span> <span class="s2">&quot;NeutralAxis&quot;</span><span class="p">:</span> <span class="n">root_un</span><span class="p">,</span> <span class="s2">&quot;e_p&quot;</span><span class="p">:</span> <span class="n">e_p</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.utils.section_properties.calc_section_rectangular" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_section_rectangular</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;SECÇÃO RETANGULAR&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculates the area, center of gravity, and moment of inertia of a rectangular section.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>h</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Section height.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>b</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Section width.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_s</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of tensioned reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_sc</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of compressed reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>A_p</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Area of prestressing tendon.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ds</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to tensioned reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dsc</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to compressed reinforcement.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dp</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distance to prestressing tendon.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha_Es</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Equivalence factor of passive steel.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha_Ep</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Equivalence factor of prestressed steel.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>M</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Bending moment.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>P</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Prestressing normal force.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>display</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, displays the results. Defaults to False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>tuple</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A tuple containing two dictionaries, representing the properties of the uncracked
+and cracked sections respectively. Each dictionary contains the area, center of
+gravity, and moment of inertia.
+(prop_un, prop_cr)</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/utils/section_properties.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_section_rectangular</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;SECÇÃO RETANGULAR&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the area, center of gravity, and moment of inertia of a rectangular section.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        h (float): Section height.</span>
+<span class="sd">        b (float): Section width.</span>
+<span class="sd">        A_s (float): Area of tensioned reinforcement.</span>
+<span class="sd">        A_sc (float): Area of compressed reinforcement.</span>
+<span class="sd">        A_p (float): Area of prestressing tendon.</span>
+<span class="sd">        ds (float): Distance to tensioned reinforcement.</span>
+<span class="sd">        dsc (float): Distance to compressed reinforcement.</span>
+<span class="sd">        dp (float): Distance to prestressing tendon.</span>
+<span class="sd">        alpha_Es (float): Equivalence factor of passive steel.</span>
+<span class="sd">        alpha_Ep (float): Equivalence factor of prestressed steel.</span>
+<span class="sd">        M (float): Bending moment.</span>
+<span class="sd">        P (float): Prestressing normal force.</span>
+<span class="sd">        display (bool, optional): If True, displays the results. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: A tuple containing two dictionaries, representing the properties of the uncracked</span>
+<span class="sd">            and cracked sections respectively. Each dictionary contains the area, center of</span>
+<span class="sd">            gravity, and moment of inertia.</span>
+<span class="sd">            (prop_un, prop_cr)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Altura: </span><span class="si">{</span><span class="n">h</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Largura: </span><span class="si">{</span><span class="n">b</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Área da armadura tracionada: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_s</span><span class="p">)</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Área da armadura comprimida: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_sc</span><span class="p">)</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Área do cabo de pré-esforço: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A_p</span><span class="p">)</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Distância da armadura tracionada: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Distância da armadura comprimida: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dsc</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Distância do cabo de pré-esforço: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Fator de equivalência do aço: </span><span class="si">{</span><span class="n">alpha_Es</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Fator de equivalência do pré-esforço: </span><span class="si">{</span><span class="n">alpha_Ep</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Momento fletor: </span><span class="si">{</span><span class="n">M</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Força normal de pré-esforço: </span><span class="si">{</span><span class="n">P</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">prop_un</span> <span class="o">=</span> <span class="n">calc_section_T_uncrack</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
+    <span class="n">prop_cr</span> <span class="o">=</span> <span class="n">calc_section_T_crack</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">A_s</span><span class="p">,</span> <span class="n">A_sc</span><span class="p">,</span> <span class="n">A_p</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">dsc</span><span class="p">,</span> <span class="n">dp</span><span class="p">,</span> <span class="n">alpha_Es</span><span class="p">,</span> <span class="n">alpha_Ep</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prop_un</span><span class="p">,</span> <span class="n">prop_cr</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.utils.section_properties.solve_cubic" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">solve_cubic</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Resolve a equação cúbica x³ + a1<em>x² + a2</em>x + a3 = 0
+e seleciona a raiz real dentro do intervalo (0, h).</p>
+<p>Parâmetros:
+a1, a2, a3 - Coeficientes da equação cúbica
+h - Altura máxima permitida para x</p>
+<p>Retorna:
+x_real - A raiz válida dentro do intervalo (0, h)</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/utils/section_properties.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve_cubic</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Resolve a equação cúbica x³ + a1*x² + a2*x + a3 = 0</span>
+<span class="sd">    e seleciona a raiz real dentro do intervalo (0, h).</span>
+
+<span class="sd">    Parâmetros:</span>
+<span class="sd">    a1, a2, a3 - Coeficientes da equação cúbica</span>
+<span class="sd">    h - Altura máxima permitida para x</span>
+
+<span class="sd">    Retorna:</span>
+<span class="sd">    x_real - A raiz válida dentro do intervalo (0, h)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Resolver a equação cúbica</span>
+    <span class="n">roots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roots</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">])</span>  <span class="c1"># np.roots resolve equações polinomiais</span>
+
+    <span class="c1"># Filtrar apenas raízes reais e dentro do intervalo (0, h)</span>
+    <span class="n">real_roots</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">real</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">roots</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isreal</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span> <span class="o">&lt;</span> <span class="n">h</span><span class="p">]</span>
+
+    <span class="c1"># Retorna a raiz válida ou None se não houver solução dentro do intervalo</span>
+    <span class="k">return</span> <span class="n">real_roots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">real_roots</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

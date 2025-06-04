@@ -9,8 +9,6 @@
       
       
       
-        <link rel="prev" href="../reference/eurocodepy/utils/stress/">
-      
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -18,7 +16,7 @@
     
     
       
-        <title>Copyright & contributing - Documentation for eurocodepy</title>
+        <title>Python Style Guide - Documentation for eurocodepy</title>
       
     
     
@@ -62,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#contributing-guidelines-and-copyright-notice" class="md-skip">
+        <a href="#python-style-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Copyright & contributing
+              Python Style Guide
             
           </span>
         </div>
@@ -1651,32 +1649,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Copyright & contributing
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../copyright/" class="md-nav__link">
         
   
   
@@ -1687,86 +1663,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#contributing-guidelines" class="md-nav__link">
-    <span class="md-ellipsis">
-      Contributing Guidelines
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Contributing Guidelines">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#code-of-conduct" class="md-nav__link">
-    <span class="md-ellipsis">
-      Code of Conduct
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issues
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pull-requests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pull Requests
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting Started
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#copyright-notice" class="md-nav__link">
-    <span class="md-ellipsis">
-      Copyright Notice
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1798,46 +1694,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#contributing-guidelines" class="md-nav__link">
+  <a href="#code-formatting" class="md-nav__link">
     <span class="md-ellipsis">
-      Contributing Guidelines
+      Code Formatting
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Contributing Guidelines">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Naming Conventions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Naming Conventions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#code-of-conduct" class="md-nav__link">
+  <a href="#variables" class="md-nav__link">
     <span class="md-ellipsis">
-      Code of Conduct
+      Variables
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#issues" class="md-nav__link">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
-      Issues
+      Functions
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#pull-requests" class="md-nav__link">
+  <a href="#comments" class="md-nav__link">
     <span class="md-ellipsis">
-      Pull Requests
+      Comments
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
+  <a href="#miscellaneous" class="md-nav__link">
     <span class="md-ellipsis">
-      Getting Started
+      Miscellaneous
     </span>
   </a>
   
@@ -1849,9 +1754,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#copyright-notice" class="md-nav__link">
+  <a href="#resources" class="md-nav__link">
     <span class="md-ellipsis">
-      Copyright Notice
+      Resources
     </span>
   </a>
   
@@ -1873,45 +1778,107 @@
 
 
 
-<h1 id="contributing-guidelines-and-copyright-notice">Contributing Guidelines and Copyright Notice</h1>
-<h2 id="contributing-guidelines">Contributing Guidelines</h2>
-<p>We welcome contributions from everyone. Please read these guidelines before submitting a pull request or issue.</p>
-<h3 id="code-of-conduct">Code of Conduct</h3>
-<p>We expect all contributors to adhere to our <a href="../CODE_OF_CONDUCT/">Code of Conduct</a>. Please read it before contributing.</p>
-<h3 id="issues">Issues</h3>
-<p>If you find a bug or have a feature request, please submit an issue on our <a href="https://github.com/yourproject/issues">GitHub issue tracker</a>. Please check the existing issues to make sure your issue hasn't already been reported.</p>
-<p>When submitting an issue, please provide as much detail as possible, including steps to reproduce the issue if applicable.</p>
-<h3 id="pull-requests">Pull Requests</h3>
-<p>We welcome pull requests from everyone. Please ensure that your PR adheres to the following guidelines:</p>
-<ol>
-<li>Before submitting a PR, please create an issue first and wait for approval from a project maintainer.</li>
-<li>Your code should follow our <a href="../STYLE_GUIDE/">style guide</a>.</li>
-<li>Write tests for any new functionality.</li>
-<li>Ensure that all tests pass before submitting your pull request.</li>
-<li>Include documentation for any new functionality you've added.</li>
-<li>Make sure your code has no linter errors or warnings.</li>
-<li>Be sure to explain what your changes do and why they are necessary.</li>
-</ol>
-<h3 id="getting-started">Getting Started</h3>
-<p>To get started with contributing, take a look at the issues on our <a href="https://github.com/yourproject/issues">GitHub issue tracker</a>. If you have any questions or need any help, please don't hesitate to reach out to us on <a href="https://yourproject.slack.com">Slack</a>.</p>
-<p>Thank you for contributing to our project!</p>
-<h2 id="copyright-notice">Copyright Notice</h2>
-<p>Copyright (c) 2025 Paulo Cachim</p>
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:</p>
-<p>The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</p>
+<h1 id="python-style-guide">Python Style Guide</h1>
+<p>This document outlines the guidelines for writing Python code for our project. Following these guidelines helps ensure that the code is consistent and easy to read.</p>
+<h2 id="code-formatting">Code Formatting</h2>
+<ul>
+<li>Use 4 spaces for indentation.</li>
+<li>Use a space after the # for inline comments.</li>
+<li>Use blank lines to separate logical sections of code.</li>
+</ul>
+<pre><code class="language-python">if x &gt; 0:
+    print('x is positive')
+else:
+    print('x is non-positive')
+
+# This is an inline comment.
+
+def function_name(parameter):
+    # Code inside function.
+</code></pre>
+<h2 id="naming-conventions">Naming Conventions</h2>
+<h3 id="variables">Variables</h3>
+<ul>
+<li>Use descriptive names that accurately reflect the purpose of the variable.</li>
+<li>Use snake_case for variable names.</li>
+</ul>
+<pre><code class="language-python">number_of_items = 5
+total_price = 10.50
+</code></pre>
+<h3 id="functions">Functions</h3>
+<ul>
+<li>Use descriptive names that accurately reflect the purpose of the function.</li>
+<li>Use snake_case for function names.</li>
+</ul>
+<pre><code class="language-python">def calculate_total_price(quantity, price):
+    return quantity * price
+````
+
+### Classes
+
+- Use PascalCase for class names.
+
+```python
+class User:
+    # ...
+````
+
+### File Names
+
+- Use snake_case for file names.
+
+```text
+main_script.py
+user_profile.py
+</code></pre>
+<h3 id="comments">Comments</h3>
+<ul>
+<li>Use comments to explain non-obvious or complex code.</li>
+<li>Use complete sentences and proper grammar.</li>
+<li>Begin comments with a capital letter.</li>
+<li>Use one space after the # for inline comments.</li>
+<li>Use multi-line comments for longer explanations.</li>
+</ul>
+<pre><code class="language-python"># Add the value to the list.
+my_list.append(value)
+
+&quot;&quot;&quot;
+This function takes two parameters:
+- name: a string representing the name of the user
+- age: an integer representing the age of the user
+
+It returns a greeting message.
+&quot;&quot;&quot;
+def greet(name, age):
+    # ...
+</code></pre>
+<h3 id="miscellaneous">Miscellaneous</h3>
+<ul>
+<li>Use double quotes for strings.</li>
+<li>Use parentheses for tuple packing and unpacking.</li>
+<li>Always use is or is not to compare with None.</li>
+<li>Use a blank line before and after a return statement.</li>
+<li>Use None instead of '' or [] for default values of function arguments.</li>
+</ul>
+<p>```python
+message = "Hello, world!"
+print(message)</p>
+<p>a, b, c = (1, 2, 3)</p>
+<p>if x is None:
+    # ...</p>
+<p>def my_function(arg1, arg2=None):
+    # ...</p>
+<p>def my_other_function(arg1, arg2=[]):
+    # This is bad.</p>
+<p>def my_good_function(arg1, arg2=None):
+    if arg2 is None:
+        arg2 = []
+    # ...
+````</p>
+<h2 id="resources">Resources</h2>
+<p><a href="https://www.python.org/dev/peps/pep-0008/">PEP 8 -- Style Guide for Python Code</a>\
+<a href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a>\
+<a href="https://realpython.com/python-code-style/">Python Code Style: A Guide to Writing Readable Code</a></p>
 
 
 
