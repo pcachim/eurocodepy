@@ -19,3 +19,7 @@ cd mkdocs
 mkdocs build
 commit to github
 mkdocs gh-deploy
+
+### test documentation
+
+mkdocs serve
