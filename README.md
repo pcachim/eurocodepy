@@ -77,7 +77,7 @@ Available european steel profiles are:
 
 ## Documentation
 
-A more or less complete description of existing packages and modules can be found on [pcachim.github.io/eurocodepy](https://pcachim.github.io/eurocodepy/)
+A more or less complete description of existing packages and modules can be found on [https://pcachim.github.io/eurocodepy](https://pcachim.github.io/eurocodepy/)
 
 ## License
 
@@ -85,4 +85,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) fi
 
 ## Contributing
 
-We welcome contributions from everyone. Before getting started, please read our [Code of Conduct](CODE_OF_CONDUCT.md) and [Contributing Guidelines](CONTRIBUTING.md).
+We welcome contributions from everyone. Before getting started, please read our [Code of Conduct](CODE_OF_CONDUCT.md) and [Contributing Guidelines](CONTRIBUTING_GUIDELINES.md).
