@@ -71,7 +71,7 @@ class CombinationType(Enum):
             return cls(value)
         except ValueError:
             raise ValueError(f"Invalid combination type: {value}")
- 
+
 class LoadCombination:
     """
     Class representing a load combination for Eurocode standards.
@@ -94,6 +94,9 @@ class LoadCombination:
 
 @dataclass
 class Load():
+    """
+    Load class representing a load with its name, type, reduced coefficients and safety factors.
+    """
     name: str
     load_type: LoadType
     gamma_fav: float
@@ -104,7 +107,15 @@ class Load():
     incombo: bool = True
     
 class LoadCollection(UserDict):
-    
+    """Collection of loads that can be added, removed, and queried.
+    This class extends UserDict to manage a collection of Load objects.
+    It allows adding, removing, and finding loads by type, as well as calculating load combinations for ULS and SLS.
+    It also provides methods to get ULS and SLS load combinations based on the loads in the collection.
+    It is initialized with an empty dictionary to store Load objects.
+
+    Args:
+        UserDict (Load): Load objects collection.
+    """
     def __init__(self):
         super().__init__()
         self.packs = []
