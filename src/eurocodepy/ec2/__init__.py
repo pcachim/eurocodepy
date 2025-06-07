@@ -1,3 +1,7 @@
+"""Eurocode 2: Design of concrete structures.
+This module provides classes and functions for Eurocode 2 concrete design.
+It includes properties for different concrete grades and types, as well as calculations for serviceability and ultimate limit states.
+"""
 from enum import Enum
 from .. import db
 

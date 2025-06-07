@@ -1,3 +1,9 @@
+"""
+Eurocode 5 Timber Module.
+This module provides classes and functions for Eurocode 5 timber design.
+It includes properties for different timber grades and types, as well as calculations for serviceability and ultimate limit states.
+it also includes vibration and deformation calculations. 
+"""
 from enum import Enum
 
 from .. import db

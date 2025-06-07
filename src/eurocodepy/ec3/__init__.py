@@ -1,3 +1,7 @@
+"""
+Eurocode 3 Steel Reinforcement Module.
+This module provides classes and functions for Eurocode 3 steel reinforcement design.
+It includes properties for different steel grades and types, as well as profile classes."""
 from enum import Enum
 from .. import db
 

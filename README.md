@@ -13,10 +13,16 @@ The **utils** package has some functions that can be useful:
 
 ## Installation
 
-You can install EurocodePy using pip by running the following command:
+You can install EurocodePy using pip or [uv](https://github.com/astral-sh/uv) by running the following command:
 
 ```shell
 pip install eurocodepy
+```
+
+or
+
+```shell
+uv add eurocodepy
 ```
 
 Too upgrade to the latest version use:
@@ -29,7 +35,10 @@ pip install eurocodepy --upgrade
 
 EurocodePy provides a range of functions for designing and analyzing structures according to Eurocodes. Here are some examples:
 
+```python
+import eurocodepy as ec
 from eurocodepy import ec2
+```
 
 ## Materials and Profiles Database
 

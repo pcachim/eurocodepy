@@ -110,8 +110,31 @@ def test_seismic():
     print(f"params = {params}")
 
 if __name__ == "__main__":
+
+    import requests
+    def get_altitude_OSM(latitude: float, longitude: float)->int:
+        # Make a request to the Open-Elevation API
+        url = f'https://api.open-elevation.com/api/v1/lookup?locations={latitude},{longitude}'
+        response = requests.get(url)
+
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Parse the JSON response
+            data = response.json()
+            
+            # Extract the altitude (elevation) from the response
+            altitude = data['results'][0]['elevation']
+            
+            # st.write(f'Altitude at ({latitude}, {longitude}): {altitude} meters')
+        else:
+            print(f"Error: Unable to fetch data from Open-Elevation API. Status code: {response.reason}")
+            
+        return altitude
+
     print ("Testing 'eurocodepy'\n")
     starttime = timeit.default_timer()
+    alti = get_altitude_OSM(45.0, 7.0)
+    print(f"Altitude at (45.0, 7.0): {alti} meters")
 
     # test_database()
     # # test_modules()
