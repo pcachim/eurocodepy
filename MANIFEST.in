@@ -1,2 +1,4 @@
-include src/eurocodepy/eurocodes.json
-include src/eurocodepy/prof_euro.json
+include src/eurocodepy/data/eurocodes.json
+include src/eurocodepy/data/prof_euro.json
+include src/eurocodepy/data/eurocode_data_portugal.csv
+include src/eurocodepy/data/eurocode_data_portugal.xlsx

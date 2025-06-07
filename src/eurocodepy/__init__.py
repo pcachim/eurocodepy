@@ -19,8 +19,8 @@ import pandas as pd
 import os
 from enum import Enum
 
-__version__ = "2025.6.1"
-print_version = "This is 'eurocodepy' version " + __version__
+__version__ = "2025.6.6"
+print_version = "This is 'EurocodePy' version " + __version__
 
 from . import ec1
 from . import ec2
