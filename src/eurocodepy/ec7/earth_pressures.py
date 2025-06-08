@@ -1,4 +1,5 @@
 import numpy as np
+from eurocodepy.ec7 import SoilSeismicParameters
 
 
 def rankine_coefficient(phi, betha):
@@ -81,7 +82,7 @@ def inrest_coefficient(phi, betha, OCR=1.0):
     return [a, a]
 
 
-def earthquake_coefficient(phi, delta, theta, betha, kh, kv):
+def earthquake_coefficient(phi, delta, theta, betha, kh, kv, k_quake_water=1.0):
     """Calculate earthquake coefficients for earth pressures.
 
     Args:
@@ -91,13 +92,14 @@ def earthquake_coefficient(phi, delta, theta, betha, kh, kv):
         betha (float): slope angle of the wall (radians).
         kh (float): horizontal seismic coefficient.
         kv (float): vertical seismic coefficient.
+        k_quake_water (float, optional): water earthquake coefficient (g_d/(g-g_w)). Defaults to 1.0: no water.
 
     Returns:
         list: Active/passive earthquake coefficients (kas1, kps1, kas2, kps2).
     """
     psi = np.pi/2 - theta
 
-    eps = np.arctan(kh/(1+kv))
+    eps = np.arctan(k_quake_water * kh/(1+kv))
     a1 = np.sin(psi+phi-eps)**2
     a2 = np.cos(eps)*np.sin(psi)**2*np.sin(psi-eps-delta)
     a3 = 1.0 if betha > phi-eps else (1+np.sqrt((np.sin(phi+delta)*np.sin(phi-betha-eps))/(np.sin(psi-eps-delta)*np.sin(psi+betha))))**2
@@ -107,7 +109,7 @@ def earthquake_coefficient(phi, delta, theta, betha, kh, kv):
     a3 = 1.0 if betha > phi-eps else (1+np.sqrt((np.sin(phi+delta)*np.sin(phi-betha-eps))/(np.sin(psi+eps)*np.sin(psi+betha))))**2
     kps1 = a1/(a2*a3) 
     
-    eps = np.arctan(kh/(1-kv))
+    eps = np.arctan(k_quake_water * kh/(1-kv))
     a1 = np.sin(psi+phi-eps)**2
     a2 = np.cos(eps)*np.sin(psi)**2*np.sin(psi-eps-delta)
     a3 = 1.0 if betha > phi-eps else (1+np.sqrt((np.sin(phi+delta)*np.sin(phi-betha-eps))/(np.sin(psi-eps-delta)*np.sin(psi+betha))))**2
@@ -120,7 +122,7 @@ def earthquake_coefficient(phi, delta, theta, betha, kh, kv):
     return [kas1, kps1, kas2, kps2]
 
 
-def pressure_coefficients(phi, delta, theta, beta, method="ec7", seismic=None):
+def pressure_coefficients(phi, delta, theta, beta, method="ec7", seismic=None, k_quake_water = 1.0):
     """Calculate earth pressure coefficients based on the specified method.
 
     Args:
@@ -129,7 +131,8 @@ def pressure_coefficients(phi, delta, theta, beta, method="ec7", seismic=None):
         theta (float): slope angle of the backfill (radians).
         betha (float): slope angle of the wall (radians).
         method (str, optional): calculation method for earth pressures. Defaults to "ec7".
-        seismic (_type_, optional): Seismic horizontal/vertical seismic coefficients. Defaults to None.
+        seismic (SoilSeismicParameters, optional): Seismic horizontal/vertical seismic coefficients. Defaults to None.
+        k_quake_water (float, optional): water earthquake coefficient (g_d/(g-g_w)). Defaults to 1.0: no water.
 
     Raises:
         ValueError: Method not found.
@@ -172,7 +175,7 @@ def pressure_coefficients(phi, delta, theta, beta, method="ec7", seismic=None):
     dkps1 = 0.0
     dkps2 = 0.0
     if seismic is not None:
-        kas1, kps1, kas2, kps2 = earthquake_coefficient(phi, delta, theta, beta, seismic.kh, seismic.kv)
+        kas1, kps1, kas2, kps2 = earthquake_coefficient(phi, delta, theta, beta, seismic.kh, seismic.kv, k_quake_water)
         dkas1 = (1.0 + seismic.kv) * kas1 - Ka
         dkas2 = (1.0 - seismic.kv) * kas2 - Ka
         dkps1 = Kp - (1.0 + seismic.kv) * kps1

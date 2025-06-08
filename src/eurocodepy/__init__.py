@@ -19,7 +19,7 @@ import pandas as pd
 import os
 from enum import Enum
 
-__version__ = "2025.6.6"
+__version__ = "2025.6.8"
 print_version = "This is 'EurocodePy' version " + __version__
 
 from . import ec1
