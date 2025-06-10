@@ -21,22 +21,23 @@ soil_gamma_rd = {
 }
 
 
-def bearing_resistance(phi, gamma, q, Bx, By, Hx, Hy, N, c=0, drained=True):
+def bearing_resistance(Bx, By, Hx, Hy, N, phi, gamma, q, c=0, drained=True):
     """Calculates the bearing capacity of a shallow foundation according with Eurocode 7 (EN 1997-1:2004)
 
     Args:
-        phi (float or numpy.array): effective soil friction angle
-        gamma (float or numpy.array): unit weight of the soil
-        Bx (float or numpy.array): effective width of the foundation
-        By (float or numpy.array): effective length of the foundation
-        Hx (float or numpy.array): horizontal load in X direction on the foundation
-        Hy (float or numpy.array): horizontal load in Y direction on the foundation
-        N (float or numpy.array): vertical load on the foundation
-        c (int or numpy.array, optional): effective cohesion. Defaults to 0.
+        Bx (float or numpy.ndarray): effective width of the foundation
+        By (float or numpy.ndarray): effective length of the foundation
+        Hx (float or numpy.ndarray): horizontal load in X direction on the foundation
+        Hy (float or numpy.ndarray): horizontal load in Y direction on the foundation
+        q (float or numpy.ndarray): vertical load outside the foundation
+        phi (float or numpy.ndarray): effective soil friction angle
+        gamma (float or numpy.ndarray): unit weight of the soil
+        N (float or numpy.ndarray): vertical load on the foundation
+        c (int or numpy.ndarray, optional): effective cohesion. Defaults to 0.
         drained (bool, optional): drained or undrained conditions. if undrained c = cu. Defaults to True.
 
     Returns:
-        float or numpy.array: the bearing capacity of the foundation 
+        float or numpy.ndarray: the bearing capacity of the foundation 
     """
     bearing = 0.0
     area = Bx*By
@@ -79,19 +80,20 @@ def bearing_resistance(phi, gamma, q, Bx, By, Hx, Hy, N, c=0, drained=True):
     return bearing
 
 
-def seismic_bearing_resistance(phi, gamma, ag, avg_ahg, S, B, H, N, M, c=0.0, gamma_c=1.0, gamma_rd=1.5, soil_type="incoerente") -> np.ndarray:
+def seismic_bearing_resistance(ag, avg_ahg, S, B, H, N, M, phi, gamma_s, cu=0.0, gamma_c=1.0, gamma_rd=1.5, soil_type="incoherent") -> np.ndarray:
     """Calculates the bearing capacity of a shallow foundation under seismic conditioonsd according with Eurocode 7 (EN 1997-5:2004)
 
     Args:
-        phi (float or numpy.ndarray): effective soil friction angle
-        gamma (float or numpy.ndarray): unit weight of the soil
         ag (float or numpy.ndarray): soil acceleration
         avg_ahg (float or numpy.ndarray): ratio between the vertical and horizontal accelerations
+        S (float or numpy.ndarray): seismic soil coefficient
         B (float or numpy.ndarray): width of the foundation
         H (float or numpy.ndarray): horizontal load in Y direction on the foundation
         N (float or numpy.ndarray): vertical load on the foundation
         M (float or numpy.ndarray): moment on the foundation
-        c (float or numpy.ndarray, optional): effective cohesion. Defaults to 0.
+        phi (float or numpy.ndarray): effective soil friction angle
+        gamma_s (float or numpy.ndarray): unit weight of the soil
+        cu (float or numpy.ndarray, optional): effective cohesion. Defaults to 0.
         gamma_c (float or numpy.ndarray, optional): safety coefficient for coehesion. Defaults to 1.0
         gamma_rd (float or numpy.ndarray, optional): safety coefficient for bearing capacity. Defaults to 1.5
         soil_type (str, optional): type of soil.
@@ -105,7 +107,7 @@ def seismic_bearing_resistance(phi, gamma, ag, avg_ahg, S, B, H, N, M, c=0.0, ga
     Nmax = np.array([0.0, 0.0])
     F_ = 0.0
 
-    if soil_type == "coerente":
+    if soil_type == "coherent":
         a = 0.7
         b = 1.29
         c = 2.14
@@ -121,12 +123,12 @@ def seismic_bearing_resistance(phi, gamma, ag, avg_ahg, S, B, H, N, M, c=0.0, ga
         beta = 2.57
         gamma = 1.87
 
-        F_ = gamma * ag * S * B / c
+        F_ = gamma_s * ag * S * B / cu
         Nq = np.exp(np.pi*tanphi)*np.tan(np.pi/4 + phi/2)**2
         Ng = 2.0*(Nq-1.0)*tanphi
         Nmax = np.array([(np.pi+2.0) * c * B / gamma_c])
 
-    elif soil_type == "incoerente":
+    elif soil_type == "incoherent":
         a = 0.92
         b = 1.25
         c = 0.92
@@ -145,8 +147,8 @@ def seismic_bearing_resistance(phi, gamma, ag, avg_ahg, S, B, H, N, M, c=0.0, ga
         F_ = ag / (g * tanphi)
         Nq = np.exp(np.pi*tanphi)*np.tan(np.pi/4 + phi/2)**2
         Ng = 2.0*(Nq-1.0)*tanphi
-        Nmax = np.array([   0.5 * gamma * g * (1.0 + avg_ahg * ag / g) * B**2 * Ng,
-                            0.5 * gamma * g * (1.0 - avg_ahg * ag / g) * B**2 * Ng])
+        Nmax = np.array([   0.5 * gamma_s * g * (1.0 + avg_ahg * ag / g) * B**2 * Ng,
+                            0.5 * gamma_s * g * (1.0 - avg_ahg * ag / g) * B**2 * Ng])
 
     ratio = np.array([])
     for n in Nmax:
@@ -155,14 +157,14 @@ def seismic_bearing_resistance(phi, gamma, ag, avg_ahg, S, B, H, N, M, c=0.0, ga
         M_ = gamma_rd * M / n
 
         if (N_ < 0.0 or 
-            ((soil_type == "incoerente" and N_ >= (1.0 - m*F_)**k_) or (soil_type == "coerente" and N_ >= 1.0))):
+            ((soil_type == "incoherent" and N_ >= (1.0 - m*F_)**k_) or (soil_type == "coherent" and N_ >= 1.0))):
             ratio.append(-1)
             continue
 
         val1 = (1.0 - e*F_)**ct * (beta*V_)**ct
         val2 = N_**a * (( 1.0-m*F_**k)**k_ - N_)**b
         val3 = (1.0-f*F_)**c_m*(gamma*M_)**cm
-        val4 = N_**a * (( 1.0-m*F_**k)**k_ - N_)**d
+        val4 = N_**c * (( 1.0-m*F_**k)**k_ - N_)**d
 
         ratio.append(val1/val2 + val3/val4 -  1.0)
         

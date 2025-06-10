@@ -33,19 +33,34 @@ class SoilSafetyFactors():
         self.slide = slide
         self.bearing = bearing
 
-class Soil():
-    """Soil class to hold soil properties for geotechnical calculations
-    Attributes:
-        unit_weight (float): unit weight of the soil in kN/m³
-        phi (float): effective angle of internal friction in radians
-        delta (float): angle of wall friction in radians
-        sig_adm (float): admissible stress in kPa
+@dataclass
+class Soil:
     """
-    def __init__(self, unit_weight, phi, delta, sig_adm):
-        self.unit_weight = unit_weight
-        self.phi = np.radians(phi)
-        self.delta = np.radians(delta)
-        self.sig_adm = sig_adm
+    Soil class to hold soil properties for geotechnical calculations.
+    
+    Attributes:
+        unit_weight (float): Unit weight of the soil in kN/m³.
+        friction_angle (float): Effective angle of internal friction in degrees (converted to radians).
+        conc_friction_angle (float): Angle of soil/concrete friction in degrees (converted to radians).
+        sig_adm (float): Admissible stress in kPa. Defaults to 200 kPa.
+        c (int or numpy.ndarray): effective cohesion. Defaults to 0.
+        drained (bool, optional): drained or undrained conditions. if undrained c = cu. Defaults to True.
+    """
+    name: str = "Soil"
+    unit_weight: float = 18.0  # Unit weight in kN/m³, default is 18 kN/m³
+    friction_angle: float = 30.0  # Input in degrees, default is 30 degrees
+    conc_friction_angle: float = 20.0  # Input in degrees, default is 20 degrees
+    sig_adm: float = 200.0  # Admissible stress in kPa, default is 200 kPa
+    cohesion: float = 0.0  # Effective cohesion in kPa, default is 0
+    is_drained: bool = True  # Drained condition, default is True
+    is_coherent: bool = False  # Whether the soil is cohesive, default is False
+
+    def __post_init__(self):
+        # Convert angles to radians
+        self.friction_angle = np.radians(self.friction_angle)
+        self.conc_friction_angle = np.radians(self.conc_friction_angle)
+        if self.cohesion > 0:
+            self.is_coherent = True
 
 class SoilSeismicParameters():
     """Seismic parameters for soil based on Eurocode 8
