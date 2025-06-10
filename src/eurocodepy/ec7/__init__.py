@@ -13,6 +13,8 @@ class SoilSafetyFactors():
         case (str): specific case description (e.g., "STR/GEO", "EQU", "ACC")
         gamma (float): partial safety factor for weight
         phi (float): partial safety factor for angle of internal friction
+        c (float): partial safety factor for effective cohesion
+        cu (float): partial safety factor for undrained shear strength
         perm_unfav (float): unfavourable permanent load factor
         perm_fav (float): favourable permanent load factor
         var_unfav (float): unfavourable variable load factor
@@ -20,18 +22,31 @@ class SoilSafetyFactors():
         slide (float): sliding resistance factor
         bearing (float): bearing resistance factor
     """
-    def  __init__(self, name, casetype, case, gamma, phi, perm_unfav, perm_fav, var_unfav, var_fav, slide, bearing):
+    def  __init__(self, name, casetype, case, gamma, phi, c, cu, perm_unfav, perm_fav, var_unfav, var_fav, slide, bearing):
         self.name = name
         self.casetype = casetype
         self.case = case
         self.gamma = gamma
         self.phi = phi
+        self.c = c
+        self.cu = cu
         self.perm_fav = perm_fav
         self.perm_unfav = perm_unfav
         self.var_fa = var_fav
         self.var_unfav = var_unfav
         self.slide = slide
         self.bearing = bearing
+
+class SoilSafetyFactorsEnum:
+    """Enum for soil safety factors based on Eurocode 7"""
+    STRGEO_SLS = SoilSafetyFactors("STR/GEO", "SLS",  "STR/GEO", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0)
+    STRGEO_A1 = SoilSafetyFactors("STR/GEO A1", "ULS", "STR/GEO", 1.0, 1.0, 1.0, 1.0, 1.35, 1.0, 1.5, 0.0, 1.0, 1.0)
+    STRGEO_A2 = SoilSafetyFactors("STR/GEO A2", "ULS", "STR/GEO", 1.0, 1.25, 1.25, 1.4, 1.0, 1.0, 1.3, 0.0, 1.0, 1.0)
+    STRGEO_B = SoilSafetyFactors("STR/GEO B", "ULS", "STR/GEO", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 0.0, 1.1, 1.4)
+    STRGEO_C = SoilSafetyFactors("STR/GEO C", "ULS", "STR/GEO", 1.0, 1.25, 1.25, 1.4, 1.0, 1.0, 1.5, 0.0, 1.0, 1.0)
+    STRGEO_ACC = SoilSafetyFactors("ACC STR/GEO", "ACC", "STR/GEO", 1.0, 1.1, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0)   
+    EQU = SoilSafetyFactors("EQU", "ULS", "EQU", 1.0, 1.25, 1.25, 1.4, 1.1, 0.9, 1.5, 0.0, 1.0, 1.0)
+    EQU_ACC = SoilSafetyFactors("ACC EQU", "ACC", "EQU", 1.0, 1.0, 1.0, 1.25, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0)
 
 @dataclass
 class Soil:
@@ -51,6 +66,7 @@ class Soil:
     friction_angle: float = 30.0  # Input in degrees, default is 30 degrees
     conc_friction_angle: float = 20.0  # Input in degrees, default is 20 degrees
     sig_adm: float = 200.0  # Admissible stress in kPa, default is 200 kPa
+    sig_Rd: float = 300.0  # Maximum design resistance stress in kPa, default is 300 kPa
     cohesion: float = 0.0  # Effective cohesion in kPa, default is 0
     is_drained: bool = True  # Drained condition, default is True
     is_coherent: bool = False  # Whether the soil is cohesive, default is False
@@ -62,6 +78,12 @@ class Soil:
         if self.cohesion > 0:
             self.is_coherent = True
 
+class SoilEnum():
+    Sand = Soil(name="Sand", unit_weight=18.0, friction_angle=30.0, conc_friction_angle=20.0, sig_adm=200.0, cohesion=0.0, is_drained=True)
+    Clay = Soil(name="Clay", unit_weight=18.0, friction_angle=20.0, conc_friction_angle=15.0, sig_adm=200.0, cohesion=50.0, is_drained=False)
+    Gravel = Soil(name="Gravel", unit_weight=20.0, friction_angle=35.0, conc_friction_angle=25.0, sig_adm=250.0, cohesion=0.0, is_drained=True)
+    Rock = Soil(name="Rock", unit_weight=25.0, friction_angle=40.0, conc_friction_angle=30.0, sig_adm=500.0, cohesion=100.0, is_drained=True)
+    
 class SoilSeismicParameters():
     """Seismic parameters for soil based on Eurocode 8
 

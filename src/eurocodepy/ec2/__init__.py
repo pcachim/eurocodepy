@@ -77,6 +77,17 @@ class Concrete:
         self.fcd = round(self.fck / gamma_cc, 1)  # Design yield strength (MPa)
         gamma_ct = db.ConcreteParams["gamma_ct"]  # Partial safety factor
         self.fctd = round(self.fctk_05 / gamma_ct, 1)  # Design yield strength (MPa)
+        
+    def __repr__(self):
+        return f"Concrete(grade='{self.grade}', fck={self.fck}, fcm={self.fcm}, fctm={self.fctm}, " \
+               f"fctk_05={self.fctk_05}, fctk_95={self.fctk_95}, Ecm={self.Ecm}, eps_c2={self.eps_c2}, " \
+               f"eps_cu2={self.eps_cu2}, n={self.n}, fcd={self.fcd}, fctd={self.fctd})"
+    
+    def __str__(self):
+        return f"Concrete {self.grade} (fck={self.fck} MPa, fcm={self.fcm} MPa, fctm={self.fctm} MPa, " \
+               f"fctk_05={self.fctk_05} MPa, fctk_95={self.fctk_95} MPa, Ecm={self.Ecm} MPa, " \
+               f"eps_c2={self.eps_c2}, eps_cu2={self.eps_cu2}, n={self.n}, fcd={self.fcd} MPa, " \
+               f"fctd={self.fctd} MPa)"
 
     @property
     def C25_30(self):
@@ -140,6 +151,13 @@ class Reinforcement:
         
         gamma_s = db.ReinforcementParams["gamma_s"]  # Partial safety factor
         self.fyd = round(self.fyk / gamma_s, 1)  # Design yield strength (MPa)
+    
+    def __repr__(self):
+        return f"Reinforcement(grade='{self.grade}', fyk={self.fyk}, epsilon_uk={self.epsilon_uk}, " \
+            f"ftk={self.ftk}, Es={self.Es}, ClassType='{self.ClassType}', fyd={self.fyd})"
+    def __str__(self):
+        return f"Reinforcement {self.grade} (fyk={self.fyk} MPa, epsilon_uk={self.epsilon_uk} ‰, " \
+            f"ftk={self.ftk} MPa, Es={self.Es} MPa, ClassType='{self.ClassType}', fyd={self.fyd} MPa)"
 
 class Prestress:
     def __init__(self, type_label: str | PrestressClass = "Y1860S7 12.5"):
@@ -173,3 +191,11 @@ class Prestress:
 
         gamma_p = db.PrestressParams["gamma_p"]  # Partial safety factor
         self.fpd = round(self.fp0_1k / gamma_p, 0)  # Design yield strength (MPa)
+    
+    def __repr__(self):
+        return f"Prestress(name='{self.name}', pType='{self.pType}', zone='{self.zone}', " \
+            f"fpk={self.fpk}, fp0_1k={self.fp0_1k}, Ep={self.Ep}, d={self.d}, Ap={self.Ap}, fpd={self.fpd})"
+    def __str__(self):
+        return f"Prestress {self.name} (pType='{self.pType}', zone='{self.zone}', " \
+            f"fpk={self.fpk} MPa, fp0_1k={self.fp0_1k} MPa, Ep={self.Ep} MPa, d={self.d} mm, " \
+            f"Ap={self.Ap} cm², fpd={self.fpd} MPa)"
