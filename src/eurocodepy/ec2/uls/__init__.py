@@ -20,4 +20,6 @@ from .shell import calc_reinf_plane
 from . import shear
 from . import shell
 
+from .. import Concrete, ConcreteClass, Reinforcement, ReinforcementClass, Prestress, PrestressClass
+
 

@@ -3,47 +3,77 @@ This module provides classes and functions for Eurocode 2 concrete design.
 It includes properties for different concrete grades and types, as well as calculations for serviceability and ultimate limit states.
 """
 from enum import Enum
+from typing import Union, List
+import numpy as np
 from .. import db
 
 from .. import utils
 
-from . import material
-from .material import beta_cc
-from .material import beta_ce
-from .material import cemprops
-from .material import calc_creep_coef # EN1992-1:2004
-from .material import calc_shrink_strain # EN1992-1:2004
-
-from . import fire
-from . import crack
-from .crack import iscracked_annexLL
-
-from . import uls
-from .uls import beam
-from .uls.beam import get_bend_params
-from .uls.beam import calc_mrd
-from .uls.beam import calc_asl
-from .uls import shear
-from .uls.shear import calc_asws
-from .uls.shear import calc_vrd 
-from .uls.shear import calc_vrdc
-from .uls.shear import calc_vrdmax
-from .uls import shell
-from .uls.shell import calc_reinf_shell
-from .uls.shell import calc_reinf_plane
-
-from . import sls
-from .sls import shrinkage
-from .sls.shrinkage import shrink_strain # EN1992-1:2025
-from .sls import creep
-from .sls.creep import creep_coef # EN1992-1:2025
-
+gamma_C = db.ConcreteParams["gamma_cc"]
+gamma_CT = db.ConcreteParams["gamma_ct"]
 ConcreteClass = Enum("ConcreteClass", {item: item.replace("_", "/") for item in db.ConcreteGrades.keys()})
 ReinforcementClass = Enum("ReinforcementClass", list(db.ReinforcementGrades.keys()))
+gamma_S = db.ReinforcementParams["gamma_s"]
 PrestressClass = Enum("PrestressClass", list(db.PrestressGrades.keys()))
 
+class Bar:
+    def __init__(self, diameter: float, number: int = 1):
+        self.diameter = diameter
+        self.area = np.round(np.pi * diameter**2 / 4.0, 2)
+        self.number = number
+
+    def __eq__(self, other):
+        """Compara barras com base no diâmetro e área."""
+        return (
+            isinstance(other, Bar) and
+            self.diameter == other.diameter
+        )
+
+    def __repr__(self):
+        return f"Bar(diameter={self.diameter}, area={self.area})"
+
+class Bundle:
+    def __init__(self, bars: List[Bar]):
+        if len(bars) > 4:
+            raise ValueError("Number of bars in a bundle must be less or equal 4")
+        self.bars = bars
+        self.diameter = np.sqrt(sum(x**2 for x in bars))
+        self.area = sum(bar.area for bar in self.bars)
+
+class BarLayout:
+    def __init__(self, bars: List[Bar] = None):
+        self.bars = bars if bars is not None else []
+
+    def add_bar(self, item: Union[Bar, Bundle], n: int = 1):
+        """
+        Adiciona uma barra ou um bundle de barras ao layout.
+        
+        Args:
+            item (Bar or Bundle): objeto Bar individual ou Bundle de barras.
+            n (int): número de vezes que o item será adicionado (aplicado ao número de barras).
+        """
+        if isinstance(item, Bar):
+            self._add_or_merge_bar(item, n)
+        elif isinstance(item, Bundle):
+            for bar in item.bars:
+                self._add_or_merge_bar(bar, n)
+        else:
+            raise TypeError("Item deve ser do tipo Bar ou Bundle")
+
+    def _add_or_merge_bar(self, bar: Bar, n: int):
+        for existing_bar in self.bars:
+            if existing_bar == bar:
+                existing_bar.number += bar.number * n
+                return
+        # Não encontrou igual, adiciona nova entrada
+        self.bars.append(Bar(bar.diameter, bar.area, bar.number * n))
+
+    def total_area(self) -> float:
+        """Retorna a área total considerando todas as barras."""
+        return sum(bar.area * bar.number for bar in self.bars)
+
 class Concrete:
-    def __init__(self, class_name: str | ConcreteClass = "C30/37"):
+    def __init__(self, class_name: Union[str] = "C30/37"):
         """
         Eurocode 2 concrete properties.
         :param fck: Characteristic compressive strength of concrete (MPa)
@@ -73,21 +103,19 @@ class Concrete:
         self.eps_cu2 = conc["epscu2"]  # Ultimate compressive strain
         self.n = conc["n"]  # Ultimate compressive strain
         
-        gamma_cc = db.ConcreteParams["gamma_cc"]  # Partial safety factor
-        self.fcd = round(self.fck / gamma_cc, 1)  # Design yield strength (MPa)
-        gamma_ct = db.ConcreteParams["gamma_ct"]  # Partial safety factor
-        self.fctd = round(self.fctk_05 / gamma_ct, 1)  # Design yield strength (MPa)
+        self.fcd = round(self.fck / gamma_C, 1)  # Design yield strength (MPa)
+        self.fctd = round(self.fctk_05 / gamma_CT, 1)  # Design yield strength (MPa)
         
     def __repr__(self):
         return f"Concrete(grade='{self.grade}', fck={self.fck}, fcm={self.fcm}, fctm={self.fctm}, " \
-               f"fctk_05={self.fctk_05}, fctk_95={self.fctk_95}, Ecm={self.Ecm}, eps_c2={self.eps_c2}, " \
-               f"eps_cu2={self.eps_cu2}, n={self.n}, fcd={self.fcd}, fctd={self.fctd})"
+            f"fctk_05={self.fctk_05}, fctk_95={self.fctk_95}, Ecm={self.Ecm}, eps_c2={self.eps_c2}, " \
+            f"eps_cu2={self.eps_cu2}, n={self.n}, fcd={self.fcd}, fctd={self.fctd})"
     
     def __str__(self):
         return f"Concrete {self.grade} (fck={self.fck} MPa, fcm={self.fcm} MPa, fctm={self.fctm} MPa, " \
-               f"fctk_05={self.fctk_05} MPa, fctk_95={self.fctk_95} MPa, Ecm={self.Ecm} MPa, " \
-               f"eps_c2={self.eps_c2}, eps_cu2={self.eps_cu2}, n={self.n}, fcd={self.fcd} MPa, " \
-               f"fctd={self.fctd} MPa)"
+            f"fctk_05={self.fctk_05} MPa, fctk_95={self.fctk_95} MPa, Ecm={self.Ecm} MPa, " \
+            f"eps_c2={self.eps_c2}, eps_cu2={self.eps_cu2}, n={self.n}, fcd={self.fcd} MPa, " \
+            f"fctd={self.fctd} MPa)"
 
     @property
     def C25_30(self):
@@ -118,14 +146,34 @@ class Concrete:
             cls.name = f"C{f_ck}"
             cls.grade = f"C{f_ck}"
 
-        gamma_cc = db.ConcreteParams["gamma_cc"]  # Partial safety factor
-        cls.fcd = round(cls.fck / gamma_cc, 1)  # Design yield strength (MPa)
-        gamma_ct = db.ConcreteParams["gamma_ct"]  # Partial safety factor
-        cls.fctd = round(cls.fctk_05 / gamma_ct, 1)  # Design yield strength (MPa)
+        cls.fcd = round(cls.fck / gamma_C, 1)  # Design yield strength (MPa)
+        cls.fctd = round(cls.fctk_05 / gamma_CT, 1)  # Design yield strength (MPa)
 
         return cls  
 
-ConcreteGrade = Enum("ConcreteGrade", {item: Concrete(item) for item in db.ConcreteGrades.keys()})
+class ConcreteGrade(Enum):
+    C20_25 = Concrete("C20/25")
+    C25_30 = Concrete("C25/30")
+    C30_37 = Concrete("C30/37")
+    C35_45 = Concrete("C35/45")
+    C40_50 = Concrete("C40/50")
+    C45_55 = Concrete("C45/55")
+    C50_60 = Concrete("C50/60")
+    C55_67 = Concrete("C55/67")
+    C60_75 = Concrete("C60/75")
+    C70_85 = Concrete("C70/85")
+    C80_95 = Concrete("C80/95")
+    C90_105 = Concrete("C90/105")
+
+def get_concrete(concrete: Union[str, Concrete, ConcreteGrade]) -> Concrete:
+    if isinstance(concrete, Concrete):
+        return concrete
+    elif isinstance(concrete, ConcreteGrade):
+        return concrete.value
+    elif isinstance(concrete, str):
+        return Concrete(concrete)
+    else:
+        raise TypeError("Input must be a str, Concrete, or ConcreteGrade")
 
 class Reinforcement:
     def __init__(self, type_label: str | ReinforcementClass = "B500B"):
@@ -158,6 +206,35 @@ class Reinforcement:
     def __str__(self):
         return f"Reinforcement {self.grade} (fyk={self.fyk} MPa, epsilon_uk={self.epsilon_uk} ‰, " \
             f"ftk={self.ftk} MPa, Es={self.Es} MPa, ClassType='{self.ClassType}', fyd={self.fyd} MPa)"
+
+class ReinforcementGrade(Enum):
+    A400NR = Reinforcement("A400NR")
+    A500NR = Reinforcement("A500NR")
+    A500EL = Reinforcement("A500EL")
+    A400NRSD = Reinforcement("A400NRSD")
+    A500NRSD = Reinforcement("A500NRSD")
+    B400A = Reinforcement("B400A")
+    B400B = Reinforcement("B400B")
+    B400C = Reinforcement("B400C")
+    B500A = Reinforcement("B500A")
+    B500B = Reinforcement("B500B")
+    B500C = Reinforcement("B500C")
+    B600A = Reinforcement("B600A")
+    B600B = Reinforcement("B600B")
+    B600C = Reinforcement("B600C")
+    B700A = Reinforcement("B700A")
+    B700B = Reinforcement("B700B")
+    B700C = Reinforcement("B700C")
+
+def get_reinforcement(reinforcement: Union[str, Reinforcement, ReinforcementGrade]) -> Reinforcement:
+    if isinstance(reinforcement, Reinforcement):
+        return reinforcement
+    elif isinstance(reinforcement, ReinforcementGrade):
+        return reinforcement.value
+    elif isinstance(reinforcement, str):
+        return Reinforcement(reinforcement)
+    else:
+        raise TypeError("Input must be a str, Reinforcement, or ReinforcementGrade")
 
 class Prestress:
     def __init__(self, type_label: str | PrestressClass = "Y1860S7 12.5"):
@@ -199,3 +276,35 @@ class Prestress:
         return f"Prestress {self.name} (pType='{self.pType}', zone='{self.zone}', " \
             f"fpk={self.fpk} MPa, fp0_1k={self.fp0_1k} MPa, Ep={self.Ep} MPa, d={self.d} mm, " \
             f"Ap={self.Ap} cm², fpd={self.fpd} MPa)"
+
+from . import material
+from .material import beta_cc
+from .material import beta_ce
+from .material import cemprops
+from .material import calc_creep_coef # EN1992-1:2004
+from .material import calc_shrink_strain # EN1992-1:2004
+
+from . import fire
+from . import crack
+from .crack import iscracked_annexLL
+
+from . import uls
+from .uls import beam
+from .uls.beam import get_bend_params
+from .uls.beam import calc_mrd
+from .uls.beam import calc_asl
+from .uls import shear
+from .uls.shear import calc_asws
+from .uls.shear import calc_vrd 
+from .uls.shear import calc_vrdc
+from .uls.shear import calc_vrdmax
+from .uls import shell
+from .uls.shell import calc_reinf_shell
+from .uls.shell import calc_reinf_plane
+
+from . import sls
+from .sls import shrinkage
+from .sls.shrinkage import shrink_strain # EN1992-1:2025
+from .sls import creep
+from .sls.creep import creep_coef # EN1992-1:2025
+

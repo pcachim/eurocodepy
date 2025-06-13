@@ -1,7 +1,10 @@
-import math
 import numpy as np
-from typing import Tuple, Dict, List
-import eurocodepy as ec
+from typing import Tuple, Dict, List, Union
+
+from eurocodepy.ec2 import Concrete, ConcreteGrade, get_concrete
+from eurocodepy.ec2 import Reinforcement, ReinforcementGrade, get_reinforcement
+from eurocodepy.ec2 import gamma_C, gamma_S
+from eurocodepy.utils import calc_section_rectangular
 
 
 def calc_vrdmax(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float, cott: float) -> float:
@@ -66,7 +69,7 @@ def calc_asws(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: floa
     niu = 0.6*(1.0-fck/250)
     vrd_max = bw * z * niu * fck / g_c * 1000.0 / (cott + 1.0/cott)
 
-    asw_s = ved / z / fyk * g_s / cott / 1000.0 if vrd_max >= ved else math.nan
+    asw_s = ved / z / fyk * g_s / cott / 1000.0 if vrd_max >= ved else np.nan
     return asw_s, vrd_max
 
 
@@ -83,8 +86,8 @@ def calc_vrdc(bw: float, d: float, fck: float, g_c: float, rho_l: float) -> Tupl
     Returns:
         Tuple[float, float, float]: (vrd.min, vrd.c, vrd [min(vrd.mmin, vrd.c])
     """
-    k = min(2.0, 1.0+math.sqrt(0.2/d))
-    vrd_min = 35.0 * math.pow(k, 1.5) * math.sqrt(fck) * bw * d
+    k = min(2.0, 1.0+np.sqrt(0.2/d))
+    vrd_min = 35.0 * np.pow(k, 1.5) * np.sqrt(fck) * bw * d
     vrd_c = 180.0 / g_c * k * (100.0*rho_l*fck)**(1.0/3.0) * bw * d
     vrd = max (vrd_min, vrd_c)
     return vrd_min, vrd_c, vrd
@@ -109,9 +112,9 @@ def calc_asl(b: float, d: float, med: float, fcd: float=13.7, fyd: float=348.0, 
     dd = d
     miu = mmed/bb/d**2/fcd/1000.0
     try:
-        omega = 1.0-math.sqrt(1-2*miu)
+        omega = 1.0-np.sqrt(1-2*miu)
     except:
-        omega = math.nan
+        omega = np.nan
     alpha = 1.25*omega
     ast = omega*b*d*fcd/fyd * 10000.0
     epss = (1.0-alpha)*3.5/alpha
@@ -145,9 +148,10 @@ def calc_mrd(b: float, d: float, ast: float, fcd: float=20.0, fyd: float=400.0, 
 
 
 def get_bend_params(conc:str='C20/25')->Tuple[float, float, float]:
-    n = ec.ConcreteClasses[conc]['n']
-    epsc2 = ec.ConcreteClasses[conc]['epsc2']
-    epscu2 = ec.ConcreteClasses[conc]['epscu2']
+    concrete = Concrete(conc)
+    n = concrete.n
+    epsc2 = concrete.eps_c2
+    epscu2 = concrete.eps_cu2
     epsc12 = epsc2/epscu2
     chi1 = 1.0-epsc12/(n+1)
     chi2 = 1.0-((n+1)*(n+2)*0.5-epsc12**2)/((n+1)*(n+2)*chi1)
@@ -156,9 +160,11 @@ def get_bend_params(conc:str='C20/25')->Tuple[float, float, float]:
 
 
 class RCBeam:
-    def __init__(self, b: float, h: float, at: float = 0.05, ac: float = 0.05,
-                conc: str="C25/30", gammac = None, reinf: str="B500B", gammas = None) -> None:
-        """_summary_
+    def __init__(self, b: float, h: float, at: float, ac: float,
+                conc: Union[str, Concrete, ConcreteGrade]=Concrete("C20/25"), 
+                reinf: Union[str, Reinforcement, ReinforcementGrade]=Reinforcement("B500B")) -> None:
+        """Reinforced concrete beam object. Characterized by bredth (b), height (h), reinforcement covers  and materials.
+        Checks ULS for bending and shear.
 
         Args:
             b (float): bredth of the beam in m.
@@ -168,6 +174,8 @@ class RCBeam:
             at (float, optional): tensile reinforcement mechanical cover. Defaults to 0.05 m.
             ac (float, optional): compressive reinforcement mechanical cover. Defaults to 0.05 m.
         """
+        self.concrete = get_concrete(conc)
+        self.reinforcement = get_reinforcement(reinf)
         self.b = b
         self.h = h
         self.conc = conc
@@ -175,12 +183,12 @@ class RCBeam:
         self.at = at
         self.ac = ac
         self.d = self.h - self.at
-        self.fck = ec.ConcreteClasses[self.conc]['fck']
-        self.fyk = ec.ReinforcementClasses[self.reinf]['fyk']
-        self.gammac = gammac if gammac is not None else 1.5
-        self.gammas = gammas if gammas is not None else 1.15
-        self.fcd = self.fck/self.gammac
-        self.fyd = self.fyk/self.gammas
+        self.fck = self.concrete.fck
+        self.fyk = self.reinforcement.fyk
+        self.gammac = gamma_C
+        self.gammas = gamma_S
+        self.fcd = self.concrete.fck
+        self.fyd = self.reinforcement.fyd
         return
     
     def calcShear(self, med: float, ved: float, cott: float = 2.5, iprint: bool=False) -> Tuple[float, float, float]:
@@ -192,11 +200,12 @@ class RCBeam:
         asws = 0.0
         vrdmax = 0.0
 
-        cotetas = np.arange(1.0, 2.5000000000000000000001, 0.1)
+        cotetas = np.arange(1.0, 2.5001, 0.1)
         vrdmaxs = calc_vrdmax(self.b, self.d, self.fck, self.gammac, self.fyk, self.gammas, cotetas)
-        min_val = min(filter(lambda i: i > ved, vrdmaxs))
+        min_val = np.min(filter(lambda i: i > ved, vrdmaxs))
+        # cott = cotetas[i]
 
-        asws = calc_asws(self.b, self.d, self.fck, self.gammac, self.fyk,self.gammas, ved)
+        asws = calc_asws(self.b, self.d, self.fck, self.gammac, self.fyk,self.gammas, cott, ved, 1.0)
         return aslt, aslc, alpha, epsst, epssc, asws, vrdmax
     
     def calcBending(self, med: float, delta: float = 1.0, iprint: bool=False) -> Tuple[float, float, float, float, float]:
@@ -213,46 +222,38 @@ class RCBeam:
 
         # Calculate med_max
         alpha_c = self.ac/self.d
-        epscu2 = ec.ConcreteClasses[self.conc]['epscu2']
+        epscu2 = self.concrete.eps_cu2
 
         alpha_lim = 0.45 if self.fck <= 50 else 0.35 # correct this values for fck > 50
         omega_max = alpha_lim/1.25
         miu_max = omega_max*(1-0.5*omega_max)
         med_max = miu_max*self.b*self.d*self.d*self.fck/self.gammac*1000.0
         
-        # Check if miu is less than miu-max and calculate reinforcement accordingly
-        if med <= med_max:
-            # Calculate reinforcement for miu < miu-max
-            aslt, epsst, alpha = calc_asl(self.b, self.d, med, self.fcd, self.fyd, iprint)
-            aslc = None
-            epssc = None
-        else:
-            # Calculate reinforcement for miu = miu-max
-            epsyd = self.fyd/ec.ReinforcementClasses[self.reinf]['Es']*1000
-            # epssc = (alpha_lim-alpha_c)/alpha_lim*epscu2
-            # if epssc < epsyd:
-            #     alpha_lim = epscu2/(epscu2-epsyd)*alpha_c
-            #     omega_max = alpha_lim/1.25
-            #     miu_max = omega_max*(1-0.5*omega_max)
-            #     med_max = miu_max*self.b*self.d*self.d*self.fck/self.gammac*1000.0
-            
-            aslt, epsst, alpha = calc_asl(self.b, self.d, med_max, self.fcd, self.fyd, iprint)
-            aslc = (med-med_max)/(self.d-self.ac)/self.fyd*10.0
-            aslt += aslc
-            epssc = (alpha-alpha_c)/alpha*epscu2
-
+        aslt = 0.0
+        aslc = 0.0
+        alpha = 0.0
+        epsst = 0.0
+        epssc = 0.0
         
-        return aslt, aslc, alpha, epsst, epssc
+        # Check if miu is less than miu-max and calculate reinforcement accordingly
+        # if med <= med_max:
+        med_eff = np.minimum(med, med_max)
+        aslt, epsst, alpha = calc_asl(self.b, self.d, med_eff, self.fcd, self.fyd, iprint)
+        aslc = np.where(med <= med_max, 0.0, (med - med_max) / ((self.d - self.ac) * self.fyd) * 10.0)
+        aslt += aslc
+        epssc = np.where(med <= med_max, None, (alpha-alpha_c)/alpha*epscu2)
+        
+        return np.array([aslt, aslc, alpha, epsst, epssc])
+
 
 if __name__ == "__main__":
     # test RCBeam class
     print("\nTest RCBeam:\n")
-    beam = RCBeam(0.3, 0.5, at=0.05, ac=0.05, conc="C70/85", reinf="A500NR")
+    beam = RCBeam(0.3, 0.5, at=0.05, ac=0.05, conc=ConcreteGrade.C30_37, reinf="A500NR")
     a = beam.calcShear(100.0, 100.0)
     asl, asc, a, epst, epsc = beam.calcBending(100.0)
-    print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
+    print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}")
     asl, asc, a, epst, epsc = beam.calcBending(500.0)
-    print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
+    print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}")
     asl, asc, a, epst, epsc = beam.calcBending(900.0)
-    print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
-
+    print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}")

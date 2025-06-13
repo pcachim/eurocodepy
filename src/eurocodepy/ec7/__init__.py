@@ -70,6 +70,9 @@ class Soil:
     cohesion: float = 0.0  # Effective cohesion in kPa, default is 0
     is_drained: bool = True  # Drained condition, default is True
     is_coherent: bool = False  # Whether the soil is cohesive, default is False
+    young: float = 30.0 # Young modulus in MPa
+    poiss: float = 0.3 # Poisson coefficient
+    ks: float = 30000 # modulus of subgrade reaction kN/m3
 
     def __post_init__(self):
         # Convert angles to radians
@@ -77,6 +80,27 @@ class Soil:
         self.conc_friction_angle = np.radians(self.conc_friction_angle)
         if self.cohesion > 0:
             self.is_coherent = True
+    
+    @staticmethod
+    def get_Es_from_SPT(Nspt: float) -> float:
+        pass
+
+    @staticmethod
+    def get_sigadm_from_SPT(Nspt: float) -> float:
+        pass
+
+    @staticmethod
+    def get_sigadm_from_CPT(Nspt: float) -> float:
+        pass
+
+    @staticmethod
+    def get_ks_from_SPT(Nspt: float) -> float:
+        pass
+
+    @staticmethod
+    def get_ks_from_Es(Es: float) -> float:
+        pass
+
 
 class SoilEnum():
     Sand = Soil(name="Sand", unit_weight=18.0, friction_angle=30.0, conc_friction_angle=20.0, sig_adm=200.0, cohesion=0.0, is_drained=True)

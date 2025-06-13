@@ -1,4 +1,15 @@
 import numpy as np
+from dataclasses import dataclass
+
+@dataclass
+class CrossSectionProperties():
+    Area: float
+    Inertia: float
+    G_inf: float
+    G_sup: float
+    NeutralAxis: float
+    W_inf: float
+    W_sup: float
 
 # Resolver a equação cúbica
 def calc_section_T(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display=False, label="SECÇÃO EM T") -> tuple:
@@ -388,3 +399,6 @@ if __name__ == "__main__":
 
     # Calcular valores
     prop_cr = calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_E_s, alpha_E_p, M, P, display=True)
+
+
+    
