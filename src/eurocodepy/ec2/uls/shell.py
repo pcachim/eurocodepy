@@ -2,7 +2,7 @@ import math
 import numpy as np
 
 
-def calc_reinf_plane(n_xx: float, n_yy:float, n_xy: float)->list:
+def calc_reinf_plane(n_xx: float, n_yy:float, n_xy: float) -> list:
     """Calculate the reinforcement in a plane element.
 
     Args:
@@ -12,6 +12,7 @@ def calc_reinf_plane(n_xx: float, n_yy:float, n_xy: float)->list:
 
     Returns:
         list: the reinforecment in both diretions and concrete stresses
+
     """
     abs_n_xy = abs(n_xy)
     n_xx_n_yy = n_xx * n_yy
@@ -39,14 +40,24 @@ def calc_reinf_plane(n_xx: float, n_yy:float, n_xy: float)->list:
         asx = 0.0
         asy = 0.0
         asc = abs(cen - rad)
-        
+
     return [asx, asy, asc, theta]
 
 
-def cal_reinf_shell_plan(n_t_xx: float, n_t_yy: float, n_t_xy: float, 
-                n_b_xx: float, n_b_yy: float, n_b_xy: float)->np.ndarray:
+def cal_reinf_shell_plan(top_forces: tuple, bottom_forces: tuple) -> np.ndarray:
+    """Calculate reinforcement for shell plane given top and bottom force tuples.
 
-    return np.array(calc_reinf_plane(n_t_xx, n_t_yy, n_t_xy) + calc_reinf_plane(n_b_xx, n_b_yy, n_b_xy))
+    Args:
+        top_forces (tuple): (n_t_xx, n_t_yy, n_t_xy)
+        bottom_forces (tuple): (n_b_xx, n_b_yy, n_b_xy)
+
+    Returns:
+        np.ndarray: Reinforcement and concrete stresses for both layers.
+
+    """
+    return np.array(
+        calc_reinf_plane(*top_forces) + calc_reinf_plane(*bottom_forces)
+    )
 
 
 def calc_reinf_shell(n_xx: float, n_yy: float, n_xy: float, m_xx: float, m_yy: float, m_xy: float,
@@ -65,20 +76,20 @@ def calc_reinf_shell(n_xx: float, n_yy: float, n_xy: float, m_xx: float, m_yy: f
 
     Returns:
         np.array: the reinforecment in both diretions in top and bottom layer and concrete stresses
-    """
 
+    """
     t = 2 * rec
     z = h - t
-    if h - 4 * rec < 0: return np.array([math.nan,math.nan,math.nan,math.nan,math.nan,math.nan])
-    
-    n_t_xx = (0.5*n_xx + m_xx/z) / t
-    n_t_yy = (0.5*n_yy + m_yy/z) / t
-    n_t_xy = (0.5*n_xy - m_xy/z) / t
+    if h - 4 * rec < 0:
+        return np.array([math.nan, math.nan, math.nan, math.nan, math.nan, math.nan])
 
-    n_b_xx = (0.5*n_xx - m_xx/z) / t
-    n_b_yy = (0.5*n_yy - m_yy/z) / t
-    n_b_xy = (0.5*n_xy + m_xy/z) / t
+    n_t_xx = (0.5 * n_xx + m_xx / z) / t
+    n_t_yy = (0.5 * n_yy + m_yy / z) / t
+    n_t_xy = (0.5 * n_xy - m_xy / z) / t
+
+    n_b_xx = (0.5 * n_xx - m_xx / z) / t
+    n_b_yy = (0.5 * n_yy - m_yy / z) / t
+    n_b_xy = (0.5 * n_xy + m_xy / z) / t
 
     as_vect = np.vectorize(cal_reinf_shell_plan, otypes=[np.ndarray])
-    as_total = as_vect(n_t_xx, n_t_yy, n_t_xy, n_b_xx, n_b_yy, n_b_xy)
-    return as_total
+    return as_vect(n_t_xx, n_t_yy, n_t_xy, n_b_xx, n_b_yy, n_b_xy)

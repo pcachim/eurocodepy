@@ -1,56 +1,217 @@
 """Eurocode 2: Design of concrete structures.
+
 This module provides classes and functions for Eurocode 2 concrete design.
-It includes properties for different concrete grades and types, as well as calculations for serviceability and ultimate limit states.
+It includes properties for different concrete grades and types, as well as calculations
+for serviceability and ultimate limit states.
 """
+
 from enum import Enum
-from typing import Union, List
+
 import numpy as np
-from .. import db
 
-from .. import utils
+from eurocodepy import db
 
-gamma_C = db.ConcreteParams["gamma_cc"]
-gamma_CT = db.ConcreteParams["gamma_ct"]
-ConcreteClass = Enum("ConcreteClass", {item: item.replace("_", "/") for item in db.ConcreteGrades.keys()})
+GammaC = db.ConcreteParams["gamma_cc"]
+GammaCT = db.ConcreteParams["gamma_ct"]
+ConcreteClass = Enum(
+    "ConcreteClass",
+    {item: item.replace("_", "/") for item in db.ConcreteGrades},
+)
 ReinforcementClass = Enum("ReinforcementClass", list(db.ReinforcementGrades.keys()))
-gamma_S = db.ReinforcementParams["gamma_s"]
+GammaS = db.ReinforcementParams["gamma_s"]
 PrestressClass = Enum("PrestressClass", list(db.PrestressGrades.keys()))
+GammaP = db.PrestressParams["gamma_p"]
+
+MAX_BUNDLE_BARS = 4
+MIN_BUNDLE_BARS = 2
+REF_FCK = 50
+
 
 class Bar:
-    def __init__(self, diameter: float, number: int = 1):
-        self.diameter = diameter
-        self.area = np.round(np.pi * diameter**2 / 4.0, 2)
-        self.number = number
+    """Represents a reinforcement bar with a given diameter and number of bars.
 
-    def __eq__(self, other):
-        """Compara barras com base no diâmetro e área."""
+    Attributes
+    ----------
+    diameter : float
+        Diameter of the bar.
+    area : float
+        Area of the bar cross-section.
+    number : int
+        Number of bars in the bundle.
+
+    Methods
+    -------
+    total_area
+        Returns the total area of all bars.
+
+    """
+
+    def __init__(self, diameter: float, n: int = 1) -> None:
+        """Initialize a Bar with a given diameter and number of bars.
+
+        Args:
+            diameter (float): Diameter of the bar.
+            n (int, optional): Number of bars in the bundle. Defaults to 1.
+
+        """
+        self.diameter = diameter
+        self.area = round(np.pi * diameter**2 / 400.0, 2)
+        self.number = n
+
+    def total_area(self) -> float:
+        """Return the total area of all bars in the bundle.
+
+        Returns
+        -------
+        float
+            The total area of all bars in the bundle.
+
+        """
+        return self.number * self.area
+
+    def __eq__(self, other: object) -> bool:
+        """Compara barras com base no diâmetro e área.
+
+        Returns
+        -------
+        bool
+            True se as barras têm o mesmo diâmetro, False caso contrário.
+
+        """
         return (
             isinstance(other, Bar) and
             self.diameter == other.diameter
         )
 
-    def __repr__(self):
+    def __hash__(self) -> int:
+        """Make Bar hashable based on diameter.
+
+        Returns
+        -------
+        int
+            Hash value based on the bar's diameter.
+
+        """
+        return hash(self.diameter)
+
+    def __repr__(self) -> str:
+        """Return a string representation of the Bar object.
+
+        Returns
+        -------
+        str
+            String representation of the Bar object.
+
+        """
         return f"Bar(diameter={self.diameter}, area={self.area})"
 
+
 class Bundle:
-    def __init__(self, bars: List[Bar]):
-        if len(bars) > 4:
-            raise ValueError("Number of bars in a bundle must be less or equal 4")
+    """Represents a bundle of reinforcement bars for concrete design.
+
+    Attributes
+    ----------
+    bars : list[Bar]
+        List of Bar objects included in the bundle.
+    diameter : float
+        Equivalent diameter of the bundle.
+    area : float
+        Total area of all bars in the bundle.
+    number : int
+        Number of bundles.
+
+    Methods
+    -------
+    total_area
+        Returns the total area of all bars in the bundle.
+    equiv_diameter
+        Calculates and returns the equivalent diameter of the bundle.
+
+    """
+
+    def __init__(self, bars: list[Bar], number: int = 1) -> None:
+        """Initialize a Bundle with a list of Bar objects.
+
+        Args:
+            bars (list[Bar]): List of Bar objects to be included in the bundle.
+            number (int, optional): Number of bundles. Defaults to 1.
+
+        Raises:
+            ValueError: If the number of bars in the bundle is less than 2 or
+                greater than 4.
+
+        """
+        if len(bars) > MAX_BUNDLE_BARS:
+            msg = "Number of bars in a bundle must be less or equal 4"
+            raise ValueError(msg)
+        if len(bars) < MIN_BUNDLE_BARS:
+            msg = "Number of bars in a bundle must be more than 1"
+            raise ValueError(msg)
         self.bars = bars
-        self.diameter = np.sqrt(sum(x**2 for x in bars))
+        self.diameter = np.sqrt(sum(x.diameter**2 for x in bars))
         self.area = sum(bar.area for bar in self.bars)
+        self.number = number
+
+    @property
+    def total_area(self) -> float:
+        """Return the total area of all bars in the bundle."""
+        return self.number * self.area
+
+    @property
+    def equiv_diameter(self) -> float:
+        """Calculate and return the equivalent diameter of the bundle of bars.
+
+        Returns
+        -------
+        float
+            The equivalent diameter calculated as the sum of squared
+            diameters divided by the sum of diameters.
+
+        """
+        num = sum(bar.diameter**2 for bar in self.bars)
+        den = sum(bar.diameter for bar in self.bars)
+        return num / den
+
 
 class BarLayout:
-    def __init__(self, bars: List[Bar] = None):
+    """Manages a layout of reinforcement bars or bundles for concrete design.
+
+    Attributes
+    ----------
+    bars : list[Bar]
+        List of Bar objects representing the reinforcement layout.
+
+    Methods
+    -------
+    add_bar(item: Union[Bar, Bundle], n: int = 1)
+        Adds a bar or bundle of bars to the layout.
+    total_area
+        Returns the total area of all bars in the layout.
+    diameter
+        Returns the diameter (to be implemented).
+
+    """
+
+    def __init__(self, bars: list[Bar]) -> None:
+        """Initialize a BarLayout with a list of Bar objects.
+
+        Args:
+            bars (list[Bar]): List of Bar objects representing the reinforcement layout.
+
+        """
         self.bars = bars if bars is not None else []
 
-    def add_bar(self, item: Union[Bar, Bundle], n: int = 1):
-        """
-        Adiciona uma barra ou um bundle de barras ao layout.
-        
+    def add_bar(self, item: Bar | Bundle, n: int = 1) -> None:
+        """Adiciona uma barra ou um bundle de barras ao layout.
+
         Args:
             item (Bar or Bundle): objeto Bar individual ou Bundle de barras.
-            n (int): número de vezes que o item será adicionado (aplicado ao número de barras).
+            n (int): número de vezes que o item será adicionado
+                (aplicado ao número de barras).
+
+        Raises:
+            TypeError: Se o item não for do tipo Bar ou Bundle.
+
         """
         if isinstance(item, Bar):
             self._add_or_merge_bar(item, n)
@@ -58,38 +219,95 @@ class BarLayout:
             for bar in item.bars:
                 self._add_or_merge_bar(bar, n)
         else:
-            raise TypeError("Item deve ser do tipo Bar ou Bundle")
+            msg = "Item deve ser do tipo Bar ou Bundle"
+            raise TypeError(msg)
 
-    def _add_or_merge_bar(self, bar: Bar, n: int):
+    def _add_or_merge_bar(self, bar: Bar, n: int) -> None:
         for existing_bar in self.bars:
             if existing_bar == bar:
                 existing_bar.number += bar.number * n
                 return
         # Não encontrou igual, adiciona nova entrada
-        self.bars.append(Bar(bar.diameter, bar.area, bar.number * n))
+        self.bars.append(Bar(bar.diameter, bar.number * n))
 
+    @property
     def total_area(self) -> float:
         """Retorna a área total considerando todas as barras."""
         return sum(bar.area * bar.number for bar in self.bars)
 
+    @property
+    def diameter(self) -> float:
+        """Returns the diameter (to be implemented)."""
+        return self.diameter
+
+
 class Concrete:
-    def __init__(self, class_name: Union[str] = "C30/37"):
+    """Represents EC2 concrete properties and provides access to parameters.
+
+    Attributes
+    ----------
+    grade : str
+        The concrete grade (e.g., 'C30/37').
+    name : str
+        The normalized name of the concrete grade.
+    fck : float
+        Characteristic compressive strength (MPa).
+    fcm : float
+        Mean compressive strength (MPa).
+    fctm : float
+        Mean tensile strength (MPa).
+    fctk_05 : float
+        5% fractile tensile strength (MPa).
+    fctk_95 : float
+        95% fractile tensile strength (MPa).
+    Ecm : float
+        Modulus of elasticity (MPa).
+    eps_c2 : float
+        Strain at peak stress.
+    eps_cu2 : float
+        Ultimate compressive strain.
+    n : float
+        Parameter n for stress-strain curve.
+    gamma_c : float
+        Partial safety factor for concrete.
+    fcd : float
+        Design compressive strength (MPa).
+    fctd : float
+        Design tensile strength (MPa).
+
+    Methods
+    -------
+    __repr__()
+        Returns a string representation of the Concrete object.
+    __str__()
+        Returns a user-friendly string representation of the Concrete object.
+    from_fck(f_ck: int, name: object = None)
+        Class method to create a Concrete instance from characteristic
+        compressive strength.
+
+    """
+
+    def __init__(self, class_name: str = "C30/37") -> None:
+        """Eurocode 2 concrete properties.
+
+        :param fck: Characteristic compressive strength of concrete (MPa).
+
+        Raises
+        ------
+        ValueError
+            If the concrete class is not found in the database.
+
         """
-        Eurocode 2 concrete properties.
-        :param fck: Characteristic compressive strength of concrete (MPa)
-        """
-        if isinstance(class_name, ConcreteClass):
-            self.grade = class_name.value
-            class_name = class_name.value
-        elif isinstance(class_name, str):
-            self.grade = class_name
-        else:
-            raise TypeError("class_name must be a string or ConcreteClass enum")
+        self.grade = class_name
 
         class_name = class_name.replace("/", "_").upper()
-        if class_name not in db.ConcreteGrades.keys():
-            grades_list = [item.replace("_", "/") for item in db.ConcreteGrades.keys()]
-            raise ValueError(f"Concrete class '{class_name}' not found in database. Concrete type must be one of {grades_list}")
+        if class_name not in db.ConcreteGrades:
+            grades_list = [item.replace("_", "/") for item in db.ConcreteGrades]
+            msg = (
+                f"Concrete class '{class_name}' not found in database. "
+                f"Concrete type must be one of {grades_list}"
+            )
+            raise ValueError(msg)
 
         conc = db.ConcreteGrades[class_name]
         self.name = class_name
@@ -102,43 +320,81 @@ class Concrete:
         self.eps_c2 = conc["epsc2"]  # Strain at peak stress
         self.eps_cu2 = conc["epscu2"]  # Ultimate compressive strain
         self.n = conc["n"]  # Ultimate compressive strain
-        
-        self.fcd = round(self.fck / gamma_C, 1)  # Design yield strength (MPa)
-        self.fctd = round(self.fctk_05 / gamma_CT, 1)  # Design yield strength (MPa)
-        
-    def __repr__(self):
-        return f"Concrete(grade='{self.grade}', fck={self.fck}, fcm={self.fcm}, fctm={self.fctm}, " \
-            f"fctk_05={self.fctk_05}, fctk_95={self.fctk_95}, Ecm={self.Ecm}, eps_c2={self.eps_c2}, " \
-            f"eps_cu2={self.eps_cu2}, n={self.n}, fcd={self.fcd}, fctd={self.fctd})"
-    
-    def __str__(self):
-        return f"Concrete {self.grade} (fck={self.fck} MPa, fcm={self.fcm} MPa, fctm={self.fctm} MPa, " \
-            f"fctk_05={self.fctk_05} MPa, fctk_95={self.fctk_95} MPa, Ecm={self.Ecm} MPa, " \
-            f"eps_c2={self.eps_c2}, eps_cu2={self.eps_cu2}, n={self.n}, fcd={self.fcd} MPa, " \
-            f"fctd={self.fctd} MPa)"
 
-    @property
-    def C25_30(self):
-        return Concrete("C25/30")  # Default concrete class
+        self.gamma_c = GammaC
+        self.fcd = round(self.fck / GammaC, 1)  # Design yield strength (MPa)
+        self.fctd = round(self.fctk_05 / GammaCT, 1)  # Design yield strength (MPa)
+
+    def __repr__(self) -> str:
+        """Return a string representation of the Concrete object.
+
+        Returns
+        -------
+        str
+            String representation of the Concrete object.
+
+        """
+        return (
+            f"Concrete(grade='{self.grade}', fck={self.fck}, fcm={self.fcm}, "
+            f"fctm={self.fctm}, fctk_05={self.fctk_05}, fctk_95={self.fctk_95}, "
+            f"Ecm={self.Ecm}, eps_c2={self.eps_c2}, eps_cu2={self.eps_cu2}, "
+            f"n={self.n}, fcd={self.fcd}, fctd={self.fctd})"
+        )
+
+    def __str__(self) -> str:
+        """Return a string representation of the Concrete object.
+
+        Returns
+        -------
+        str
+            String representation of the Concrete object.
+
+        """
+        return (
+            f"Concrete {self.grade} ("
+            f"fck={self.fck} MPa, "
+            f"fcm={self.fcm} MPa, "
+            f"fctm={self.fctm} MPa, "
+            f"fctk_05={self.fctk_05} MPa, "
+            f"fctk_95={self.fctk_95} MPa, "
+            f"Ecm={self.Ecm} MPa, "
+            f"eps_c2={self.eps_c2}, "
+            f"eps_cu2={self.eps_cu2}, "
+            f"n={self.n}, "
+            f"fcd={self.fcd} MPa, "
+            f"fctd={self.fctd} MPa)"
+        )
 
     @classmethod
-    def from_fck(cls, f_ck: int, name=None) -> 'Concrete':
-        """
-        Create a Concrete instance from characteristic compressive strength, using EC2 relations.
-        :param f_ck: Characteristic compressive strength of concrete (MPa)
-        :type f_ck: int
-        :return: Concrete instance
+    def from_fck(cls, f_ck: int, name: object = None) -> "Concrete":
+        """Create a Concrete instance from characteristic compressive strength.
+
+        Args:
+            f_ck (int): Characteristic compressive strength of concrete (MPa)
+            name (str, optional): Name for the concrete grade.
+
+        Returns:
+            Concrete: Concrete instance.
+
         """
         fck = float(f_ck)
         cls.fck = round(fck, 1)  # MPa
         cls.fcm = round(fck + 8, 1)  # Mean compressive strength (MPa)
-        cls.fctm = round(0.30 * fck**(2/3), 1)  # Mean tensile strength (MPa)
+        cls.fctm = round(0.30 * fck**(2 / 3), 1)  # Mean tensile strength (MPa)
         cls.fctk_005 = round(0.7 * cls.fctm, 1)  # 5% fractile
         cls.fctk_095 = round(1.3 * cls.fctm, 1)  # 95% fractile
         cls.Ecm = round(22000 * (cls.fcm / 10)**0.3, 1)  # Modulus of elasticity (MPa)
-        cls.eps_c2 = 2.0 if fck <= 50 else 2.0 + 0.085 * (fck - 50) ** 0.53  # Strain at peak stress
-        cls.eps_cu2 = 3.5 if fck <= 50 else round(2.6+35*((90.0-fck)/100.0)**4, 1)
-        cls.n = 2.0 if fck <= 50 else round(1.4+23.4*((90.0-fck)/100.0)**4, 1)
+        cls.eps_c2 = 2.0 if fck <= REF_FCK else 2.0 + 0.085 * (fck - 50) ** 0.53
+        # Strain at peak stress
+        cls.eps_cu2 = (
+            3.5 if fck <= REF_FCK
+            else round(2.6 + 35 * ((90.0 - fck) / 100.0) ** 4, 1)
+        )
+        cls.n = (
+            2.0
+            if fck <= REF_FCK
+            else round(1.4 + 23.4 * ((90.0 - fck) / 100.0) ** 4, 1)
+        )
         if name is not None:
             cls.name = name
             cls.grade = name
@@ -146,12 +402,19 @@ class Concrete:
             cls.name = f"C{f_ck}"
             cls.grade = f"C{f_ck}"
 
-        cls.fcd = round(cls.fck / gamma_C, 1)  # Design yield strength (MPa)
-        cls.fctd = round(cls.fctk_05 / gamma_CT, 1)  # Design yield strength (MPa)
+        cls.gamma_c = GammaC
+        cls.fcd = round(cls.fck / GammaC, 1)  # Design yield strength (MPa)
+        cls.fctd = round(cls.fctk_05 / GammaCT, 1)  # Design yield strength (MPa)
 
-        return cls  
+        return cls
+
 
 class ConcreteGrade(Enum):
+    """Enumeration of standard Eurocode 2 concrete grades.
+
+    Each member represents a concrete grade with its associated properties.
+    """
+
     C20_25 = Concrete("C20/25")
     C25_30 = Concrete("C25/30")
     C30_37 = Concrete("C30/37")
@@ -165,49 +428,146 @@ class ConcreteGrade(Enum):
     C80_95 = Concrete("C80/95")
     C90_105 = Concrete("C90/105")
 
-def get_concrete(concrete: Union[str, Concrete, ConcreteGrade]) -> Concrete:
+
+def get_concrete(concrete: str | Concrete | ConcreteGrade) -> Concrete:
+    """Return a Concrete instance from a string, Concrete, or ConcreteGrade input.
+
+    Parameters
+    ----------
+    concrete : str, Concrete, or ConcreteGrade
+        The concrete specification as a string (e.g., 'C30/37'), a Concrete object,
+        or a ConcreteGrade enum.
+
+    Returns
+    -------
+    Concrete
+        A Concrete instance corresponding to the input.
+
+    Raises
+    ------
+    TypeError
+        If the input is not a str, Concrete, or ConcreteGrade.
+
+    """
     if isinstance(concrete, Concrete):
         return concrete
-    elif isinstance(concrete, ConcreteGrade):
+    if isinstance(concrete, ConcreteGrade):
         return concrete.value
-    elif isinstance(concrete, str):
+    if isinstance(concrete, str):
         return Concrete(concrete)
-    else:
-        raise TypeError("Input must be a str, Concrete, or ConcreteGrade")
+
+    msg = "Input must be a str, Concrete, or ConcreteGrade"
+    raise TypeError(msg)
+
 
 class Reinforcement:
-    def __init__(self, type_label: str | ReinforcementClass = "B500B"):
-        """
-        Eurocode 2 steel reinforcement properties.
+    """Represents Eurocode 2 steel reinforcement properties.
+
+    Attributes
+    ----------
+    grade : str
+        Steel type label (e.g., 'B500B', 'B500C').
+    name : str
+        Name of the reinforcement type.
+    fyk : float
+        Characteristic yield strength (MPa).
+    epsilon_uk : float
+        Ultimate strain (‰).
+    ftk : float
+        Characteristic tensile strength (MPa).
+    Es : float
+        Modulus of elasticity (MPa).
+    ClassType : str
+        Class type ('A', 'B', or 'C').
+    gamma_s : float
+        Partial safety factor for reinforcement.
+    fyd : float
+        Design yield strength (MPa).
+
+    Methods
+    -------
+    __repr__()
+        Returns a string representation of the Reinforcement object.
+    __str__()
+        Returns a user-friendly string representation of the Reinforcement object.
+
+    """
+
+    def __init__(self, type_label: str | ReinforcementClass = "B500B") -> None:
+        """Eurocode 2 steel reinforcement properties.
+
         :param type_label: Steel type label (e.g., 'B500B', 'B500C')
+
+        Raises
+        ------
+        ValueError
+            If the steel type is not found in the database.
+
         """
-        
         if isinstance(type_label, ReinforcementClass):
             type_label = type_label.name
         self.grade = type_label
         self.name = type_label
-        
-        if type_label not in db.ReinforcementGrades.keys():
-            raise ValueError(f"Steel type '{type_label}' not found in database. Steel type must be one of {list(db.ReinforcementGrades.keys())}")
+
+        if type_label not in db.ReinforcementGrades:
+            msg = (
+                f"Steel type '{type_label}' not found in database. "
+                f"Steel type must be one of {list(db.ReinforcementGrades.keys())}"
+            )
+            raise ValueError(msg)
 
         reinf = db.ReinforcementGrades[type_label]
-        self.fyk = reinf["fyk"] # Characteristic yield strength (MPa)
-        self.epsilon_uk = reinf["epsuk"] # Ultimate strain (‰)
-        self.ftk = reinf["ftk"] # Characteristic tensile strength (MPa)
-        self.Es = reinf["Es"] # Modulus of elasticity (MPa)
-        self.ClassType = reinf["T"] # 'A', 'B', or 'C'
-        
+        self.fyk = reinf["fyk"]  # Characteristic yield strength (MPa)
+        self.epsilon_uk = reinf["epsuk"]  # Ultimate strain (‰)
+        self.ftk = reinf["ftk"]  # Characteristic tensile strength (MPa)
+        self.Es = reinf["Es"]  # Modulus of elasticity (MPa)
+        self.ClassType = reinf["T"]  # 'A', 'B', or 'C'
+
         gamma_s = db.ReinforcementParams["gamma_s"]  # Partial safety factor
+        self.gamma_s = GammaS
         self.fyd = round(self.fyk / gamma_s, 1)  # Design yield strength (MPa)
-    
-    def __repr__(self):
-        return f"Reinforcement(grade='{self.grade}', fyk={self.fyk}, epsilon_uk={self.epsilon_uk}, " \
-            f"ftk={self.ftk}, Es={self.Es}, ClassType='{self.ClassType}', fyd={self.fyd})"
-    def __str__(self):
-        return f"Reinforcement {self.grade} (fyk={self.fyk} MPa, epsilon_uk={self.epsilon_uk} ‰, " \
-            f"ftk={self.ftk} MPa, Es={self.Es} MPa, ClassType='{self.ClassType}', fyd={self.fyd} MPa)"
+
+    def __repr__(self) -> str:
+        """Return a string representation of the Reinforcement object.
+
+        Returns
+        -------
+        str
+            String representation of the Reinforcement object.
+
+        """
+        return (
+            f"Reinforcement(grade='{self.grade}', fyk={self.fyk}, "
+            f"epsilon_uk={self.epsilon_uk}, ftk={self.ftk}, Es={self.Es}, "
+            f"ClassType='{self.ClassType}', fyd={self.fyd})"
+        )
+
+    def __str__(self) -> str:
+        """Return a string representation of the Reinforcement object.
+
+        Returns
+        -------
+        str
+            String representation of the Reinforcement object.
+
+        """
+        return (
+            f"Reinforcement {self.grade} ("
+            f"fyk={self.fyk} MPa, "
+            f"epsilon_uk={self.epsilon_uk} ‰, "
+            f"ftk={self.ftk} MPa, "
+            f"Es={self.Es} MPa, "
+            f"ClassType='{self.ClassType}', "
+            f"fyd={self.fyd} MPa)"
+        )
+
 
 class ReinforcementGrade(Enum):
+    """Enumeration of standard Eurocode 2 reinforcement steel grades.
+
+    Each member represents a reinforcement grade with its associated properties.
+    """
+
     A400NR = Reinforcement("A400NR")
     A500NR = Reinforcement("A500NR")
     A500EL = Reinforcement("A500EL")
@@ -226,23 +586,88 @@ class ReinforcementGrade(Enum):
     B700B = Reinforcement("B700B")
     B700C = Reinforcement("B700C")
 
-def get_reinforcement(reinforcement: Union[str, Reinforcement, ReinforcementGrade]) -> Reinforcement:
+
+def get_reinforcement(
+    reinforcement: str | Reinforcement | ReinforcementGrade,
+) -> Reinforcement:
+    """Return a Reinforcement object from string, Reinforcement, or ReinforcementGrade.
+
+    Parameters
+    ----------
+    reinforcement : str, Reinforcement, or ReinforcementGrade
+        The reinforcement specification as a string (e.g., 'B500B'), a
+        Reinforcement object, or a ReinforcementGrade enum.
+
+    Returns
+    -------
+    Reinforcement
+        A Reinforcement instance corresponding to the input.
+
+    Raises
+    ------
+    TypeError
+        If the input is not a str, Reinforcement, or ReinforcementGrade.
+
+    """
     if isinstance(reinforcement, Reinforcement):
         return reinforcement
-    elif isinstance(reinforcement, ReinforcementGrade):
+    if isinstance(reinforcement, ReinforcementGrade):
         return reinforcement.value
-    elif isinstance(reinforcement, str):
+    if isinstance(reinforcement, str):
         return Reinforcement(reinforcement)
-    else:
-        raise TypeError("Input must be a str, Reinforcement, or ReinforcementGrade")
+
+    msg = "Input must be a str, Reinforcement, or ReinforcementGrade"
+    raise TypeError(msg)
+
 
 class Prestress:
-    def __init__(self, type_label: str | PrestressClass = "Y1860S7 12.5"):
-        """
-        Eurocode 2 steel reinforcement properties.
-        :param type_label: Steel type label (e.g., 'Y1860S7 12.5', 'Y1860S7 15.2')
-        """
+    """Represents Eurocode 2 prestressing steel properties.
 
+    Attributes
+    ----------
+    name : str
+        Name of the prestressing steel type.
+    pType : str
+        Type of prestressing steel ('strand', 'bar', or 'wire').
+    zone : str
+        Zone classification.
+    fpk : float
+        Characteristic prestress force (MPa).
+    fp0_1k : float
+        Characteristic prestress force at 0.1% strain (MPa).
+    Ep : float
+        Modulus of elasticity (MPa).
+    d : float
+        Diameter (mm).
+    Ap : float
+        Cross-sectional area (cm²).
+    gamma_P : float
+        Partial safety factor for prestressing steel.
+    fpd : float
+        Design yield strength (MPa).
+
+    Methods
+    -------
+    __repr__()
+        Returns a string representation of the Prestress object.
+    __str__()
+        Returns a user-friendly string representation of the Prestress object.
+
+    """
+
+    def __init__(self, type_label: str | PrestressClass = "Y1860S7 12.5") -> None:
+        """Eurocode 2 steel reinforcement properties.
+
+        :param type_label: Steel type label (e.g., 'Y1860S7 12.5', 'Y1860S7 15.2').
+
+        Raises
+        ------
+        TypeError
+            If type_label is not a string or PrestressClass enum.
+        ValueError
+            If the prestress steel class is not found in the database.
+
+        """
         if isinstance(type_label, PrestressClass):
             class_name = type_label.name
             self.name = class_name.replace("_", " ", 1).replace("_", ".", 1)
@@ -251,42 +676,73 @@ class Prestress:
             class_name = type_label.replace(" ", "_")
             class_name = class_name.replace(".", "_")
         else:
-            raise TypeError("type_label must be a string or PrestressClass enum")
+            msg = "type_label must be a string or PrestressClass enum"
+            raise TypeError(msg)
 
-        if class_name not in db.PrestressGrades.keys():
-            grades_list = [item.replace("_", " ", 1).replace("_", ".", 1) for item in db.PrestressGrades.keys()]
-            raise ValueError(f"Prestress steel class '{class_name}' not found in database. Prestress type must be one of {grades_list}")
+        if class_name not in db.PrestressGrades:
+            grades_list = [
+                item.replace("_", " ", 1).replace("_", ".", 1)
+                for item in db.PrestressGrades
+            ]
+            msg = (
+                f"Prestress steel class '{class_name}' not found in database. "
+                f"Prestress type must be one of {grades_list}"
+            )
+            raise ValueError(msg)
 
         reinf = db.PrestressGrades[class_name]
-        self.pType = reinf["T"] # 'strand', 'bar', or 'wire'
+        self.pType = reinf["T"]  # 'strand', 'bar', or 'wire'
         self.zone = reinf["zone"]
-        self.fpk = reinf["fpk"] # Characteristic prestress force (MPa)
-        self.fp0_1k = reinf["fp0_1k"] # Characteristic prestress force at 0.1% strain (MPa)
-        self.Ep = reinf["Ep"] # Modulus of elasticity (MPa)
-        self.d = reinf["d"] # Diameter (mm)
-        self.Ap = reinf["Ap"] # Cross-sectional area (cm²)
+        self.fpk = reinf["fpk"]  # Characteristic prestress force (MPa)
+        # Characteristic prestress force at 0.1% strain (MPa)
+        self.fp0_1k = reinf["fp0_1k"]
+        self.Ep = reinf["Ep"]  # Modulus of elasticity (MPa)
+        self.d = reinf["d"]  # Diameter (mm)
+        self.Ap = reinf["Ap"]  # Cross-sectional area (cm²)
 
         gamma_p = db.PrestressParams["gamma_p"]  # Partial safety factor
+        self.gamma_P = gamma_p
         self.fpd = round(self.fp0_1k / gamma_p, 0)  # Design yield strength (MPa)
-    
-    def __repr__(self):
-        return f"Prestress(name='{self.name}', pType='{self.pType}', zone='{self.zone}', " \
-            f"fpk={self.fpk}, fp0_1k={self.fp0_1k}, Ep={self.Ep}, d={self.d}, Ap={self.Ap}, fpd={self.fpd})"
-    def __str__(self):
-        return f"Prestress {self.name} (pType='{self.pType}', zone='{self.zone}', " \
-            f"fpk={self.fpk} MPa, fp0_1k={self.fp0_1k} MPa, Ep={self.Ep} MPa, d={self.d} mm, " \
-            f"Ap={self.Ap} cm², fpd={self.fpd} MPa)"
+
+    def __repr__(self) -> str:
+        """Return a string representation of the Prestress object.
+
+        Returns
+        -------
+        str
+            String representation of the Prestress object.
+
+        """
+        return (
+            f"Prestress(name='{self.name}', pType='{self.pType}', zone='{self.zone}', "
+            f"fpk={self.fpk}, fp0_1k={self.fp0_1k}, Ep={self.Ep}, d={self.d}, "
+            f"Ap={self.Ap}, fpd={self.fpd})"
+        )
+
+    def __str__(self) -> str:
+        """Return a string representation of the Prestress object.
+
+        Returns
+        -------
+        str
+            String representation of the Prestress object.
+
+        """
+        return (
+            f"Prestress {self.name} (pType='{self.pType}', zone='{self.zone}', "
+            f"fpk={self.fpk} MPa, fp0_1k={self.fp0_1k} MPa, Ep={self.Ep} MPa, "
+            f"d={self.d} mm, Ap={self.Ap} cm², fpd={self.fpd} MPa)"
+        )
+
 
 from . import material
 from .material import beta_cc
 from .material import beta_ce
 from .material import cemprops
-from .material import calc_creep_coef # EN1992-1:2004
+from .material import calc_creep_coef  # EN1992-1:2004
 from .material import calc_shrink_strain # EN1992-1:2004
 
 from . import fire
-from . import crack
-from .crack import iscracked_annexLL
 
 from . import uls
 from .uls import beam
@@ -307,4 +763,3 @@ from .sls import shrinkage
 from .sls.shrinkage import shrink_strain # EN1992-1:2025
 from .sls import creep
 from .sls.creep import creep_coef # EN1992-1:2025
-

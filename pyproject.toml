@@ -32,6 +32,25 @@ dependencies = [
 ]
 
 
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.11.13",
+    "ty>=0.0.1a10",
+    "pre-commit>=4.2.0",
+]
+
 [project.urls]
 "Homepage" = "https://github.com/pcachim/eurocodepy"
 "Bug Tracker" = "https://github.com/pcachim/eurocodepy/issues"
+
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+lint.select = ["ALL"]
+lint.ignore = ["D100"]       # check available rules by: uv run ruff rules
+preview = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

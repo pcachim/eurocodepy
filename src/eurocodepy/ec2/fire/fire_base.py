@@ -2,24 +2,26 @@ import math
 import numpy as np
 import pandas as pd
 
-## Tables for tabulated data fire methods
-def delta_a(eta_fi, gamma_s, fyk, as_req_prov):
+
+# Tables for tabulated data fire methods
+def delta_a(eta_fi: float, gamma_s: float, fyk: float, as_req_prov: float):
     sig_s0 = np.array([20, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200])
-    sig_kt = np.array([1.0, 0.999999, 0.9, 0.85, 0.8, 0.6, 0.35, 
-                       0.1, 0.08, 0.06, 0.04, 0.02, 0.0])
+    sig_kt = np.array([1.0, 0.999999, 0.9, 0.85, 0.8, 0.6, 0.35,
+                    0.1, 0.08, 0.06, 0.04, 0.02, 0.0])
     sig_s = eta_fi * fyk * as_req_prov / gamma_s
     k_s = sig_s / fyk
     temp = np.interp(k_s, np.flip(sig_kt), np.flip(sig_s0))
     valid = 345 <= temp <= 705
     return round(0.1 * (500 - temp), 0), temp, valid
-    
+
+
 wall_a40rei = np.array([
     [10, 10, 10],
     [10, 15, 20],
     [20, 25, 30],
     [25, 30, 35],
     [35, 40, 45],
-    [40, 45, 50] ])
+    [40, 45, 50]])
 
 wall_h40rei = np.array([
     [100, 110, 120],
@@ -27,7 +29,7 @@ wall_h40rei = np.array([
     [120, 135, 140],
     [135, 150, 160],
     [155, 170, 180],
-    [180, 200, 210] ])
+    [180, 200, 210]])
 
 wall_h40r = np.array([
     [100, 120, 130],
@@ -35,7 +37,7 @@ wall_h40r = np.array([
     [140, 185, 210],
     [165, 210, 240],
     [200, 250, 280],
-    [250, 305, 340] ])
+    [250, 305, 340]])
 
 wall_a40r = np.array([
     [10, 10, 10],
@@ -43,7 +45,7 @@ wall_a40r = np.array([
     [20, 30, 35],
     [30, 40, 45],
     [45, 50, 45],
-    [50, 55, 60] ])
+    [50, 55, 60]])
 
 wall_h25rei = np.array([
     [ 80,  90, 100],
@@ -51,7 +53,7 @@ wall_h25rei = np.array([
     [100, 110, 120],
     [120, 120, 130],
     [150, 150, 150],
-    [170, 175, 175] ])
+    [170, 175, 175]])
 
 wall_h25r = np.array([
     [ 90, 100, 110],
@@ -59,7 +61,7 @@ wall_h25r = np.array([
     [125, 155, 170],
     [140, 175, 200],
     [175, 215, 240],
-    [200, 250, 280] ])
+    [200, 250, 280]])
 
 wall_a25rei = np.array([
     [10, 10, 10],
@@ -67,7 +69,7 @@ wall_a25rei = np.array([
     [10, 15, 20],
     [15, 20, 25],
     [20, 25, 30],
-    [25, 30, 35] ])
+    [25, 30, 35]])
 
 wall_a25r = np.array([
     [10, 10, 10],
@@ -75,7 +77,7 @@ wall_a25r = np.array([
     [15, 25, 30],
     [25, 35, 40],
     [30, 40, 45],
-    [35, 45, 50] ])
+    [35, 45, 50]])
 
 beam_bsimp = np.array([
     [ 80, 120, 160, 200],
@@ -83,7 +85,7 @@ beam_bsimp = np.array([
     [150, 200, 300, 400],
     [200, 240, 300, 500],
     [240, 300, 400, 600],
-    [280, 350, 500, 700] ])
+    [280, 350, 500, 700]])
 
 beam_bwsimp = np.array([
     [ 80],
@@ -91,7 +93,7 @@ beam_bwsimp = np.array([
     [110],
     [120],
     [140],
-    [160] ])
+    [160]])
 
 beam_asimp = np.array([
     [25, 20, 15, 15],
@@ -99,26 +101,26 @@ beam_asimp = np.array([
     [55, 45, 40, 35],
     [65, 60, 55, 50],
     [80, 70, 65, 60],
-    [90, 80, 75, 70] ])
+    [90, 80, 75, 70]])
 
 tables = [
-  wall_a40rei,
-  wall_h40rei,
-  wall_h40r,
-  wall_a40r,
-  wall_h25rei,
-  wall_h25r,
-  wall_a25rei,
-  wall_a25r,
-  beam_bsimp,
-  beam_bwsimp,
-  beam_asimp
+    wall_a40rei,
+    wall_h40rei,
+    wall_h40r,
+    wall_a40r,
+    wall_h25rei,
+    wall_h25r,
+    wall_a25rei,
+    wall_a25r,
+    beam_bsimp,
+    beam_bwsimp,
+    beam_asimp,
 ]
 
-## Tables concrete and steel properties
+# Tables concrete and steel properties
 stemp = np.array([20, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200])
 sig_ks = np.array(['ksyt_hot', 'ksyt_cold', 'kspt_hot', 
-                   'kspt_cold', 'kse', 'kest_hot', 'kest_cold'])
+                'kspt_cold', 'kse', 'kest_hot', 'kest_cold'])
 
 values_ks = np.array([
     [ 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00],
@@ -133,7 +135,7 @@ values_ks = np.array([
     [ 0.06, 0.08, 0.04, 0.05, 0.06, 0.07, 0.05],
     [ 0.04, 0.05, 0.02, 0.03, 0.04, 0.04, 0.03],
     [ 0.02, 0.03, 0.01, 0.02, 0.02, 0.02, 0.02],
-    [ 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    [ 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
     ])
 
 sig_kc = np.array(['kct_sil', 'kct_cal', 'kct_70', 'eps1t', 'epsu1t'])
@@ -150,7 +152,7 @@ values_kc = np.array([
     [ 0.08, 0.15, 0.08, 0.0250, 0.0425],
     [ 0.04, 0.06, 0.04, 0.0250, 0.0450],
     [ 0.01, 0.02, 0.01, 0.0250, 0.0475],
-    [ 0.00, 0.00, 0.00, math.nan, math.nan]
+    [ 0.00, 0.00, 0.00, math.nan, math.nan],
     ])
 
 df_conc = pd.DataFrame(data=values_kc, index=stemp, columns=sig_kc)

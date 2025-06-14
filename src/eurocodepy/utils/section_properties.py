@@ -1,8 +1,22 @@
 import numpy as np
 from dataclasses import dataclass
 
+
 @dataclass
-class CrossSectionProperties():
+class CrossSectionProperties:
+    """Represents the geometric and mechanical properties of a cross-section.
+
+    Attributes:
+        Area (float): Cross-sectional area.
+        Inertia (float): Moment of inertia.
+        G_inf (float): Some property at the bottom fiber (description needed).
+        G_sup (float): Some property at the top fiber (description needed).
+        NeutralAxis (float): Position of the neutral axis.
+        W_inf (float): Section modulus at the bottom fiber.
+        W_sup (float): Section modulus at the top fiber.
+
+    """
+
     Area: float
     Inertia: float
     G_inf: float
@@ -11,10 +25,10 @@ class CrossSectionProperties():
     W_inf: float
     W_sup: float
 
+
 # Resolver a equação cúbica
 def calc_section_T(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display=False, label="SECÇÃO EM T") -> tuple:
-    """
-    Calculates the area, center of gravity, bending modulus and moment of inertia of a T-section.
+    """Calculate the area, center of gravity, bending modulus and moment of inertia of a T-section.
 
     Args:
         h (float): Total height of the section.
@@ -38,6 +52,7 @@ def calc_section_T(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_E
             and cracked sections respectively. Each dictionary contains the area, center of
             gravity, and moment of inertia.
             (prop_un, prop_cr)
+
     """
     if display:
         print(f"\n{label}")
@@ -59,9 +74,9 @@ def calc_section_T(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_E
     prop_cr = calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display=display)
     return prop_un, prop_cr
 
+
 def calc_section_rectangular(h, b, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display = False, label="SECÇÃO RETANGULAR"):
-    """
-    Calculates the area, center of gravity, and moment of inertia of a rectangular section.
+    """Calculate the area, center of gravity, and moment of inertia of a rectangular section.
 
     Args:
         h (float): Section height.
@@ -83,8 +98,8 @@ def calc_section_rectangular(h, b, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_
             and cracked sections respectively. Each dictionary contains the area, center of
             gravity, and moment of inertia.
             (prop_un, prop_cr)
+
     """
-    
     if display:
         print(f"\n{label}")
         print(f"   Altura: {h:.3f}")
@@ -99,13 +114,16 @@ def calc_section_rectangular(h, b, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_
         print(f"   Fator de equivalência do pré-esforço: {alpha_Ep:.1f}")
         print(f"   Momento fletor: {M:.1f}")
         print(f"   Força normal de pré-esforço: {P:.1f}")
-    prop_un = calc_section_T_uncrack(h, b, b, 0, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display=display)
-    prop_cr = calc_section_T_crack(h, b, b, 0, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display=display)
+    prop_un = calc_section_T_uncrack(h, b, b, 0, A_s, A_sc, A_p, ds, dsc, dp,
+                            alpha_Es, alpha_Ep, M, P, display=display)
+    prop_cr = calc_section_T_crack(h, b, b, 0, A_s, A_sc, A_p, ds, dsc, dp,
+                            alpha_Es, alpha_Ep, M, P, display=display)
     return prop_un, prop_cr
 
-def calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display = False):
-    """
-    Calculates the area, center of gravity, bending modulus and moment of inertia of a cracked T-section.
+
+def calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp,
+                alpha_Es, alpha_Ep, M, P, display = False):
+    """Calculate the area, center of gravity, bending modulus and moment of inertia of a cracked T-section.
 
     Args:
         h (float): Total height of the section.
@@ -127,11 +145,8 @@ def calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, a
     Returns:
         dict: the properties of the cracked section. The dictionary contains the area, center of
             gravity, and moment of inertia.
+
     """
-    
-    # if np.sum(A_s) == 0 and np.sum(A_sc) == 0 and np.sum(A_p) == 0:
-    #     return {"Area": 0.0, "Inertia": 0.0, "zGi": 0.0, "zGs": 0.0, "Wi": 0.0, "Ws": 0.0, "NeutralAxis": 0.0, "e_p": 0.0}
-    
     xi = calc_neutral_axis_cracked_T(h, bf, bw, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display=display)
 
     # Cálculo da área da secção fendilhada
@@ -141,7 +156,7 @@ def calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, a
     zgs = (0.5 * xi*xi * bw + 0.5 * hf**2 * (bf - bw) + (alpha_Es - 1) * np.sum(dsc * A_sc) +
               alpha_Es * np.sum(ds * A_s) + alpha_Ep * np.sum(dp * A_p)) / Aun
     zg = h - zgs
-    
+
     if zgs < hf:
         # Se o centro de gravidade estiver dentro da banzo, a secção é como retangular com bw = bf
         return calc_section_T_crack(h, bw, bw, 0.0, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display=display)
@@ -158,9 +173,9 @@ def calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, a
     Ws = Iun/zgs
     Wi = Iun/zg
     sigma_cs = np.round(-P/Aun - (M - P * e_p) / Ws, 1)
-    sigma_p = np.round(alpha_Ep * (-P/Aun + (M - P * e_p) / Iun * e_p), 1)
-    sigma_sc = np.round(alpha_Es * (-P/Aun + (M - P * e_p) / Iun * (dsc - zgs)), 1)
-    sigma_st = np.round(alpha_Es * (-P/Aun + (M - P * e_p) / Iun * (ds - zgs)), 1)
+    sigma_p = np.round(alpha_Ep * (-P / Aun + (M - P * e_p) / Iun * e_p), 1)
+    sigma_sc = np.round(alpha_Es * (-P / Aun + (M - P * e_p) / Iun * (dsc - zgs)), 1)
+    sigma_st = np.round(alpha_Es * (-P / Aun + (M - P * e_p) / Iun * (ds - zgs)), 1)
 
     if display:
         print("Propriedades da secção fendilhada")
@@ -179,9 +194,9 @@ def calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, a
 
     return {"Area": Aun, "Inertia": Iun, "zGi": zg, "zGs": zgs, "Wi": Wi, "Ws": Ws, "NeutralAxis": xi, "e_p": e_p}
 
+
 def calc_section_T_uncrack(h, bw, bf, hf, As, Asc, Ap, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display=False):
-    """
-    Calculates the area, center of gravity, bending modulus and moment of inertia of a cracked T-section.
+    """Calculate the area, center of gravity, bending modulus and moment of inertia of a cracked T-section.
 
     Args:
         h (float): Total height of the section.
@@ -203,17 +218,17 @@ def calc_section_T_uncrack(h, bw, bf, hf, As, Asc, Ap, ds, dsc, dp, alpha_Es, al
     Returns:
         dict: the properties of the uncracked section. The dictionary contains the area, center of
             gravity, and moment of inertia.
+
     """
-    
     # Cálculo da área equivalente em betão
     Aun = h * bw + hf * (bf - bw) + (alpha_Es - 1) * (np.sum(As) + np.sum(Asc)) + (alpha_Ep - 1) * np.sum(Ap)
-    
+
     # Cálculo do centro de gravidade
     zgs = (0.5 * h**2 * bw + 0.5 * hf**2 * (bf - bw) + 
            (alpha_Es - 1) * (np.sum(ds * As) + np.sum(dsc * Asc)) + 
            (alpha_Ep - 1) * np.sum(dp * Ap)) / Aun
     zg = h - zgs
-    
+
     # Cálculo da inércia não fendilhada
     Iun = np.float64(
         (bw * h**3)/12 + (bw * h * (0.5 * h - zgs)**2) + 
@@ -228,9 +243,9 @@ def calc_section_T_uncrack(h, bw, bf, hf, As, Asc, Ap, ds, dsc, dp, alpha_Es, al
     Wi = Iun/zg
     sigma_cs = np.round(-P/Aun - (M - P * e_p) / Ws, 1)
     sigma_ci = np.round(-P/Aun + (M - P * e_p) / Wi, 1)
-    sigma_p = np.round(alpha_Ep * (-P/Aun + (M - P * e_p) / Iun * e_p), 1)
-    sigma_sc = np.round(alpha_Es * (-P/Aun + (M - P * e_p) / Iun * (dsc - zgs)), 1)
-    sigma_st = np.round(alpha_Es * (-P/Aun + (M - P * e_p) / Iun * (ds - zgs)), 1)
+    sigma_p = np.round(alpha_Ep * (-P / Aun + (M - P * e_p) / Iun * e_p), 1)
+    sigma_sc = np.round(alpha_Es * (-P / Aun + (M - P * e_p) / Iun * (dsc - zgs)), 1)
+    sigma_st = np.round(alpha_Es * (-P / Aun + (M - P * e_p) / Iun * (ds - zgs)), 1)
 
     if display:
         print("Propriedades da secção não fendilhada")
@@ -250,20 +265,35 @@ def calc_section_T_uncrack(h, bw, bf, hf, As, Asc, Ap, ds, dsc, dp, alpha_Es, al
 
     return {"Area": Aun, "Inertia": Iun, "zGi": zg, "zGs": zgs, "Wi": Wi, "Ws": Ws, "NeutralAxis": root_un, "e_p": e_p}
 
-def cubic_equation(x, a1, a2, a3):
-    return x**3 + a1*x**2 + a2*x + a3
 
-def solve_cubic(a1, a2, a3, h):
+def cubic_equation(x: float, a1: float, a2: float, a3: float) -> float:
+    """Evaluate the cubic equation x^3 + a1*x^2 + a2*x + a3.
+
+    Args:
+        x (float): The variable.
+        a1 (float): Coefficient of x^2.
+        a2 (float): Coefficient of x.
+        a3 (float): Constant term.
+
+    Returns:
+        float: The result of the cubic equation.
+
     """
-    Resolve a equação cúbica x³ + a1*x² + a2*x + a3 = 0
-    e seleciona a raiz real dentro do intervalo (0, h).
-    
-    Parâmetros:
-    a1, a2, a3 - Coeficientes da equação cúbica
-    h - Altura máxima permitida para x
+    return x**3 + a1 * x**2 + a2 * x + a3
 
-    Retorna:
-    x_real - A raiz válida dentro do intervalo (0, h)
+
+def solve_cubic(a1: float, a2: float, a3: float, h: float) -> float:
+    """Solves the cubic equation x^3 + a1*x^2 + a2*x + a3 = 0 and returns the real root within the interval (0, h).
+
+    Args:
+        a1 (float): Coefficient of x^2.
+        a2 (float): Coefficient of x.
+        a3 (float): Constant term.
+        h (float): Upper bound for the root interval.
+
+    Returns:
+        float: The real root within (0, h), or np.nan if no such root exists.
+
     """
     # Resolver a equação cúbica
     roots = np.roots([1, a1, a2, a3])  # np.roots resolve equações polinomiais
@@ -274,9 +304,10 @@ def solve_cubic(a1, a2, a3, h):
     # Retorna a raiz válida ou None se não houver solução dentro do intervalo
     return real_roots[0] if real_roots else np.nan
 
-def calc_neutral_axis_cracked_T(h, b, bw, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_E_s, alpha_E_p, M, P, display=False) -> float:
-    """
-    Calculates the neutral axis of a cracked T-section.
+
+def calc_neutral_axis_cracked_T(h, b, bw, hf, A_s, A_sc, A_p, ds, dsc, dp,
+                alpha_E_s, alpha_E_p, M, P, display=False) -> float:
+    """Calculate the neutral axis of a cracked T-section.
 
     Args:
         h (float): Total height of the section.
@@ -297,17 +328,17 @@ def calc_neutral_axis_cracked_T(h, b, bw, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha
 
     Returns:
         float: the neutral axis depth of a cracked T section.
+
     """
-    
     ds_ref = np.max(ds)
     dp_ref = np.sum(dp * A_p) / np.sum(A_p) if np.abs(np.sum(A_p)) > 0 else dp[0]
     es = -M / P - (ds_ref - dp_ref)  # Excentricidade
 
     # Calcular os coeficientes da equação cúbica
     a1 = -3 * np.sum(ds + es)
-    a2 = (-6 / bw) * (hf * (b - bw) * np.sum((ds + es - 0.5 * hf)) + (alpha_E_s - 1) * np.sum(A_sc * (ds + es - dsc)) +
+    a2 = (-6 / bw) * (hf * (b - bw) * np.sum(ds + es - 0.5 * hf) + (alpha_E_s - 1) * np.sum(A_sc * (ds + es - dsc)) +
                     alpha_E_p * np.sum(A_p * (ds + es - dp)) + alpha_E_s * np.sum(A_s * es))
-    a3 = (6 / bw) * (0.5 * hf**2 * (b - bw) * np.sum((ds + es - 2/3 * hf)) +
+    a3 = (6 / bw) * (0.5 * hf**2 * (b - bw) * np.sum(ds + es - 2/3 * hf) +
                     (alpha_E_s - 1) * A_sc * np.sum(dsc * (ds + es - dsc)) +
                     alpha_E_p * np.sum(A_p * dp * (ds + es - dp)) + alpha_E_s * np.sum(A_s * ds * es))
 
@@ -318,35 +349,7 @@ def calc_neutral_axis_cracked_T(h, b, bw, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha
     roots = np.roots([1, a1, a2, a3])  # np.roots resolve equações polinomiais
 
     if display:
-        # Exibir as soluções
-        # print(f"\n")
-        # print("Coeficientes da equação cúbica:", (a1, a2, a3))
-        # print("Raízes da equação cúbica:", roots)
         pass
-
-    # Plotar a função para visualização
-    import matplotlib.pyplot as plt
-
-    # x_vals = np.linspace(-1, h+1, 1000)
-    # y_vals = cubic_equation(x_vals, a1, a2, a3)
-
-    # plt.figure(figsize=(8, 5))
-    # plt.plot(x_vals, y_vals, label="Equação Cúbica")
-    # plt.axhline(0, color='k', linestyle='--')
-    # plt.axvline(roots[0], color='g', linestyle=':', label=f"Raiz 1: {roots[0]:.3f}")
-    # if len(roots) > 1:
-    #     plt.axvline(roots[1], color='b', linestyle=':', label=f"Raiz 2: {roots[1]:.3f}")
-    # if len(roots) > 2:
-    #     plt.axvline(roots[2], color='orange', linestyle=':', label=f"Raiz 3: {roots[2]:.3f}")
-    # plt.axvline(0, color='r', linestyle=':', label=f"Top")
-    # plt.axvline(h, color='r', linestyle=':', label=f"Bottom")
-
-    # plt.xlabel("x")
-    # plt.ylabel("f(x)")
-    # plt.title("Solução da Equação Cúbica")
-    # plt.legend()
-    # plt.grid(True)
-    # plt.show()
 
     # Filtrar apenas raízes reais e dentro do intervalo (0, h)
     real_roots = [x.real for x in roots if np.isreal(x) and 0 < x.real < h]
@@ -383,22 +386,19 @@ if __name__ == "__main__":
     P = 1400 # Força normal de pré-esforço
     fctm = 3.6 # Resistência à tração do betão
 
-    root = calc_neutral_axis_cracked_T(h, bf, bw, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_E_s, alpha_E_p, M, P, True)
+    root = calc_neutral_axis_cracked_T(h, bf, bw, hf, A_s, A_sc, A_p, ds, dsc, dp,
+                                alpha_E_s, alpha_E_p, M, P, display=True)
 
     # Calcular valores
-    prop_un = calc_section_T_uncrack(h, bw, bf, hf,  A_s, A_sc, A_p, ds, dsc, dp, alpha_E_s, alpha_E_p, M, P, display=True)
+    prop_un = calc_section_T_uncrack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp,
+                                alpha_E_s, alpha_E_p, M, P, display=True)
     root_un = prop_un["NeutralAxis"]
     Aun = prop_un["Area"]
     Iun = prop_un["Inertia"]
     zgun = prop_un["zGi"]
     zgsun = prop_un["zGs"]
-    
-    Mcr = (fctm + P/Aun) * prop_un["Wi"] + P * np.sum(prop_un["e_p"])
 
-    # Exibir resultados
+    Mcr = (fctm + P/Aun) * prop_un["Wi"] + P * np.sum(prop_un["e_p"])
 
     # Calcular valores
     prop_cr = calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_E_s, alpha_E_p, M, P, display=True)
-
-
-    

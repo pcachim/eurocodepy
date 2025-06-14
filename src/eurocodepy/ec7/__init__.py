@@ -1,15 +1,22 @@
-"""Eurocode 7 - Geotechnical design module
-This module provides functions and classes for geotechnical design according to Eurocode 7 (EN 1997-1:2004).
-It includes calculations for bearing capacity, earth pressures, and other geotechnical parameters.
+"""Eurocode 7 - Geotechnical design module.
+
+This module provides functions and classes for geotechnical design according to
+Eurocode 7 (EN 1997-1:2004).
+It includes calculations for bearing capacity, earth pressures,
+and other geotechnical parameters.
 """
-import numpy as np
 from dataclasses import dataclass
 
-class SoilSafetyFactors():
-    """Soil safety factors for geotechnical design
+import numpy as np
+
+
+@dataclass
+class SoilSafetyFactors:
+    """Soil safety factors for geotechnical design.
+
     Attributes:
-        name (str): name of the soil safety factor set ("STR/GEO", "EQU", "ACC STR/GEO", ...)
-        casetype (str): type of case (e.g., "SLS", "ULS", "ACC)
+        name (str): name of the soil safety factor set ("STR/GEO", "EQU", "ACC STR/GEO")
+        casetype (str): type of case (e.g., "SLS", "ULS", "ACC")
         case (str): specific case description (e.g., "STR/GEO", "EQU", "ACC")
         gamma (float): partial safety factor for weight
         phi (float): partial safety factor for angle of internal friction
@@ -21,107 +28,204 @@ class SoilSafetyFactors():
         var_fav (float): favourable variable load factor
         slide (float): sliding resistance factor
         bearing (float): bearing resistance factor
+
     """
-    def  __init__(self, name, casetype, case, gamma, phi, c, cu, perm_unfav, perm_fav, var_unfav, var_fav, slide, bearing):
-        self.name = name
-        self.casetype = casetype
-        self.case = case
-        self.gamma = gamma
-        self.phi = phi
-        self.c = c
-        self.cu = cu
-        self.perm_fav = perm_fav
-        self.perm_unfav = perm_unfav
-        self.var_fa = var_fav
-        self.var_unfav = var_unfav
-        self.slide = slide
-        self.bearing = bearing
+
+    name: str
+    casetype: str
+    case: str
+    gamma: float
+    phi: float
+    c: float
+    cu: float
+    perm_unfav: float
+    perm_fav: float
+    var_unfav: float
+    var_fav: float
+    slide: float
+    bearing: float
+
 
 class SoilSafetyFactorsEnum:
-    """Enum for soil safety factors based on Eurocode 7"""
-    STRGEO_SLS = SoilSafetyFactors("STR/GEO", "SLS",  "STR/GEO", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0)
-    STRGEO_A1 = SoilSafetyFactors("STR/GEO A1", "ULS", "STR/GEO", 1.0, 1.0, 1.0, 1.0, 1.35, 1.0, 1.5, 0.0, 1.0, 1.0)
-    STRGEO_A2 = SoilSafetyFactors("STR/GEO A2", "ULS", "STR/GEO", 1.0, 1.25, 1.25, 1.4, 1.0, 1.0, 1.3, 0.0, 1.0, 1.0)
-    STRGEO_B = SoilSafetyFactors("STR/GEO B", "ULS", "STR/GEO", 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 0.0, 1.1, 1.4)
-    STRGEO_C = SoilSafetyFactors("STR/GEO C", "ULS", "STR/GEO", 1.0, 1.25, 1.25, 1.4, 1.0, 1.0, 1.5, 0.0, 1.0, 1.0)
-    STRGEO_ACC = SoilSafetyFactors("ACC STR/GEO", "ACC", "STR/GEO", 1.0, 1.1, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0)   
-    EQU = SoilSafetyFactors("EQU", "ULS", "EQU", 1.0, 1.25, 1.25, 1.4, 1.1, 0.9, 1.5, 0.0, 1.0, 1.0)
-    EQU_ACC = SoilSafetyFactors("ACC EQU", "ACC", "EQU", 1.0, 1.0, 1.0, 1.25, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0)
+    """Enum for soil safety factors based on Eurocode 7."""
+
+    STRGEO_SLS = SoilSafetyFactors("STR/GEO", "SLS", "STR/GEO",
+        1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0)
+    STRGEO_A1 = SoilSafetyFactors("STR/GEO A1", "ULS", "STR/GEO",
+        1.0, 1.0, 1.0, 1.0, 1.35, 1.0, 1.5, 0.0, 1.0, 1.0)
+    STRGEO_A2 = SoilSafetyFactors("STR/GEO A2", "ULS", "STR/GEO",
+        1.0, 1.25, 1.25, 1.4, 1.0, 1.0, 1.3, 0.0, 1.0, 1.0)
+    STRGEO_B = SoilSafetyFactors("STR/GEO B", "ULS", "STR/GEO",
+        1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 0.0, 1.1, 1.4)
+    STRGEO_C = SoilSafetyFactors("STR/GEO C", "ULS", "STR/GEO",
+        1.0, 1.25, 1.25, 1.4, 1.0, 1.0, 1.5, 0.0, 1.0, 1.0)
+    STRGEO_ACC = SoilSafetyFactors("ACC STR/GEO", "ACC", "STR/GEO",
+        1.0, 1.1, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0)
+    EQU = SoilSafetyFactors("EQU", "ULS", "EQU",
+        1.0, 1.25, 1.25, 1.4, 1.1, 0.9, 1.5, 0.0, 1.0, 1.0)
+    EQU_ACC = SoilSafetyFactors("ACC EQU", "ACC", "EQU",
+        1.0, 1.0, 1.0, 1.25, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0)
+
 
 @dataclass
 class Soil:
-    """
-    Soil class to hold soil properties for geotechnical calculations.
-    
+    """Soil class to hold soil properties for geotechnical calculations.
+
     Attributes:
         unit_weight (float): Unit weight of the soil in kN/m³.
-        friction_angle (float): Effective angle of internal friction in degrees (converted to radians).
-        conc_friction_angle (float): Angle of soil/concrete friction in degrees (converted to radians).
+        friction_angle (float): Effective angle of internal friction in degrees
+        (converted to radians).
+        conc_friction_angle (float): Angle of soil/concrete friction in degrees
+        (converted to radians).
         sig_adm (float): Admissible stress in kPa. Defaults to 200 kPa.
         c (int or numpy.ndarray): effective cohesion. Defaults to 0.
-        drained (bool, optional): drained or undrained conditions. if undrained c = cu. Defaults to True.
+        drained (bool, optional): drained or undrained conditions.
+        if undrained c = cu. Defaults to True.
+
     """
+
     name: str = "Soil"
     unit_weight: float = 18.0  # Unit weight in kN/m³, default is 18 kN/m³
     friction_angle: float = 30.0  # Input in degrees, default is 30 degrees
     conc_friction_angle: float = 20.0  # Input in degrees, default is 20 degrees
     sig_adm: float = 200.0  # Admissible stress in kPa, default is 200 kPa
-    sig_Rd: float = 300.0  # Maximum design resistance stress in kPa, default is 300 kPa
+    sig_rd: float = 300.0  # Maximum design resistance stress in kPa, default is 300 kPa
     cohesion: float = 0.0  # Effective cohesion in kPa, default is 0
     is_drained: bool = True  # Drained condition, default is True
     is_coherent: bool = False  # Whether the soil is cohesive, default is False
-    young: float = 30.0 # Young modulus in MPa
-    poiss: float = 0.3 # Poisson coefficient
-    ks: float = 30000 # modulus of subgrade reaction kN/m3
+    young: float = 30.0  # Young modulus in MPa
+    poiss: float = 0.3  # Poisson coefficient
+    ks: float = 30000  # modulus of subgrade reaction kN/m3
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
+        """Convert angles to radians and set is_coherent if cohesion > 0."""
         # Convert angles to radians
         self.friction_angle = np.radians(self.friction_angle)
         self.conc_friction_angle = np.radians(self.conc_friction_angle)
         if self.cohesion > 0:
             self.is_coherent = True
-    
-    @staticmethod
-    def get_Es_from_SPT(Nspt: float) -> float:
-        pass
 
     @staticmethod
-    def get_sigadm_from_SPT(Nspt: float) -> float:
-        pass
+    def get_es_from_spt(nspt: float) -> float:
+        """Estimate Young's modulus (Es) from SPT value.
+
+        Parameters
+        ----------
+        nspt : float
+            Standard Penetration Test (SPT) value.
+
+        Returns
+        -------
+        float
+            Estimated Young's modulus (Es).
+
+        """
+        return nspt
 
     @staticmethod
-    def get_sigadm_from_CPT(Nspt: float) -> float:
-        pass
+    def get_sigadm_from_spt(nspt: float) -> float:
+        """Estimate admissible stress from SPT (Standard Penetration Test) value.
+
+        Parameters
+        ----------
+        nspt : float
+            Standard Penetration Test (SPT) value.
+
+        Returns
+        -------
+        float
+            Estimated admissible stress in kPa.
+
+        """
+        return nspt
 
     @staticmethod
-    def get_ks_from_SPT(Nspt: float) -> float:
-        pass
+    def get_sigadm_from_cpt(nspt: float) -> float:
+        """Estimate admissible stress from CPT (Cone Penetration Test) value.
+
+        Parameters
+        ----------
+        nspt : float
+            CPT value.
+
+        Returns
+        -------
+        float
+            Estimated admissible stress in kPa.
+
+        """
+        return nspt
 
     @staticmethod
-    def get_ks_from_Es(Es: float) -> float:
-        pass
+    def get_ks_from_spt(nspt: float) -> float:
+        """Estimate modulus of subgrade reaction (ks) from SPT value.
+
+        Parameters
+        ----------
+        nspt : float
+            Standard Penetration Test (SPT) value.
+
+        Returns
+        -------
+        float
+            Estimated modulus of subgrade reaction in kN/m³.
+
+        """
+        return nspt
+
+    @staticmethod
+    def get_ks_from_es(es: float) -> float:
+        """Estimate modulus of subgrade reaction (ks) from Young's modulus (Es).
+
+        Parameters
+        ----------
+        es : float
+            Young's modulus in MPa.
+
+        Returns
+        -------
+        float
+            Estimated modulus of subgrade reaction in kN/m³.
+
+        """
+        return es
 
 
-class SoilEnum():
-    Sand = Soil(name="Sand", unit_weight=18.0, friction_angle=30.0, conc_friction_angle=20.0, sig_adm=200.0, cohesion=0.0, is_drained=True)
-    Clay = Soil(name="Clay", unit_weight=18.0, friction_angle=20.0, conc_friction_angle=15.0, sig_adm=200.0, cohesion=50.0, is_drained=False)
-    Gravel = Soil(name="Gravel", unit_weight=20.0, friction_angle=35.0, conc_friction_angle=25.0, sig_adm=250.0, cohesion=0.0, is_drained=True)
-    Rock = Soil(name="Rock", unit_weight=25.0, friction_angle=40.0, conc_friction_angle=30.0, sig_adm=500.0, cohesion=100.0, is_drained=True)
-    
-class SoilSeismicParameters():
-    """Seismic parameters for soil based on Eurocode 8
+class SoilEnum:
+    """Enumeration of typical soil types with predefined properties.
+
+    Attributes:
+        Sand (Soil): Typical sand soil properties.
+        Clay (Soil): Typical clay soil properties.
+        Gravel (Soil): Typical gravel soil properties.
+        Rock (Soil): Typical rock soil properties.
+
+    """
+
+    Sand = Soil(name="Sand", unit_weight=18.0, friction_angle=30.0,
+                conc_friction_angle=20.0, sig_adm=200.0, cohesion=0.0, is_drained=True)
+    Clay = Soil(name="Clay", unit_weight=18.0, friction_angle=20.0,
+                conc_friction_angle=15.0, sig_adm=200., cohesion=50.0, is_drained=False)
+    Gravel = Soil(name="Gravel", unit_weight=20.0, friction_angle=35.0,
+                conc_friction_angle=25.0, sig_adm=250.0, cohesion=0.0, is_drained=True)
+    Rock = Soil(name="Rock", unit_weight=25.0, friction_angle=40.0,
+                conc_friction_angle=30.0, sig_adm=500., cohesion=100.0, is_drained=True)
+
+
+class SoilSeismicParameters:
+    """Seismic parameters for soil based on Eurocode 8.
 
     Args:
-        spectrum (str): name of the seismic spectrum (e.g., "PT1", "PT2", "CEN1", "CEN2")
+        spectrum (str): name of the seismic spectrum (e.g., "PT1", "PT2", "CEN1", ...)
         agR (float): ground acceleration in m/s²
         s_max (float): maximum spectral acceleration
         importance_coeff (float): importance coefficient for the structure
         avg_ahg (float): ratio vertical/horizontal acceleration
         r (float, optional): response reduction factor. Defaults to 1.0.
-    
+
     Notes:
-        r=2.0 - Free gravity walls that can accept a displacement up to dr = 300 α⋅S (mm)
-        r=1.5 - Free gravity walls that can accept a displacement up to dr = 200 α⋅S (mm)
+        r=2.0 - Free gravity walls that can accept a displacement dr = 300 a⋅S (mm)
+        r=1.5 - Free gravity walls that can accept a displacement dr = 200 a⋅S (mm)
         r=1.0 - Flexural reinforced concrete walls, anchored or braced walls, reinforced
         concrete walls founded on vertical piles, restrained basement walls and bridge
         abutments
@@ -137,38 +241,56 @@ class SoilSeismicParameters():
         avg_ahg (float): ratio of vertical to horizontal acceleration
         kh (float): horizontal seismic coefficient
         kv (float): vertical seismic coefficient
+
     """
-    def __init__(self, name, agR, s_max, importance_coeff, avg_ahg, r=1.0):
+
+    def __init__(self, name: str, agr: float, s_max: float,
+                avg_ahg: float, r: float = 1.0) -> None:
+        """Initialize seismic parameters for soil based on Eurocode 8.
+
+        Args:
+            name (str): Name of the seismic spectrum.
+            agr (float): Ground acceleration in m/s²
+            (already includes importance coefficient).
+            s_max (float): Maximum spectral acceleration.
+            avg_ahg (float): Ratio vertical/horizontal acceleration.
+            r (float, optional): Response reduction factor. Defaults to 1.0.
+
+        """
         self.name = name
         self.r = r
-        self._ag = agR * importance_coeff
+        self._ag = agr
         self.smax = s_max
-        self.importance_coeff = importance_coeff
         self.avg_ahg = avg_ahg
-        self.alpha = agR / 9.80665
-        self._S =  np.maximum(1,np.minimum(s_max,s_max-(s_max-1)*(agR * importance_coeff - 1)/3))
+        self.alpha = agr / 9.80665
+        self._S = np.maximum(1, np.minimum(s_max, s_max - (s_max - 1) * (agr - 1) / 3))
         self._kh = self.alpha * self.S / self.r
-        self._kv = 0.5*self.kh if self.avg_ahg > 0.6 else 0.33*self._kh
+        self._kv = 0.5 * self.kh if self.avg_ahg > 0.6 else 0.33 * self._kh
 
     @property
-    def kh(self):
+    def kh(self) -> float:
+        """Return the horizontal seismic coefficient (kh)."""
         return self._kh
-    
+
     @property
-    def kv(self):
+    def kv(self) -> float:
+        """Return the vertical seismic coefficient (kv)."""
         return self._kv
-    
+
     @property
-    def ag(self):
+    def ag(self) -> float:
+        """Return the ground acceleration (ag) in m/s²."""
         return self._ag
-    
+
     @property
-    def S(self):
+    def s(self) -> float:
+        """Return the soil spectral scale factor (S)."""
         return self._S
 
-def get_soil_seismic_parameters(name: str, code: str, soil: str, imp_class: str, 
-            spectrum: str, zone: str, r: float=1.0) -> SoilSeismicParameters:
-    """Sets the parameters for the seismic action 1 and 2
+
+def get_soil_seismic_parameters(name: str, code: str, soil: str, imp_class: str,
+            spectrum: str, zone: str) -> SoilSeismicParameters:
+    """Set the parameters for the seismic action 1 and 2.
 
     Args:
         name (str): name of the seismic action (e.g., "S1", "S2")
@@ -180,18 +302,24 @@ def get_soil_seismic_parameters(name: str, code: str, soil: str, imp_class: str,
         zone (str): seismic zone 1 (for PT: 1_1, 1_2, 1_3, 2_4, 2_5, 2_6, ...)
                                     (for EU: _1g, _2g ...)
         r (float, optional): response reduction factor. Defaults to 1.0.
-    
+
     Returns:
         SoilSeismicParameters: object containing seismic parameters
 
     Notes:
-        r=2.0 - Free gravity walls that can accept a displacement up to dr = 300 α⋅S (mm)
-        r=1.5 - Free gravity walls that can accept a displacement up to dr = 200 α⋅S (mm)
+        r=2.0 - Free gravity walls that can accept a displacement dr = 300 a⋅S (mm)
+    return SoilSeismicParameters(
+        name=name,
+        agR=ag,
+        s_max=smax,
+        importance_coeff=impcoef,
+        avg_ahg=agvagh
+    )
         r=1.0 - Flexural reinforced concrete walls, anchored or braced walls, reinforced
         concrete walls founded on vertical piles, restrained basement walls and bridge
         abutments
-    """
 
+    """
     ag = db.Loads["Seismic"]["Locale"][code]["a_gR"][spectrum][zone]
     smax = db.Loads["Seismic"]["Locale"][code]["Spectrum"][spectrum][soil]["S_max"]
     impcoef = db.Loads["Seismic"]["Locale"][code]["ImportanceCoef"][spectrum][imp_class]
@@ -199,32 +327,33 @@ def get_soil_seismic_parameters(name: str, code: str, soil: str, imp_class: str,
 
     return SoilSeismicParameters(name, ag, smax, impcoef, agvagh)
 
+
 @dataclass
 class SoilSurcharge:
-    """Soil surcharge load parameters
+    """Soil surcharge load parameters.
+
     Attributes:
         q (float): surcharge load in kN/m²
         psi0 (float): coefficient for vertical stress at depth z=0
         psi1 (float): coefficient for vertical stress at depth z=1
         psi2 (float): coefficient for vertical stress at depth z=2
+
     """
+
     q: float = 10.0
     psi0: float = 0.6
     psi1: float = 0.4
     psi2: float = 0.2
 
-from .. import db
-from .. import utils
 
-from . import bearing_capacity
-from .bearing_capacity import bearing_resistance
-from .bearing_capacity import seismic_bearing_resistance
-
-from . import earth_pressures
-from .earth_pressures import rankine_coefficient
-from .earth_pressures import coulomb_coefficient
-from .earth_pressures import inrest_coefficient
-from .earth_pressures import ec7_coefficient
-from .earth_pressures import pressure_coefficients
-from .earth_pressures import earthquake_coefficient
-
+from .. import db, utils
+from . import bearing_capacity, earth_pressures
+from .bearing_capacity import bearing_resistance, seismic_bearing_resistance
+from .earth_pressures import (
+    coulomb_coefficient,
+    earthquake_coefficient,
+    ec7_coefficient,
+    inrest_coefficient,
+    pressure_coefficients,
+    rankine_coefficient,
+)

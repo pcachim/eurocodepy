@@ -1,11 +1,10 @@
 import json
-import os
-import importlib.resources as pkg_resources
-import pandas as pd
+from pathlib import Path
 
 """This module contains the database of the Eurocodes
 
-For convenience, the database is loaded as a dictionary and as a class. It allows to access the database in two ways:
+For convenience, the database is loaded as a dictionary and as a class.
+It allows to access the database in two ways:
 1. Using the dictionary db (e.g. db["Materials"]["Timber"]["Grade"]["C24"]["fcd"])
 2. Using the class dbase (e.g. dbase.Materials.Timber.Grades.C24.fcd)
 
@@ -44,39 +43,36 @@ And some variables:
 
 """
 
-def dict2obj(dict1):
-    """
-    Converts a dictionary to a custom object using json.loads and object_hook.
+
+def dict2obj(dict1: dict) -> str:
+    """Convert a dictionary to a custom object using json.loads and object_hook.
 
     Args:
         dict1: The input dictionary.
 
     Returns:
         A custom object representing the dictionary.
+
     """
 
-    class obj:
-        """
-        Custom object class used as the object_hook.
-        """
-        def __init__(self, dict1):
-            """
-            Constructor that updates the object's __dict__ with the dictionary.
-            """
+    class Obj:
+        """Custom object class used as the object_hook."""
+
+        def __init__(self, dict1: dict) -> None:
+            """Update the object's __dict__ with the dictionary."""
             self.__dict__.update(dict1)
 
-    return json.loads(json.dumps(dict1), object_hook=obj)
+    return json.loads(json.dumps(dict1), object_hook=Obj)
+
 
 database = {}
-# dirname = os.path.dirname(__file__)
-# db = json.loads(open(os.path.join(dirname,'eurocodes.json'),'r').read())["Eurocodes"]
-# db["SteelProfiles"]["Euro"] = json.loads(open(os.path.join(dirname,'prof_euro.json'),'r').read())
-base_name = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
-base_name = os.path.join(base_name, 'eurocodes.json')
-db = json.loads(open(base_name,'r').read())["Eurocodes"]
-prof_name = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
-prof_name = os.path.join(prof_name, 'prof_euro.json')
-db["SteelProfiles"]["Euro"] = json.loads(open(prof_name,'r').read())
+base_path = Path(__file__).parent / "data"
+base_name = base_path / "eurocodes.json"
+with base_name.open(encoding="utf-8") as f:
+    db = json.loads(f.read())["Eurocodes"]
+prof_name = base_path / "prof_euro.json"
+with prof_name.open(encoding="utf-8") as f:
+    db["SteelProfiles"]["Euro"] = json.loads(f.read())
 
 dbobj = dict2obj(db)
 
@@ -86,7 +82,6 @@ Reinforcement = db["Materials"]["Reinforcement"]
 ReinforcementGrades = Reinforcement["Grade"]
 ReinforcementBars = Reinforcement["Rebars"]
 ReinforcementParams = Reinforcement["Parameters"]
-#ReinforcementGrades = db["Materials"]["Reinforcement"]["Grade"]
 
 Concrete = db["Materials"]["Concrete"]
 ConcreteGrades = Concrete["Grade"]
@@ -116,8 +111,16 @@ WindLoads = Loads["Wind"]
 DeadLoads = Loads["Dead"]
 SeismicLoads = Loads["Seismic"]
 
-def wind_get_params(code: str = "PT", zone: str="ZonaA", terrain: str = "II") -> tuple:
-    """Returns the wind parameters for the specified code."""
+
+def wind_get_params(code: str = "PT", zone: str = "ZonaA",
+                    terrain: str = "II") -> tuple:
+    """Return the wind parameters for the specified code.
+
+    Returns:
+        tuple: A tuple containing (vb0, zmin, z0), where vb0 is the base wind velocity,
+        zmin is the minimum height, and z0 is the terrain roughness length.
+
+    """
     wind = WindLoads["locale"][code]
     vb0 = wind["base_velocity"][zone]["vb0"]
     z0 = wind["terrain"][terrain]["z0"]

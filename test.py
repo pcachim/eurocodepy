@@ -88,12 +88,12 @@ def test_rcbeam():
     # test RCBeam class
     print("\nTest RCBeam:\n")
     beam = ec.ec2.uls.RCBeam(0.3, 0.5, at=0.05, ac=0.05, conc="C30/37", reinf="A500NR")
-    asl, asc, a, epst, epsc = beam.calcBending(100.0)
+    asl, asc, a, epst, epsc = beam.calc_bending(100.0)
     print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
-    asl, asc, a, epst, epsc = beam.calcBending(500.0)
+    asl, asc, a, epst, epsc = beam.calc_bending(500.0)
     print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
     beam = ec.ec2.uls.RCBeam(0.3, 0.5, at=0.05, ac=0.05, conc="C90/105", reinf="A500NR")
-    asl, asc, a, epst, epsc = beam.calcBending(700.0)
+    asl, asc, a, epst, epsc = beam.calc_bending(700.0)
     print (f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}\n")
     return
 
