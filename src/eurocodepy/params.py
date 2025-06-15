@@ -1,11 +1,13 @@
-from . import db
-from .db import WindLoads
-from .db import SeismicLoads
+# Copyright (c) 2024 Paulo Cachim
+# SPDX-License-Identifier: MIT
 
+from . import dbase
+from .dbase import SeismicLoads, WindLoads
 
 
 def wind_get_params(code: str = "PT", zone: str="ZonaA", terrain: str = "II") -> tuple:
-    """Gets the wind load parameters for a given code, zone, and terrain.
+    """Get the wind load parameters for a given code, zone, and terrain.
+
     This function retrieves the wind load parameters from the WindLoads database based on the provided parameters.
     It returns a tuple containing the base velocity, minimum height, roughness length, and roughness length for terrain II.
     The parameters are case-insensitive for the zone and terrain, but the code should be provided in uppercase.
@@ -25,6 +27,7 @@ def wind_get_params(code: str = "PT", zone: str="ZonaA", terrain: str = "II") ->
             - zmin (float): minimum height for the specified terrain.
             - z0 (float): roughness length for the specified terrain.
             - z0II (float): roughness length for terrain II.
+
     """
     terrain = str.upper(terrain)
     code = str.upper(code)
@@ -36,35 +39,54 @@ def wind_get_params(code: str = "PT", zone: str="ZonaA", terrain: str = "II") ->
     zmin = wind["terrain"][terrain]["zmin"]
     return vb0, zmin, z0, z0II
 
+
 def seismic_get_params(code, seismic_type, soil_type, importance_class) -> dict:
-    """Gets the seismic spectrum parameters for a given code, seismic type, soil type, and importance class.
-    This function retrieves the seismic spectrum parameters from the SeismicLoads database based on the provided parameters.
-    It returns a dictionary containing the spectrum parameters, including the importance coefficient.
-    The parameters are case-insensitive for soil type and importance class, but the seismic type should be provided in uppercase.
-    The function is designed to work with different localization codes, such as "PT" for Portugal or "EU" for standard CEN.
-    The seismic types can include "PT1", "PT2", "PTA" for Portugal, or "CEN-1", "CEN-2" for CEN standards.
-    This function is useful for engineers and designers who need to apply seismic loads according to Eurocode standards.
+    """Get the seismic spectrum parameters.
+
+    This function retrieves the seismic spectrum parameters from the SeismicLoads
+    database based on the provided parameters. It returns a dictionary containing
+    the spectrum parameters, including the importance coefficient. The parameters
+    are case-insensitive for soil type and importance class, but the seismic type
+    should be provided in uppercase. The function is designed to work with different
+    localization codes, such as "PT" for Portugal or "EU" for standard CEN. The
+    seismic types can include "PT1", "PT2", "PTA" for Portugal, or "CEN-1", "CEN-2"
+    for CEN standards. This function is useful for engineers and designers who need
+    to apply seismic loads according to Eurocode standards.
+
     Args:
-        code (str): Localization code (e.g., "PT" for Portugal, "EU" for standard CEN).
-        seismic_type (str): type of seismic action (e.g., "PT1", "PT2", "PTA", "CEN-1", "CEN-2").
-        soil_type (str): soil type (e.g., "A", "B", "C", "D", "E" for different soil conditions).   
+        code (str): Localization code (e.g., "PT" for Portugal, "EU" for standard
+            CEN).
+        seismic_type (str): type of seismic action (e.g., "PT1", "PT2", "PTA",
+            "CEN-1", "CEN-2").
+        soil_type (str): soil type (e.g., "A", "B", "C", "D", "E" for different
+            soil conditions).
         importance_class (str): importance class (e.g., "i", "ii", "iii", "iv").
 
     Returns:
-        dict: spectrum parameters for the specified code, seismic type, soil type, and importance class.
+        dict: spectrum parameters for the specified code, seismic type, soil type,
+            and importance class.
+
+    Raises:
+        ValueError: If the code, seismic type, soil type, or importance class is
+            invalid.
+
     """
     code = str.upper(code)
     seismic_type = str.upper(seismic_type)
     soil_type = str.upper(soil_type)
     importance_class = str.lower(importance_class)
     if code not in SeismicLoads["Locale"]:
-        raise ValueError(f"Invalid code: {code}. Available codes: {list(SeismicLoads['Locale'].keys())}")
+        msg = f"Invalid code: {code}. Available codes: {list(SeismicLoads['Locale'].keys())}"
+        raise ValueError(msg)
     if seismic_type not in SeismicLoads["Locale"][code]["Spectrum"]:
-        raise ValueError(f"Invalid seismic type: {seismic_type}. Available types: {list(SeismicLoads['Locale'][code]['Spectrum'].keys())}")
+        msg = f"Invalid seismic type: {seismic_type}. Available types: {list(SeismicLoads['Locale'][code]['Spectrum'].keys())}"
+        raise ValueError(msg)
     if soil_type not in SeismicLoads["Locale"][code]["Spectrum"][seismic_type]:
-        raise ValueError(f"Invalid soil type: {soil_type}. Available types: {list(SeismicLoads['Locale'][code]['Spectrum'][seismic_type].keys())}")
+        msg = f"Invalid soil type: {soil_type}. Available types: {list(SeismicLoads['Locale'][code]['Spectrum'][seismic_type].keys())}"
+        raise ValueError(msg)
     if importance_class not in SeismicLoads["Locale"][code]["ImportanceClass"]:
-        raise ValueError(f"Invalid importance class: {importance_class}. Available classes: {list(SeismicLoads['Locale'][code]['ImportanceCoef'].keys())}")
+        msg = f"Invalid importance class: {importance_class}. Available classes: {list(SeismicLoads['Locale'][code]['ImportanceCoef'].keys())}"
+        raise ValueError(msg)
 
     # Retrieve the spectrum parameters
     spectrum = SeismicLoads["Locale"][code]["Spectrum"][seismic_type][str.upper(soil_type)]

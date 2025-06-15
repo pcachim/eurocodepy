@@ -1,3 +1,6 @@
+# Copyright (c) 2024 Paulo Cachim
+# SPDX-License-Identifier: MIT
+
 import json
 from pathlib import Path
 
@@ -65,7 +68,7 @@ def dict2obj(dict1: dict) -> str:
     return json.loads(json.dumps(dict1), object_hook=Obj)
 
 
-database = {}
+# db = {}
 base_path = Path(__file__).parent / "data"
 base_name = base_path / "eurocodes.json"
 with base_name.open(encoding="utf-8") as f:

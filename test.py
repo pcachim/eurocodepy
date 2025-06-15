@@ -4,7 +4,7 @@ import timeit
 
 from src import eurocodepy as ec
 SteelProfiles = ec.SteelProfiles
-db = ec.db
+db = ec.dbase
 # import eurocodepy as ec
 # from eurocodepy.db import SteelProfiles
 
@@ -13,7 +13,7 @@ def test_database():
     """[summary]
     """
     print ("Testing database\n")
-    db = ec.db
+    db = ec.dbase
 
     print ("\nPrestress classes\n")
     df = pd.DataFrame.from_dict(ec.PrestressClasses)

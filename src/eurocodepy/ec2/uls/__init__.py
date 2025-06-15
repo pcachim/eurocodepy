@@ -1,25 +1,28 @@
-from .. import db
-db = db
+# Copyright (c) 2024 Paulo Cachim
+# SPDX-License-Identifier: MIT
 
-from .shear import calc_asws
-from .shear import calc_vrd
-from .shear import calc_vrdc
+from eurocodepy import dbase
+dbase = dbase
 
-from . import beam
-from .beam import get_bend_params
-from .beam import calc_mrd
-from .beam import calc_asl
-from .beam import calc_vrdc
-from .beam import calc_asws
-from .beam import calc_vrd
-from .beam import RCBeam
-
-from .shell import calc_reinf_shell
-from .shell import calc_reinf_plane
-
-from . import shear
-from . import shell
-
-from .. import Concrete, ConcreteClass, Reinforcement, ReinforcementClass, Prestress, PrestressClass
-
+from eurocodepy.ec2 import (
+    Concrete,
+    ConcreteClass,
+    Prestress,
+    PrestressClass,
+    Reinforcement,
+    ReinforcementClass,
+)
+from eurocodepy.ec2 import uls
+from eurocodepy.ec2.uls import shear, shell, beam
+from eurocodepy.ec2.uls.shear import calc_asws, calc_vrd, calc_vrdc
+from eurocodepy.ec2.uls.beam import (
+    RCBeam,
+    calc_asl,
+    calc_asws,
+    calc_mrd,
+    calc_vrd,
+    calc_vrdc,
+    get_bend_params,
+)
+from eurocodepy.ec2.uls.shell import calc_reinf_plane, calc_reinf_shell
 

@@ -1,3 +1,6 @@
+# Copyright (c) 2024 Paulo Cachim
+# SPDX-License-Identifier: MIT
+
 import numpy as np
 
 from eurocodepy.ec2 import (

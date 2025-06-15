@@ -1,9 +1,10 @@
-# eurocodepy
+# Copyright (c) 2024 Paulo Cachim
+# SPDX-License-Identifier: MIT
 
+# EurocodePy
 """Provide several functions to help designers working with Eurocodes.
 
 This module allows the user to make mathematical calculations.
-
 The module contains the following functions:
 
 `db`: Returns the database of the Eurocodes.
@@ -15,40 +16,36 @@ The module contains the following functions:
 `ec8`: Returns functions for ec8 calculations.
 """
 
-import pandas as pd 
-import os
 from enum import Enum
+from pathlib import Path
+
+import pandas as pd
 
 __version__ = "2025.6.8"
 print_version = "This is 'EurocodePy' version " + __version__
 
-from . import ec1
-from . import ec2
-from . import ec3
-from . import ec5
-from . import ec7
-from . import ec8
-from . import utils
+from eurocodepy import ec1, ec2, ec3, ec5, ec7, ec8, utils, dbase
 
 # National parameters
-local_name = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
-local_name = os.path.join(local_name, 'eurocode_data_portugal.csv')
+local_name = Path(__file__).parent / "data" / "eurocode_data_portugal.csv"
 locale = Enum("locale", ["EU", "PT"])
 locales = {}
 locales["PT"] = pd.read_csv(local_name)
 
-def get_national_params(local: locale = locale.PT, concelho: str = "Lisboa") -> dict:
-    """
+def get_national_params(local: locale = locale.PT, concelho: str = "Lisboa") -> object:
+    """Get Portuguese data for municipalities.
 
     Args:
-        locale (str, optional): _description_. Defaults to "PT".
-        concelho (str, optional): _description_. Defaults to "Lisboa".
+        local (locale, optional): Locale to use for national parameters.
+        Defaults to locale.PT.
+        concelho (str, optional): Municipality name. Defaults to "Lisboa".
 
     Returns:
-        dict: _description_
+        dict: the data
+
     """
     pt_data = locale[local.name]
-    row = pt_data[pt_data['Concelho'] == concelho]
+    row = pt_data[pt_data["Concelho"] == concelho]
     # Convert to dict if found
     if not row.empty:
         result = row.iloc[0].to_dict()
@@ -59,47 +56,38 @@ def get_national_params(local: locale = locale.PT, concelho: str = "Lisboa") -> 
     return result
 
 
+from eurocodepy import dbase
 # Database imports
-from .db import db
-from .db import dbobj
-from .db import Materials
-
-from .db import Bolts
-from .db import BoltGrades
-from .db import BoltDiameters
-
-from .db import Concrete
-from .db import ConcreteGrades
-from .db import ConcreteParams
-
-from .db import Prestress
-from .db import PrestressGrades
-from .db import PrestressParams
-
-from .db import Reinforcement
-from .db import ReinforcementBars
-from .db import ReinforcementGrades
-from .db import ReinforcementParams
-
-from .db import Steel
-from .db import SteelGrades
-from .db import SteelParams
-
-from .db import SteelProfiles
-
-from .db import Loads
-from .db import WindLoads
-from .db import DeadLoads
-from .db import SeismicLoads
-
-from .params import wind_get_params
-from .params import seismic_get_params
-
-from .ec8 import get_spec_params
-
-from .ec1 import wind
-
-from .utils import stress
+from eurocodepy.dbase import (
+    BoltDiameters,
+    BoltGrades,
+    Bolts,
+    Concrete,
+    ConcreteGrades,
+    ConcreteParams,
+    DeadLoads,
+    Loads,
+    Materials,
+    Prestress,
+    PrestressGrades,
+    PrestressParams,
+    Reinforcement,
+    ReinforcementBars,
+    ReinforcementGrades,
+    ReinforcementParams,
+    SeismicLoads,
+    Steel,
+    SteelGrades,
+    SteelParams,
+    SteelProfiles,
+    WindLoads,
+    db,
+    dbobj,
+)
+from eurocodepy.ec1 import wind
+from eurocodepy.ec8 import spectrum, get_spec_params
+from eurocodepy.params import seismic_get_params, wind_get_params
+from eurocodepy.utils import stress, section_properties
 
 RECTANGULAR = 0
 CIRCULAR = 1

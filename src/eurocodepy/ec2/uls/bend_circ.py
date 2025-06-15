@@ -1,3 +1,6 @@
+# Copyright (c) 2024 Paulo Cachim
+# SPDX-License-Identifier: MIT
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import rc
