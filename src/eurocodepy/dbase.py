@@ -76,6 +76,9 @@ with base_name.open(encoding="utf-8") as f:
 prof_name = base_path / "prof_euro.json"
 with prof_name.open(encoding="utf-8") as f:
     db["SteelProfiles"]["Euro"] = json.loads(f.read())
+prof_name = base_path / "i_profiles_euro.json"
+with prof_name.open(encoding="utf-8") as f:
+    db["SteelProfiles"]["EuroI"] = json.loads(f.read())
 
 dbobj = dict2obj(db)
 
@@ -108,6 +111,7 @@ BoltGrades = Bolts["Grade"]
 BoltDiameters = Bolts["Diameters"]
 
 SteelProfiles = db["SteelProfiles"]["Euro"]
+SteelIProfiles = db["SteelProfiles"]["EuroI"]
 
 Loads = db["Loads"]
 WindLoads = Loads["Wind"]

@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 name = "eurocodepy"
 version = "2025.6.8"
 authors = [
-  { name="Paulo Cachim", email="pcachim@ua.pt" },
+    { name="Paulo Cachim", email="pcachim@ua.pt" },
 ]
 description = "A package for eurocode calculations"
 readme = "README.md"
@@ -30,7 +30,6 @@ dependencies = [
     "mkdocs-literate-nav>=0.6.2",
     "mkdocs-section-index>=0.3.10",
 ]
-
 
 [project.optional-dependencies]
 dev = [

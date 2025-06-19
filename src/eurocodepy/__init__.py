@@ -16,13 +16,13 @@ The module contains the following functions:
 `ec8`: Returns functions for ec8 calculations.
 """
 
+__version__ = "2025.6.8"
+print_version = "This is 'EurocodePy' version " + __version__
+
 from enum import Enum
 from pathlib import Path
 
 import pandas as pd
-
-__version__ = "2025.6.8"
-print_version = "This is 'EurocodePy' version " + __version__
 
 from eurocodepy import ec1, ec2, ec3, ec5, ec7, ec8, utils, dbase
 
@@ -78,6 +78,7 @@ from eurocodepy.dbase import (
     SeismicLoads,
     Steel,
     SteelGrades,
+    SteelIProfiles,
     SteelParams,
     SteelProfiles,
     WindLoads,
