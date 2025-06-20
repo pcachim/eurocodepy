@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 from eurocodepy import dbase
-from eurocodepy.ec3 import uls
+from eurocodepy.ec3 import uls  # noqa: F401
 
 ProfileType = Enum("ProfileType", dbase.SteelProfiles)
 """
@@ -108,12 +108,127 @@ class ProfileI(SteelSection):
     CurveB: str
 
 
-class ProfileH(SteelSection):
-    """Eurocode 3 H-shaped steel profile. Not implemented."""
-
-
+@dataclass
 class ProfileSHS(SteelSection):
-    """Eurocode 3 SHS (Square Hollow Section) steel profile. Not implemented."""
+    """SHS-shaped steel profile according to Eurocode 3.
+
+    Args:
+        SteelSection (SteelSection): geometric and mechanical properties of the section.
+
+    """
+
+    Section: str
+    h: float
+    b: float
+    tw: float
+    tf: float
+    r: float
+    m: float
+    P: float
+    A: float
+    Av_z: float
+    Av_y: float
+    Iy: float
+    iy: float
+    Wel_y: float
+    Wpl_y: float
+    Iz: float
+    iz: float
+    Wel_z: float
+    Wpl_z: float
+    IT: float
+    WT: float
+    Iw: float
+    Ww: float
+    Npl_Rd: float
+    Vpl_Rd_z: float
+    Vpl_Rd_y: float
+    Mel_Rd_y: float
+    Mpl_Rd_y: float
+    Mel_Rd_z: float
+    Mpl_Rd_z: float
+
+
+@dataclass
+class ProfileRHS(SteelSection):
+    """RHS-shaped steel profile according to Eurocode 3.
+
+    Args:
+        SteelSection (SteelSection): geometric and mechanical properties of the section.
+
+    """
+
+    Section: str
+    h: float
+    b: float
+    tw: float
+    tf: float
+    r: float
+    m: float
+    P: float
+    A: float
+    Av_z: float
+    Av_y: float
+    Iy: float
+    iy: float
+    Wel_y: float
+    Wpl_y: float
+    Iz: float
+    iz: float
+    Wel_z: float
+    Wpl_z: float
+    IT: float
+    WT: float
+    Iw: float
+    Ww: float
+    Npl_Rd: float
+    Vpl_Rd_z: float
+    Vpl_Rd_y: float
+    Mel_Rd_y: float
+    Mpl_Rd_y: float
+    Mel_Rd_z: float
+    Mpl_Rd_z: float
+
+
+@dataclass
+class ProfileCHS(SteelSection):
+    """CHS-shaped steel profile according to Eurocode 3.
+
+    Args:
+        SteelSection (SteelSection): geometric and mechanical properties of the section.
+
+    """
+
+    Section: str
+    h: float
+    b: float
+    tw: float
+    tf: float
+    r: float
+    m: float
+    P: float
+    A: float
+    Av_z: float
+    Av_y: float
+    Iy: float
+    iy: float
+    Wel_y: float
+    Wpl_y: float
+    Iz: float
+    iz: float
+    Wel_z: float
+    Wpl_z: float
+    IT: float
+    WT: float
+    Iw: float
+    Ww: float
+    Npl_Rd: float
+    Vpl_Rd_z: float
+    Vpl_Rd_y: float
+    Mel_Rd_y: float
+    Mpl_Rd_y: float
+    Mel_Rd_z: float
+    Mpl_Rd_z: float
 
 
 def _parse_profiles_I() -> dict[str, ProfileI]:  # noqa: N802
@@ -122,5 +237,34 @@ def _parse_profiles_I() -> dict[str, ProfileI]:  # noqa: N802
     return {d["Section"]: ProfileI(type="I", **d) for d in dados_raw}
 
 
+def _parse_profiles_SHS() -> dict[str, ProfileSHS]:  # noqa: N802
+    dados_raw = dbase.SteelSHSProfiles
+
+    return {d["Section"]: ProfileSHS(type="SHS", **d) for d in dados_raw}
+
+
+def _parse_profiles_RHS() -> dict[str, ProfileRHS]:  # noqa: N802
+    dados_raw = dbase.SteelRHSProfiles
+
+    return {d["Section"]: ProfileRHS(type="RHS", **d) for d in dados_raw}
+
+
+def _parse_profiles_CHS() -> dict[str, ProfileCHS]:  # noqa: N802
+    dados_raw = dbase.SteelCHSProfiles
+
+    return {d["Section"]: ProfileCHS(type="CHS", **d) for d in dados_raw}
+
+
 ProfilesI = _parse_profiles_I()
 """Dictionary of Eurocode 3 I-shaped steel profiles."""
+ProfilesSHS = _parse_profiles_SHS()
+"""Dictionary of Eurocode 3 SHS-shaped steel profiles."""
+ProfilesRHS = _parse_profiles_RHS()
+"""Dictionary of Eurocode 3 RHS-shaped steel profiles."""
+ProfilesCHS = _parse_profiles_CHS()
+"""Dictionary of Eurocode 3 CHS-shaped steel profiles."""
+
+ProfilesIEnum = Enum("ProfilesIEnum", ProfilesI)
+ProfilesSHSEnum = Enum("ProfilesSHSEnum", ProfilesSHS)
+ProfilesRHSEnum = Enum("ProfilesRHSEnum", ProfilesRHS)
+ProfilesCHSEnum = Enum("ProfilesCHSEnum", ProfilesCHS)

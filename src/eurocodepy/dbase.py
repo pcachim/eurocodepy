@@ -68,7 +68,6 @@ def dict2obj(dict1: dict) -> str:
     return json.loads(json.dumps(dict1), object_hook=Obj)
 
 
-# db = {}
 base_path = Path(__file__).parent / "data"
 base_name = base_path / "eurocodes.json"
 with base_name.open(encoding="utf-8") as f:
@@ -79,6 +78,15 @@ with prof_name.open(encoding="utf-8") as f:
 prof_name = base_path / "i_profiles_euro.json"
 with prof_name.open(encoding="utf-8") as f:
     db["SteelProfiles"]["EuroI"] = json.loads(f.read())
+prof_name = base_path / "shs_profiles_euro.json"
+with prof_name.open(encoding="utf-8") as f:
+    db["SteelProfiles"]["EuroSHS"] = json.loads(f.read())
+prof_name = base_path / "rhs_profiles_euro.json"
+with prof_name.open(encoding="utf-8") as f:
+    db["SteelProfiles"]["EuroRHS"] = json.loads(f.read())
+prof_name = base_path / "chs_profiles_euro.json"
+with prof_name.open(encoding="utf-8") as f:
+    db["SteelProfiles"]["EuroCHS"] = json.loads(f.read())
 
 dbobj = dict2obj(db)
 
@@ -112,6 +120,9 @@ BoltDiameters = Bolts["Diameters"]
 
 SteelProfiles = db["SteelProfiles"]["Euro"]
 SteelIProfiles = db["SteelProfiles"]["EuroI"]
+SteelSHSProfiles = db["SteelProfiles"]["EuroSHS"]
+SteelRHSProfiles = db["SteelProfiles"]["EuroRHS"]
+SteelCHSProfiles = db["SteelProfiles"]["EuroCHS"]
 
 Loads = db["Loads"]
 WindLoads = Loads["Wind"]

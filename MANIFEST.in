@@ -1,5 +1,8 @@
 include src/eurocodepy/data/eurocodes.json
 include src/eurocodepy/data/prof_euro.json
 include src/eurocodepy/data/i_profiles_euro.json
+include src/eurocodepy/data/chs_profiles_euro.json
+include src/eurocodepy/data/rhs_profiles_euro.json
+include src/eurocodepy/data/shs_profiles_euro.json
 include src/eurocodepy/data/eurocode_data_portugal.csv
 include src/eurocodepy/data/eurocode_data_portugal.xlsx
