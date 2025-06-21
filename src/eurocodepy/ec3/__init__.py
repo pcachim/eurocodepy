@@ -9,6 +9,8 @@ It includes properties for different steel grades and types, as well as profile 
 from dataclasses import dataclass
 from enum import Enum
 
+import numpy as np
+
 from eurocodepy import dbase
 from eurocodepy.ec3 import uls  # noqa: F401
 
@@ -79,33 +81,149 @@ class ProfileI(SteelSection):
     b: float
     tw: float
     tf: float
-    r: float
-    m: float
-    P: float
-    A: float
-    Av_z: float
-    Av_y: float
-    Iy: float
-    iy: float
-    Wel_y: float
-    Wpl_y: float
-    Iz: float
-    iz: float
-    Wel_z: float
-    Wpl_z: float
-    IT: float
-    WT: float
-    Iw: float
-    Ww: float
-    Npl_Rd: float
-    Vpl_Rd_z: float
-    Vpl_Rd_y: float
-    Mel_Rd_y: float
-    Mpl_Rd_y: float
-    Mel_Rd_z: float
-    Mpl_Rd_z: float
-    CurveA: str
-    CurveB: str
+    r: float = 0.0  # Fillet radius, default is 0.0
+    m: float = 0.0
+    P: float = 0.0
+    A: float = 0.0
+    Av_z: float = 0.0
+    Av_y: float = 0.0
+    Iy: float = 0.0
+    iy: float = 0.0
+    Wel_y: float = 0.0
+    Wpl_y: float = 0.0
+    Iz: float = 0.0
+    iz: float = 0.0
+    Wel_z: float = 0.0
+    Wpl_z: float = 0.0
+    IT: float = 0.0
+    WT: float = 0.0
+    Iw: float = 0.0
+    Ww: float = 0.0
+    Npl_Rd: float = 0.0
+    Vpl_Rd_z: float = 0.0
+    Vpl_Rd_y: float = 0.0
+    Mel_Rd_y: float = 0.0
+    Mpl_Rd_y: float = 0.0
+    Mel_Rd_z: float = 0.0
+    Mpl_Rd_z: float = 0.0
+    CurveA: str = "a"
+    CurveB: str = "b"
+    UserDefined: bool = False
+    fyd: float = 235.0  # Design yield strength (MPa)
+
+    def __post_init__(self) -> None:
+        """Post-initialization to ensure the section type is set correctly.
+
+        Raises:
+            ValueError: If the section type is not 'I'.
+
+        """
+        if self.type != "I":
+            msg = f"Invalid section type: {self.type}. Expected 'I'."
+            raise ValueError(msg)
+
+        if self.UserDefined:
+            self._initialize_user_defined_properties()
+
+    def _initialize_user_defined_properties(self) -> None:
+        """Initialize properties for user-defined sections."""
+        self.A = self.tf * self.b * 2 + (self.h - 2 * self.tf) * self.tw
+        self.Av_z = self.tw * self.h
+        self.Av_y = 2.0 * self.tf * self.b
+        self.Iy = (self.b * self.h**3 - (self.tw * (self.h - 2 * self.tf)**3)) / 12.0
+        self.Wel_y = self.Iy / (self.h / 2.0)
+        self.Wpl_y = self.Iy / (self.h / 2.0)
+        self.iy = np.sqrt(self.Iy / self.A)
+        self.Iz = (
+            (self.h * self.b**3) / 12.0 -
+            (self.tf * (self.b - 2 * self.tw)**3) / 12.0)
+        self.Wel_z = self.Iz / (self.b / 2.0)
+        self.Wpl_z = self.Iz / (self.b / 2.0)
+        self.iz = np.sqrt(self.Iz / self.A)
+        self.IT = (
+            (2.0 * self.hf**3 * self.b +
+            self.tw**3 * (self.h - 2.0 * self.hf)) / 3.0
+            )
+        self.WT = 0.0
+        self.Iw = (
+            self.h**2 / 2.0 *
+            (self.b**3 * self.tf / 12.0))
+        self.Ww = 0.0
+        self.Npl_Rd = self.A * 235.0 * 0.1
+        self.Vpl_Rd_z = self.Av_z * 235.0 * 0.1
+        self.Vpl_Rd_y = self.Av_y * 235.0 * 0.1
+        self.Mel_Rd_y = self.Wel_y * 235.0 * 1.0e-3
+        self.Mpl_Rd_y = self.Wpl_y * 235.0 * 1.0e-3
+        self.Mel_Rd_z = self.Wel_z * 235.0 * 1.0e-3
+        self.Mpl_Rd_z = self.Wpl_z * 235.0 * 1.0e-3
+
+    def update_strength(self, fyd: float, gamma_M0: float = 1.0) -> None:  # noqa: D417, N803
+        """Update the design strength based on a new yield strength.
+
+        Args:
+            fyk (float): New characteristic yield strength (MPa).
+            gamma_M0 (float, optional): Partial safety factor for material strength.
+            Defaults to 1.0.
+
+        """
+        conversion_factor: float = fyd / self.fyd / gamma_M0
+        self.Npl_Rd *= conversion_factor
+        self.Mel_Rd_y *= conversion_factor
+        self.Mpl_Rd_y *= conversion_factor
+        self.Mel_Rd_z *= conversion_factor
+        self.Mpl_Rd_z *= conversion_factor
+        self.Vpl_Rd_y *= conversion_factor
+        self.Vpl_Rd_z *= conversion_factor
+        self.fyd = fyd
+
+    def __str__(self) -> str:
+        """Return a string representation of the ProfileI instance.
+
+        Returns:
+            str: A string describing the ProfileI instance.
+
+        """
+        return (
+            f"Geometry: {self.Section}\n"
+            f"User Defined: {self.UserDefined}\n"
+            f"Type: {self.type}\n"
+            f"GEOMETRY:\n"
+            f"Height (h): {self.h} cm\n"
+            f"Width (b): {self.b} cm\n"
+            f"Web thickness (tw): {self.tw} cm\n"
+            f"Flange thickness (tf): {self.tf} cm\n"
+            f"Fillet radius (r): {self.r} cm\n"
+            f"PROPERTIES:\n"
+            f"Mass per unit length (m): {self.m} kg/m\n"
+            f"Perimeter (P): {self.P} m\n"
+            f"Cross-sectional area (A): {self.A} cm²\n"
+            f"Shear area in z-direction (Av_z): {self.Av_z} cm²\n"
+            f"Shear area in y-direction (Av_y): {self.Av_y} cm²\n"
+            f"Moment of inertia about y-axis (Iy): {self.Iy} cm⁴\n"
+            f"Radius of gyration about y-axis (iy): {self.iy} cm\n"
+            f"Elastic section modulus about y-axis (Wel_y): {self.Wel_y} cm³\n"
+            f"Plastic section modulus about y-axis (Wpl_y): {self.Wpl_y} cm³\n"
+            f"Moment of inertia about z-axis (Iz): {self.Iz} cm⁴\n"
+            f"Radius of gyration about z-axis (iz): {self.iz} cm\n"
+            f"Elastic section modulus about z-axis (Wel_z): {self.Wel_z} cm³\n"
+            f"Plastic section modulus about z-axis (Wpl_z): {self.Wpl_z} cm³\n"
+            f"Torsional moment of inertia (IT): {self.IT} cm⁴\n"
+            f"Torsional section modulus (WT): {self.WT} cm³\n"
+            f"Warping constant (Iw): {self.Iw} cm⁶\n"
+            f"Warping section modulus (Ww): {self.Ww} cm³\n"
+            f"STRENGTH:\n"
+            f"Design yield strength (fyd): {self.fyd} MPa\n"
+            f"Design axial strength (Npl_Rd): {self.Npl_Rd:.2f} kN\n"
+            f"Design shear strength in z-direction (Vpl_Rd_z): {self.Vpl_Rd_z:.2f} kN\n"
+            f"Design shear strength in y-direction (Vpl_Rd_y): {self.Vpl_Rd_y:.2f} kN\n"
+            f"Design elastic moment about y-axis (Mel_Rd_y): {self.Mel_Rd_y:.2f} kNm\n"
+            f"Design plastic moment about y-axis (Mpl_Rd_y): {self.Mpl_Rd_y:.2f} kNm\n"
+            f"Design elastic moment about z-axis (Mel_Rd_z): {self.Mel_Rd_z:.2f} kNm\n"
+            f"Design plastic moment about z-axis (Mpl_Rd_z): {self.Mpl_Rd_z:.2f} kNm\n"
+            f"OTHER DATA:\n"
+            f"Curve A: {self.CurveA}\n"
+            f"Curve B: {self.CurveB}\n"
+        )
 
 
 @dataclass

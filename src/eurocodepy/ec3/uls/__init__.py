@@ -427,4 +427,3 @@ def calc_Ncr_TF(
 
     # Combined torsional-flexural buckling
     return 1 / ((1 / Ncr_y) + (1 / Ncr_T))
-
