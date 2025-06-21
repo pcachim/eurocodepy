@@ -44,8 +44,8 @@ from eurocodepy import ec2
 
 EurocodePy includes a database of structural materials and steel profiles. The database is stored in a JSON file and can be easily updated or extended. The materials database includes properties such as the density, modulus of elasticity, and Poisson's ratio, while the steel profiles database includes properties such as the cross-sectional area, moment of inertia, and section modulus.
 
-The database is stored in a JSON file 'eurocodes.json'. This file is loaded when the package is impoorted, soo you can modified it to include you own properties. If you have some suggestions or materials to add to the database and want them to be included for all the coommunity, please contribute as described below in the [contributions](#contributing)
- section. Steel profiles arre stored in a separate file 'prof_euro.json'
+The database is stored in a JSON file 'eurocodes.json'. This file is loaded when the package is imported, so you can modify it to include your own properties. If you have some suggestions or materials to add to the database and want them to be included for all the community, please contribute as described below in the [contributions](#contributing)
+ section. Steel profiles are stored in a separate file 'prof_euro.json'
 
 The database can be accessed through a dictionary. There are also some aliases to easily access the database. The following code gives examples on how to use it.
 
@@ -55,14 +55,15 @@ import eurocodepy as ec
 # To access the entire database
 db = ec.db
 
-# To access concrete class C30/37
-conc = ec.db["Materials"]["Concrete"]["Classes"]["C30/37"] # Alternative 1
-conc = ec.Materials["Concrete"]["Classes"]["C30/37"] # Alternative 2
-conc = ec.Concrete["Classes"]["C30/37"] # Alternative 3
-conc = ec.ConcreteClasses["C30/37"] # Alternative 4
+# To access concrete grade C30/37
+conc = ec.db["Materials"]["Concrete"]["Grade"]["C30_37"]  # Alternative 1
+conc = ec.Materials["Concrete"]["Grade"]["C30_37"]  # Alternative 2
+conc = ec.Concrete["Grade"]["C30_37"]  # Alternative 3
+conc = ec.ConcreteGrades["C30_37"]  # Alternative 4
 
-# to access a steel profile
-ipe200 = ec.SteelProfiles["I_SECTION"]["IPE200]
+# To access a steel profile
+ipe200 = ec.db["SteelProfiles"]["Euro"]["I"]["IPE200"]  # Alternative 1
+ipe200 = ec.SteelProfiles["I"]["IPE200"]  # Alternative 2
 ```
 
 Current materials in the database are:
