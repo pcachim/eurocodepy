@@ -37,22 +37,56 @@ class Steel:
         ValueError: If the steel type is not found in the database.
 
         """
-        if type_label not in dbase.ReinforcementGrades:
+        if type_label not in dbase.SteelGrades:
             msg = (
                 f"Steel type '{type_label}' not found in database. "
-                f"Steel type must be one of {list(dbase.ReinforcementGrades.keys())}"
+                f"Steel type must be one of {list(dbase.SteelGrades.keys())}"
             )
             raise ValueError(msg)
 
-        reinf = dbase.ReinforcementGrades[type_label]
+        reinf = dbase.SteelGrades[type_label]
         self.fyk = reinf["fyk"]  # Characteristic yield strength (MPa)
-        self.epsilon_uk = reinf["epsuk"]  # Ultimate strain (‰)
-        self.ftk = reinf["ftk"]  # Characteristic tensile strength (MPa)
+        self.fuk = reinf["fuk"]  # Characteristic ultimate strength (MPa)
+        self.fyk40 = reinf["fyk40"]  # Characteristic yield strength for 40 mm bar (MPa)
+        self.fuk40 = reinf["fuk40"]  # Charac. ultimate strength for 40 mm bar (MPa)
         self.Es = reinf["Es"]  # Modulus of elasticity (MPa)
-        self.ClassType = reinf["T"]  # 'A', 'B', or 'C'
+        self.ClassType = ""
 
-        gamma_s = dbase.ReinforcementParams["gamma_s"]  # Partial safety factor
+        gamma_s = dbase.SteelParams["gamma_M0"]  # Partial safety factor
+        self.gamma_M0 = dbase.SteelParams["gamma_M0"]  # Partial safety factor
+        self.gamma_M1 = dbase.SteelParams["gamma_M1"]  # Partial safety factor
+        self.gamma_M2 = dbase.SteelParams["gamma_M2"]  # Partial safety factor
         self.fyd = round(self.fyk / gamma_s, 1)  # Design yield strength (MPa)
+        self.fyd40 = round(self.fyk40 / gamma_s, 1)  # Design yield strength (MPa)
+
+    def __str__(self) -> str:
+        """Return a string representation of the Steel instance.
+
+        Returns:
+            str: A string describing the steel properties.
+
+        """
+        return (
+            f"Steel Type: {self.fyk}\n"
+            f"Characteristic Yield Strength (fyk): {self.fyk} MPa\n"
+            f"Characteristic Ultimate Strength (fuk): {self.fuk} MPa\n"
+            f"Design Yield Strength (fyd): {self.fyd} MPa\n"
+            f"Modulus of Elasticity (Es): {self.Es} MPa\n"
+            f"Partial Safety Factor (gamma_M0): {self.gamma_M0}\n"
+        )
+
+    def __repr__(self) -> str:
+        """Return a string representation of the Steel instance for debugging.
+
+        Returns:
+            str: A string representation of the Steel instance.
+
+        """
+        return (
+            f"Steel(type_label={self.fyk}, "
+            f"fyk={self.fyk}, fuk={self.fuk}, "
+            f"fyd={self.fyd}, Es={self.Es})"
+        )
 
 
 @dataclass
