@@ -14,7 +14,10 @@ cemprops = {
     "Type R": [6, 0.11],
 }
 
-VALUE_FCM = 35.0
+MAX_BUNDLE_BARS = 4
+MIN_BUNDLE_BARS = 2
+REF_FCK = 50.0
+REF_FCM = 35.0
 
 
 GammaC = dbase.ConcreteParams["gamma_cc"]
@@ -27,10 +30,6 @@ ReinforcementClass = Enum("ReinforcementClass", list(dbase.ReinforcementGrades.k
 GammaS = dbase.ReinforcementParams["gamma_s"]
 PrestressClass = Enum("PrestressClass", list(dbase.PrestressGrades.keys()))
 GammaP = dbase.PrestressParams["gamma_p"]
-
-MAX_BUNDLE_BARS = 4
-MIN_BUNDLE_BARS = 2
-REF_FCK = 50
 
 
 class Bar:
@@ -52,7 +51,7 @@ class Bar:
 
     """
 
-    def __init__(self, diameter: float, n: int = 1) -> None:
+    def __init__(self, diameter: float | str, n: int = 1) -> None:
         """Initialize a Bar with a given diameter and number of bars.
 
         Args:
@@ -60,8 +59,14 @@ class Bar:
             n (int, optional): Number of bars in the bundle. Defaults to 1.
 
         """
-        self.diameter = diameter
-        self.area = round(np.pi * diameter**2 / 400.0, 2)
+        if isinstance(diameter, str):
+            self.bar = dbase.ReinforcementBars[diameter]
+            self.diameter = self.bar["d"]
+            self.area = self.bar["A"]
+        else:
+            self.diameter = diameter
+            self.area = round(np.pi * diameter**2 / 400.0, 2)
+
         self.number = n
 
     def total_area(self) -> float:
@@ -135,12 +140,11 @@ class Bundle:
 
     """
 
-    def __init__(self, bars: list[Bar], number: int = 1) -> None:
+    def __init__(self, bars: list[Bar]) -> None:
         """Initialize a Bundle with a list of Bar objects.
 
         Args:
             bars (list[Bar]): List of Bar objects to be included in the bundle.
-            number (int, optional): Number of bundles. Defaults to 1.
 
         Raises:
             ValueError: If the number of bars in the bundle is less than 2 or
@@ -156,7 +160,7 @@ class Bundle:
         self.bars = bars
         self.diameter = np.sqrt(sum(x.diameter**2 for x in bars))
         self.area = sum(bar.area for bar in self.bars)
-        self.number = number
+        self.number = 1
 
     @property
     def total_area(self) -> float:
@@ -245,6 +249,9 @@ class BarLayout:
     def diameter(self) -> float:
         """Returns the diameter (to be implemented)."""
         return self.diameter
+
+
+BarSizes = dbase.ReinforcementBars.keys()
 
 
 class Concrete:
@@ -435,6 +442,10 @@ class ConcreteGrade(Enum):
     C90_105 = Concrete("C90/105")
 
 
+ConcreteGrades = {item.replace("_", "/"): Concrete(item.replace("_", "/"))
+            for item in dbase.ConcreteGrades}
+
+
 def get_concrete(concrete: str | Concrete | ConcreteGrade) -> Concrete:
     """Return a Concrete instance from a string, Concrete, or ConcreteGrade input.
 
@@ -591,6 +602,10 @@ class ReinforcementGrade(Enum):
     B700A = Reinforcement("B700A")
     B700B = Reinforcement("B700B")
     B700C = Reinforcement("B700C")
+
+
+ReinforcementGrades = {item: Reinforcement(item)
+            for item in dbase.ReinforcementGrades}
 
 
 def get_reinforcement(
@@ -817,7 +832,7 @@ def _calc_tt0(t0: float, cem: float) -> float:
 def _calc_phi_rh(rh: float, h0: float, fcm: float,
                 alpha1: float, alpha2: float) -> float:
     phi_rh = (1.0 - rh / 100) / (0.1 * (h0**0.33333333))
-    if fcm <= VALUE_FCM:
+    if fcm <= REF_FCM:
         return 1.0 + phi_rh
     return (1.0 + phi_rh * alpha1) * alpha2
 

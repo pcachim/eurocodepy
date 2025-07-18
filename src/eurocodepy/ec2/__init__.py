@@ -11,10 +11,12 @@ for serviceability and ultimate limit states.
 from eurocodepy.ec2.materials import (
     Bar,
     BarLayout,
+    BarSizes,
     Bundle,
     Concrete,
     ConcreteClass,
     ConcreteGrade,
+    ConcreteGrades,
     CreepParams,
     GammaC,
     GammaCT,
@@ -22,15 +24,16 @@ from eurocodepy.ec2.materials import (
     GammaS,
     Prestress,
     PrestressClass,
-    Reinforcement,
+    Reinforcement,  # noqa: F401
     ReinforcementClass,
     ReinforcementGrade,
+    ReinforcementGrades,
     ShrinkStrainParams,
     beta_cc,
     beta_ce,
     calc_creep_coef,  # EN1992-1:2004
     calc_shrink_strain,  # EN1992-1:2004
-    cemprops,
+    cemprops,  # noqa: F401
     get_concrete,
     get_reinforcement,
 )
