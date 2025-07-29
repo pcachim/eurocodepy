@@ -8,6 +8,7 @@ It includes properties for different steel grades and types, as well as profile 
 """
 from dataclasses import dataclass
 from enum import Enum
+import re
 
 import numpy as np
 
@@ -19,6 +20,10 @@ ProfileType = Enum("ProfileType", dbase.SteelProfiles)
 Eurocode 3 steel classes existing in the databse.
 """
 
+def extract_steel(s):
+    match = re.search(r'S\d+', s)
+    return match.group(0) if match else None
+
 MIN_E1: float = 1.2
 MIN_E2: float = 1.2
 MIN_P1: float = 2.2
@@ -29,7 +34,6 @@ REC_P1: float = 3.75
 REC_P2: float = 3.0
 MIN_E1_PIN: float = 1.6
 MIN_E2_PIN: float = 1.25
-
 
 class Bolt:
     """Represents a steel bolt according to Eurocode 3.
@@ -1276,4 +1280,143 @@ class PinnedConnectionDouble(PinnedConnection):
         }
 
         return self._result
+
+
+class WeldTypeEnum(Enum):
+    """Enumeration for weld types according to Eurocode 3."""
+    SLIDE = 0
+    SHEAR = 1
+    NORMAL = 2
+    SHEARNORMAL = 3
+    SLIDENORMAL = 4
+    SLIDESHEAR = 4
+    SLINESHEARNORMAL = 5
+
+@dataclass
+class Weld:
+    """Represents a weld according to Eurocode 3.
+
+    Attributes:
+        a (float): Weld width (mm).
+        length (float): Weld length (mm).
+        grade (str): Weld grade (e.g., 'A', 'B', etc.).
+    """
+
+    a: float
+    length: float
+    steel_grade: str
+    x: float = 0.0
+    y: float = 0.0
+    orientation: float = 0.0
+    weldtype: WeldTypeEnum = WeldTypeEnum.SLIDENORMAL
+    x_max: float = 0.0
+    y_max: float = 0.0
+    x_min: float = 0.0
+    y_min: float = 0.0
+    cos: float = 1.0
+    sin: float = 0.0
+    xg: float = 0.0
+    yg: float = 0.0
+
+    def __post_init__(self):
+        self.steel_grade = self.steel_grade.upper()
+        if self.steel_grade not in dbase.SteelGrades:
+            msg = (
+                f"Weld grade '{self.steel_grade}' not found in database. "
+                f"Weld grade must be one of {list(dbase.SteelGrades.keys())}"
+            )
+            raise ValueError(msg)
+
+        steel = dbase.SteelGrades[self.steel_grade]
+        self.fu = steel["fuk"]
+        self.fy = steel["fyk"]
+        grade = extract_steel(self.steel_grade)
+        self.beta_w = 0.8 if grade == "S235" else 0.85 if grade == "S275" else 0.9 if grade == "S355" else 1.00
+        self.gamma_M0 = dbase.SteelParams["gamma_M0"]  # Partial safety factor
+        self.gamma_M1 = dbase.SteelParams["gamma_M1"]  # Partial safety factor
+        self.gamma_M2 = dbase.SteelParams["gamma_M2"]  # Partial safety factor
+        self.fv_wd = self.fu / (np.sqrt(3.0) * self.gamma_M2 * self.beta_w)
+        # Fillet width for shear full strength (should be mukltiplied by t)
+        self.a_full_shear = 0.7 * self.fy / self.gamma_M0 / self.fv_wd  
+        # Fillet width for tension full strength (should be mukltiplied by t)
+        self.a_full_tension = 0.5 * self.fy / self.gamma_M0 / self.fv_wd
+        self.fw_vrd = self.fu / self.gamma_M2 / self.beta_w
+        self.fw_trd = 0.9 * self.fu / self.gamma_M2
+
+        self.cos = np.cos(self.orientation)
+        self.sin = np.sin(self.orientation)
+        self.x_max = self.x + 0.5 * self.length * self.cos
+        self.y_max = self.y + 0.5 * self.length * self.sin
+        self.x_min = self.x - 0.5 * self.length * self.cos
+        self.y_min = self.y - 0.5 * self.length * self.sin
+        i_xx = (self.a**3 * self.length) / 12.0
+        i_yy = (self.a * self.length**3) / 12.0
+        i_xy = 0.5 * (i_xx + i_yy)
+        i_yx = 0.5 * (i_xx - i_yy)
+        cos_2a = np.cos(2 * self.orientation)
+        sin_2a = np.sin(2 * self.orientation)
+        self.inertia_xx = i_xy + i_yx * cos_2a
+        self.inertia_yy = i_xy - i_yx * cos_2a
+        self.inertia_xy = i_yx * sin_2a
+        self.area = self.a * self.length
+        self.area_xx = self.area * np.round(self.cos**2, 2)
+        self.area_yy = self.area * np.round(self.sin**2, 2)
+
+
+    def __repr__(self):
+        return f"Weld(a='{self.a}', length={self.length}, steel grade='{self.steel_grade}')"
+
+
+class WeldConnection:
+
+    inertia_xx = 0.0
+    inertia_yy = 0.0
+    inertia_xy = 0.0
+    area_xx = 0.0
+    area_yy = 0.0
+    area = 0.0
+    max_x = -np.inf
+    max_y = -np.inf
+    min_x = np.inf
+    min_y = np.inf  
+
+    def __init__(self, welds: list | None = None):
+        self.welds = welds if welds is not None else []
+
+    def add(self, weld: Weld):
+        self.__update_weld(weld)
+        self.welds.append(weld)
+
+    def __update_weld(self, weld: Weld) -> None:
+        self.inertia_xx += weld.inertia_xx
+        self.inertia_yy += weld.inertia_yy
+        self.inertia_xy += weld.inertia_xy
+        self.area_xx += weld.area_xx
+        self.area_yy += weld.area_yy
+        self.area += weld.area
+        if weld.x_max > self.max_x:
+            self.max_x = weld.x_max
+        if weld.y_max > self.max_y:
+            self.max_y = weld.y_max
+        if weld.x_min < self.min_x:
+            self.min_x = weld.x_min
+        if weld.y_min < self.min_y:
+            self.min_y = weld.y_min
+        self.w_el_xx_sup = self.inertia_xx / self.max_x
+        self.w_el_yy_sup = self.inertia_yy / self.max_y
+        self.w_el_xx_inf = np.abs(self.inertia_xx / self.min_x)
+        self.w_el_yy_inf = np.abs(self.inertia_yy / self.min_y)
+
+    def total_length(self):
+        return sum(weld.length for weld in self.welds)
+
+    def __len__(self):
+        return len(self.welds)
+
+    def __iter__(self):
+        return iter(self.welds)
+
+    def __repr__(self):
+        return f"WeldConnection({self.welds})"
+
 
