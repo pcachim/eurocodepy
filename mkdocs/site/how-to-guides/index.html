@@ -16,7 +16,7 @@
     
     
       
-        <title>How to guides - Documentation for **EurocodePy**</title>
+        <title>How-to guides - Documentation for EurocodePy</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#how-to-add-two-numbers" class="md-skip">
+        <a href="#how-to-guides" class="md-skip">
           Skip to content
         </a>
       
@@ -76,7 +76,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Documentation for **EurocodePy**" class="md-header__button md-logo" aria-label="Documentation for **EurocodePy**" data-md-component="logo">
+    <a href=".." title="Documentation for EurocodePy" class="md-header__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -90,13 +90,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Documentation for **EurocodePy**
+            Documentation for EurocodePy
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              How to guides
+              How-to guides
             
           </span>
         </div>
@@ -174,13 +174,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Documentation for **EurocodePy**" class="md-nav__button md-logo" aria-label="Documentation for **EurocodePy**" data-md-component="logo">
+    <a href=".." title="Documentation for EurocodePy" class="md-nav__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Documentation for **EurocodePy**
+    Documentation for EurocodePy
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -297,7 +297,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../modules/ec2.md" class="md-nav__link">
+      <a href="../modules/ec2/" class="md-nav__link">
         
   
   
@@ -320,7 +320,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../modules/ec3.md" class="md-nav__link">
+      <a href="../modules/ec3/" class="md-nav__link">
         
   
   
@@ -343,7 +343,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../modules/ec5.md" class="md-nav__link">
+      <a href="../modules/ec5/" class="md-nav__link">
         
   
   
@@ -389,7 +389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../modules/ec8.md" class="md-nav__link">
+      <a href="../modules/ec8/" class="md-nav__link">
         
   
   
@@ -412,7 +412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../modules/utils.md" class="md-nav__link">
+      <a href="../modules/utils/" class="md-nav__link">
         
   
   
@@ -1806,6 +1806,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1814,9 +1816,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-to-add-two-numbers" class="md-nav__link">
+  <a href="#table-of-contents" class="md-nav__link">
     <span class="md-ellipsis">
-      How To Add Two Numbers?
+      Table of Contents
     </span>
   </a>
   
@@ -1838,42 +1840,12 @@
 
 
 
-  <h1>How to guides</h1>
-
-<p>This part of the project documentation focuses on a
-<strong>problem-oriented</strong> approach. You'll tackle common
-tasks that you might have, with the help of the code
-provided in this project.</p>
-<h2 id="how-to-add-two-numbers">How To Add Two Numbers?</h2>
-<p>You have two numbers and you need to add them together.
-You're in luck! The <code>calculator</code> package can help you
-get this done.</p>
-<p>Download the code from this GitHub repository and place
-the <code>calculator/</code> folder in the same directory as your
-Python script:</p>
-<pre><code>your_project/
-│
-├── calculator/
-│   ├── __init__.py
-│   └── calculations.py
-│
-└── your_script.py
-</code></pre>
-<p>Inside of <code>your_script.py</code> you can now import the
-<code>add()</code> function from the <code>calculator.calculations</code>
-module:</p>
-<pre><code># your_script.py
-from calculator.calculations import add
-</code></pre>
-<p>After you've imported the function, you can use it
-to add any two numbers that you need to add:</p>
-<pre><code># your_script.py
-from calculator.calculations import add
-
-print(add(20, 22))  # OUTPUT: 42.0
-</code></pre>
-<p>You're now able to add any two numbers, and you'll
-always get a <code>float</code> as a result.</p>
+<h1 id="how-to-guides">How-to guides</h1>
+<p>This section of the documentation provides practical guides on how to use the eurocodepy package to solve specific problems or perform common tasks. It is designed to help users quickly find solutions to their needs without having to delve into the full reference documentation.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li>To be completed...</li>
+</ul>
 
 
 
