@@ -7,7 +7,9 @@ This site contains the project documentation for the
 
 ## Projet overview
 
-Eurocodepy are Python functions to work with structural eurocodes. Material data is stored in a JSON file. Current materials in the database are:
+Eurocodepy is a Python package that provides functions to work with structural Eurocodes. It includes material properties, load combinations, and other utilities for structural engineering calculations.
+
+Material data is stored in a JSON file. Current materials in the database are:
 
 * concrete (C20 to C90)
 * timber (C, D, GL)
@@ -19,19 +21,15 @@ Eurocodepy are Python functions to work with structural eurocodes. Material data
 Available european steel profiles are:
 
 * IPE
-* HEA
-* HEB
-* HEM
-* CHS
-* RHS
-* SHS
+* HEA, HEB, HEM
+* CHS, RHS, SHS
 
 There are also some functions to work with material properties:
 
 * creep_coef
 * shrink_strain
 
-The existing functions are listed in the page '[Reference](reference)'. They are divided by eurocode.
+The existing functions are listed in the page '[Reference](reference/eurocodepy)'.
 
 ## Table Of Contents
 

@@ -1,6 +1,12 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
+"""Module for Eurocode 8 Seismic Design Response Spectrum calculations.
 
+It includes functions for generating design response spectra,
+retrieving national annex parameters, and writing design response spectra to a file.
+It also includes classes for representing soil amplification, reference acceleration,
+and spectrum shape parameters.
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd

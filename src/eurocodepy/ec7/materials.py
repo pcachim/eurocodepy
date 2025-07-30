@@ -96,8 +96,6 @@ class Soil:
     ks: float = 30000  # modulus of subgrade reaction kN/m3
 
     def __post_init__(self) -> None:
-        """Convert angles to radians and set is_coherent if cohesion > 0."""
-        # Convert angles to radians
         self.friction_angle = np.radians(self.friction_angle)
         self.conc_friction_angle = np.radians(self.conc_friction_angle)
         if self.cohesion > 0:
@@ -231,30 +229,20 @@ class SoilSeismicParameters:
     Attributes:
         name (str): name of the seismic spectrum
         r (float): response reduction factor
-        ag (float): ground acceleration in m/s²
-        S (float): soil spectral scale factor
+        agr (float): ground acceleration in m/s²
+        s_max (float): Maximum spectral acceleration.
         alpha (float): normalized ground acceleration (ag / 9.80665)
         smax (float): maximum spectral acceleration
         importance_coeff (float): importance coefficient
         avg_ahg (float): ratio of vertical to horizontal acceleration
         kh (float): horizontal seismic coefficient
         kv (float): vertical seismic coefficient
+        r (float, optional): Response reduction factor. Defaults to 1.0.
 
     """
 
     def __init__(self, name: str, agr: float, s_max: float,
                 avg_ahg: float, r: float = 1.0) -> None:
-        """Initialize seismic parameters for soil based on Eurocode 8.
-
-        Args:
-            name (str): Name of the seismic spectrum.
-            agr (float): Ground acceleration in m/s²
-            (already includes importance coefficient).
-            s_max (float): Maximum spectral acceleration.
-            avg_ahg (float): Ratio vertical/horizontal acceleration.
-            r (float, optional): Response reduction factor. Defaults to 1.0.
-
-        """
         self.name = name
         self.r = r
         self._ag = agr
