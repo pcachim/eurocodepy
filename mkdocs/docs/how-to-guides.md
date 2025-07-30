@@ -1,40 +1,7 @@
-This part of the project documentation focuses on a
-**problem-oriented** approach. You'll tackle common
-tasks that you might have, with the help of the code
-provided in this project.
+# How-to guides
 
-## How To Add Two Numbers?
+This section of the documentation provides practical guides on how to use the eurocodepy package to solve specific problems or perform common tasks. It is designed to help users quickly find solutions to their needs without having to delve into the full reference documentation.
 
-You have two numbers and you need to add them together.
-You're in luck! The `calculator` package can help you
-get this done.
+## Table of Contents
 
-Download the code from this GitHub repository and place
-the `calculator/` folder in the same directory as your
-Python script:
-
-    your_project/
-    │
-    ├── calculator/
-    │   ├── __init__.py
-    │   └── calculations.py
-    │
-    └── your_script.py
-
-Inside of `your_script.py` you can now import the
-`add()` function from the `calculator.calculations`
-module:
-
-    # your_script.py
-    from calculator.calculations import add
-
-After you've imported the function, you can use it
-to add any two numbers that you need to add:
-
-    # your_script.py
-    from calculator.calculations import add
-
-    print(add(20, 22))  # OUTPUT: 42.0
-
-You're now able to add any two numbers, and you'll
-always get a `float` as a result.
+- To be completed...

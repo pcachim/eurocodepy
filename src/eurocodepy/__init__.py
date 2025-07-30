@@ -4,33 +4,35 @@
 # EurocodePy
 """Provide several functions to help designers working with Eurocodes.
 
-This module allows the user to make mathematical calculations.
-The module contains the following functions:
+The package provides modules for different Eurocodes and utilities, such as:
 
-`db`: Returns the database of the Eurocodes.
-`ec1`: Returns functions for ec1 calculations.
-`ec2`: Returns functions for ec2 calculations.
-`ec3`: Returns functions for ec3 calculations.
-`ec5`: Returns functions for ec5 calculations.
-`ec7`: Returns functions for ec7 calculations.
-`ec8`: Returns functions for ec8 calculations.
+* `dbase`: access to the database of materials, loads, sections, etc.
+* `utils`: utility functions for calculations, stress, and section properties.
+* `ec1`: utility functions for ec1 calculations.<br>
+* `ec2`: utility functions for ec2 calculations.<br>
+* `ec3`: utility functions for ec3 calculations.<br>
+* `ec5`: utility functions for ec5 calculations.<br>
+* `ec7`: utility functions for ec7 calculations.<br>
+* `ec8`: utility functions for ec8 calculations.
 """
 
 __version__ = "2025.6.8"
+"""Version of EurocodePy package."""
 print_version = "This is 'EurocodePy' version " + __version__
+"""Prints the version of EurocodePy package."""
+from enum import Enum  # noqa: E402
+from pathlib import Path  # noqa: E402
 
-from enum import Enum
-from pathlib import Path
+import pandas as pd  # noqa: E402
 
-import pandas as pd
-
-from eurocodepy import ec1, ec2, ec3, ec5, ec7, ec8, utils, dbase
+from eurocodepy import dbase, ec1, ec2, ec3, ec5, ec7, ec8, utils
 
 # National parameters
 local_name = Path(__file__).parent / "data" / "eurocode_data_portugal.csv"
 locale = Enum("locale", ["EU", "PT"])
 locales = {}
 locales["PT"] = pd.read_csv(local_name)
+
 
 def get_national_params(local: locale = locale.PT, concelho: str = "Lisboa") -> object:
     """Get Portuguese data for municipalities.
@@ -49,14 +51,13 @@ def get_national_params(local: locale = locale.PT, concelho: str = "Lisboa") -> 
     # Convert to dict if found
     if not row.empty:
         result = row.iloc[0].to_dict()
-        print(result)
+        print(result)  # noqa: T201
     else:
         result = None
-        print("Concelho not found.")
+        print("Concelho not found.")  # noqa: T201
     return result
 
 
-from eurocodepy import dbase
 # Database imports
 from eurocodepy.dbase import (
     BoltDiameters,
@@ -77,10 +78,12 @@ from eurocodepy.dbase import (
     ReinforcementParams,
     SeismicLoads,
     Steel,
+    SteelCHSProfiles,
     SteelGrades,
-    SteelIProfiles,
     SteelParams,
-    SteelProfiles,
+    SteelIProfiles,
+    SteelRHSProfiles,
+    SteelSHSProfiles,
     WindLoads,
     db,
     dbobj,

@@ -15,7 +15,6 @@ import numpy as np
 from eurocodepy import dbase
 from eurocodepy.ec3 import uls  # noqa: F401
 
-ProfileType = Enum("ProfileType", dbase.SteelProfiles)
 """
 Eurocode 3 steel classes existing in the databse.
 """
@@ -39,6 +38,10 @@ class Bolt:
     """Represents a steel bolt according to Eurocode 3.
 
     Attributes:
+        diameter (str | float): Bolt diameter designation (e.g., 'M16' or 16.0).
+        grade (str): Bolt steel grade (e.g., '8.8').
+        athread (float, optional): Area of the thread (cm^2). Defaults to None.
+        dnut (float, optional): Diameter of the nut (mm). Defaults to None.
         name (str): Bolt diameter designation (e.g., 'M16').
         steel (str): Bolt steel grade (e.g., '8.8').
         d (float): Diameter of the bolt (mm).
@@ -50,22 +53,12 @@ class Bolt:
     Methods:
         __str__(): Returns a string representation of the bolt properties.
 
-    """
-
-    def __init__(self, diameter: str | float | int | object, grade: str, athread = None, dnut = None) -> None:
-        """Initialize a Bolt instance with diameter and grade.
-
-        Args:
-            diameter (str | float): Bolt diameter designation (e.g., 'M16' or 16.0).
-            grade (str): Bolt steel grade (e.g., '8.8').
-            athread (float, optional): Area of the thread (cm^2). Defaults to None.
-            dnut (float, optional): Diameter of the nut (mm). Defaults to None.
-
         Raises:
             ValueError: If the grade or diameter is not found in the database.
 
-        """
-        
+    """
+
+    def __init__(self, diameter: str | float | object, grade: str, athread = None, dnut = None) -> None:  # noqa: D107
         if grade.replace(".", "_") not in dbase.BoltGrades:
             msg = (
                 f"Bolt grade '{grade}' not found in database. "

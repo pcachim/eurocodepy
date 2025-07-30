@@ -52,13 +52,6 @@ class Bar:
     """
 
     def __init__(self, diameter: float | str, n: int = 1) -> None:
-        """Initialize a Bar with a given diameter and number of bars.
-
-        Args:
-            diameter (float): Diameter of the bar.
-            n (int, optional): Number of bars in the bundle. Defaults to 1.
-
-        """
         if isinstance(diameter, str):
             self.bar = dbase.ReinforcementBars[diameter]
             self.diameter = self.bar["d"]
@@ -301,16 +294,6 @@ class Concrete:
     """
 
     def __init__(self, class_name: str = "C30/37") -> None:
-        """Eurocode 2 concrete properties.
-
-        :param fck: Characteristic compressive strength of concrete (MPa).
-
-        Raises
-        ------
-        ValueError
-            If the concrete class is not found in the database.
-
-        """
         self.grade = class_name
 
         class_name = class_name.replace("/", "_").upper()
@@ -511,16 +494,6 @@ class Reinforcement:
     """
 
     def __init__(self, type_label: str | ReinforcementClass = "B500B") -> None:
-        """Eurocode 2 steel reinforcement properties.
-
-        :param type_label: Steel type label (e.g., 'B500B', 'B500C')
-
-        Raises
-        ------
-        ValueError
-            If the steel type is not found in the database.
-
-        """
         if isinstance(type_label, ReinforcementClass):
             type_label = type_label.name
         self.grade = type_label
@@ -676,19 +649,7 @@ class Prestress:
 
     """
 
-    def __init__(self, type_label: str | PrestressClass = "Y1860S7 12.5") -> None:
-        """Eurocode 2 steel reinforcement properties.
-
-        :param type_label: Steel type label (e.g., 'Y1860S7 12.5', 'Y1860S7 15.2').
-
-        Raises
-        ------
-        TypeError
-            If type_label is not a string or PrestressClass enum.
-        ValueError
-            If the prestress steel class is not found in the database.
-
-        """
+    def __init__(self, type_label: str | PrestressClass = "Y1860S7 12.5") -> None:  # noqa: D107
         if isinstance(type_label, PrestressClass):
             class_name = type_label.name
             self.name = class_name.replace("_", " ", 1).replace("_", ".", 1)

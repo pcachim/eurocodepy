@@ -62,8 +62,8 @@ conc = ec.Concrete["Grade"]["C30_37"]  # Alternative 3
 conc = ec.ConcreteGrades["C30_37"]  # Alternative 4
 
 # To access a steel profile
-ipe200 = ec.db["SteelProfiles"]["Euro"]["I"]["IPE200"]  # Alternative 1
-ipe200 = ec.SteelProfiles["I"]["IPE200"]  # Alternative 2
+ipe200 = ec.db["SteelProfiles"]["EuroI"]["IPE200"]  # Alternative 1
+ipe200 = ec.SteelProfiles["EuroI"]["IPE200"]  # Alternative 2
 ```
 
 Current materials in the database are:

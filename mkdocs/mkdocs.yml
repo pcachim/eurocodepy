@@ -1,4 +1,4 @@
-site_name: Documentation for **EurocodePy**
+site_name: Documentation for EurocodePy
 
 theme:
   name: "material"

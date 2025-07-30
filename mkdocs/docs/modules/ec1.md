@@ -1,51 +1,36 @@
-# Eurocode 7: ec7 module
+# Eurocode 1 module: `ec1`
 
 ## Overview
 
-Welcome to the ec7 module off *eurocodepy* package. This module is a toolkit designed to assist engineers and geotechnical professionals in calculating and analyzing earth pressure coefficients and soil bearing capacity based on the Eurocode 7 (EC7) standards.
+The `ec1` module of the *eurocodepy* package provides tools for the analysis and design of structures subjected to actions as defined in Eurocode 1 (EN 1991). It is intended for engineers who need to calculate loads such as self-weight, imposed loads, wind, snow, and thermal actions in accordance with Eurocode 1 standards.
 
 ## Features
 
-1. Active Earth Pressure Analysis
-Perform active earth pressure calculations according to Eurocode 7 standards.
-Input parameters include soil properties, wall geometry, and external loads.
-Output results include the magnitude and distribution of active earth pressure on the retaining structure.
-2. Soil Bearing Capacity Analysis
-Calculate soil bearing capacity based on the Eurocode 7 guidelines.
-Input parameters include soil properties, foundation geometry, and relevant loadings.
-Output results include the ultimate and allowable bearing capacities for shallow foundations.
-3. Compliance with Eurocode 7
-The package adheres to the Eurocode 7 standards, ensuring accurate and reliable calculations.
-Regular updates will be provided to align with any changes or amendments to the Eurocode 7 specifications.
-Installation
+- **Load Calculations**  
+  Functions to calculate self-weight, imposed loads, wind loads, snow loads, and thermal actions for buildings and civil engineering works.
+- **Parameter Flexibility**  
+  Input parameters include geometry, location, exposure, and usage category.
 
-## Usage
-
-Import the *eurocodepy* package 
-Initialize the active earth pressure or soil bearing capacity calculation objects.
-Set the input parameters such as soil properties, wall/foundation geometry, and loads.
-Run the calculation method to obtain the results.
-Access the output data and analyze the results.
+## Typical Usage
 
 ```python
-# Import the EC7Package module
-from eurocodepy.ec7 import pressure_coefficients, bearing_resistance 
+from eurocodepy.ec1 import wind_load, snow_load, imposed_load
 
-# Example for Active Earth Pressure
-active_pressure_calculator = ActiveEarthPressure()
-active_pressure_calculator.set_soil_properties(...)
-active_pressure_calculator.set_wall_geometry(...)
-active_pressure_calculator.set_external_loads(...)
-active_pressure_calculator.calculate_active_pressure()
-results = active_pressure_calculator.get_results()
+# Calculate wind load
+wind = wind_load(height=15, exposure='B', location='coastal')
 
-# Example for Soil Bearing Capacity
-bearing_capacity_calculator = SoilBearingCapacity()
-bearing_capacity_calculator.set_soil_properties(...)
-bearing_capacity_calculator.set_foundation_geometry(...)
-bearing_capacity_calculator.set_loadings(...)
-bearing_capacity_calculator.calculate_bearing_capacity()
-results = bearing_capacity_calculator.get_results()
-Contribution Guidelines
+# Calculate snow load
+snow = snow_load(altitude=500, location='mountain')
+
+# Calculate imposed load for office
+imposed = imposed_load(category='B', area=50)
 ```
+
+## Compliance
+
+All calculations and checks are based on the requirements and recommendations of Eurocode 1 (EN 1991). The module is updated to reflect changes and amendments to the code.
+
+## Further Reading
+
+- [Eurocode 1: Actions on structures (EN 1991)](https://eurocodes.jrc.ec.europa.eu/EN-Eurocodes/eurocode-1-actions-structures)
 

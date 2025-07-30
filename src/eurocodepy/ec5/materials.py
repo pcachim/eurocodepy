@@ -11,21 +11,20 @@ TimberClass = Enum("TimberClass", list(dbase.TimberGrades.keys()))
 
 
 class Timber:
-    """Eurocode 5 timber properties."""
+    """Initialize Timber object.
+
+    Properties are derived from the database for the given type_label.
+
+    Args:
+        type_label (str, optional): Timber grade label (e.g., 'C24').
+        Defaults to 'C24'.
+
+    Raises:
+        ValueError: If the type_label is not found in the database.
+
+    """
 
     def __init__(self, type_label: str = "C24") -> None:
-        """Initialize Timber object.
-
-        Properties are derived from the database for the given type_label.
-
-        Args:
-            type_label (str, optional): Timber grade label (e.g., 'C24').
-            Defaults to 'C24'.
-
-        Raises:
-            ValueError: If the type_label is not found in the database.
-
-        """
         if type_label not in dbase.TimberGrades:
             msg = (
                 f"Timber type '{type_label}' not found in database. "
@@ -92,25 +91,18 @@ class SolidTimber(Timber):
     """Class represents Eurocode 5 solid timber properties.
 
     It includes both softwood and hardwood types.
+    Properties read from the database for the given type_label.
 
     Args:
-        type_label (str): Timber grade label (e.g., 'C24', 'D30'). Defaults to 'C24'.
+        type_label (str, optional): Timber grade label (e.g., 'C24', 'D30').
+        Defaults to 'C24'.
+
+    Raises:
+        ValueError: If the type_label is not found in the database.
 
     """
 
     def __init__(self, type_label: str = "C24") -> None:
-        """Initialize a SolidTimber object.
-
-        Properties read from the database for the given type_label.
-
-        Args:
-            type_label (str, optional): Timber grade label (e.g., 'C24', 'D30').
-            Defaults to 'C24'.
-
-        Raises:
-            ValueError: If the type_label is not found in the database.
-
-        """
         grades_list = [item for item in dbase.TimberGrades
                     if (item.startswith(("C", "D")))]
         if type_label not in grades_list:
@@ -130,23 +122,18 @@ class SolidTimber(Timber):
 class Glulam(Timber):
     """Eurocode 5 glulam properties.
 
-    :param type_label: Glulam type label (e.g., 'GL24h', 'GL28c')
+    Properties read from the database for the given type_label.
+
+    Args:
+        type_label (str, optional): Glulam type label (e.g., 'GL24h', 'GL28c').
+        Defaults to 'GL24h'.
+
+    Raises:
+        ValueError: If the type_label does not start with 'GL' or
+        is not found in the database.
     """
 
     def __init__(self, type_label: str = "GL24h") -> None:
-        """Initialize a Glulam object.
-
-        Properties read from the database for the given type_label.
-
-        Args:
-            type_label (str, optional): Glulam type label (e.g., 'GL24h', 'GL28c').
-            Defaults to 'GL24h'.
-
-        Raises:
-            ValueError: If the type_label does not start with 'GL' or
-            is not found in the database.
-
-        """
         grades_list = [item for item in dbase.TimberGrades if item.startswith("GL")]
 
         if not type_label.startswith("GL"):

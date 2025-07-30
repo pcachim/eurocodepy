@@ -1,17 +1,18 @@
-import pandas as pd
-import numpy as np
 import timeit
 
+import numpy as np
+import pandas as pd
+
 from src import eurocodepy as ec
-SteelProfiles = ec.SteelProfiles
+
+SteelProfiles = ec.SteelIProfiles
 db = ec.dbase
 # import eurocodepy as ec
 # from eurocodepy.db import SteelProfiles
 
 
 def test_database():
-    """[summary]
-    """
+    """[summary]."""
     print ("Testing database\n")
     db = ec.dbase
 
@@ -21,13 +22,13 @@ def test_database():
     print("\nReinforccement classes\n")
     df = pd.DataFrame.from_dict(ec.ReinforcementClasses)
     print(df)
-    
+
     print("\nConcrete classes\n")
     print(ec.ConcreteClasses)
 
     print("\nReinforcement classes\n")    
     print(pd.DataFrame.from_dict(db["Materials"]["Reinforcement"]["Classes"]))
-    
+
     print("\nConcrete C20/25")
     fck = ec.ConcreteClasses['C20/25']
     print(fck)
@@ -78,7 +79,7 @@ def test_utils_stress():
     print("\nTest stress module: principal_vectors:\n")
     evec = ec.utils.stress.principal_vectors(3.0, 2.0, -1.0, 0.0, 0.0, 0.0)
     print(evec)
-    
+
     print("\nTest stress module: stress invariants:\n")
     u = ec.stress.invariants(3.0, 2.0, -1.0, 0.3, -0.4, 0.5)
     print (u)
@@ -100,13 +101,13 @@ def test_rcbeam():
 
 def test_wind():
     print("Testing wind")
-    c0 = ec.ec1.wind.c_0(10.0, 0.0, 10.0, 10.0, 1000.0)
+    c0 = ec.ec1.wind.c_o(10.0, 0.0, 10.0, 10.0, 1000.0)
     print(f"c_0 = {c0}")
     
 
 def test_seismic():
     print("Testing seismic")
-    params = ec.ec8.spectrum.get_spec_params("PT", "PT-1", "ii", "A", "1.3")
+    params = ec.ec8.spectrum.get_spec_params("PT", "PT1", "ii", "A", "1_3")
     print(f"params = {params}")
 
 if __name__ == "__main__":
@@ -121,14 +122,14 @@ if __name__ == "__main__":
         if response.status_code == 200:
             # Parse the JSON response
             data = response.json()
-            
+
             # Extract the altitude (elevation) from the response
             altitude = data['results'][0]['elevation']
-            
+
             # st.write(f'Altitude at ({latitude}, {longitude}): {altitude} meters')
         else:
             print(f"Error: Unable to fetch data from Open-Elevation API. Status code: {response.reason}")
-            
+
         return altitude
 
     print ("Testing 'eurocodepy'\n")
@@ -143,14 +144,13 @@ if __name__ == "__main__":
     # test_ec2_uls_biaxial()
     # print("\n")
     # test_utils_stress()
-    
+
     # cr = ec.ec2.crack.iscracked_annexLL(2.2, 25.0, 2.201, 0.0, 0.0, 0.0, 0.0, 0.0)
     # print(f"Is cracked: {cr}")
-    
+
     # test_rcbeam()
     test_wind()
     test_seismic()
 
     print("\nTotal execution time is :", timeit.default_timer() - starttime)
     print("\n")
-    
