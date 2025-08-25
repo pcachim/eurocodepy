@@ -6,9 +6,9 @@
 This module provides classes and functions for Eurocode 3 steel reinforcement design.
 It includes properties for different steel grades and types, as well as profile classes.
 """
+import re
 from dataclasses import dataclass
 from enum import Enum
-import re
 
 import numpy as np
 
@@ -16,12 +16,14 @@ from eurocodepy import dbase
 from eurocodepy.ec3 import uls  # noqa: F401
 
 """
-Eurocode 3 steel classes existing in the databse.
+Eurocode 3 steel classes existing in the database.
 """
 
-def extract_steel(s):
-    match = re.search(r'S\d+', s)
+
+def __extract_steel(s):  # noqa: ANN202
+    match = re.search(r"S\d+", s)
     return match.group(0) if match else None
+
 
 MIN_E1: float = 1.2
 MIN_E2: float = 1.2
@@ -33,6 +35,7 @@ REC_P1: float = 3.75
 REC_P2: float = 3.0
 MIN_E1_PIN: float = 1.6
 MIN_E2_PIN: float = 1.25
+
 
 class Bolt:
     """Represents a steel bolt according to Eurocode 3.
@@ -379,12 +382,6 @@ class ProfileI(SteelSection):
         self.fyd = fyd
 
     def __str__(self) -> str:
-        """Return a string representation of the ProfileI instance.
-
-        Returns:
-            str: A string describing the ProfileI instance.
-
-        """
         return (
             f"Geometry: {self.Section}\n"
             f"User Defined: {self.UserDefined}\n"
@@ -1290,7 +1287,7 @@ class Weld:
     """Represents a weld according to Eurocode 3.
 
     Attributes:
-        a (float): Weld width (mm).
+        a (float): Weld throat (mm).
         length (float): Weld length (mm).
         grade (str): Weld grade (e.g., 'A', 'B', etc.).
     """
@@ -1323,7 +1320,7 @@ class Weld:
         steel = dbase.SteelGrades[self.steel_grade]
         self.fu = steel["fuk"]
         self.fy = steel["fyk"]
-        grade = extract_steel(self.steel_grade)
+        grade = __extract_steel(self.steel_grade)
         self.beta_w = 0.8 if grade == "S235" else 0.85 if grade == "S275" else 0.9 if grade == "S355" else 1.00
         self.gamma_M0 = dbase.SteelParams["gamma_M0"]  # Partial safety factor
         self.gamma_M1 = dbase.SteelParams["gamma_M1"]  # Partial safety factor

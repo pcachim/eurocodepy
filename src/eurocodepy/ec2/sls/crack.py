@@ -133,10 +133,10 @@ def is_cracked(b: float, h: float, phi, As: np.ndarray, ds: np.ndarray, Asc: np.
 
     uncrk, crack = calc_section_rectangular(h, b, As, Asc, Ap, ds, dsc, dp, alpha_Es, alpha_Ep, M, N)
     sig_c = M / uncrk["Wi"]
-    
+
     cracked = np.all(sig_c < fctm)
     return cracked
-    
+
 def iscracked_annexLL(fctm: float, fcm: float, 
                 sigxx: float, sigyy: float, sigzz: float, 
                 sigxy: float, sigyz: float, sigzx: float) -> bool:

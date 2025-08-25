@@ -107,7 +107,7 @@ class Bar:
             String representation of the Bar object.
 
         """
-        return f"Bar(diameter={self.diameter}, area={self.area})"
+        return f"Bar(diameter = {self.diameter}, area = {self.area})"
 
 
 class Bundle:
@@ -331,10 +331,10 @@ class Concrete:
 
         """
         return (
-            f"Concrete(grade='{self.grade}', fck={self.fck}, fcm={self.fcm}, "
-            f"fctm={self.fctm}, fctk_05={self.fctk_05}, fctk_95={self.fctk_95}, "
-            f"Ecm={self.Ecm}, eps_c2={self.eps_c2}, eps_cu2={self.eps_cu2}, "
-            f"n={self.n}, fcd={self.fcd}, fctd={self.fctd})"
+            f"Concrete(grade='{self.grade}', fck = {self.fck}, fcm = {self.fcm}, "
+            f"fctm = {self.fctm}, fctk_05 = {self.fctk_05}, fctk_95 = {self.fctk_95}, "
+            f"Ecm = {self.Ecm}, eps_c2 = {self.eps_c2}, eps_cu2 = {self.eps_cu2}, "
+            f"n = {self.n}, fcd = {self.fcd}, fctd = {self.fctd})"
         )
 
     def __str__(self) -> str:
@@ -347,22 +347,23 @@ class Concrete:
 
         """
         return (
-            f"Concrete {self.grade} ("
-            f"fck={self.fck} MPa, "
-            f"fcm={self.fcm} MPa, "
-            f"fctm={self.fctm} MPa, "
-            f"fctk_05={self.fctk_05} MPa, "
-            f"fctk_95={self.fctk_95} MPa, "
-            f"Ecm={self.Ecm} MPa, "
-            f"eps_c2={self.eps_c2}, "
-            f"eps_cu2={self.eps_cu2}, "
-            f"n={self.n}, "
-            f"fcd={self.fcd} MPa, "
-            f"fctd={self.fctd} MPa)"
+            f"Concrete {self.grade} (\n    "
+            f"fck = {self.fck} MPa, \n    "
+            f"fcm = {self.fcm} MPa, \n    "
+            f"fctm = {self.fctm:.1f} MPa, \n    "
+            f"fctk_05 = {self.fctk_05:.1f} MPa, \n    "
+            f"fctk_95 = {self.fctk_95:.1f} MPa, \n    "
+            f"Ecm = {self.Ecm} MPa, \n    "
+            f"eps_c2 = {self.eps_c2}, \n    "
+            f"eps_cu2 = {self.eps_cu2}, \n    "
+            f"n = {self.n}, \n    "
+            f"fcd = {self.fcd} MPa, \n    "
+            f"fctd = {self.fctd} MPa\n)"
         )
 
+
     @classmethod
-    def from_fck(cls, f_ck: int, name: object = None) -> "Concrete":
+    def from_fck(cls, f_ck: int, name: object = None):
         """Create a Concrete instance from characteristic compressive strength.
 
         Args:
@@ -373,36 +374,37 @@ class Concrete:
             Concrete: Concrete instance.
 
         """
+        concrete = Concrete("C30/37")  # Dummy initialization
         fck = float(f_ck)
-        cls.fck = round(fck, 1)  # MPa
-        cls.fcm = round(fck + 8, 1)  # Mean compressive strength (MPa)
-        cls.fctm = round(0.30 * fck**(2 / 3), 1)  # Mean tensile strength (MPa)
-        cls.fctk_005 = round(0.7 * cls.fctm, 1)  # 5% fractile
-        cls.fctk_095 = round(1.3 * cls.fctm, 1)  # 95% fractile
-        cls.Ecm = round(22000 * (cls.fcm / 10)**0.3, 1)  # Modulus of elasticity (MPa)
-        cls.eps_c2 = 2.0 if fck <= REF_FCK else 2.0 + 0.085 * (fck - 50) ** 0.53
+        concrete.fck = round(fck, 1)  # MPa
+        concrete.fcm = round(fck + 8, 1)  # Mean compressive strength (MPa)
+        concrete.fctm = round(0.30 * fck**(2 / 3), 1)  # Mean tensile strength (MPa)
+        concrete.fctk_005 = round(0.7 * concrete.fctm, 1)  # 5% fractile
+        concrete.fctk_095 = round(1.3 * concrete.fctm, 1)  # 95% fractile
+        concrete.Ecm = round(22000 * (concrete.fcm / 10)**0.3, 1)  # Modulus of elasticity (MPa)
+        concrete.eps_c2 = 2.0 if fck <= REF_FCK else 2.0 + 0.085 * (fck - 50) ** 0.53
         # Strain at peak stress
-        cls.eps_cu2 = (
+        concrete.eps_cu2 = (
             3.5 if fck <= REF_FCK
             else round(2.6 + 35 * ((90.0 - fck) / 100.0) ** 4, 1)
         )
-        cls.n = (
+        concrete.n = (
             2.0
             if fck <= REF_FCK
             else round(1.4 + 23.4 * ((90.0 - fck) / 100.0) ** 4, 1)
         )
         if name is not None:
-            cls.name = name
-            cls.grade = name
+            concrete.name = name
+            concrete.grade = name
         else:
-            cls.name = f"C{f_ck}"
-            cls.grade = f"C{f_ck}"
+            concrete.name = f"C{f_ck}"
+            concrete.grade = f"C{f_ck}"
 
-        cls.gamma_c = GammaC
-        cls.fcd = round(cls.fck / GammaC, 1)  # Design yield strength (MPa)
-        cls.fctd = round(cls.fctk_05 / GammaCT, 1)  # Design yield strength (MPa)
+        concrete.gamma_c = GammaC
+        concrete.fcd = round(concrete.fck / GammaC, 1)  # Design yield strength (MPa)
+        concrete.fctd = round(concrete.fctk_005 / GammaCT, 1)  # Design yield strength (MPa)
 
-        return cls
+        return concrete
 
 
 class ConcreteGrade(Enum):
@@ -527,9 +529,9 @@ class Reinforcement:
 
         """
         return (
-            f"Reinforcement(grade='{self.grade}', fyk={self.fyk}, "
-            f"epsilon_uk={self.epsilon_uk}, ftk={self.ftk}, Es={self.Es}, "
-            f"ClassType='{self.ClassType}', fyd={self.fyd})"
+            f"Reinforcement(grade='{self.grade}', fyk = {self.fyk}, "
+            f"epsilon_uk = {self.epsilon_uk}, ftk = {self.ftk}, Es = {self.Es}, "
+            f"ClassType='{self.ClassType}', fyd = {self.fyd})"
         )
 
     def __str__(self) -> str:
@@ -543,12 +545,12 @@ class Reinforcement:
         """
         return (
             f"Reinforcement {self.grade} ("
-            f"fyk={self.fyk} MPa, "
-            f"epsilon_uk={self.epsilon_uk} ‰, "
-            f"ftk={self.ftk} MPa, "
-            f"Es={self.Es} MPa, "
-            f"ClassType='{self.ClassType}', "
-            f"fyd={self.fyd} MPa)"
+            f"fyk = {self.fyk} MPa, "
+            f"epsilon_uk = {self.epsilon_uk} ‰, "
+            f"ftk = {self.ftk} MPa, "
+            f"Es = {self.Es} MPa, "
+            f"ClassType = '{self.ClassType}', "
+            f"fyd = {self.fyd} MPa)"
         )
 
 
@@ -697,8 +699,8 @@ class Prestress:
         """
         return (
             f"Prestress(name='{self.name}', pType='{self.pType}', zone='{self.zone}', "
-            f"fpk={self.fpk}, fp0_1k={self.fp0_1k}, Ep={self.Ep}, d={self.d}, "
-            f"Ap={self.Ap}, fpd={self.fpd})"
+            f"fpk = {self.fpk}, fp0_1k = {self.fp0_1k}, Ep = {self.Ep}, d = {self.d}, "
+            f"Ap = {self.Ap}, fpd = {self.fpd})"
         )
 
     def __str__(self) -> str:
@@ -712,8 +714,8 @@ class Prestress:
         """
         return (
             f"Prestress {self.name} (pType='{self.pType}', zone='{self.zone}', "
-            f"fpk={self.fpk} MPa, fp0_1k={self.fp0_1k} MPa, Ep={self.Ep} MPa, "
-            f"d={self.d} mm, Ap={self.Ap} cm², fpd={self.fpd} MPa)"
+            f"fpk = {self.fpk} MPa, fp0_1k = {self.fp0_1k} MPa, Ep = {self.Ep} MPa, "
+            f"d = {self.d} mm, Ap = {self.Ap} cm², fpd = {self.fpd} MPa)"
         )
 
 

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "eurocodepy"
-version = "2025.6.8"
+version = "2025.8.1"
 authors = [
     { name="Paulo Cachim", email="pcachim@ua.pt" },
 ]
@@ -19,11 +19,11 @@ classifiers = [
 ]
 dependencies = [
     "matplotlib>=3.9.4",
-    "mkdocs[python]>=1.6.1",
-    "mkdocs-material>=9.6.14",
     "numpy>=2.0.2",
     "pandas>=2.2.3",
     "plotly>=6.1.2",
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.6.14",
     "mkdocstrings>=0.29.1",
     "mkdocstrings-python>=1.16.12",
     "mkdocs-gen-files>=0.5.0",

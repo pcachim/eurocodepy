@@ -7,6 +7,10 @@ It assumes that you have the necessary tools installed, such as `uv` for buildin
 
 uv build
 
+## Upload the package to PyPI
+
+twine upload dist/*
+
 ## Create documentation for EurocodePy
 
 ### install packages

@@ -16,10 +16,11 @@ The package provides modules for different Eurocodes and utilities, such as:
 * `ec8`: utility functions for ec8 calculations.
 """
 
-__version__ = "2025.6.8"
+__version__ = "2025.8.1"
 """Version of EurocodePy package."""
 print_version = "This is 'EurocodePy' version " + __version__
 """Prints the version of EurocodePy package."""
+from dataclasses import dataclass  # noqa: E402
 from enum import Enum  # noqa: E402
 from pathlib import Path  # noqa: E402
 
@@ -32,6 +33,26 @@ local_name = Path(__file__).parent / "data" / "eurocode_data_portugal.csv"
 locale = Enum("locale", ["EU", "PT"])
 locales = {}
 locales["PT"] = pd.read_csv(local_name)
+
+
+@dataclass
+class NationalParams:
+    """Class to hold national parameters."""
+
+    local: locale = locale.PT
+    """Locale for national parameters."""
+    concelho: str = "Lisboa"
+    """Municipality name, default is 'Lisboa'."""
+
+    def __post_init__(self):
+        """Post-initialization to load data."""
+        self.data = get_national_params(self.local, self.concelho)
+
+
+class LocaleData:
+    """Class to hold locale data."""
+
+    PT: pd.DataFrame = pd.read_csv(local_name)
 
 
 def get_national_params(local: locale = locale.PT, concelho: str = "Lisboa") -> object:
@@ -90,7 +111,7 @@ from eurocodepy.dbase import (
 )
 from eurocodepy.ec1 import wind
 from eurocodepy.ec8 import spectrum, get_spec_params
-from eurocodepy.params import seismic_get_params, wind_get_params
+from eurocodepy.national_parameters import seismic_get_params, wind_get_params
 from eurocodepy.utils import stress, section_properties
 
 RECTANGULAR = 0

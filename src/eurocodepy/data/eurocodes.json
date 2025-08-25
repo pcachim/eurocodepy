@@ -2277,9 +2277,6 @@
                     }
                 }
             },
-            "Masonry": {
-                "MC01": {}
-            },
             "Bolts": {
                 "Grade": {
                     "4_6": {
@@ -2446,6 +2443,514 @@
                 "Concrete": 24.0,
                 "ReinforcedConcrete": 25.0,
                 "GL24": 5.0
+            },
+            "Live": {
+                "Locale": {
+                    "EU": {
+                        "A": {
+                            "Description": "Areas for domestic and residential activities",
+                            "psi_0": 0.7,
+                            "psi_1": 0.5,
+                            "psi_2": 0.3,
+                            "A1": {
+                                "Description": "Floors",
+                                "q_k_rec": 2.0,
+                                "Q_k_rec": 2.0,
+                                "q_k_min": 1.5,
+                                "q_k_max": 2.0,
+                                "Q_k_min": 2.0,
+                                "Q_k_max": 3.0
+                            },
+                            "A2": {
+                                "Description": "Stairs",
+                                "q_k_rec": 2.0,
+                                "Q_k_rec": 2.0,
+                                "q_k_min": 2.0,
+                                "q_k_max": 4.0,
+                                "Q_k_min": 2.0,
+                                "Q_k_max": 4.0
+                            },
+                            "A3": {
+                                "Description": "Balconies",
+                                "q_k_rec": 2.5,
+                                "Q_k_rec": 2.0,
+                                "q_k_min": 2.5,
+                                "q_k_max": 4.0,
+                                "Q_k_min": 2.0,
+                                "Q_k_max": 3.0
+                            }
+                        },
+                        "B": {
+                            "Description": "Office areas",
+                            "q_k_rec": 2.0,
+                            "Q_k_rec": 4.5,
+                            "q_k_min": 2.0,
+                            "q_k_max": 3.0,
+                            "Q_k_min": 1.5,
+                            "Q_k_max": 4.5,
+                            "psi_0": 0.7,
+                            "psi_1": 0.5,
+                            "psi_2": 0.3
+                        },
+                        "C": {
+                            "Description": "Areas where people may congregate",
+                            "psi_0": 0.7,
+                            "psi_1": 0.7,
+                            "psi_2": 0.6,
+                            "C1": {
+                                "Description": "Areas with tables, etc. (e.g. schools, cafes, restaurants)",
+                                "q_k_rec": 3.0,
+                                "Q_k_rec": 4.0,
+                                "q_k_min": 2.0,
+                                "q_k_max": 3.0,
+                                "Q_k_min": 3.0,
+                                "Q_k_max": 4.0
+                            },
+                            "C2": {
+                                "Description": "Areas with fixed seating (e.g. churches, theatres, cinemas, classrooms)",
+                                "q_k_rec": 4.0,
+                                "Q_k_rec": 4.0,
+                                "q_k_min": 3.0,
+                                "q_k_max": 4.0,
+                                "Q_k_min": 2.5,
+                                "Q_k_max": 7.0
+                            },
+                            "C3": {
+                                "Description": "Areas without obstructions to movement (e.g. museums, exhibition halls)",
+                                "q_k_rec": 5.0,
+                                "Q_k_rec": 4.0,
+                                "q_k_min": 3.0,
+                                "q_k_max": 5.0,
+                                "Q_k_min": 4.0,
+                                "Q_k_max": 7.0
+                            },
+                            "C4": {
+                                "Description": "Areas for physical activities (e.g. dance halls, gymnasiums)",
+                                "q_k_rec": 5.0,
+                                "Q_k_rec": 7.0,
+                                "q_k_min": 4.5,
+                                "q_k_max": 5.0,
+                                "Q_k_min": 3.5,
+                                "Q_k_max": 7.0
+                            },
+                            "C5": {
+                                "Description": "Areas subject to large crowds (e.g. public buildings, railway stations)",
+                                "q_k_rec": 5.0,
+                                "Q_k_rec": 4.5,
+                                "q_k_min": 5.0,
+                                "q_k_max": 7.5,
+                                "Q_k_min": 3.5,
+                                "Q_k_max": 4.5
+                            }
+                        },
+                        "D": {
+                            "Description": "Shopping areas",
+                            "psi_0": 0.7,
+                            "psi_1": 0.7,
+                            "psi_2": 0.6,
+                            "D1": {
+                                "Description": "Areas in general retail shops",
+                                "q_k_rec": 4.0,
+                                "Q_k_rec": 4.0,
+                                "q_k_min": 4.0,
+                                "q_k_max": 5.0,
+                                "Q_k_min": 3.5,
+                                "Q_k_max": 7.0
+                            },
+                            "D2": {
+                                "Description": "Areas in department stores",
+                                "q_k_rec": 5.0,
+                                "Q_k_rec": 7.0,
+                                "q_k_min": 4.0,
+                                "q_k_max": 5.0,
+                                "Q_k_min": 3.5,
+                                "Q_k_max": 7.0
+                            }
+                        },
+                        "E": {
+                            "Description": "Areas for storage and industrial activities",
+                            "psi_0": 1.0,
+                            "psi_1": 0.9,
+                            "psi_2": 0.8,
+                            "E1": {
+                                "Description": "Areas susceptible to accumulation of goods, including access areas",
+                                "q_k_rec": 7.5,
+                                "Q_k_rec": 7.0,
+                                "q_k_min": 7.5,
+                                "q_k_max": 7.5,
+                                "Q_k_min": 7.0,
+                                "Q_k_max": 7.0
+                            },
+                            "FL": {
+                                "Description": "Fork lift",
+                                "Dynamic_factor": {
+                                    "Pneumatic": 1.4,
+                                    "Solid": 2.0
+                                },
+                                "Wheel": 0.2,
+                                "FL1": {
+                                    "Net weight [kN]": 21,
+                                    "Lifting load [kN]": 10,
+                                    "Axle width [m]": 0.85,
+                                    "Total width [m]": 1.00,
+                                    "Total length [m]": 2.60,
+                                    "Axle load Q_k [kN]": 26
+                                },
+                                "FL2": {
+                                    "Net weight [kN]": 31,
+                                    "Lifting load [kN]": 15,
+                                    "Axle width [m]": 0.95,
+                                    "Total width [m]": 1.10,
+                                    "Total length [m]": 3.00,
+                                    "Axle load Q_k [kN]": 40
+                                },
+                                "FL3": {
+                                    "Net weight [kN]": 44,
+                                    "Lifting load [kN]": 25,
+                                    "Axle width [m]": 1.00,
+                                    "Total width [m]": 1.20,
+                                    "Total length [m]": 3.30,
+                                    "Axle load Q_k [kN]": 63
+                                },
+                                "FL4": {
+                                    "Net weight [kN]": 60,
+                                    "Lifting load [kN]": 40,
+                                    "Axle width [m]": 1.20,
+                                    "Total width [m]": 1.40,
+                                    "Total length [m]": 4.00,
+                                    "Axle load Q_k [kN]": 90
+                                },
+                                "FL5": {
+                                    "Net weight [kN]": 90,
+                                    "Lifting load [kN]": 60,
+                                    "Axle width [m]": 1.50,
+                                    "Total width [m]": 1.90,
+                                    "Total length [m]": 4.60,
+                                    "Axle load Q_k [kN]": 140
+                                },
+                                "FL6": {
+                                    "Net weight [kN]": 110,
+                                    "Lifting load [kN]": 80,
+                                    "Axle width [m]": 1.80,
+                                    "Total width [m]": 2.30,
+                                    "Total length [m]": 5.10,
+                                    "Axle load Q_k [kN]": 170
+                                }
+                            }
+                        },
+                        "F": {
+                            "Description": "Vehicle traffic areas (gross weight <= 30 kN)",
+                            "psi_0": 0.7,
+                            "psi_1": 0.7,
+                            "psi_2": 0.6,
+                            "q_k_rec": 2.5,
+                            "Q_k_rec": 20.0,
+                            "q_k_min": 1.5,
+                            "q_k_max": 2.5,
+                            "Q_k_min": 10.0,
+                            "Q_k_max": 20.0
+                        },
+                        "G": {
+                            "Description": "Vehicle traffic areas (gross weight 30 to 160 kN)",
+                            "psi_0": 0.7,
+                            "psi_1": 0.5,
+                            "psi_2": 0.3,
+                            "q_k_rec": 5.0,
+                            "Q_k_rec": 90.0,
+                            "q_k_min": 5.0,
+                            "q_k_max": 5.0,
+                            "Q_k_min": 40.0,
+                            "Q_k_max": 90.0
+                        },
+                        "H": {
+                            "Description": "Roofs not accessible except for normal maintenance and repair.",
+                            "psi_0": 0.0,
+                            "psi_1": 0.0,
+                            "psi_2": 0.0,
+                            "q_k_rec": 0.4,
+                            "Q_k_rec": 1.0,
+                            "q_k_min": 0.0,
+                            "q_k_max": 1.0,
+                            "Q_k_min": 0.9,
+                            "Q_k_max": 1.5
+                        },
+                        "I": {
+                            "Description": "Roofs accessible with occupancy according to categories A to G.",
+                            "psi_0": 0.0,
+                            "psi_1": 0.0,
+                            "psi_2": 0.0
+                        },
+                        "J": {
+                            "Description": "Roofs accessible for special services, such as helicopter landing areas",
+                            "Dynamic_factor": 1.4,
+                            "psi_0": 0.0,
+                            "psi_1": 0.0,
+                            "psi_2": 0.0,
+                            "HC1": {
+                                "Description": "Take-off load Q of helicopter ≤ 20 kN",
+                                "Take_off_load": 20,
+                                "Wheel": 0.2
+                            },
+                            "HC2": {
+                                "Description": "Take-off load Q of helicopter ≤ 60 kN",
+                                "Take_off_load": 60,
+                                "Wheel": 0.3
+                            }
+                        }
+                    },
+                    "PT": {
+                        "A": {
+                            "Description": "Areas for domestic and residential activities",
+                            "psi_0": 0.7,
+                            "psi_1": 0.5,
+                            "psi_2": 0.3,
+                            "A1": {
+                                "Description": "Floors",
+                                "q_k_rec": 2.0,
+                                "Q_k_rec": 2.0,
+                                "q_k_min": 2.0,
+                                "q_k_max": 2.0,
+                                "Q_k_min": 2.0,
+                                "Q_k_max": 2.0
+                            },
+                            "A2": {
+                                "Description": "Stairs",
+                                "q_k_rec": 2.0,
+                                "Q_k_rec": 2.0,
+                                "q_k_min": 2.0,
+                                "q_k_max": 2.0,
+                                "Q_k_min": 2.0,
+                                "Q_k_max": 2.0
+                            },
+                            "A3": {
+                                "Description": "Balconies",
+                                "q_k_rec": 2.0,
+                                "Q_k_rec": 2.0,
+                                "q_k_min": 2.0,
+                                "q_k_max": 2.0,
+                                "Q_k_min": 2.0,
+                                "Q_k_max": 2.0
+                            }
+                        },
+                        "B": {
+                            "Description": "Office areas",
+                            "q_k_rec": 3.0,
+                            "Q_k_rec": 4.0,
+                            "q_k_min": 3.0,
+                            "q_k_max": 3.0,
+                            "Q_k_min": 4.0,
+                            "Q_k_max": 4.0,
+                            "psi_0": 0.7,
+                            "psi_1": 0.5,
+                            "psi_2": 0.3
+                        },
+                        "C": {
+                            "Description": "Areas where people may congregate",
+                            "psi_0": 0.7,
+                            "psi_1": 0.7,
+                            "psi_2": 0.6,
+                            "C1": {
+                                "Description": "Areas with tables, etc. (e.g. schools, cafes, restaurants)",
+                                "q_k_rec": 3.0,
+                                "Q_k_rec": 4.0,
+                                "q_k_min": 3.0,
+                                "q_k_max": 3.0,
+                                "Q_k_min": 4.0,
+                                "Q_k_max": 4.0
+                            },
+                            "C2": {
+                                "Description": "Areas with fixed seating (e.g. churches, theatres, cinemas, classrooms)",
+                                "q_k_rec": 4.0,
+                                "Q_k_rec": 4.0,
+                                "q_k_min": 4.0,
+                                "q_k_max": 4.0,
+                                "Q_k_min": 4.0,
+                                "Q_k_max": 4.0
+                            },
+                            "C3": {
+                                "Description": "Areas without obstructions to movement (e.g. museums, exhibition halls)",
+                                "q_k_rec": 5.0,
+                                "Q_k_rec": 4.0,
+                                "q_k_min": 5.0,
+                                "q_k_max": 5.0,
+                                "Q_k_min": 4.0,
+                                "Q_k_max": 4.0
+                            },
+                            "C4": {
+                                "Description": "Areas for physical activities (e.g. dance halls, gymnasiums)",
+                                "q_k_rec": 5.0,
+                                "Q_k_rec": 7.0,
+                                "q_k_min": 5.0,
+                                "q_k_max": 5.0,
+                                "Q_k_min": 7.0,
+                                "Q_k_max": 7.0
+                            },
+                            "C5": {
+                                "Description": "Areas subject to large crowds (e.g. public buildings, railway stations)",
+                                "q_k_rec": 5.0,
+                                "Q_k_rec": 6.0,
+                                "q_k_min": 5.0,
+                                "q_k_max": 5.0,
+                                "Q_k_min": 6.0,
+                                "Q_k_max": 6.0
+                            }
+                        },
+                        "D": {
+                            "Description": "Shopping areas",
+                            "psi_0": 0.7,
+                            "psi_1": 0.7,
+                            "psi_2": 0.6,
+                            "D1": {
+                                "Description": "Areas in general retail shops",
+                                "q_k_rec": 4.0,
+                                "Q_k_rec": 4.0,
+                                "q_k_min": 4.0,
+                                "q_k_max": 4.0,
+                                "Q_k_min": 4.0,
+                                "Q_k_max": 4.0
+                            },
+                            "D2": {
+                                "Description": "Areas in department stores",
+                                "q_k_rec": 5.0,
+                                "Q_k_rec": 6.0,
+                                "q_k_min": 5.0,
+                                "q_k_max": 5.0,
+                                "Q_k_min": 6.0,
+                                "Q_k_max": 6.0
+                            }
+                        },
+                        "E": {
+                            "Description": "Areas for storage and industrial activities",
+                            "psi_0": 1.0,
+                            "psi_1": 0.9,
+                            "psi_2": 0.8,
+                            "E1": {
+                                "Description": "Areas susceptible to accumulation of goods, including access areas",
+                                "q_k_rec": 7.5,
+                                "Q_k_rec": 7.0,
+                                "q_k_min": 7.5,
+                                "q_k_max": 7.5,
+                                "Q_k_min": 7.0,
+                                "Q_k_max": 7.0
+                            },
+                            "FL": {
+                                "Description": "Fork lift",
+                                "Dynamic_factor": {
+                                    "Pneumatic": 1.4,
+                                    "Solid": 2.0
+                                },
+                                "Wheel": 0.2,
+                                "FL1": {
+                                    "Net weight [kN]": 21,
+                                    "Lifting load [kN]": 10,
+                                    "Axle width [m]": 0.85,
+                                    "Total width [m]": 1.00,
+                                    "Total length [m]": 2.60,
+                                    "Axle load Q_k [kN]": 26
+                                },
+                                "FL2": {
+                                    "Net weight [kN]": 31,
+                                    "Lifting load [kN]": 15,
+                                    "Axle width [m]": 0.95,
+                                    "Total width [m]": 1.10,
+                                    "Total length [m]": 3.00,
+                                    "Axle load Q_k [kN]": 40
+                                },
+                                "FL3": {
+                                    "Net weight [kN]": 44,
+                                    "Lifting load [kN]": 25,
+                                    "Axle width [m]": 1.00,
+                                    "Total width [m]": 1.20,
+                                    "Total length [m]": 3.30,
+                                    "Axle load Q_k [kN]": 63
+                                },
+                                "FL4": {
+                                    "Net weight [kN]": 60,
+                                    "Lifting load [kN]": 40,
+                                    "Axle width [m]": 1.20,
+                                    "Total width [m]": 1.40,
+                                    "Total length [m]": 4.00,
+                                    "Axle load Q_k [kN]": 90
+                                },
+                                "FL5": {
+                                    "Net weight [kN]": 90,
+                                    "Lifting load [kN]": 60,
+                                    "Axle width [m]": 1.50,
+                                    "Total width [m]": 1.90,
+                                    "Total length [m]": 4.60,
+                                    "Axle load Q_k [kN]": 140
+                                },
+                                "FL6": {
+                                    "Net weight [kN]": 110,
+                                    "Lifting load [kN]": 80,
+                                    "Axle width [m]": 1.80,
+                                    "Total width [m]": 2.30,
+                                    "Total length [m]": 5.10,
+                                    "Axle load Q_k [kN]": 170
+                                }
+                            }
+                        },
+                        "F": {
+                            "Description": "Vehicle traffic areas (gross weight <= 30 kN)",
+                            "psi_0": 0.7,
+                            "psi_1": 0.7,
+                            "psi_2": 0.6,
+                            "q_k_rec": 2.5,
+                            "Q_k_rec": 15.0,
+                            "q_k_min": 2.5,
+                            "q_k_max": 2.5,
+                            "Q_k_min": 15.0,
+                            "Q_k_max": 15.0
+                        },
+                        "G": {
+                            "Description": "Vehicle traffic areas (gross weight 30 to 160 kN)",
+                            "psi_0": 0.7,
+                            "psi_1": 0.5,
+                            "psi_2": 0.3,
+                            "q_k_rec": 5.0,
+                            "Q_k_rec": 75.0,
+                            "q_k_min": 5.0,
+                            "q_k_max": 5.0,
+                            "Q_k_min": 75.0,
+                            "Q_k_max": 75.0
+                        },
+                        "H": {
+                            "Description": "Roofs not accessible except for normal maintenance and repair.",
+                            "psi_0": 0.0,
+                            "psi_1": 0.0,
+                            "psi_2": 0.0,
+                            "q_k_rec": 0.4,
+                            "Q_k_rec": 1.0,
+                            "q_k_min": 0.4,
+                            "q_k_max": 0.4,
+                            "Q_k_min": 1.0,
+                            "Q_k_max": 1.00
+                        },
+                        "I": {
+                            "Description": "Roofs accessible with occupancy according to categories A to G.",
+                            "psi_0": 0.0,
+                            "psi_1": 0.0,
+                            "psi_2": 0.0
+                        },
+                        "J": {
+                            "Description": "Roofs accessible for special services, such as helicopter landing areas",
+                            "Dynamic_factor": 1.4,
+                            "psi_0": 0.0,
+                            "psi_1": 0.0,
+                            "psi_2": 0.0,
+                            "HC1": {
+                                "Description": "Take-off load Q of helicopter ≤ 20 kN",
+                                "Take_off_load": 20,
+                                "Wheel": 0.2
+                            },
+                            "HC2": {
+                                "Description": "Take-off load Q of helicopter ≤ 60 kN",
+                                "Take_off_load": 60,
+                                "Wheel": 0.3
+                            }
+                        }
+                    }
+                }
             },
             "Seismic": {
                 "accel_units": "m/s2",

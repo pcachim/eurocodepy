@@ -1,5 +1,6 @@
-import numpy as np
 from dataclasses import dataclass
+
+import numpy as np
 
 
 @dataclass
@@ -266,7 +267,7 @@ def calc_section_T_uncrack(h, bw, bf, hf, As, Asc, Ap, ds, dsc, dp, alpha_Es, al
     return {"Area": Aun, "Inertia": Iun, "zGi": zg, "zGs": zgs, "Wi": Wi, "Ws": Ws, "NeutralAxis": root_un, "e_p": e_p}
 
 
-def cubic_equation(x: float, a1: float, a2: float, a3: float) -> float:
+def _cubic_equation(x: float, a1: float, a2: float, a3: float) -> float:
     """Evaluate the cubic equation x^3 + a1*x^2 + a2*x + a3.
 
     Args:
@@ -282,7 +283,7 @@ def cubic_equation(x: float, a1: float, a2: float, a3: float) -> float:
     return x**3 + a1 * x**2 + a2 * x + a3
 
 
-def solve_cubic(a1: float, a2: float, a3: float, h: float) -> float:
+def _solve_cubic(a1: float, a2: float, a3: float, h: float) -> float:
     """Solves the cubic equation x^3 + a1*x^2 + a2*x + a3 = 0 and returns the real root within the interval (0, h).
 
     Args:
