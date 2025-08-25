@@ -587,24 +587,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#eurocodepy.dbase.dict2obj" class="md-nav__link">
-    <span class="md-ellipsis">
-      dict2obj
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.dbase.wind_get_params" class="md-nav__link">
-    <span class="md-ellipsis">
-      wind_get_params
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1664,12 +1646,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../params/" class="md-nav__link">
+      <a href="../national_parameters/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    params
+    national_parameters
     
   </span>
   
@@ -1724,52 +1706,6 @@
             utils
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../utils/dict_tools/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dict_tools
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../utils/plotly_templates/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    plotly_templates
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1895,24 +1831,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#eurocodepy.dbase.dict2obj" class="md-nav__link">
-    <span class="md-ellipsis">
-      dict2obj
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.dbase.wind_get_params" class="md-nav__link">
-    <span class="md-ellipsis">
-      wind_get_params
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1955,201 +1873,6 @@
 
 
 
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="eurocodepy.dbase.dict2obj" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">dict2obj</span><span class="p">(</span><span class="n">dict1</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Convert a dictionary to a custom object using json.loads and object_hook.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>dict1</code>
-            </td>
-            <td>
-                  <code><span title="dict">dict</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The input dictionary.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A custom object representing the dictionary.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-            <details class="quote">
-              <summary>Source code in <code>eurocodepy/dbase.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">dict2obj</span><span class="p">(</span><span class="n">dict1</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a dictionary to a custom object using json.loads and object_hook.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        dict1: The input dictionary.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        A custom object representing the dictionary.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">class</span><span class="w"> </span><span class="nc">Obj</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Custom object class used as the object_hook.&quot;&quot;&quot;</span>
-
-        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict1</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;Update the object&#39;s __dict__ with the dictionary.&quot;&quot;&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dict1</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dict1</span><span class="p">),</span> <span class="n">object_hook</span><span class="o">=</span><span class="n">Obj</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="eurocodepy.dbase.wind_get_params" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">wind_get_params</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s1">&#39;PT&#39;</span><span class="p">,</span> <span class="n">zone</span><span class="o">=</span><span class="s1">&#39;ZonaA&#39;</span><span class="p">,</span> <span class="n">terrain</span><span class="o">=</span><span class="s1">&#39;II&#39;</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Return the wind parameters for the specified code.</p>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-<th>Name</th>          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-<td><code>tuple</code></td>            <td>
-                  <code><span title="tuple">tuple</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A tuple containing (vb0, zmin, z0), where vb0 is the base wind velocity,</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-<td></td>            <td>
-                  <code><span title="tuple">tuple</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>zmin is the minimum height, and z0 is the terrain roughness length.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-            <details class="quote">
-              <summary>Source code in <code>eurocodepy/dbase.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span>
-<span class="normal">141</span>
-<span class="normal">142</span>
-<span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span>
-<span class="normal">146</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">wind_get_params</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;PT&quot;</span><span class="p">,</span> <span class="n">zone</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ZonaA&quot;</span><span class="p">,</span>
-                    <span class="n">terrain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;II&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the wind parameters for the specified code.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        tuple: A tuple containing (vb0, zmin, z0), where vb0 is the base wind velocity,</span>
-<span class="sd">        zmin is the minimum height, and z0 is the terrain roughness length.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">wind</span> <span class="o">=</span> <span class="n">WindLoads</span><span class="p">[</span><span class="s2">&quot;locale&quot;</span><span class="p">][</span><span class="n">code</span><span class="p">]</span>
-    <span class="n">vb0</span> <span class="o">=</span> <span class="n">wind</span><span class="p">[</span><span class="s2">&quot;base_velocity&quot;</span><span class="p">][</span><span class="n">zone</span><span class="p">][</span><span class="s2">&quot;vb0&quot;</span><span class="p">]</span>
-    <span class="n">z0</span> <span class="o">=</span> <span class="n">wind</span><span class="p">[</span><span class="s2">&quot;terrain&quot;</span><span class="p">][</span><span class="n">terrain</span><span class="p">][</span><span class="s2">&quot;z0&quot;</span><span class="p">]</span>
-    <span class="n">zmin</span> <span class="o">=</span> <span class="n">wind</span><span class="p">[</span><span class="s2">&quot;terrain&quot;</span><span class="p">][</span><span class="n">terrain</span><span class="p">][</span><span class="s2">&quot;zmin&quot;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">vb0</span><span class="p">,</span> <span class="n">zmin</span><span class="p">,</span> <span class="n">z0</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
 
 
 

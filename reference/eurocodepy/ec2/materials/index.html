@@ -2329,12 +2329,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../params/" class="md-nav__link">
+      <a href="../../national_parameters/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    params
+    national_parameters
     
   </span>
   
@@ -2389,52 +2389,6 @@
             utils
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../utils/dict_tools/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dict_tools
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../utils/plotly_templates/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    plotly_templates
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -3467,7 +3421,7 @@ number : int
 <span class="sd">            String representation of the Bar object.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Bar(diameter=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">diameter</span><span class="si">}</span><span class="s2">, area=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Bar(diameter = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">diameter</span><span class="si">}</span><span class="s2">, area = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="si">}</span><span class="s2">)&quot;</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -3614,7 +3568,7 @@ number : int
 <span class="sd">        String representation of the Bar object.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Bar(diameter=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">diameter</span><span class="si">}</span><span class="s2">, area=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Bar(diameter = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">diameter</span><span class="si">}</span><span class="s2">, area = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="si">}</span><span class="s2">)&quot;</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -4675,7 +4629,9 @@ from_fck(f_ck: int, name: object = None)
 <span class="normal">402</span>
 <span class="normal">403</span>
 <span class="normal">404</span>
-<span class="normal">405</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Concrete</span><span class="p">:</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Concrete</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents EC2 concrete properties and provides access to parameters.</span>
 
 <span class="sd">    Attributes</span>
@@ -4759,10 +4715,10 @@ from_fck(f_ck: int, name: object = None)
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Concrete(grade=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2">&#39;, fck=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fck</span><span class="si">}</span><span class="s2">, fcm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcm</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fctm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctm</span><span class="si">}</span><span class="s2">, fctk_05=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_05</span><span class="si">}</span><span class="s2">, fctk_95=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_95</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Ecm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ecm</span><span class="si">}</span><span class="s2">, eps_c2=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_c2</span><span class="si">}</span><span class="s2">, eps_cu2=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_cu2</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, fcd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcd</span><span class="si">}</span><span class="s2">, fctd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctd</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Concrete(grade=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2">&#39;, fck = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fck</span><span class="si">}</span><span class="s2">, fcm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcm</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fctm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctm</span><span class="si">}</span><span class="s2">, fctk_05 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_05</span><span class="si">}</span><span class="s2">, fctk_95 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_95</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Ecm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ecm</span><span class="si">}</span><span class="s2">, eps_c2 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_c2</span><span class="si">}</span><span class="s2">, eps_cu2 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_cu2</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;n = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, fcd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcd</span><span class="si">}</span><span class="s2">, fctd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctd</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -4775,22 +4731,23 @@ from_fck(f_ck: int, name: object = None)
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Concrete </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2"> (&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fck=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fck</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fcm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcm</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fctm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctm</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fctk_05=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_05</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fctk_95=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_95</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Ecm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ecm</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;eps_c2=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_c2</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;eps_cu2=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_cu2</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fcd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcd</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fctd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctd</span><span class="si">}</span><span class="s2"> MPa)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Concrete </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2"> (</span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fck = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fck</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fcm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcm</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fctm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctm</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fctk_05 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_05</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fctk_95 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_95</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Ecm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ecm</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;eps_c2 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_c2</span><span class="si">}</span><span class="s2">, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;eps_cu2 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_cu2</span><span class="si">}</span><span class="s2">, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;n = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fcd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcd</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fctd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctd</span><span class="si">}</span><span class="s2"> MPa</span><span class="se">\n</span><span class="s2">)&quot;</span>
         <span class="p">)</span>
 
+
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_fck</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f_ck</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">object</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Concrete&quot;</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_fck</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f_ck</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">object</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a Concrete instance from characteristic compressive strength.</span>
 
 <span class="sd">        Args:</span>
@@ -4801,36 +4758,37 @@ from_fck(f_ck: int, name: object = None)
 <span class="sd">            Concrete: Concrete instance.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">concrete</span> <span class="o">=</span> <span class="n">Concrete</span><span class="p">(</span><span class="s2">&quot;C30/37&quot;</span><span class="p">)</span>  <span class="c1"># Dummy initialization</span>
         <span class="n">fck</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">f_ck</span><span class="p">)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">fck</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">fck</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># MPa</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">fcm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">fck</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Mean compressive strength (MPa)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">fctm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.30</span> <span class="o">*</span> <span class="n">fck</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Mean tensile strength (MPa)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">fctk_005</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.7</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fctm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 5% fractile</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">fctk_095</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">1.3</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fctm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 95% fractile</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">Ecm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">22000</span> <span class="o">*</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">fcm</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span><span class="o">**</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Modulus of elasticity (MPa)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">eps_c2</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="k">if</span> <span class="n">fck</span> <span class="o">&lt;=</span> <span class="n">REF_FCK</span> <span class="k">else</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mf">0.085</span> <span class="o">*</span> <span class="p">(</span><span class="n">fck</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.53</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">fck</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">fck</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># MPa</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">fcm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">fck</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Mean compressive strength (MPa)</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">fctm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.30</span> <span class="o">*</span> <span class="n">fck</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Mean tensile strength (MPa)</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">fctk_005</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.7</span> <span class="o">*</span> <span class="n">concrete</span><span class="o">.</span><span class="n">fctm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 5% fractile</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">fctk_095</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">1.3</span> <span class="o">*</span> <span class="n">concrete</span><span class="o">.</span><span class="n">fctm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 95% fractile</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">Ecm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">22000</span> <span class="o">*</span> <span class="p">(</span><span class="n">concrete</span><span class="o">.</span><span class="n">fcm</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span><span class="o">**</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Modulus of elasticity (MPa)</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">eps_c2</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="k">if</span> <span class="n">fck</span> <span class="o">&lt;=</span> <span class="n">REF_FCK</span> <span class="k">else</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mf">0.085</span> <span class="o">*</span> <span class="p">(</span><span class="n">fck</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.53</span>
         <span class="c1"># Strain at peak stress</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">eps_cu2</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">eps_cu2</span> <span class="o">=</span> <span class="p">(</span>
             <span class="mf">3.5</span> <span class="k">if</span> <span class="n">fck</span> <span class="o">&lt;=</span> <span class="n">REF_FCK</span>
             <span class="k">else</span> <span class="nb">round</span><span class="p">(</span><span class="mf">2.6</span> <span class="o">+</span> <span class="mi">35</span> <span class="o">*</span> <span class="p">((</span><span class="mf">90.0</span> <span class="o">-</span> <span class="n">fck</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="p">)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="p">(</span>
             <span class="mf">2.0</span>
             <span class="k">if</span> <span class="n">fck</span> <span class="o">&lt;=</span> <span class="n">REF_FCK</span>
             <span class="k">else</span> <span class="nb">round</span><span class="p">(</span><span class="mf">1.4</span> <span class="o">+</span> <span class="mf">23.4</span> <span class="o">*</span> <span class="p">((</span><span class="mf">90.0</span> <span class="o">-</span> <span class="n">fck</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">cls</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-            <span class="bp">cls</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="n">name</span>
+            <span class="n">concrete</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+            <span class="n">concrete</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="n">name</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">cls</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">f_ck</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="bp">cls</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">f_ck</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">concrete</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">f_ck</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">concrete</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">f_ck</span><span class="si">}</span><span class="s2">&quot;</span>
 
-        <span class="bp">cls</span><span class="o">.</span><span class="n">gamma_c</span> <span class="o">=</span> <span class="n">GammaC</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">fcd</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">fck</span> <span class="o">/</span> <span class="n">GammaC</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Design yield strength (MPa)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">fctd</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">fctk_05</span> <span class="o">/</span> <span class="n">GammaCT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Design yield strength (MPa)</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">gamma_c</span> <span class="o">=</span> <span class="n">GammaC</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">fcd</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">concrete</span><span class="o">.</span><span class="n">fck</span> <span class="o">/</span> <span class="n">GammaC</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Design yield strength (MPa)</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">fctd</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">concrete</span><span class="o">.</span><span class="n">fctk_005</span> <span class="o">/</span> <span class="n">GammaCT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Design yield strength (MPa)</span>
 
-        <span class="k">return</span> <span class="bp">cls</span>
+        <span class="k">return</span> <span class="n">concrete</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -4889,10 +4847,10 @@ from_fck(f_ck: int, name: object = None)
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Concrete(grade=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2">&#39;, fck=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fck</span><span class="si">}</span><span class="s2">, fcm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcm</span><span class="si">}</span><span class="s2">, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fctm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctm</span><span class="si">}</span><span class="s2">, fctk_05=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_05</span><span class="si">}</span><span class="s2">, fctk_95=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_95</span><span class="si">}</span><span class="s2">, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Ecm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ecm</span><span class="si">}</span><span class="s2">, eps_c2=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_c2</span><span class="si">}</span><span class="s2">, eps_cu2=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_cu2</span><span class="si">}</span><span class="s2">, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, fcd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcd</span><span class="si">}</span><span class="s2">, fctd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctd</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Concrete(grade=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2">&#39;, fck = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fck</span><span class="si">}</span><span class="s2">, fcm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcm</span><span class="si">}</span><span class="s2">, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fctm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctm</span><span class="si">}</span><span class="s2">, fctk_05 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_05</span><span class="si">}</span><span class="s2">, fctk_95 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_95</span><span class="si">}</span><span class="s2">, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Ecm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ecm</span><span class="si">}</span><span class="s2">, eps_c2 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_c2</span><span class="si">}</span><span class="s2">, eps_cu2 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_cu2</span><span class="si">}</span><span class="s2">, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;n = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, fcd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcd</span><span class="si">}</span><span class="s2">, fctd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctd</span><span class="si">}</span><span class="s2">)&quot;</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -4951,18 +4909,18 @@ from_fck(f_ck: int, name: object = None)
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Concrete </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2"> (&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fck=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fck</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fcm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcm</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fctm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctm</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fctk_05=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_05</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fctk_95=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_95</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Ecm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ecm</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;eps_c2=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_c2</span><span class="si">}</span><span class="s2">, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;eps_cu2=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_cu2</span><span class="si">}</span><span class="s2">, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;n=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fcd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcd</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fctd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctd</span><span class="si">}</span><span class="s2"> MPa)&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Concrete </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2"> (</span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fck = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fck</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fcm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcm</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fctm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctm</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fctk_05 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_05</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fctk_95 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctk_95</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Ecm = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ecm</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;eps_c2 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_c2</span><span class="si">}</span><span class="s2">, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;eps_cu2 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eps_cu2</span><span class="si">}</span><span class="s2">, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;n = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fcd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fcd</span><span class="si">}</span><span class="s2"> MPa, </span><span class="se">\n</span><span class="s2">    &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fctd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fctd</span><span class="si">}</span><span class="s2"> MPa</span><span class="se">\n</span><span class="s2">)&quot;</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -5046,7 +5004,6 @@ from_fck(f_ck: int, name: object = None)
       <tbody>
           <tr class="doc-section-item">
 <td><code>Concrete</code></td>            <td>
-                  <code><a class="autorefs autorefs-internal" title="Concrete (eurocodepy.ec2.materials.Concrete)" href="#eurocodepy.ec2.materials.Concrete">Concrete</a></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -5060,8 +5017,7 @@ from_fck(f_ck: int, name: object = None)
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">364</span>
-<span class="normal">365</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">365</span>
 <span class="normal">366</span>
 <span class="normal">367</span>
 <span class="normal">368</span>
@@ -5101,8 +5057,10 @@ from_fck(f_ck: int, name: object = None)
 <span class="normal">402</span>
 <span class="normal">403</span>
 <span class="normal">404</span>
-<span class="normal">405</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">from_fck</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f_ck</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">object</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Concrete&quot;</span><span class="p">:</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">from_fck</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f_ck</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">object</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Concrete instance from characteristic compressive strength.</span>
 
 <span class="sd">    Args:</span>
@@ -5113,36 +5071,37 @@ from_fck(f_ck: int, name: object = None)
 <span class="sd">        Concrete: Concrete instance.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">concrete</span> <span class="o">=</span> <span class="n">Concrete</span><span class="p">(</span><span class="s2">&quot;C30/37&quot;</span><span class="p">)</span>  <span class="c1"># Dummy initialization</span>
     <span class="n">fck</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">f_ck</span><span class="p">)</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">fck</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">fck</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># MPa</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">fcm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">fck</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Mean compressive strength (MPa)</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">fctm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.30</span> <span class="o">*</span> <span class="n">fck</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Mean tensile strength (MPa)</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">fctk_005</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.7</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fctm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 5% fractile</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">fctk_095</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">1.3</span> <span class="o">*</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fctm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 95% fractile</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">Ecm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">22000</span> <span class="o">*</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">fcm</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span><span class="o">**</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Modulus of elasticity (MPa)</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">eps_c2</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="k">if</span> <span class="n">fck</span> <span class="o">&lt;=</span> <span class="n">REF_FCK</span> <span class="k">else</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mf">0.085</span> <span class="o">*</span> <span class="p">(</span><span class="n">fck</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.53</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">fck</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">fck</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># MPa</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">fcm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">fck</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Mean compressive strength (MPa)</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">fctm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.30</span> <span class="o">*</span> <span class="n">fck</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Mean tensile strength (MPa)</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">fctk_005</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.7</span> <span class="o">*</span> <span class="n">concrete</span><span class="o">.</span><span class="n">fctm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 5% fractile</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">fctk_095</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">1.3</span> <span class="o">*</span> <span class="n">concrete</span><span class="o">.</span><span class="n">fctm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 95% fractile</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">Ecm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">22000</span> <span class="o">*</span> <span class="p">(</span><span class="n">concrete</span><span class="o">.</span><span class="n">fcm</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span><span class="o">**</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Modulus of elasticity (MPa)</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">eps_c2</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="k">if</span> <span class="n">fck</span> <span class="o">&lt;=</span> <span class="n">REF_FCK</span> <span class="k">else</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mf">0.085</span> <span class="o">*</span> <span class="p">(</span><span class="n">fck</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.53</span>
     <span class="c1"># Strain at peak stress</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">eps_cu2</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">eps_cu2</span> <span class="o">=</span> <span class="p">(</span>
         <span class="mf">3.5</span> <span class="k">if</span> <span class="n">fck</span> <span class="o">&lt;=</span> <span class="n">REF_FCK</span>
         <span class="k">else</span> <span class="nb">round</span><span class="p">(</span><span class="mf">2.6</span> <span class="o">+</span> <span class="mi">35</span> <span class="o">*</span> <span class="p">((</span><span class="mf">90.0</span> <span class="o">-</span> <span class="n">fck</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="p">)</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="p">(</span>
         <span class="mf">2.0</span>
         <span class="k">if</span> <span class="n">fck</span> <span class="o">&lt;=</span> <span class="n">REF_FCK</span>
         <span class="k">else</span> <span class="nb">round</span><span class="p">(</span><span class="mf">1.4</span> <span class="o">+</span> <span class="mf">23.4</span> <span class="o">*</span> <span class="p">((</span><span class="mf">90.0</span> <span class="o">-</span> <span class="n">fck</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="n">name</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">f_ck</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">f_ck</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">f_ck</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">concrete</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">f_ck</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="bp">cls</span><span class="o">.</span><span class="n">gamma_c</span> <span class="o">=</span> <span class="n">GammaC</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">fcd</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">fck</span> <span class="o">/</span> <span class="n">GammaC</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Design yield strength (MPa)</span>
-    <span class="bp">cls</span><span class="o">.</span><span class="n">fctd</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">fctk_05</span> <span class="o">/</span> <span class="n">GammaCT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Design yield strength (MPa)</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">gamma_c</span> <span class="o">=</span> <span class="n">GammaC</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">fcd</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">concrete</span><span class="o">.</span><span class="n">fck</span> <span class="o">/</span> <span class="n">GammaC</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Design yield strength (MPa)</span>
+    <span class="n">concrete</span><span class="o">.</span><span class="n">fctd</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">concrete</span><span class="o">.</span><span class="n">fctk_005</span> <span class="o">/</span> <span class="n">GammaCT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Design yield strength (MPa)</span>
 
-    <span class="k">return</span> <span class="bp">cls</span>
+    <span class="k">return</span> <span class="n">concrete</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -5184,9 +5143,7 @@ from_fck(f_ck: int, name: object = None)
 
               <details class="quote">
                 <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">408</span>
-<span class="normal">409</span>
-<span class="normal">410</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">410</span>
 <span class="normal">411</span>
 <span class="normal">412</span>
 <span class="normal">413</span>
@@ -5201,7 +5158,9 @@ from_fck(f_ck: int, name: object = None)
 <span class="normal">422</span>
 <span class="normal">423</span>
 <span class="normal">424</span>
-<span class="normal">425</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ConcreteGrade</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ConcreteGrade</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Enumeration of standard Eurocode 2 concrete grades.</span>
 
 <span class="sd">    Each member represents a concrete grade with its associated properties.</span>
@@ -5350,9 +5309,7 @@ from_fck(f_ck: int, name: object = None)
 
               <details class="quote">
                 <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">756</span>
-<span class="normal">757</span>
-<span class="normal">758</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">758</span>
 <span class="normal">759</span>
 <span class="normal">760</span>
 <span class="normal">761</span>
@@ -5369,7 +5326,9 @@ from_fck(f_ck: int, name: object = None)
 <span class="normal">772</span>
 <span class="normal">773</span>
 <span class="normal">774</span>
-<span class="normal">775</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="normal">775</span>
+<span class="normal">776</span>
+<span class="normal">777</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">CreepParams</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Data class for storing parameters used in creep coefficient calculations.</span>
 
@@ -5462,9 +5421,7 @@ fpd : float
 
               <details class="quote">
                 <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">617</span>
-<span class="normal">618</span>
-<span class="normal">619</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">619</span>
 <span class="normal">620</span>
 <span class="normal">621</span>
 <span class="normal">622</span>
@@ -5562,7 +5519,9 @@ fpd : float
 <span class="normal">714</span>
 <span class="normal">715</span>
 <span class="normal">716</span>
-<span class="normal">717</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Prestress</span><span class="p">:</span>
+<span class="normal">717</span>
+<span class="normal">718</span>
+<span class="normal">719</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Prestress</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents Eurocode 2 prestressing steel properties.</span>
 
 <span class="sd">    Attributes</span>
@@ -5645,8 +5604,8 @@ fpd : float
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Prestress(name=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;, pType=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pType</span><span class="si">}</span><span class="s2">&#39;, zone=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zone</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fpk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpk</span><span class="si">}</span><span class="s2">, fp0_1k=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fp0_1k</span><span class="si">}</span><span class="s2">, Ep=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ep</span><span class="si">}</span><span class="s2">, d=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Ap=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ap</span><span class="si">}</span><span class="s2">, fpd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpd</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fpk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpk</span><span class="si">}</span><span class="s2">, fp0_1k = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fp0_1k</span><span class="si">}</span><span class="s2">, Ep = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ep</span><span class="si">}</span><span class="s2">, d = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Ap = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ap</span><span class="si">}</span><span class="s2">, fpd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpd</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -5660,8 +5619,8 @@ fpd : float
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Prestress </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (pType=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pType</span><span class="si">}</span><span class="s2">&#39;, zone=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zone</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fpk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpk</span><span class="si">}</span><span class="s2"> MPa, fp0_1k=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fp0_1k</span><span class="si">}</span><span class="s2"> MPa, Ep=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ep</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;d=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="si">}</span><span class="s2"> mm, Ap=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ap</span><span class="si">}</span><span class="s2"> cm², fpd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpd</span><span class="si">}</span><span class="s2"> MPa)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fpk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpk</span><span class="si">}</span><span class="s2"> MPa, fp0_1k = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fp0_1k</span><span class="si">}</span><span class="s2"> MPa, Ep = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ep</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;d = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="si">}</span><span class="s2"> mm, Ap = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ap</span><span class="si">}</span><span class="s2"> cm², fpd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpd</span><span class="si">}</span><span class="s2"> MPa)&quot;</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
@@ -5697,9 +5656,7 @@ fpd : float
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">689</span>
-<span class="normal">690</span>
-<span class="normal">691</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">691</span>
 <span class="normal">692</span>
 <span class="normal">693</span>
 <span class="normal">694</span>
@@ -5710,7 +5667,9 @@ fpd : float
 <span class="normal">699</span>
 <span class="normal">700</span>
 <span class="normal">701</span>
-<span class="normal">702</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="normal">702</span>
+<span class="normal">703</span>
+<span class="normal">704</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a string representation of the Prestress object.</span>
 
 <span class="sd">    Returns</span>
@@ -5721,8 +5680,8 @@ fpd : float
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;Prestress(name=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;, pType=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pType</span><span class="si">}</span><span class="s2">&#39;, zone=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zone</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fpk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpk</span><span class="si">}</span><span class="s2">, fp0_1k=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fp0_1k</span><span class="si">}</span><span class="s2">, Ep=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ep</span><span class="si">}</span><span class="s2">, d=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="si">}</span><span class="s2">, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Ap=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ap</span><span class="si">}</span><span class="s2">, fpd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpd</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fpk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpk</span><span class="si">}</span><span class="s2">, fp0_1k = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fp0_1k</span><span class="si">}</span><span class="s2">, Ep = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ep</span><span class="si">}</span><span class="s2">, d = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="si">}</span><span class="s2">, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Ap = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ap</span><span class="si">}</span><span class="s2">, fpd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpd</span><span class="si">}</span><span class="s2">)&quot;</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -5749,9 +5708,7 @@ fpd : float
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">704</span>
-<span class="normal">705</span>
-<span class="normal">706</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">706</span>
 <span class="normal">707</span>
 <span class="normal">708</span>
 <span class="normal">709</span>
@@ -5762,7 +5719,9 @@ fpd : float
 <span class="normal">714</span>
 <span class="normal">715</span>
 <span class="normal">716</span>
-<span class="normal">717</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="normal">717</span>
+<span class="normal">718</span>
+<span class="normal">719</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a string representation of the Prestress object.</span>
 
 <span class="sd">    Returns</span>
@@ -5773,8 +5732,8 @@ fpd : float
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;Prestress </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (pType=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pType</span><span class="si">}</span><span class="s2">&#39;, zone=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">zone</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fpk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpk</span><span class="si">}</span><span class="s2"> MPa, fp0_1k=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fp0_1k</span><span class="si">}</span><span class="s2"> MPa, Ep=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ep</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;d=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="si">}</span><span class="s2"> mm, Ap=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ap</span><span class="si">}</span><span class="s2"> cm², fpd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpd</span><span class="si">}</span><span class="s2"> MPa)&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fpk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpk</span><span class="si">}</span><span class="s2"> MPa, fp0_1k = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fp0_1k</span><span class="si">}</span><span class="s2"> MPa, Ep = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ep</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;d = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="si">}</span><span class="s2"> mm, Ap = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Ap</span><span class="si">}</span><span class="s2"> cm², fpd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpd</span><span class="si">}</span><span class="s2"> MPa)&quot;</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -5838,9 +5797,7 @@ fyd : float
 
               <details class="quote">
                 <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">463</span>
-<span class="normal">464</span>
-<span class="normal">465</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">465</span>
 <span class="normal">466</span>
 <span class="normal">467</span>
 <span class="normal">468</span>
@@ -5927,7 +5884,9 @@ fyd : float
 <span class="normal">549</span>
 <span class="normal">550</span>
 <span class="normal">551</span>
-<span class="normal">552</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Reinforcement</span><span class="p">:</span>
+<span class="normal">552</span>
+<span class="normal">553</span>
+<span class="normal">554</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Reinforcement</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents Eurocode 2 steel reinforcement properties.</span>
 
 <span class="sd">    Attributes</span>
@@ -5994,9 +5953,9 @@ fyd : float
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Reinforcement(grade=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2">&#39;, fyk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyk</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;epsilon_uk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon_uk</span><span class="si">}</span><span class="s2">, ftk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ftk</span><span class="si">}</span><span class="s2">, Es=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Es</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;ClassType=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ClassType</span><span class="si">}</span><span class="s2">&#39;, fyd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyd</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Reinforcement(grade=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2">&#39;, fyk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyk</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;epsilon_uk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon_uk</span><span class="si">}</span><span class="s2">, ftk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ftk</span><span class="si">}</span><span class="s2">, Es = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Es</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;ClassType=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ClassType</span><span class="si">}</span><span class="s2">&#39;, fyd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyd</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -6010,12 +5969,12 @@ fyd : float
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Reinforcement </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2"> (&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fyk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyk</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;epsilon_uk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon_uk</span><span class="si">}</span><span class="s2"> ‰, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;ftk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ftk</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Es=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Es</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;ClassType=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ClassType</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;fyd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyd</span><span class="si">}</span><span class="s2"> MPa)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fyk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyk</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;epsilon_uk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon_uk</span><span class="si">}</span><span class="s2"> ‰, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;ftk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ftk</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Es = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Es</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;ClassType = &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ClassType</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;fyd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyd</span><span class="si">}</span><span class="s2"> MPa)&quot;</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
@@ -6051,9 +6010,7 @@ fyd : float
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">520</span>
-<span class="normal">521</span>
-<span class="normal">522</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">522</span>
 <span class="normal">523</span>
 <span class="normal">524</span>
 <span class="normal">525</span>
@@ -6064,7 +6021,9 @@ fyd : float
 <span class="normal">530</span>
 <span class="normal">531</span>
 <span class="normal">532</span>
-<span class="normal">533</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="normal">533</span>
+<span class="normal">534</span>
+<span class="normal">535</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a string representation of the Reinforcement object.</span>
 
 <span class="sd">    Returns</span>
@@ -6074,9 +6033,9 @@ fyd : float
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Reinforcement(grade=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2">&#39;, fyk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyk</span><span class="si">}</span><span class="s2">, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;epsilon_uk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon_uk</span><span class="si">}</span><span class="s2">, ftk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ftk</span><span class="si">}</span><span class="s2">, Es=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Es</span><span class="si">}</span><span class="s2">, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;ClassType=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ClassType</span><span class="si">}</span><span class="s2">&#39;, fyd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyd</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Reinforcement(grade=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2">&#39;, fyk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyk</span><span class="si">}</span><span class="s2">, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;epsilon_uk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon_uk</span><span class="si">}</span><span class="s2">, ftk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ftk</span><span class="si">}</span><span class="s2">, Es = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Es</span><span class="si">}</span><span class="s2">, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;ClassType=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ClassType</span><span class="si">}</span><span class="s2">&#39;, fyd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyd</span><span class="si">}</span><span class="s2">)&quot;</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -6103,9 +6062,7 @@ fyd : float
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">535</span>
-<span class="normal">536</span>
-<span class="normal">537</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">537</span>
 <span class="normal">538</span>
 <span class="normal">539</span>
 <span class="normal">540</span>
@@ -6120,7 +6077,9 @@ fyd : float
 <span class="normal">549</span>
 <span class="normal">550</span>
 <span class="normal">551</span>
-<span class="normal">552</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="normal">552</span>
+<span class="normal">553</span>
+<span class="normal">554</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a string representation of the Reinforcement object.</span>
 
 <span class="sd">    Returns</span>
@@ -6131,12 +6090,12 @@ fyd : float
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;Reinforcement </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="si">}</span><span class="s2"> (&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fyk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyk</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;epsilon_uk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon_uk</span><span class="si">}</span><span class="s2"> ‰, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;ftk=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ftk</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Es=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Es</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;ClassType=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ClassType</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;fyd=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyd</span><span class="si">}</span><span class="s2"> MPa)&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fyk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyk</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;epsilon_uk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">epsilon_uk</span><span class="si">}</span><span class="s2"> ‰, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;ftk = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ftk</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Es = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Es</span><span class="si">}</span><span class="s2"> MPa, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;ClassType = &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ClassType</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;fyd = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fyd</span><span class="si">}</span><span class="s2"> MPa)&quot;</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -6179,9 +6138,7 @@ fyd : float
 
               <details class="quote">
                 <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">555</span>
-<span class="normal">556</span>
-<span class="normal">557</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">557</span>
 <span class="normal">558</span>
 <span class="normal">559</span>
 <span class="normal">560</span>
@@ -6201,7 +6158,9 @@ fyd : float
 <span class="normal">574</span>
 <span class="normal">575</span>
 <span class="normal">576</span>
-<span class="normal">577</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ReinforcementGrade</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="normal">577</span>
+<span class="normal">578</span>
+<span class="normal">579</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ReinforcementGrade</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Enumeration of standard Eurocode 2 reinforcement steel grades.</span>
 
 <span class="sd">    Each member represents a reinforcement grade with its associated properties.</span>
@@ -6355,9 +6314,7 @@ fyd : float
 
               <details class="quote">
                 <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">862</span>
-<span class="normal">863</span>
-<span class="normal">864</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">864</span>
 <span class="normal">865</span>
 <span class="normal">866</span>
 <span class="normal">867</span>
@@ -6374,7 +6331,9 @@ fyd : float
 <span class="normal">878</span>
 <span class="normal">879</span>
 <span class="normal">880</span>
-<span class="normal">881</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="normal">881</span>
+<span class="normal">882</span>
+<span class="normal">883</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ShrinkStrainParams</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Data class for storing parameters used in shrinkage strain calculations.</span>
 
@@ -6552,9 +6511,7 @@ fyd : float
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">720</span>
-<span class="normal">721</span>
-<span class="normal">722</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">722</span>
 <span class="normal">723</span>
 <span class="normal">724</span>
 <span class="normal">725</span>
@@ -6567,7 +6524,9 @@ fyd : float
 <span class="normal">732</span>
 <span class="normal">733</span>
 <span class="normal">734</span>
-<span class="normal">735</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">beta_cc</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="normal">735</span>
+<span class="normal">736</span>
+<span class="normal">737</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">beta_cc</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the strength hardening coefficient.</span>
 
 <span class="sd">    Args:</span>
@@ -6723,9 +6682,7 @@ fyd : float
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">738</span>
-<span class="normal">739</span>
-<span class="normal">740</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">740</span>
 <span class="normal">741</span>
 <span class="normal">742</span>
 <span class="normal">743</span>
@@ -6738,7 +6695,9 @@ fyd : float
 <span class="normal">750</span>
 <span class="normal">751</span>
 <span class="normal">752</span>
-<span class="normal">753</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">beta_ce</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="normal">753</span>
+<span class="normal">754</span>
+<span class="normal">755</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">beta_ce</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the modulus of elasticity hardening coefficient.</span>
 
 <span class="sd">    Args:</span>
@@ -6841,9 +6800,7 @@ of relative humidity and time.</p>
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">820</span>
-<span class="normal">821</span>
-<span class="normal">822</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">822</span>
 <span class="normal">823</span>
 <span class="normal">824</span>
 <span class="normal">825</span>
@@ -6880,7 +6837,9 @@ of relative humidity and time.</p>
 <span class="normal">856</span>
 <span class="normal">857</span>
 <span class="normal">858</span>
-<span class="normal">859</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_creep_coef</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">CreepParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="normal">859</span>
+<span class="normal">860</span>
+<span class="normal">861</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_creep_coef</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">CreepParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the creep coefficient using EN1992-1:2004.</span>
 
 <span class="sd">    This function calculates the creep coefficient of concrete based on the time,</span>
@@ -7005,9 +6964,7 @@ defined for different cement types and the concrete compressive strength.</p>
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">884</span>
-<span class="normal">885</span>
-<span class="normal">886</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">886</span>
 <span class="normal">887</span>
 <span class="normal">888</span>
 <span class="normal">889</span>
@@ -7038,7 +6995,9 @@ defined for different cement types and the concrete compressive strength.</p>
 <span class="normal">914</span>
 <span class="normal">915</span>
 <span class="normal">916</span>
-<span class="normal">917</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_shrink_strain</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">ShrinkStrainParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="normal">917</span>
+<span class="normal">918</span>
+<span class="normal">919</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_shrink_strain</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">ShrinkStrainParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the total shrinkage strain. Uses EN1992-1:2004.</span>
 
 <span class="sd">    This function calculates the total shrinkage strain of concrete based on the time,</span>
@@ -7104,9 +7063,7 @@ defined for different cement types and the concrete compressive strength.</p>
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">432</span>
-<span class="normal">433</span>
-<span class="normal">434</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">434</span>
 <span class="normal">435</span>
 <span class="normal">436</span>
 <span class="normal">437</span>
@@ -7132,7 +7089,9 @@ defined for different cement types and the concrete compressive strength.</p>
 <span class="normal">457</span>
 <span class="normal">458</span>
 <span class="normal">459</span>
-<span class="normal">460</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_concrete</span><span class="p">(</span><span class="n">concrete</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Concrete</span> <span class="o">|</span> <span class="n">ConcreteGrade</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Concrete</span><span class="p">:</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_concrete</span><span class="p">(</span><span class="n">concrete</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Concrete</span> <span class="o">|</span> <span class="n">ConcreteGrade</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Concrete</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a Concrete instance from a string, Concrete, or ConcreteGrade input.</span>
 
 <span class="sd">    Parameters</span>
@@ -7193,9 +7152,7 @@ defined for different cement types and the concrete compressive strength.</p>
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec2/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">584</span>
-<span class="normal">585</span>
-<span class="normal">586</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">586</span>
 <span class="normal">587</span>
 <span class="normal">588</span>
 <span class="normal">589</span>
@@ -7223,7 +7180,9 @@ defined for different cement types and the concrete compressive strength.</p>
 <span class="normal">611</span>
 <span class="normal">612</span>
 <span class="normal">613</span>
-<span class="normal">614</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_reinforcement</span><span class="p">(</span>
+<span class="normal">614</span>
+<span class="normal">615</span>
+<span class="normal">616</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_reinforcement</span><span class="p">(</span>
     <span class="n">reinforcement</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Reinforcement</span> <span class="o">|</span> <span class="n">ReinforcementGrade</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Reinforcement</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a Reinforcement object from string, Reinforcement, or ReinforcementGrade.</span>

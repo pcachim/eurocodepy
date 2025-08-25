@@ -1599,12 +1599,12 @@
   
   
     <li class="md-nav__item">
-      <a href="params/" class="md-nav__link">
+      <a href="national_parameters/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    params
+    national_parameters
     
   </span>
   
@@ -1659,52 +1659,6 @@
             utils
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="utils/dict_tools/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    dict_tools
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="utils/plotly_templates/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    plotly_templates
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -1849,6 +1803,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#eurocodepy.LocaleData" class="md-nav__link">
+    <span class="md-ellipsis">
+      LocaleData
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.NationalParams" class="md-nav__link">
+    <span class="md-ellipsis">
+      NationalParams
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NationalParams">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.NationalParams.concelho" class="md-nav__link">
+    <span class="md-ellipsis">
+      concelho
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.NationalParams.local" class="md-nav__link">
+    <span class="md-ellipsis">
+      local
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.NationalParams.__post_init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __post_init__
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#eurocodepy.get_national_params" class="md-nav__link">
     <span class="md-ellipsis">
       get_national_params
@@ -1916,7 +1921,7 @@
 
 
 <h2 id="eurocodepy.__version__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;2025.6.8&#39;</span></code>
+            <code class="highlight language-python"><span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;2025.8.1&#39;</span></code>
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
@@ -1955,6 +1960,207 @@
 
 </div>
 
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="eurocodepy.LocaleData" class="doc doc-heading">
+            <code>LocaleData</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Class to hold locale data.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>eurocodepy/__init__.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LocaleData</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to hold locale data.&quot;&quot;&quot;</span>
+
+    <span class="n">PT</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">local_name</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="eurocodepy.NationalParams" class="doc doc-heading">
+            <code>NationalParams</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Class to hold national parameters.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>eurocodepy/__init__.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NationalParams</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to hold national parameters.&quot;&quot;&quot;</span>
+
+    <span class="n">local</span><span class="p">:</span> <span class="n">locale</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">PT</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Locale for national parameters.&quot;&quot;&quot;</span>
+    <span class="n">concelho</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Lisboa&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Municipality name, default is &#39;Lisboa&#39;.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Post-initialization to load data.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">get_national_params</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">concelho</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="eurocodepy.NationalParams.concelho" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">concelho</span> <span class="o">=</span> <span class="s1">&#39;Lisboa&#39;</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Municipality name, default is 'Lisboa'.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="eurocodepy.NationalParams.local" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">local</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">PT</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Locale for national parameters.</p>
+
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="eurocodepy.NationalParams.__post_init__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">__post_init__</span><span class="p">()</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Post-initialization to load data.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/__init__.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Post-initialization to load data.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">get_national_params</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">concelho</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
 
 
 <div class="doc doc-object doc-function">
@@ -2043,28 +2249,28 @@
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/__init__.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_national_params</span><span class="p">(</span><span class="n">local</span><span class="p">:</span> <span class="n">locale</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">PT</span><span class="p">,</span> <span class="n">concelho</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Lisboa&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_national_params</span><span class="p">(</span><span class="n">local</span><span class="p">:</span> <span class="n">locale</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">PT</span><span class="p">,</span> <span class="n">concelho</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Lisboa&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get Portuguese data for municipalities.</span>
 
 <span class="sd">    Args:</span>
