@@ -9,21 +9,21 @@ It includes calculations for bearing capacity, earth pressures,
 and other geotechnical parameters.
 """
 
-from eurocodepy.ec7.materials import (
-    Soil,
-    SoilEnum,
-    SoilSafetyFactors,
-    SoilSafetyFactorsEnum,
-    SoilSeismicParameters,
-    SoilSurcharge,
-    get_soil_seismic_parameters,
+from .bearing_capacity import (
+    bearing_resistance,  # noqa: F401
+    seismic_bearing_resistance,  # noqa: F401
+    soil_gamma_rd,  # noqa: F401
 )
-from eurocodepy.ec7.bearing_capacity import (
-    bearing_resistance,
-    seismic_bearing_resistance,
-    soil_gamma_rd,
+from .earth_pressures import (
+    EarthPressureModels,  # noqa: F401
+    pressure_coefficients,  # noqa: F401
 )
-from eurocodepy.ec7.earth_pressures import (
-    EarthPressureModels,
-    pressure_coefficients,
+from .materials import (
+    Soil,  # noqa: F401
+    SoilEnum,  # noqa: F401
+    SoilSafetyFactors,  # noqa: F401
+    SoilSafetyFactorsEnum,  # noqa: F401
+    SoilSeismicParameters,  # noqa: F401
+    SoilSurcharge,  # noqa: F401
+    get_soil_seismic_parameters,  # noqa: F401
 )

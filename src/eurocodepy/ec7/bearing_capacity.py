@@ -189,7 +189,7 @@ if __name__ == "__main__":
     q = d*gamma
     H = np.array([74.6, 74.7, 20.0])
     V = np.array([716.4, 557.0, 530.5])
-    bearing = bearing_resistance(B, B, H, H, V, fhi, gamma, q, 0, True)
-    print(f"Bearing capacity: {np.round(bearing, 1)} kN/m²")
-    print(f"Bearing capacity: {np.round(bearing*B, 1)} kN")
-
+    bearing = bearing_resistance(B, B, H, H, V, 
+                                fhi, gamma, q, 0, True)  # noqa: FBT003
+    print(f"Bearing capacity: {np.round(bearing, 1)} kN/m²")  # noqa: T201
+    print(f"Bearing capacity: {np.round(bearing*B, 1)} kN")  # noqa: T201

@@ -4,7 +4,7 @@ from enum import Enum
 
 import numpy as np
 
-from eurocodepy.ec7 import SoilSeismicParameters
+from .materials import SoilSeismicParameters
 
 
 class EarthPressureModels(Enum):
