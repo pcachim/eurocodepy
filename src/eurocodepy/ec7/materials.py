@@ -29,19 +29,26 @@ class SoilSafetyFactors:
 
     """
 
-    name: str
-    casetype: str
-    case: str
-    gamma: float
-    phi: float
-    c: float
-    cu: float
-    perm_unfav: float
-    perm_fav: float
-    var_unfav: float
-    var_fav: float
-    slide: float
-    bearing: float
+    name: str = ""
+    casetype: str = ""
+    case: str = ""
+    gamma: float = 1.0
+    phi: float = 1.0
+    c: float = 1.0
+    cu: float = 1.0
+    perm_unfav: float = 1.0
+    perm_fav: float = 1.0
+    var_unfav: float = 1.0
+    var_fav: float = 1.0
+    slide: float = 1.0
+    bearing: float = 1.0
+
+    def __str__(self):
+        return (f"Soil Safety Factors: {self.name} ({self.casetype} - {self.case})\n"
+                f"Gamma: {self.gamma}, Phi: {self.phi}, C: {self.c}, CU: {self.cu}\n"
+                f"Permanent Unfav: {self.perm_unfav}, Permanent Fav: {self.perm_fav}\n"
+                f"Variable Unfav: {self.var_unfav}, Variable Fav: {self.var_fav}\n"
+                f"Sliding Resistance Factor: {self.slide}, Bearing Resistance Factor: {self.bearing}")
 
 
 class SoilSafetyFactorsEnum:
@@ -87,7 +94,7 @@ class Soil:
     friction_angle: float = 30.0  # Input in degrees, default is 30 degrees
     conc_friction_angle: float = 20.0  # Input in degrees, default is 20 degrees
     sig_adm: float = 200.0  # Admissible stress in kPa, default is 200 kPa
-    sig_rd: float = 300.0  # Maximum design resistance stress in kPa, default is 300 kPa
+    sig_rd: float | object = 300.0  # Maximum design resistance stress in kPa, default is 300 kPa
     cohesion: float = 0.0  # Effective cohesion in kPa, default is 0
     is_drained: bool = True  # Drained condition, default is True
     is_coherent: bool = False  # Whether the soil is cohesive, default is False
@@ -95,7 +102,7 @@ class Soil:
     poiss: float = 0.3  # Poisson coefficient
     ks: float = 30000  # modulus of subgrade reaction kN/m3
 
-    def __post_init__(self) -> None:
+    def __post_init__(self) -> None:  # noqa: D105
         self.friction_angle = np.radians(self.friction_angle)
         self.conc_friction_angle = np.radians(self.conc_friction_angle)
         if self.cohesion > 0:
@@ -185,6 +192,20 @@ class Soil:
 
         """
         return es
+
+    def __str__(self) -> str:  # noqa: D105
+        return (
+            f"{self.name}(\n"
+            f"   Unit weight: {self.unit_weight} kN/m³\n"
+            f"   Friction angle: {np.degrees(self.friction_angle):.2f}°\n"
+            f"   Cohesion: {self.cohesion} kPa\n"
+            f"   Drained: {self.is_drained}\n"
+            f"   Coherent: {self.is_coherent}\n"
+            f"   Young Modulus: {self.young} MPa\n"
+            f"   Poisson Ratio: {self.poiss}\n"
+            f"   Modulus of subgrade reaction: {self.ks} kN/m³\n"
+            f"   Admissible stress: {self.sig_adm} kPa"
+            f")")
 
 
 class SoilEnum:

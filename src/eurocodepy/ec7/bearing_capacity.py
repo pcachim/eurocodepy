@@ -23,7 +23,8 @@ soil_gamma_rd = {
 }
 
 
-def bearing_resistance(Bx: float, By: float, Hx: float, Hy: float, N: float,
+def bearing_resistance(Bx: float, By: float, Hx: int | float | np.ndarray, Hy: int | float | np.ndarray,
+            N:  int | float | np.ndarray,
             phi: float, gamma: float, q: float, c: float = 0,
             drained: bool = True) -> float:
     """Calculate the bearing capacity of a shallow foundation (EN 1997-1:2004).

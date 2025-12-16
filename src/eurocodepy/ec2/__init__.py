@@ -43,5 +43,11 @@ from eurocodepy.ec2.sls.creep import creep_coef  # EN1992-1:2025
 from eurocodepy.ec2.sls.shrinkage import shrink_strain  # EN1992-1:2025
 from eurocodepy.ec2.uls import beam, shear, shell
 from eurocodepy.ec2.uls.beam import calc_asl, calc_mrd, get_bend_params
+from eurocodepy.ec2.uls.punch import (
+    calc_perimeters,
+    calc_vedp,
+    calc_vrdcminp,
+    calc_vrdcp,
+)
 from eurocodepy.ec2.uls.shear import calc_asws, calc_vrd, calc_vrdc, calc_vrdmax
 from eurocodepy.ec2.uls.shell import calc_reinf_plane, calc_reinf_shell

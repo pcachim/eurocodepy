@@ -22,6 +22,7 @@ REF_FCM = 35.0
 
 GammaC = dbase.ConcreteParams["gamma_cc"]
 GammaCT = dbase.ConcreteParams["gamma_ct"]
+Weight = dbase.ConcreteParams["weigh"]
 ConcreteClass = Enum(
     "ConcreteClass",
     {item: item.replace("_", "/") for item in dbase.ConcreteGrades},
@@ -280,6 +281,8 @@ class Concrete:
         Design compressive strength (MPa).
     fctd : float
         Design tensile strength (MPa).
+    weight : float
+        Weight of the concrete per cubic meter (kN/m³).
 
     Methods
     -------
@@ -316,6 +319,7 @@ class Concrete:
         self.eps_c2 = conc["epsc2"]  # Strain at peak stress
         self.eps_cu2 = conc["epscu2"]  # Ultimate compressive strain
         self.n = conc["n"]  # Ultimate compressive strain
+        self.weight = Weight  # kN/m³
 
         self.gamma_c = GammaC
         self.fcd = round(self.fck / GammaC, 1)  # Design yield strength (MPa)
@@ -358,7 +362,9 @@ class Concrete:
             f"eps_cu2 = {self.eps_cu2}, \n    "
             f"n = {self.n}, \n    "
             f"fcd = {self.fcd} MPa, \n    "
-            f"fctd = {self.fctd} MPa\n)"
+            f"fctd = {self.fctd} MPa\n    "
+            f"weight = self.weight kN/m³\n"
+            f")"
         )
 
 
@@ -495,7 +501,7 @@ class Reinforcement:
 
     """
 
-    def __init__(self, type_label: str | ReinforcementClass = "B500B") -> None:
+    def __init__(self, type_label: str | ReinforcementClass = "B500B") -> None:  # noqa: D107
         if isinstance(type_label, ReinforcementClass):
             type_label = type_label.name
         self.grade = type_label
@@ -544,13 +550,14 @@ class Reinforcement:
 
         """
         return (
-            f"Reinforcement {self.grade} ("
-            f"fyk = {self.fyk} MPa, "
-            f"epsilon_uk = {self.epsilon_uk} ‰, "
-            f"ftk = {self.ftk} MPa, "
-            f"Es = {self.Es} MPa, "
-            f"ClassType = '{self.ClassType}', "
-            f"fyd = {self.fyd} MPa)"
+            f"Reinforcement {self.grade} (\n"
+            f"   fyk = {self.fyk} MPa,\n"
+            f"   epsilon_uk = {self.epsilon_uk} ‰,\n"
+            f"   ftk = {self.ftk} MPa,\n"
+            f"   Es = {self.Es} MPa,\n"
+            f"   ClassType = '{self.ClassType}',\n"
+            f"   fyd = {self.fyd} MPa\n"
+            f")"
         )
 
 

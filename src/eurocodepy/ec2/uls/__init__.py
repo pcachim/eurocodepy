@@ -13,8 +13,9 @@ from eurocodepy.ec2 import (
     ReinforcementClass,
 )
 from eurocodepy.ec2 import uls
-from eurocodepy.ec2.uls import shear, shell, beam
+from eurocodepy.ec2.uls import shear, shell, beam, punch
 from eurocodepy.ec2.uls.shear import calc_asws, calc_vrd, calc_vrdc
+from eurocodepy.ec2.uls.punch import calc_perimeters, calc_vedp, calc_vrdcp, calc_vrdcminp
 from eurocodepy.ec2.uls.beam import (
     RCBeam,
     calc_asl,

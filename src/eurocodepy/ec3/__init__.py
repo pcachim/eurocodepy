@@ -20,7 +20,7 @@ Eurocode 3 steel classes existing in the database.
 """
 
 
-def __extract_steel(s):  # noqa: ANN202
+def extract_steel_from_str(s):  # noqa: ANN202
     match = re.search(r"S\d+", s)
     return match.group(0) if match else None
 
@@ -35,6 +35,9 @@ REC_P1: float = 3.75
 REC_P2: float = 3.0
 MIN_E1_PIN: float = 1.6
 MIN_E2_PIN: float = 1.25
+
+
+BoltGrades = [str(grade).replace("_",".") for grade in dbase.BoltGrades.keys()]
 
 
 class Bolt:
@@ -1148,6 +1151,13 @@ class PinnedConnection(BoltedConnection):
 
         return self._result
 
+    def show_results(self) -> None:
+        """Print the results of the design checks."""
+        if self._result is None:
+            print("No results available. Run 'check' method first.")
+        else:
+            print(self.__str__())
+
     def __str__(self) -> str:
         """Return a string representation of the bolted connection.
 
@@ -1320,7 +1330,7 @@ class Weld:
         steel = dbase.SteelGrades[self.steel_grade]
         self.fu = steel["fuk"]
         self.fy = steel["fyk"]
-        grade = __extract_steel(self.steel_grade)
+        grade = extract_steel_from_str(self.steel_grade)
         self.beta_w = 0.8 if grade == "S235" else 0.85 if grade == "S275" else 0.9 if grade == "S355" else 1.00
         self.gamma_M0 = dbase.SteelParams["gamma_M0"]  # Partial safety factor
         self.gamma_M1 = dbase.SteelParams["gamma_M1"]  # Partial safety factor
@@ -1384,14 +1394,10 @@ class WeldConnection:
         self.area_xx += weld.area_xx
         self.area_yy += weld.area_yy
         self.area += weld.area
-        if weld.x_max > self.max_x:
-            self.max_x = weld.x_max
-        if weld.y_max > self.max_y:
-            self.max_y = weld.y_max
-        if weld.x_min < self.min_x:
-            self.min_x = weld.x_min
-        if weld.y_min < self.min_y:
-            self.min_y = weld.y_min
+        self.max_x = max(self.max_x, weld.x_max)
+        self.max_y = max(self.max_y, weld.y_max)
+        self.min_x = min(self.min_x, weld.x_min)
+        self.min_y = min(self.min_y, weld.y_min)
         self.w_el_xx_sup = self.inertia_xx / self.max_x
         self.w_el_yy_sup = self.inertia_yy / self.max_y
         self.w_el_xx_inf = np.abs(self.inertia_xx / self.min_x)

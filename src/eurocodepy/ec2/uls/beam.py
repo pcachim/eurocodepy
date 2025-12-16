@@ -252,7 +252,7 @@ class RCBeam:
         self.fyk = self.reinforcement.fyk
         self.gammac = GammaC
         self.gammas = GammaS
-        self.fcd = self.concrete.fck
+        self.fcd = self.concrete.fcd
         self.fyd = self.reinforcement.fyd
 
     def calc_shear(self, ved: float,
@@ -326,7 +326,7 @@ class RCBeam:
         aslt += aslc
         epssc = np.where(med <= med_max, None, (alpha - alpha_c) / alpha * epscu2)
 
-        return np.array([aslt, aslc, alpha, epsst, epssc])
+        return aslt, aslc, alpha, epsst, epssc
 
 
 if __name__ == "__main__":
