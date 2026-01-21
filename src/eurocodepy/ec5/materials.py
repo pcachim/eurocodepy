@@ -85,6 +85,23 @@ class Timber:
 
         """
         return self.kdef[service_class.name]
+    
+    def __str__(self):
+        return (
+            f"Timber type: {self.type_label}\n"
+            f"  fmk: {self.fmk} MPa\n"
+            f"  ft0k: {self.ft0k} MPa\n"
+            f"  fc0k: {self.fc0k} MPa\n"
+            f"  fvk: {self.fvk} MPa\n"
+            f"  fc90k: {self.fc90k} MPa\n"
+            f"  ft90k: {self.ft90k} MPa\n"
+            f"  E0k: {self.E0k} MPa\n"
+            f"  E90k: {self.E90k} MPa\n"
+            f"  E0mean: {self.E0mean} MPa\n"
+            f"  Gmean: {self.Gmean} MPa\n"
+            f"  rhok: {self.rhok} kg/m³\n"
+            f"  rhom: {self.rhom} kg/m³\n"
+        )
 
 
 class SolidTimber(Timber):
