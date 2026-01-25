@@ -16,7 +16,7 @@ The package provides modules for different Eurocodes and utilities, such as:
 * `ec8`: utility functions for ec8 calculations.
 """
 
-__version__ = "2025.12.1"
+__version__ = "2026.1.1"
 """Version of EurocodePy package."""
 print_version = "This is 'EurocodePy' version " + __version__
 """Prints the version of EurocodePy package."""
