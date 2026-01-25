@@ -1368,7 +1368,6 @@ class Weld:
 
 
 class WeldConnection:
-
     inertia_xx = 0.0
     inertia_yy = 0.0
     inertia_xy = 0.0
@@ -1414,5 +1413,4 @@ class WeldConnection:
 
     def __repr__(self):
         return f"WeldConnection({self.welds})"
-
 

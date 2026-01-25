@@ -52,6 +52,7 @@ class Timber:
         self.kmod = dbase.TimberParams["kmod"][self.type]
         self.kdef = dbase.TimberParams["kmod"][self.type]
         self.kh = dbase.TimberParams["kh"][self.type]
+        self.material = "Solid"
 
     def k_mod(
         self,
@@ -85,8 +86,8 @@ class Timber:
 
         """
         return self.kdef[service_class.name]
-    
-    def __str__(self):
+
+    def __str__(self) -> str:
         return (
             f"Timber type: {self.type_label}\n"
             f"  fmk: {self.fmk} MPa\n"
@@ -134,6 +135,7 @@ class SolidTimber(Timber):
         self.fvrefk = dbase.TimberParams["fvrefk"][self.type]
         self.theta_twist = dbase.TimberParams["theta_twist"][self.type]
         self.kred = dbase.TimberParams["kred"][self.type]
+        self.material = "Solid"
 
 
 class Glulam(Timber):
@@ -171,6 +173,7 @@ class Glulam(Timber):
         self.fvrefk = dbase.TimberParams["fvrefk"][self.type]
         self.theta_twist = dbase.TimberParams["theta_twist"][self.type]
         self.kred = dbase.TimberParams["kred"][self.type]
+        self.material = "Glulam"
 
 
 class CLT(Timber):
@@ -193,3 +196,7 @@ Hardwood = SolidTimber
 ST = SolidTimber
 # Alias for Glulam, as it is commonly referred to as Glulam in Eurocode 5
 GL = Glulam
+
+
+TimberGrades = {item: Timber(item)
+            for item in dbase.TimberGrades}

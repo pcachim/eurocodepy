@@ -23,6 +23,7 @@ from eurocodepy.ec5.materials import (
     SolidTimber,
     Timber,
     TimberClass,
+    TimberGrades,
 )
 from eurocodepy.ec5 import sls
 from eurocodepy.ec5.sls import deformation, vibration

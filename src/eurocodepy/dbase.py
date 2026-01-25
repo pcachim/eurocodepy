@@ -92,6 +92,7 @@ Timber = db["Materials"]["Timber"]
 TimberGrades = Timber["Grade"]
 TimberParams = Timber["Parameters"]
 TimberLoadDuration = Timber["LoadDuration"]
+TimberServiceClasses = Timber["ServiceClasses"]
 
 Steel = db["Materials"]["Steel"]
 SteelGrades = Steel["Grade"]
