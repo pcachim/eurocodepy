@@ -101,23 +101,23 @@ from eurocodepy.dbase import (
     Steel,
     SteelCHSProfiles,
     SteelGrades,
-    SteelParams,
     SteelIProfiles,
+    SteelParams,
     SteelRHSProfiles,
     SteelSHSProfiles,
     Timber,
     TimberGrades,
-    TimberParams,
     TimberLoadDuration,
+    TimberParams,
     TimberServiceClasses,
     WindLoads,
     db,
     dbobj,
 )
 from eurocodepy.ec1 import wind
-from eurocodepy.ec8 import spectrum, get_spec_params
+from eurocodepy.ec8 import get_spec_params, spectrum
 from eurocodepy.national_parameters import seismic_get_params, wind_get_params
-from eurocodepy.utils import stress, section_properties
+from eurocodepy.utils import crosssection, section_properties, stress
 
 RECTANGULAR = 0
 CIRCULAR = 1

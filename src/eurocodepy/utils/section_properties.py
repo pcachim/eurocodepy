@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Paulo Cachim
+# SPDX-License-Identifier: MIT
+
 from dataclasses import dataclass
 
 import numpy as np

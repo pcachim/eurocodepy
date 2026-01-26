@@ -89,7 +89,8 @@ class Timber:
 
     def __str__(self) -> str:
         return (
-            f"Timber type: {self.type_label}\n"
+            f"Timber class: {self.type_label}\n"
+            f"  type: {self.type}\n"
             f"  fmk: {self.fmk} MPa\n"
             f"  ft0k: {self.ft0k} MPa\n"
             f"  fc0k: {self.fc0k} MPa\n"

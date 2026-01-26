@@ -9,6 +9,8 @@ for serviceability and ultimate limit states.
 it also includes vibration and deformation calculations.
 """
 
+from eurocodepy.ec5 import sls
+from eurocodepy.ec5 import uls
 from eurocodepy.ec5.materials import (
     CLT,
     GL,
@@ -25,6 +27,7 @@ from eurocodepy.ec5.materials import (
     TimberClass,
     TimberGrades,
 )
-from eurocodepy.ec5 import sls
 from eurocodepy.ec5.sls import deformation, vibration
 from eurocodepy.ec5.sls.vibration import a_from_b, b_from_a, floor_freq, vel, vlim
+from eurocodepy.ec5.uls import bending
+from eurocodepy.ec5.uls.bending import k_h, k_l
