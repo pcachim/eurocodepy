@@ -9,7 +9,7 @@ uv build
 
 ## Upload the package to PyPI
 
-twine upload dist/*
+uv publish
 
 ## Create documentation for EurocodePy
 

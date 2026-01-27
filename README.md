@@ -1,4 +1,4 @@
-# eurocodepy v2025.6.5
+# eurocodepy v2026.1.3
 
 EurocodePy is a Python package for calculating structures according to Eurocodes. It provides a collection of functions that enable engineers to design and analyze structures based on the Eurocode standards. In addition, it includes a database of structural materials and steel profiles, making it easy to design and analyze structures according to Eurocode standards.
 

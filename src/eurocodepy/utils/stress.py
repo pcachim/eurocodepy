@@ -38,7 +38,7 @@ class Invariant(Enum):
     TRIAXIALITY = "Triaxiality"
 
 
-def principals(sigxx: float, sigyy: float, sigzz: float,
+def principals(sigxx: float, sigyy: float, sigzz: float,  # noqa: PLR0913, PLR0917
             sigxy: float, sigyz: float, sigzx: float) -> tuple[np.ndarray, np.ndarray]:
     """Calculate the principal stresses and the normalized principal directions.
 
@@ -62,7 +62,7 @@ def principals(sigxx: float, sigyy: float, sigzz: float,
     return eigvals, eigvecs
 
 
-def principal_vectors(sigxx: float, sigyy: float, sigzz: float,
+def principal_vectors(sigxx: float, sigyy: float, sigzz: float,  # noqa: PLR0913
     sigxy: float, sigyz: float, sigzx: float) -> np.ndarray:
     """Calculate the princcipal vectors (size proportional to principal stresses).
 

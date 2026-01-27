@@ -41,7 +41,7 @@ class Timber:
         self.fvk = timber["fvk"]  # Characteristic shear strength (MPa)
         self.E0mean = timber["E0mean"]  # Mean modulus elasticity in MPa
         self.E0k = timber["E0k"]  # Characteristic modulus elasticity in MPa
-        self.E90k = timber["E90k"]  # Charact. modulus elasticity perp. to grain (MPa)
+        self.E90mean = timber["E90mean"]  # Charact. modulus elasticity perp. to grain (MPa)
         self.Gmean = timber["Gmean"]  # Mean shear modulus in MPa
         self.rhok = timber["rhok"]  # Characteristic density in kg/m³
         self.rhom = timber["rhom"]  # Mean density in kg/m³
@@ -87,7 +87,7 @@ class Timber:
         """
         return self.kdef[service_class.name]
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # noqa: D105
         return (
             f"Timber class: {self.type_label}\n"
             f"  type: {self.type}\n"
@@ -98,7 +98,7 @@ class Timber:
             f"  fc90k: {self.fc90k} MPa\n"
             f"  ft90k: {self.ft90k} MPa\n"
             f"  E0k: {self.E0k} MPa\n"
-            f"  E90k: {self.E90k} MPa\n"
+            f"  E90mean: {self.E90mean} MPa\n"
             f"  E0mean: {self.E0mean} MPa\n"
             f"  Gmean: {self.Gmean} MPa\n"
             f"  rhok: {self.rhok} kg/m³\n"
@@ -171,10 +171,39 @@ class Glulam(Timber):
 
         super().__init__(type_label)
 
+        timber = dbase.TimberGrades[type_label]
+        self.frk = timber["frk"]  # Characteristic rolling shear strength (MPa)
+        self.Gk = timber["Gk"]  # Characteristic shear modulus in MPa
+        self.Grk = timber["Grk"]  # Charact. rolling shear modulus in
+        self.Grmean = timber["Grmean"]  # Mean rolling shear modulus in MPa
+        self.G90k = timber["Gk"]  # Charact. shear modulus perp. to grain (MPa)
         self.fvrefk = dbase.TimberParams["fvrefk"][self.type]
         self.theta_twist = dbase.TimberParams["theta_twist"][self.type]
         self.kred = dbase.TimberParams["kred"][self.type]
         self.material = "Glulam"
+
+    def __str__(self) -> str:  # noqa: D105
+        return (
+            f"Timber class: {self.type_label}\n"
+            f"  type: {self.type}\n"
+            f"  fmk: {self.fmk} MPa\n"
+            f"  ft0k: {self.ft0k} MPa\n"
+            f"  fc0k: {self.fc0k} MPa\n"
+            f"  fvk: {self.fvk} MPa\n"
+            f"  fc90k: {self.fc90k} MPa\n"
+            f"  ft90k: {self.ft90k} MPa\n"
+            f"  frk: {self.frk} MPa\n"
+            f"  E0mean: {self.E0mean} MPa\n"
+            f"  E0k: {self.E0k} MPa\n"
+            f"  E90mean: {self.E90mean} MPa\n"
+            f"  E90k: {self.E90k} MPa\n"
+            f"  Gmean: {self.Gmean} MPa\n"
+            f"  Gk: {self.Gk} MPa\n"
+            f"  Grmean: {self.Grmean} MPa\n"
+            f"  Grk: {self.Grk} MPa\n"
+            f"  rhok: {self.rhok} kg/m³\n"
+            f"  rhom: {self.rhom} kg/m³\n"
+        )
 
 
 class CLT(Timber):
