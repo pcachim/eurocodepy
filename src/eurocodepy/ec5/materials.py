@@ -4,9 +4,9 @@ from enum import Enum
 
 from eurocodepy import dbase
 
-RiskClass = Enum("RiskClasses", dbase.Timber["RiskClasses"])
-ServiceClass = Enum("ServiceClasses", dbase.Timber["ServiceClasses"])
-LoadDuration = Enum("LoadDuration", dbase.Timber["LoadDuration"])
+RiskClass = Enum("RiskClasses", dbase.TimberMaterial["RiskClasses"])
+ServiceClass = Enum("ServiceClass", dbase.TimberMaterial["ServiceClasses"])
+LoadDuration = Enum("LoadDuration", dbase.TimberMaterial["LoadDuration"])
 TimberClass = Enum("TimberClass", list(dbase.TimberGrades.keys()))
 
 

@@ -69,12 +69,12 @@ class RectangularCrossSection(CrossSection):
         return (self.height * self.width**3) / 12
 
     @property
-    def bend_mod_z(self) -> float:
+    def bend_mod_y(self) -> float:
         """Calculate the bending modulus about the z-axis (horizontal)."""
         return (self.width * self.height**2) / 6
 
     @property
-    def bend_mod_y(self) -> float:
+    def bend_mod_z(self) -> float:
         """Calculate the bending modulus about the y-axis (vertical)."""
         return (self.height * self.width**2) / 6
 
