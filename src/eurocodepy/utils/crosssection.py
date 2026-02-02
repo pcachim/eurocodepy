@@ -1,11 +1,33 @@
 # Copyright (c) 2026 Paulo Cachim
 # SPDX-License-Identifier: MIT
+from enum import StrEnum
 
 import numpy as np
 
 
+class CrossSectionShape(StrEnum):
+    """Enumeration of cross-section shapes.
+
+    Attributes
+    ----------
+    RECTANGULAR : str
+        Rectangular cross-section shape.
+    CIRCULAR : str
+        Circular cross-section shape.
+    GENERIC : str
+        Generic cross-section shape.
+
+    """
+
+    RECTANGULAR = "rectangular"
+    CIRCULAR = "circular"
+    GENERIC = "generic"
+
+
 class CrossSection:
     """Base class for cross-sectional properties."""
+
+    shape: CrossSectionShape = CrossSectionShape("generic")
 
     def area(self) -> float:
         """Calculate the cross-sectional area."""
@@ -50,6 +72,7 @@ class RectangularCrossSection(CrossSection):
     """
 
     def __init__(self, width: float, height: float) -> None:  # noqa: D107
+        self.shape = CrossSectionShape.RECTANGULAR
         self.width = width
         self.height = height
 
@@ -79,14 +102,21 @@ class RectangularCrossSection(CrossSection):
         return (self.height * self.width**2) / 6
 
     @property
-    def radius_z(self) -> float:
-        """Calculate the radius of gyration about the z-axis (horizontal)."""
+    def radius_y(self) -> float:
+        """Calculate the radius of gyration about the y-axis (vertical)."""
         return self.height / np.sqrt(12)
 
     @property
-    def radius_y(self) -> float:
-        """Calculate the radius of gyration about the y-axis (vertical)."""
+    def radius_z(self) -> float:
+        """Calculate the radius of gyration about the z-axis (horizontal)."""
         return self.width / np.sqrt(12)
+
+    @property
+    def torsional_inertia(self) -> float:
+        """Calculate the torsional inertia."""
+        b: float = self.width
+        h: float = self.height
+        return (b * h**3) * (1.0 / 3.0) * (1.0 - 0.672 * (h / b) + 0.3 * (h / b)**2)
 
     @property
     def polar_inertia(self) -> float:
@@ -106,6 +136,7 @@ class CircularCrossSection(CrossSection):
     """
 
     def __init__(self, diameter: float) -> None:  # noqa: D107
+        self.shape = CrossSectionShape.CIRCULAR
         self.diameter = diameter
         self.radius = diameter / 2
 

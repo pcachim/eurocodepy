@@ -1,7 +1,12 @@
 # Copyright (c) 2026 Paulo Cachim
 # SPDX-License-Identifier: MIT
 
-from .crosssection import CircularCrossSection, CrossSection, RectangularCrossSection
+from .crosssection import (
+    CircularCrossSection,
+    CrossSection,
+    CrossSectionShape,
+    RectangularCrossSection,
+)
 from .section_properties import (
     calc_section_rectangular,
     calc_section_T,

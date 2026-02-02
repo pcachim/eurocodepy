@@ -1,13 +1,54 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
-from enum import Enum
+from enum import Enum, StrEnum
 
 from eurocodepy import dbase
 
 RiskClass = Enum("RiskClasses", dbase.TimberMaterial["RiskClasses"])
 ServiceClass = Enum("ServiceClass", dbase.TimberMaterial["ServiceClasses"])
 LoadDuration = Enum("LoadDuration", dbase.TimberMaterial["LoadDuration"])
-TimberClass = Enum("TimberClass", list(dbase.TimberGrades.keys()))
+TimberForcesType = Enum("TimberForcesType",
+                names={"Bending", "Compression", "Tension", "Shear", "Torsion"})
+TimberClasses = Enum("TimberClass", list(dbase.TimberGrades.keys()))
+
+
+class TimberType(StrEnum):
+    """Enumeration of timber product types."""
+
+    TIMBER = "timber"
+    GLULAM = "glulam"
+    CLT = "clt"
+    LVL = "lvl"
+    PANEL = "board"
+
+
+class TimbeProduct(StrEnum):
+    """Enumeration of timber product types."""
+
+    ST = "Structural timber"
+    FST = "Structural finger-jointed timber"
+    GL = "Glued laminated timber"
+    BGL = "Block glued glulam"
+    GST = "Glued solid timber"
+    CLT = "CLT"  # "Cross laminated timber"
+    LVL_P = "Laminated veneer lumber with parallel veneers"
+    LVL_C = "Laminated veneer lumber with crossband veneers"
+    LVL = "LVL"
+    GLVL_P = "Glued laminated veneer lumber with parallel veneers"
+    GLVL_C = "Glued laminated veneer lumber with crossband veneers"
+    GLVL = "GLVL"
+    SWP_P = "Single layer solid wood panel"
+    SWP_C = "Multi-layered solid wood panel"
+    PW = "Plywood"
+    OSB = "Oriented strand board"
+    MDF = "Dry process fibreboard"
+    SB = "Softboard"
+    MB = "Medium fibreboard"
+    HB = "Hard fibreboard"
+    RPB = "Resin-bonded particleboard"
+    CPB = "Cement-bonded particleboard"
+    GFB = "Gypsum fibreboard"
+    GPB = "Gypsum plasterboard"
 
 
 class Timber:
@@ -24,42 +65,79 @@ class Timber:
 
     """
 
-    def __init__(self, type_label: str = "C24") -> None:
-        if type_label not in dbase.TimberGrades:
+    def __init__(self, type_label: str = "C24") -> None:  # noqa: D107
+        try:
+            timber = dbase.TimberGrades[type_label]
+        except KeyError:
             msg = (
-                f"Timber type '{type_label}' not found in database. "
-                f"Timber type must be one of {list(dbase.TimberGrades)}"
+                f"Timber type '{type_label}' not found. "
+                f"Available types: {list(dbase.TimberGrades)}"
             )
-            raise ValueError(msg)
+            raise ValueError(
+                msg,
+            ) from None
 
-        timber = dbase.TimberGrades[type_label]
-        self.fmk = timber["fmk"]  # Characteristic strength in MPa
-        self.ft0k = timber["ft0k"]  # Charact. strength in tension // to grain (MPa)
-        self.ft90k = timber["ft90k"]  # Charact. strength in tensio perp. to grain (MPa)
-        self.fc0k = timber["fc0k"]  # Charact. strength in compression // to grain (MPa)
-        self.fc90k = timber["fc90k"]  # Charact. strength in compr. perp. to grain (MPa)
-        self.fvk = timber["fvk"]  # Characteristic shear strength (MPa)
-        self.E0mean = timber["E0mean"]  # Mean modulus elasticity in MPa
-        self.E0k = timber["E0k"]  # Characteristic modulus elasticity in MPa
-        self.E90mean = timber["E90mean"]  # Charact. modulus elasticity perp. to grain (MPa)
-        self.Gmean = timber["Gmean"]  # Mean shear modulus in MPa
-        self.rhok = timber["rhok"]  # Characteristic density in kg/m³
-        self.rhom = timber["rhom"]  # Mean density in kg/m³
         self.type_label = type_label
         self.type = timber["Type"]
+        self.material = TimberType.ST
 
-        self.safety = dbase.TimberParams["safety"][self.type]  # Partial safety factor
-        self.kmod = dbase.TimberParams["kmod"][self.type]
-        self.kdef = dbase.TimberParams["kmod"][self.type]
-        self.kh = dbase.TimberParams["kh"][self.type]
-        self.material = "Solid"
+        for key in (
+            "fmk", "ft0k", "ft90k", "fc0k", "fc90k", "fvk",
+            "E0mean", "E0k", "E90mean", "Gmean", "rhok", "rhom"
+        ):
+            setattr(self, key, timber[key])
+
+        params = dbase.TimberParams
+        self.safety = params["safety"][self.type]
+        self.kmods = params["kmod"][self.type]
+        self.kh = params["kh"][self.type]
+        self.kdef = params["kdef"][self.type]
+        self.kmod = 0.0
+
+        for attr in ("fmd", "ft0d", "fc0d", "fvd", "fc90d", "ft90d"):
+            setattr(self, attr, 0.0)
 
     def k_mod(
         self,
-        service_class: ServiceClass = ServiceClass.SC1,
-        load_duratiom: LoadDuration = LoadDuration.Medium,
+        service_class: ServiceClass | str = ServiceClass.SC1,
+        load_duration: LoadDuration | str = LoadDuration.Medium,
     ) -> float:
         """Return the kmod value for serviceability limit state.
+
+        Args:
+            service_class (ServiceClass, optional): Service class (SC1, SC2, or SC3).
+                Defaults to ServiceClass.SC1.
+            load_duration (LoadDuration, optional): Load duration (Perm, Long,
+            Medium, Short, Inst).
+                Defaults to LoadDuration.Medium.
+
+        Returns:
+            float: kmod value for the specified service class and load duration.
+
+        """
+        if isinstance(load_duration, str) and load_duration not in {
+            "Perm", "Long", "Medium", "Short", "Inst", "Permanent", "LongTerm",
+            "MediumTerm", "ShortTerm", "Instantaneous",
+        }:
+            load_duration = 0
+        if isinstance(load_duration, LoadDuration):
+            load_duration = load_duration.value
+
+        if isinstance(service_class, str) and service_class not in {"SC1", "SC2", "SC3"}:
+            service_class = "SC3"
+        if isinstance(service_class, ServiceClass):
+            service_class = service_class.name
+
+        self.kmod = self.kmods[service_class][load_duration]
+
+        return self.kmod
+
+    def design_values(
+        self,
+        service_class: ServiceClass | str = ServiceClass.SC1,
+        load_duratiom: LoadDuration | str = LoadDuration.Medium,
+    ) -> None:
+        """Calculate the design values of the strengh properties.
 
         Args:
             service_class (ServiceClass, optional): Service class (SC1, SC2, or SC3).
@@ -68,11 +146,16 @@ class Timber:
             Medium, Short, Inst).
                 Defaults to LoadDuration.Medium.
 
-        Returns:
-            float: kmod value for the specified service class and load duration.
-
         """
-        return self.kmod[service_class.name][load_duratiom.value]
+        kmod = self.k_mod(service_class, load_duratiom)
+        safety = self.safety
+        ratio = kmod / safety
+        self.fmd = self.fmk * ratio
+        self.ft0d = self.ft0k * ratio
+        self.fc0d = self.fc0k * ratio
+        self.fvd = self.fvk * ratio
+        self.fc90d = self.fc90k * ratio
+        self.ft90d = self.ft90k * ratio
 
     def k_def(self, service_class: ServiceClass = ServiceClass.SC1) -> float:
         """Return the kdef value for serviceability limit state.
@@ -82,10 +165,39 @@ class Timber:
                 Defaults to ServiceClass.SC1.
 
         Returns:
-            float: kmod value for the specified service class.
+            float: kdef value for the specified service class.
 
         """
         return self.kdef[service_class.name]
+
+    def k_h(self, size: float, 
+            forcetype: TimberForcesType = TimberForcesType.Bending) -> float:
+        """Return the kh value for serviceability limit state.
+
+        Returns:
+            float: kh value.
+
+        """
+        match forcetype:
+            case TimberForcesType.Bending:
+                aref = self.kh["aref"]
+                sm = self.kh["sm"]
+                kmin = self.kh["khmmin"]
+                kmax = self.kh["khmmax"]
+            case TimberForcesType.Shear:
+                aref = self.kh["aref"]
+                sm = self.kh["sv"]
+                kmin = self.kh["khvmin"]
+                kmax = self.kh["khvmax"]
+            case TimberForcesType.Tension:
+                aref = self.kh["aref"]
+                sm = self.kh["sm"]
+                kmin = self.kh["khmmin"]
+                kmax = self.kh["khmmax"]
+            case _: return 1.0
+
+        kh = (aref / size)**sm
+        return max(kmin, min(kh, kmax))
 
     def __str__(self) -> str:  # noqa: D105
         return (
@@ -121,7 +233,7 @@ class SolidTimber(Timber):
 
     """
 
-    def __init__(self, type_label: str = "C24") -> None:
+    def __init__(self, type_label: str = "C24") -> None:  # noqa: D107
         grades_list = [item for item in dbase.TimberGrades
                     if (item.startswith(("C", "D")))]
         if type_label not in grades_list:
@@ -133,6 +245,10 @@ class SolidTimber(Timber):
 
         super().__init__(type_label)
 
+        if type_label.startswith("D"):
+            self.Gk = 0.83 * self.Gmean
+        else:
+            self.Gk = 0.67 * self.Gmean
         self.fvrefk = dbase.TimberParams["fvrefk"][self.type]
         self.theta_twist = dbase.TimberParams["theta_twist"][self.type]
         self.kred = dbase.TimberParams["kred"][self.type]
@@ -153,7 +269,7 @@ class Glulam(Timber):
         is not found in the database.
     """
 
-    def __init__(self, type_label: str = "GL24h") -> None:
+    def __init__(self, type_label: str = "GL24h") -> None:  # noqa: D107
         grades_list = [item for item in dbase.TimberGrades if item.startswith("GL")]
 
         if not type_label.startswith("GL"):
@@ -180,7 +296,7 @@ class Glulam(Timber):
         self.fvrefk = dbase.TimberParams["fvrefk"][self.type]
         self.theta_twist = dbase.TimberParams["theta_twist"][self.type]
         self.kred = dbase.TimberParams["kred"][self.type]
-        self.material = "Glulam"
+        self.material = TimberType.GL
 
     def __str__(self) -> str:  # noqa: D105
         return (
@@ -209,9 +325,47 @@ class Glulam(Timber):
 class CLT(Timber):
     """Eurocode 5 Cross-Laminated Timber (CLT) properties. Not implemented."""
 
+    def __init__(self, type_label: str = "CLT30") -> None:  # noqa: D107
+        grades_list = [item for item in dbase.TimberGrades if item.startswith("GL")]
+
+        if not type_label.startswith("CLT"):
+            msg = (
+                f"CLT type '{type_label}' must start with 'CLT'. "
+                f"CLT type must be one of {grades_list}"
+            )
+            raise ValueError(msg)
+        if type_label not in grades_list:
+            msg = (
+                f"CLT type '{type_label}' not found in database. "
+                f"CLT type must be one of {grades_list}"
+            )
+            raise ValueError(msg)
+
+        super().__init__(type_label)
+        self.material = TimberType.CLT
+
 
 class LVL(Timber):
     """Eurocode 5 Laminated Veneer Lumber (LVL) properties. Not implemented."""
+
+    def __init__(self, type_label: str = "LVL30P") -> None:  # noqa: D107
+        grades_list = [item for item in dbase.TimberGrades if item.startswith("GL")]
+
+        if not type_label.startswith("LVL"):
+            msg = (
+                f"LVL type '{type_label}' must start with 'LVL'. "
+                f"LVL type must be one of {grades_list}"
+            )
+            raise ValueError(msg)
+        if type_label not in grades_list:
+            msg = (
+                f"LVL type '{type_label}' not found in database. "
+                f"LVL type must be one of {grades_list}"
+            )
+            raise ValueError(msg)
+
+        super().__init__(type_label)
+        self.material = TimberType.LVL
 
 
 class WoodBasedPanels(Timber):
@@ -225,8 +379,34 @@ Hardwood = SolidTimber
 # Alias for SolidTimber, as it is commonly referred to as ST in Eurocode 5
 ST = SolidTimber
 # Alias for Glulam, as it is commonly referred to as Glulam in Eurocode 5
-GL = Glulam
-
+GL= Glulam
 
 TimberGrades = {item: Timber(item)
             for item in dbase.TimberGrades}
+
+
+def TimberClass(timber: str = "C24") -> Timber:  # noqa: N802
+    """Return a Timber object of the appropriate subclass based on timber grade.
+
+    Args:
+        timber (str, optional): Timber grade label (e.g., 'C24', 'GL24h').
+            Defaults to 'C24'.
+
+    Returns:
+        Timber: A SolidTimber instance for C/D grades, Glulam instance for GL grades,
+            or generic Timber instance for other grades.
+
+    """
+    if timber.startswith(("C", "D")):
+        return SolidTimber(timber)
+
+    if timber.startswith("GL"):
+        return Glulam(timber)
+
+    if timber.startswith("LVL"):
+        return LVL(timber)
+
+    if timber.startswith("CLT"):
+        return CLT(timber)
+
+    return Timber(timber)
