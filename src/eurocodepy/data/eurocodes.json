@@ -2318,15 +2318,10 @@
                     "RC5"
                 ],
                 "LoadDuration": {
-                    "Perm": 0,
                     "Permanent": 0,
-                    "Long": 1,
                     "LongDuration": 1,
-                    "Medium": 2,
                     "MediumDuration": 2,
-                    "Short": 3,
                     "ShortDuration": 3,
-                    "Inst": 4,
                     "Instantaneous": 4
                 },
                 "Parameters": {

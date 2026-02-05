@@ -10,8 +10,6 @@ from . import bending as bending
 from . import shear as shear
 from .bending import (
     calc_k_c,
-    calc_k_h,
-    calc_k_l,
     calc_k_m,
     calc_k_red,
     calc_mcr,
@@ -24,8 +22,6 @@ from .shear import (
 
 __all__ = [
     "calc_k_c",
-    "calc_k_h",
-    "calc_k_l",
     "calc_k_m",
     "calc_k_red",
     "calc_mcr",

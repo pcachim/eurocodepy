@@ -28,8 +28,7 @@ from eurocodepy.ec5.materials import (
     TimberProduct,
     TimberType,
 )
-from eurocodepy.ec5 import sls
-from eurocodepy.ec5 import uls
+from eurocodepy.ec5 import sls, uls
 from eurocodepy.ec5.sls import deformation, vibration
 from eurocodepy.ec5.sls.vibration import a_from_b, b_from_a, floor_freq, vel, vlim
 from eurocodepy.ec5.uls import bending

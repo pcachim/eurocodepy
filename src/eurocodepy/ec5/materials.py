@@ -8,7 +8,7 @@ RiskClass = Enum("RiskClasses", dbase.TimberMaterial["RiskClasses"])
 ServiceClass = Enum("ServiceClass", dbase.TimberMaterial["ServiceClasses"])
 LoadDuration = Enum("LoadDuration", dbase.TimberMaterial["LoadDuration"])
 TimberForcesType = Enum("TimberForcesType",
-                names={"Bending", "Compression", "Tension", "Shear", "Torsion"})
+                names=("Bending", "Compression", "Tension", "Shear", "Torsion"))
 TimberClasses = Enum("TimberClass", list(dbase.TimberGrades.keys()))
 
 
@@ -22,7 +22,7 @@ class TimberType(StrEnum):
     PANEL = "board"
 
 
-class TimbeProduct(StrEnum):
+class TimberProduct(StrEnum):
     """Enumeration of timber product types."""
 
     ST = "Structural timber"
@@ -79,13 +79,24 @@ class Timber:
 
         self.type_label = type_label
         self.type = timber["Type"]
-        self.material = TimberType.ST
+        self.material = TimberType.TIMBER
 
-        for key in (
-            "fmk", "ft0k", "ft90k", "fc0k", "fc90k", "fvk",
-            "E0mean", "E0k", "E90mean", "Gmean", "rhok", "rhom"
-        ):
-            setattr(self, key, timber[key])
+        self.fmk = timber["fmk"]
+        self.ft0k = timber["ft0k"]
+        self.ft90k = timber["ft90k"]
+        self.fc0k = timber["fc0k"]
+        self.fc90k = timber["fc90k"]
+        self.fvk = timber["fvk"]
+
+        self.E0mean = timber["E0mean"]
+        self.E0k = timber["E0k"]
+        self.E90mean = timber["E90mean"]
+        self.E90k = 0.0
+        self.Gmean = timber["Gmean"]
+        self.Gk = self.E0k / self.E0mean * self.Gmean
+
+        self.rhok = timber["rhok"]
+        self.rhom = timber["rhom"]
 
         params = dbase.TimberParams
         self.safety = params["safety"][self.type]
@@ -94,13 +105,17 @@ class Timber:
         self.kdef = params["kdef"][self.type]
         self.kmod = 0.0
 
-        for attr in ("fmd", "ft0d", "fc0d", "fvd", "fc90d", "ft90d"):
-            setattr(self, attr, 0.0)
+        self.fmd = 0.0
+        self.ft0d = 0.0
+        self.fc0d = 0.0
+        self.fvd = 0.0
+        self.fc90d = 0.0
+        self.ft90d = 0.0
 
     def k_mod(
         self,
         service_class: ServiceClass | str = ServiceClass.SC1,
-        load_duration: LoadDuration | str = LoadDuration.Medium,
+        load_duration: LoadDuration | str = LoadDuration.MediumDuration,
     ) -> float:
         """Return the kmod value for serviceability limit state.
 
@@ -123,7 +138,8 @@ class Timber:
         if isinstance(load_duration, LoadDuration):
             load_duration = load_duration.value
 
-        if isinstance(service_class, str) and service_class not in {"SC1", "SC2", "SC3"}:
+        if (isinstance(service_class, str) and
+            service_class not in {"SC1", "SC2", "SC3"}):
             service_class = "SC3"
         if isinstance(service_class, ServiceClass):
             service_class = service_class.name
@@ -135,19 +151,19 @@ class Timber:
     def design_values(
         self,
         service_class: ServiceClass | str = ServiceClass.SC1,
-        load_duratiom: LoadDuration | str = LoadDuration.Medium,
+        load_duration: LoadDuration | str = LoadDuration.MediumDuration,
     ) -> None:
         """Calculate the design values of the strengh properties.
 
         Args:
             service_class (ServiceClass, optional): Service class (SC1, SC2, or SC3).
                 Defaults to ServiceClass.SC1.
-            load_duratiom (LoadDuration, optional): Load duration (Perm, Long,
+            load_duration (LoadDuration, optional): Load duration (Perm, Long,
             Medium, Short, Inst).
                 Defaults to LoadDuration.Medium.
 
         """
-        kmod = self.k_mod(service_class, load_duratiom)
+        kmod = self.k_mod(service_class, load_duration)
         safety = self.safety
         ratio = kmod / safety
         self.fmd = self.fmk * ratio
@@ -170,7 +186,7 @@ class Timber:
         """
         return self.kdef[service_class.name]
 
-    def k_h(self, size: float, 
+    def k_h(self, size: float,
             forcetype: TimberForcesType = TimberForcesType.Bending) -> float:
         """Return the kh value for serviceability limit state.
 
@@ -194,7 +210,8 @@ class Timber:
                 sm = self.kh["sm"]
                 kmin = self.kh["khmmin"]
                 kmax = self.kh["khmmax"]
-            case _: return 1.0
+            case _:
+                return 1.0
 
         kh = (aref / size)**sm
         return max(kmin, min(kh, kmax))
@@ -267,6 +284,7 @@ class Glulam(Timber):
     Raises:
         ValueError: If the type_label does not start with 'GL' or
         is not found in the database.
+
     """
 
     def __init__(self, type_label: str = "GL24h") -> None:  # noqa: D107
@@ -296,7 +314,7 @@ class Glulam(Timber):
         self.fvrefk = dbase.TimberParams["fvrefk"][self.type]
         self.theta_twist = dbase.TimberParams["theta_twist"][self.type]
         self.kred = dbase.TimberParams["kred"][self.type]
-        self.material = TimberType.GL
+        self.material = TimberType.GLULAM
 
     def __str__(self) -> str:  # noqa: D105
         return (
@@ -379,7 +397,7 @@ Hardwood = SolidTimber
 # Alias for SolidTimber, as it is commonly referred to as ST in Eurocode 5
 ST = SolidTimber
 # Alias for Glulam, as it is commonly referred to as Glulam in Eurocode 5
-GL= Glulam
+GL = Glulam
 
 TimberGrades = {item: Timber(item)
             for item in dbase.TimberGrades}

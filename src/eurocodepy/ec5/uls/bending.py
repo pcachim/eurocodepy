@@ -4,6 +4,7 @@ import numpy as np
 
 import eurocodepy as ec
 from eurocodepy.ec5 import LoadDuration, ServiceClass, Timber
+from eurocodepy.ec5.materials import TimberForcesType
 from eurocodepy.utils import CrossSection
 
 LAMBDA_REL_LIM = 0.3
@@ -41,54 +42,8 @@ def calc_k_red(section: CrossSection) -> float:
     return 0.7 if section.shape == "rectangular" else 1.0
 
 
-def calc_k_h(height: float, timber_type: str = "timber") -> float:
-    """Calculate the height factor k_h for bending according to Eurocode 5.
-
-    Args:
-        height (float): Height of the timber member in mm.
-        timber_type (str): Type of timber ('timber' or 'glulam').
-
-    Returns:
-        float: Height factor k_h
-
-    """
-    if timber_type not in {"timber", "glulam"}:
-        return 1.0
-
-    if timber_type == "timber":
-        return 1.0 if height > 0.150 else np.minimum((0.150 / height)**0.2, 1.3)
-
-    if timber_type == "glulam":
-        return 1.0 if height > 0.6 else np.minimum((0.60 / height)**0.1, 1.1)
-
-    if timber_type == "lvl":
-        return 1.0 if height > 0.3 else np.minimum((0.3 / height)**0.15, 1.2)
-
-    return 1.0
-
-
-def calc_k_l(length: float, timber_type: str = "lvl") -> float:
-    """Calculate the height factor k_l for tension according to Eurocode 5.
-
-    Args:
-        length (float): Length of the timber member in mm.
-        timber_type (str): Type of timber ('lvl').
-
-    Returns:
-        float: Height factor k_h
-
-    """
-    if timber_type != "lvl":
-        return 1.0
-
-    if timber_type == "lvl":
-        return 1.0 if length > 3.0 else np.minimum((3.0 / length)**0.075, 1.1)
-
-    return 1.0
-
-
-def calc_k_c(l_0y: float, l_0z: float, section: CrossSection,
-                timber: Timber) -> float:
+def calc_k_c(l_0y: float, l_0z: float, section: CrossSection,  # noqa: PLR0914
+                timber: Timber) -> tuple[float, float]:
     """Calculate the k_c factor for compression instability according to Eurocode 5.
 
     k_c is calculated using equation 8.40 from EN 1995-1-1:2025.
@@ -108,8 +63,10 @@ def calc_k_c(l_0y: float, l_0z: float, section: CrossSection,
     """
     E0k: float = timber.E0k  # noqa: N806
     fc0k: float = timber.fc0k
-    fmky: float = timber.fmk * calc_k_h(section.height, timber.type)
-    fmkz: float = timber.fmk * calc_k_h(section.width, timber.type)
+    k_hy = timber.k_h(section.height, TimberForcesType.Bending)
+    fmky: float = timber.fmk * k_hy  # calc_k_h(section.height, timber.type)
+    k_hz = timber.k_h(section.height, TimberForcesType.Bending)
+    fmkz: float = timber.fmk * k_hz  # calc_k_h(section.width, timber.type)
     n_cr_y: float = (np.pi**2 * E0k * section.radius_y) / (l_0y**2)
     n_cr_z: float = (np.pi**2 * E0k * section.radius_z) / (l_0z**2)
     lambda_rely: float = np.sqrt(timber.fc0k * section.area / n_cr_y)
@@ -202,7 +159,7 @@ def calc_k_m(l_0m: float, section: CrossSection, timber: Timber) -> float:
 def check_bending_with_normal(n_ed: float, m_ed_y: float, m_ed_z: float,  # noqa: PLR0913, PLR0914, PLR0917
                     section: CrossSection, timber: Timber,
                     l_0y: float, l_0z: float, l_0m: float,
-                    service_class: ServiceClass, load_duration: LoadDuration) -> bool:
+                    service_class: ServiceClass, load_duration: LoadDuration) -> dict:
     """Check bending according to Eurocode 5.
 
     This function checks if the design bending stresses in both principal directions
@@ -233,8 +190,10 @@ def check_bending_with_normal(n_ed: float, m_ed_y: float, m_ed_z: float,  # noqa
     kred: float = calc_k_red(section)
     fc0d: float = (timber.fc0d)
     ft0d: float = (timber.ft0d)
-    fmdy: float = (timber.fmd) * calc_k_h(section.height, timber.type)
-    fmdz: float = (timber.fmd) * calc_k_h(section.width, timber.type)
+    k_hy = timber.k_h(section.height, TimberForcesType.Bending)
+    fmdy: float = (timber.fmd) * k_hy  # calc_k_h(section.height, timber.type)
+    k_hz = timber.k_h(section.width, TimberForcesType.Bending)
+    fmdz: float = (timber.fmd) * k_hz  # calc_k_h(section.width, timber.type)
 
     # calculate stresses
     sig_n: float = n_ed / section.area / 1e3  # convert to MPa
@@ -307,8 +266,8 @@ def check_bending_with_normal(n_ed: float, m_ed_y: float, m_ed_z: float,  # noqa
         f"    fc0d = {fc0d:.2f} MPa\n"
         f"    ft0d = {ft0d:.2f} MPa\n"
         f"    kred = {kred:.2f}\n"
-        f".   khy = {calc_k_h(section.height, timber.type):.2f}\n"
-        f".   khz = {calc_k_h(section.width, timber.type):.2f}\n"
+        f".   khy = {k_hy:.2f}\n"
+        f".   khz = {k_hz:.2f}\n"
         f"    fmdy = {fmdy:.2f} MPa\n"
         f"    fmdz = {fmdz:.2f} MPa\n"
         f"  Stresses:\n"
@@ -323,17 +282,24 @@ def check_bending_with_normal(n_ed: float, m_ed_y: float, m_ed_z: float,  # noqa
     if n_ed < 0.0:  # compression
         s += (
             f"  Bending with compression checks (n_ed < 0):\n"
-            f"    Check 1 (Eq. 8.26): {check1:.3f} <= 1.0 -> {'OK' if check1 <= 1.0 else 'NOT OK'}\n"
-            f"    Check 2 (Eq. 8.27): {check2:.3f} <= 1.0 -> {'OK' if check2 <= 1.0 else 'NOT OK'}\n"
-            f"    Check 3 (Eq. 8.39): {check3:.3f} <= 1.0 -> {'OK' if check3 <= 1.0 else 'NOT OK'}\n"
-            f"    Check 4 (Eq. 8.44): {check4:.3f} <= 1.0 -> {'OK' if check4 <= 1.0 else 'NOT OK'}\n"
+            f"    Check 1 (Eq. 8.26): {check1:.3f} <= 1.0 -> "
+            f"{'OK' if check1 <= 1.0 else 'NOT OK'}\n"
+            f"    Check 2 (Eq. 8.27): {check2:.3f} <= 1.0 -> "
+            f"{'OK' if check2 <= 1.0 else 'NOT OK'}\n"
+            f"    Check 3 (Eq. 8.39): {check3:.3f} <= 1.0 -> "
+            f"{'OK' if check3 <= 1.0 else 'NOT OK'}\n"
+            f"    Check 4 (Eq. 8.44): {check4:.3f} <= 1.0 -> "
+            f"{'OK' if check4 <= 1.0 else 'NOT OK'}\n"
         )
     else:  # tension
         s += (
             f"  Bending with tension checks (n_ed >= 0):\n"
-            f"    Check 1 (Eq. 8.24): {check1:.3f} <= 1.0 -> {'OK' if check1 <= 1.0 else 'NOT OK'}\n"
-            f"    Check 2 (Eq. 8.25): {check2:.3f} <= 1.0 -> {'OK' if check2 <= 1.0 else 'NOT OK'}\n"
-            f"    Check 4 (Eq. 8.45): {check4:.3f} <= 1.0 -> {'OK' if check4 <= 1.0 else 'NOT OK'}\n"
+            f"    Check 1 (Eq. 8.24): {check1:.3f} <= 1.0 -> "
+            f"{'OK' if check1 <= 1.0 else 'NOT OK'}\n"
+            f"    Check 2 (Eq. 8.25): {check2:.3f} <= 1.0 -> "
+            f"{'OK' if check2 <= 1.0 else 'NOT OK'}\n"
+            f"    Check 4 (Eq. 8.45): {check4:.3f} <= 1.0 -> "
+            f"{'OK' if check4 <= 1.0 else 'NOT OK'}\n"
         )
 
     return {

@@ -21,7 +21,8 @@ def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa:
                     service_class: ServiceClass, load_duration: LoadDuration) -> bool:
     """Check shear and torsion according to Eurocode 5.
 
-    This function checks if the design shear and torsion stresses are within the design strengths.
+    This function checks if the design shear and torsion stresses are within
+    the design strengths.
     Uses equation 6.1 from Eurocode 5.
 
     Args:
@@ -119,10 +120,14 @@ def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa:
         f"    fvdz = {fvdz:.2f} MPa\n"
         f"    fvdt = {fvdt:.2f} MPa\n"
         f"  Shear and torsion checks (n_ed < 0):\n"
-        f"    Check shear (Eq. 8.28): {check4:.3f} <= 1.0 -> {'OK' if check4 <= 1.0 else 'NOT OK'}\n"
-        f"    Check shear (Eq. 8.29): {check1:.3f} <= 1.0 -> {'OK' if check1 <= 1.0 else 'NOT OK'}\n"
-        f"    Check torsion (Eq. 8.34a): {check2:.3f} <= 1.0 -> {'OK' if check2 <= 1.0 else 'NOT OK'}\n"
-        f"    Check shear + torsion (Eq. 8.34b): {check3:.3f} <= 1.0 -> {'OK' if check3 <= 1.0 else 'NOT OK'}\n"
+        f"    Check shear (Eq. 8.28): {check4:.3f} <= 1.0 -> "
+        f"{'OK' if check4 <= 1.0 else 'NOT OK'}\n"
+        f"    Check shear (Eq. 8.29): {check1:.3f} <= 1.0 -> "
+        f"{'OK' if check1 <= 1.0 else 'NOT OK'}\n"
+        f"    Check torsion (Eq. 8.34a): {check2:.3f} <= 1.0 -> "
+        f"{'OK' if check2 <= 1.0 else 'NOT OK'}\n"
+        f"    Check shear + torsion (Eq. 8.34b): {check3:.3f} <= 1.0 -> "
+        f"{'OK' if check3 <= 1.0 else 'NOT OK'}\n"
     )
 
     return {

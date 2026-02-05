@@ -29,37 +29,64 @@ class CrossSection:
 
     shape: CrossSectionShape = CrossSectionShape("generic")
 
+    width = 0.0
+    height = 0.0
+    diameter = 0.0
+    radius = 0.0
+
+    @property
     def area(self) -> float:
         """Calculate the cross-sectional area."""
-        raise NotImplementedError("Subclasses must implement this method.")
+        msg = "Subclasses must implement this method."
+        raise NotImplementedError(msg)
 
+    @property
     def inertia_z(self) -> float:
         """Calculate the second moment of inertia about the z-axis."""
-        raise NotImplementedError("Subclasses must implement this method.")
+        msg = "Subclasses must implement this method."
+        raise NotImplementedError(msg)
 
+    @property
     def inertia_y(self) -> float:
         """Calculate the second moment of inertia about the y-axis."""
-        raise NotImplementedError("Subclasses must implement this method.")
+        msg = "Subclasses must implement this method."
+        raise NotImplementedError(msg)
 
+    @property
     def bend_mod_z(self) -> float:
         """Calculate the bending modulus about the z-axis."""
-        raise NotImplementedError("Subclasses must implement this method.")
+        msg = "Subclasses must implement this method."
+        raise NotImplementedError(msg)
 
+    @property
     def bend_mod_y(self) -> float:
         """Calculate the bending modulus about the y-axis."""
-        raise NotImplementedError("Subclasses must implement this method.")
+        msg = "Subclasses must implement this method."
+        raise NotImplementedError(msg)
 
+    @property
     def radius_z(self) -> float:
         """Calculate the radius of gyration about the z-axis."""
-        raise NotImplementedError("Subclasses must implement this method.")
+        msg = "Subclasses must implement this method."
+        raise NotImplementedError(msg)
 
+    @property
     def radius_y(self) -> float:
         """Calculate the radius of gyration about the y-axis."""
-        raise NotImplementedError("Subclasses must implement this method.")
+        msg = "Subclasses must implement this method."
+        raise NotImplementedError(msg)
 
+    @property
+    def torsional_inertia(self) -> float:
+        """Calculate the polar moment of inertia."""
+        msg = "Subclasses must implement this method."
+        raise NotImplementedError(msg)
+
+    @property
     def polar_inertia(self) -> float:
         """Calculate the polar moment of inertia."""
-        raise NotImplementedError("Subclasses must implement this method.")
+        msg = "Subclasses must implement this method."
+        raise NotImplementedError(msg)
 
 
 class RectangularCrossSection(CrossSection):
