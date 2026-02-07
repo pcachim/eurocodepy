@@ -16,112 +16,80 @@ The package provides modules for different Eurocodes and utilities, such as:
 * `ec8`: utility functions for ec8 calculations.
 """
 
-__version__ = "2026.1.3"
+__version__ = "2026.2.1"
+version = "This is 'EurocodePy' version " + __version__  # noqa: RUF067
 """Version of EurocodePy package."""
-print_version = "This is 'EurocodePy' version " + __version__
-"""Prints the version of EurocodePy package."""
-from dataclasses import dataclass  # noqa: E402
-from enum import Enum  # noqa: E402
-from pathlib import Path  # noqa: E402
-
-import pandas as pd  # noqa: E402
-
-from eurocodepy import dbase, ec1, ec2, ec3, ec5, ec7, ec8, utils
-
-# National parameters
-local_name = Path(__file__).parent / "data" / "eurocode_data_portugal.csv"
-locale = Enum("locale", ["EU", "PT"])
-locales = {}
-locales["PT"] = pd.read_csv(local_name)
 
 
-@dataclass
-class NationalParams:
-    """Class to hold national parameters."""
-
-    local: locale = locale.PT
-    """Locale for national parameters."""
-    concelho: str = "Lisboa"
-    """Municipality name, default is 'Lisboa'."""
-
-    def __post_init__(self):
-        """Post-initialization to load data."""
-        self.data = get_national_params(self.local, self.concelho)
-
-
-class LocaleData:
-    """Class to hold locale data."""
-
-    PT: pd.DataFrame = pd.read_csv(local_name)
-
-
-def get_national_params(local: locale = locale.PT, concelho: str = "Lisboa") -> object:
-    """Get Portuguese data for municipalities.
-
-    Args:
-        local (locale, optional): Locale to use for national parameters.
-        Defaults to locale.PT.
-        concelho (str, optional): Municipality name. Defaults to "Lisboa".
-
-    Returns:
-        dict: the data
-
-    """
-    pt_data = locale[local.name]
-    row = pt_data[pt_data["Concelho"] == concelho]
-    # Convert to dict if found
-    if not row.empty:
-        result = row.iloc[0].to_dict()
-        print(result)  # noqa: T201
-    else:
-        result = None
-        print("Concelho not found.")  # noqa: T201
-    return result
-
+from eurocodepy import (  # noqa: E402, I001
+    dbase as dbase,
+    ec1 as ec1,
+    ec2 as ec2,
+    ec3 as ec3,
+    ec5 as ec5,
+    ec7 as ec7,
+    ec8 as ec8,
+    utils as utils,
+)
 
 # Database imports
-from eurocodepy.dbase import (
-    BoltDiameters,
-    BoltGrades,
-    Bolts,
-    ConcreteMaterial,
-    ConcreteGrades,
-    ConcreteParams,
-    DeadLoads,
-    Loads,
-    Materials,
-    PrestressMaterial,
-    PrestressGrades,
-    PrestressParams,
-    ReinforcementMaterial,
-    ReinforcementBars,
-    ReinforcementGrades,
-    ReinforcementParams,
-    SeismicLoads,
-    SteelMaterial,
-    SteelCHSProfiles,
-    SteelGrades,
-    SteelIProfiles,
-    SteelParams,
-    SteelRHSProfiles,
-    SteelSHSProfiles,
-    TimberMaterial,
-    TimberGrades,
-    TimberLoadDuration,
-    TimberParams,
-    TimberServiceClasses,
-    WindLoads,
-    db,
-    dbobj,
+from eurocodepy.dbase import (  # noqa: E402
+    BoltDiameters as BoltDiameters,
+    BoltGrades as BoltGrades,
+    Bolts as Bolts,
+    ConcreteMaterial as ConcreteMaterial,
+    ConcreteGrades as ConcreteGrades,
+    ConcreteParams as ConcreteParams,
+    DeadLoads as DeadLoads,
+    Loads as Loads,
+    Materials as Materials,
+    PrestressMaterial as PrestressMaterial,
+    PrestressGrades as PrestressGrades,
+    PrestressParams as PrestressParams,
+    ReinforcementMaterial as ReinforcementMaterial,
+    ReinforcementBars as ReinforcementBars,
+    ReinforcementGrades as ReinforcementGrades,
+    ReinforcementParams as ReinforcementParams,
+    SeismicLoads as SeismicLoads,
+    SteelMaterial as SteelMaterial,
+    SteelCHSProfiles as SteelCHSProfiles,
+    SteelGrades as SteelGrades,
+    SteelIProfiles as SteelIProfiles,
+    SteelParams as SteelParams,
+    SteelRHSProfiles as SteelRHSProfiles,
+    SteelSHSProfiles as SteelSHSProfiles,
+    TimberMaterial as TimberMaterial,
+    TimberGrades as TimberGrades,
+    TimberLoadDuration as TimberLoadDuration,
+    TimberParams as TimberParams,
+    TimberServiceClasses as TimberServiceClasses,
+    WindLoads as WindLoads,
+    db as db,
+    dbobj as dbobj,
 )
-from eurocodepy.ec1 import wind
-from eurocodepy.ec8 import get_spec_params, spectrum
-from eurocodepy.national_parameters import seismic_get_params, wind_get_params
-from eurocodepy.utils import crosssection, section_properties, stress
 
-RECTANGULAR = 0
-CIRCULAR = 1
-TSECTION = 2
-LSECTION = 3
-INVTSECTION = 4
-POLYGONAL = 5
+# General function imports
+from eurocodepy.ec1 import wind as wind  # noqa: E402
+from eurocodepy.ec8 import get_spec_params as get_spec_params, spectrum as spectrum  # noqa: E402
+from eurocodepy.national_parameters import (  # noqa: E402
+    local_name as local_name,
+    locale as locale,
+    locales as locales,
+    seismic_get_params as seismic_get_params,
+    wind_get_params as wind_get_params,
+    NationalParams as NationalParams,
+    LocaleData as LocaleData,
+)
+from eurocodepy.utils import (  # noqa: E402
+    crosssection as crosssection,
+    section_properties as section_properties,
+    stress as stress
+)
+
+# Materials imports
+from eurocodepy.ec2.materials import Concrete as Concrete  # noqa: E402
+from eurocodepy.ec2.materials import Reinforcement as Reinforcement  # noqa: E402
+from eurocodepy.ec2.materials import Prestress as Prestress  # noqa: E402
+from eurocodepy.ec3.materials import Steel as Steel  # noqa: E402
+from eurocodepy.ec3.materials import Weld as Weld  # noqa: E402
+from eurocodepy.ec5.materials import Timber as Timber  # noqa: E402
