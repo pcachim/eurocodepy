@@ -1263,6 +1263,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../ec2/uls/punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../ec2/uls/shear/" class="md-nav__link">
         
   
@@ -1362,6 +1385,29 @@
             ec3
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec3/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1543,6 +1589,105 @@
   
   <span class="md-ellipsis">
     vibration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec5/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_5_3" id="__nav_4_1_5_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
     
   </span>
   
@@ -1834,6 +1979,29 @@
             utils
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/crosssection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crosssection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2901,7 +3069,11 @@ It is initialized with an empty dictionary to store Load objects.</p>
 <span class="normal">380</span>
 <span class="normal">381</span>
 <span class="normal">382</span>
-<span class="normal">383</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LoadCollection</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LoadCollection</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Collection of loads that can be added, removed, and queried.</span>
 
 <span class="sd">    This class extends UserDict to manage a collection of Load objects.</span>
@@ -2984,6 +3156,8 @@ It is initialized with an empty dictionary to store Load objects.</p>
         <span class="n">wind_loads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_by_type</span><span class="p">(</span><span class="n">LoadType</span><span class="o">.</span><span class="n">WIND</span><span class="p">)</span>
         <span class="n">temperature_loads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_by_type</span><span class="p">(</span><span class="n">LoadType</span><span class="o">.</span><span class="n">TEMPERATURE</span><span class="p">)</span>
         <span class="n">wind_temp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="n">wind_loads</span><span class="p">,</span> <span class="n">temperature_loads</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wind_temp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">wind_temp</span> <span class="o">=</span> <span class="p">[{</span><span class="n">w</span><span class="p">}</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">wind_loads</span><span class="p">]</span>
 
         <span class="n">combinations</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -3063,6 +3237,8 @@ It is initialized with an empty dictionary to store Load objects.</p>
         <span class="n">wind_loads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_by_type</span><span class="p">(</span><span class="n">LoadType</span><span class="o">.</span><span class="n">WIND</span><span class="p">)</span>
         <span class="n">temperature_loads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_by_type</span><span class="p">(</span><span class="n">LoadType</span><span class="o">.</span><span class="n">TEMPERATURE</span><span class="p">)</span>
         <span class="n">wind_temp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="n">wind_loads</span><span class="p">,</span> <span class="n">temperature_loads</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wind_temp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">wind_temp</span> <span class="o">=</span> <span class="p">[{</span><span class="n">w</span><span class="p">}</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">wind_loads</span><span class="p">]</span>
 
         <span class="n">combinations</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -3436,9 +3612,7 @@ It is initialized with an empty dictionary to store Load objects.</p>
 
             <details class="quote">
               <summary>Source code in <code>eurocodepy/ec1/combos.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">279</span>
-<span class="normal">280</span>
-<span class="normal">281</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">281</span>
 <span class="normal">282</span>
 <span class="normal">283</span>
 <span class="normal">284</span>
@@ -3540,7 +3714,11 @@ It is initialized with an empty dictionary to store Load objects.</p>
 <span class="normal">380</span>
 <span class="normal">381</span>
 <span class="normal">382</span>
-<span class="normal">383</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_SLS_combos</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>  <span class="c1"># noqa: C901, N802, PLR0912, PLR0915</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_SLS_combos</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>  <span class="c1"># noqa: C901, N802, PLR0912, PLR0915</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate ULS load combinations based on the loads in the collection.</span>
 
 <span class="sd">    Returns:</span>
@@ -3554,6 +3732,8 @@ It is initialized with an empty dictionary to store Load objects.</p>
     <span class="n">wind_loads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_by_type</span><span class="p">(</span><span class="n">LoadType</span><span class="o">.</span><span class="n">WIND</span><span class="p">)</span>
     <span class="n">temperature_loads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_by_type</span><span class="p">(</span><span class="n">LoadType</span><span class="o">.</span><span class="n">TEMPERATURE</span><span class="p">)</span>
     <span class="n">wind_temp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="n">wind_loads</span><span class="p">,</span> <span class="n">temperature_loads</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wind_temp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">wind_temp</span> <span class="o">=</span> <span class="p">[{</span><span class="n">w</span><span class="p">}</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">wind_loads</span><span class="p">]</span>
 
     <span class="n">combinations</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -3768,7 +3948,9 @@ It is initialized with an empty dictionary to store Load objects.</p>
 <span class="normal">274</span>
 <span class="normal">275</span>
 <span class="normal">276</span>
-<span class="normal">277</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ULS_combos</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>  <span class="c1"># noqa: C901, N802, PLR0912</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_ULS_combos</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>  <span class="c1"># noqa: C901, N802, PLR0912</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate ULS load combinations based on the loads in the collection.</span>
 
 <span class="sd">    Returns:</span>
@@ -3783,6 +3965,8 @@ It is initialized with an empty dictionary to store Load objects.</p>
     <span class="n">wind_loads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_by_type</span><span class="p">(</span><span class="n">LoadType</span><span class="o">.</span><span class="n">WIND</span><span class="p">)</span>
     <span class="n">temperature_loads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_by_type</span><span class="p">(</span><span class="n">LoadType</span><span class="o">.</span><span class="n">TEMPERATURE</span><span class="p">)</span>
     <span class="n">wind_temp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="n">wind_loads</span><span class="p">,</span> <span class="n">temperature_loads</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wind_temp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">wind_temp</span> <span class="o">=</span> <span class="p">[{</span><span class="n">w</span><span class="p">}</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">wind_loads</span><span class="p">]</span>
 
     <span class="n">combinations</span> <span class="o">=</span> <span class="p">{}</span>
 

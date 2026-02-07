@@ -1088,6 +1088,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../ec2/uls/punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../ec2/uls/shear/" class="md-nav__link">
         
   
@@ -1187,6 +1210,29 @@
             ec3
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec3/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1368,6 +1414,105 @@
   
   <span class="md-ellipsis">
     vibration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec5/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_5_3" id="__nav_4_1_5_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
     
   </span>
   
@@ -1661,6 +1806,29 @@
             utils
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crosssection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crosssection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2442,7 +2610,7 @@ ndarray: an array of the principal vectors</p>
 <span class="normal">87</span>
 <span class="normal">88</span>
 <span class="normal">89</span>
-<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">principal_vectors</span><span class="p">(</span><span class="n">sigxx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">principal_vectors</span><span class="p">(</span><span class="n">sigxx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>  <span class="c1"># noqa: PLR0913</span>
     <span class="n">sigxy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the princcipal vectors (size proportional to principal stresses).</span>
 
@@ -2646,7 +2814,7 @@ ndarray: an array of the principal vectors</p>
 <span class="normal">59</span>
 <span class="normal">60</span>
 <span class="normal">61</span>
-<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">principals</span><span class="p">(</span><span class="n">sigxx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">principals</span><span class="p">(</span><span class="n">sigxx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>  <span class="c1"># noqa: PLR0913, PLR0917</span>
             <span class="n">sigxy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the principal stresses and the normalized principal directions.</span>
 

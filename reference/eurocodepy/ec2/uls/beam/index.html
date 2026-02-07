@@ -1262,6 +1262,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../shear/" class="md-nav__link">
         
   
@@ -1361,6 +1384,29 @@
             ec3
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1542,6 +1588,105 @@
   
   <span class="md-ellipsis">
     vibration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_5_3" id="__nav_4_1_5_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
     
   </span>
   
@@ -1833,6 +1978,29 @@
             utils
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/crosssection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crosssection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2357,7 +2525,7 @@ calc_bending(med: float, iprint: bool = False)
         <span class="bp">self</span><span class="o">.</span><span class="n">fyk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reinforcement</span><span class="o">.</span><span class="n">fyk</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gammac</span> <span class="o">=</span> <span class="n">GammaC</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gammas</span> <span class="o">=</span> <span class="n">GammaS</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fcd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concrete</span><span class="o">.</span><span class="n">fck</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fcd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concrete</span><span class="o">.</span><span class="n">fcd</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fyd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reinforcement</span><span class="o">.</span><span class="n">fyd</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">calc_shear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ved</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -2431,7 +2599,7 @@ calc_bending(med: float, iprint: bool = False)
         <span class="n">aslt</span> <span class="o">+=</span> <span class="n">aslc</span>
         <span class="n">epssc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">med</span> <span class="o">&lt;=</span> <span class="n">med_max</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">-</span> <span class="n">alpha_c</span><span class="p">)</span> <span class="o">/</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">epscu2</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">aslt</span><span class="p">,</span> <span class="n">aslc</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">epsst</span><span class="p">,</span> <span class="n">epssc</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">aslt</span><span class="p">,</span> <span class="n">aslc</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">epsst</span><span class="p">,</span> <span class="n">epssc</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -2641,7 +2809,7 @@ Checks ULS for bending and shear.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">fyk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reinforcement</span><span class="o">.</span><span class="n">fyk</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">gammac</span> <span class="o">=</span> <span class="n">GammaC</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">gammas</span> <span class="o">=</span> <span class="n">GammaS</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">fcd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concrete</span><span class="o">.</span><span class="n">fck</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fcd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concrete</span><span class="o">.</span><span class="n">fcd</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">fyd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reinforcement</span><span class="o">.</span><span class="n">fyd</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2841,7 +3009,7 @@ Checks ULS for bending and shear.</p>
     <span class="n">aslt</span> <span class="o">+=</span> <span class="n">aslc</span>
     <span class="n">epssc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">med</span> <span class="o">&lt;=</span> <span class="n">med_max</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">-</span> <span class="n">alpha_c</span><span class="p">)</span> <span class="o">/</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">epscu2</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">aslt</span><span class="p">,</span> <span class="n">aslc</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">epsst</span><span class="p">,</span> <span class="n">epssc</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">aslt</span><span class="p">,</span> <span class="n">aslc</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">epsst</span><span class="p">,</span> <span class="n">epssc</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
