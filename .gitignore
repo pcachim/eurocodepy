@@ -260,3 +260,5 @@ build.me
 dist
 .pypirc
 mkdocs/site
+makeme.md
+
