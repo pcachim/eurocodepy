@@ -12,6 +12,13 @@ A Python library for structural design calculations according to the Eurocode st
 - standardize recurring formulas / factors / combinations
 - keep design code in projects readable and testable
 
+Some of the included fatures are:
+
+- Material Properties: Access characteristic and design values for common construction materials (concrete, steel, timber) as defined in EN 1992, EN 1993, and EN 1995.
+- Load Combinations: Generate load combinations for Ultimate Limit State (ULS) and Serviceability Limit State (SLS) according to EN 1990.
+- Section Properties: Calculate geometric properties for common steel and concrete cross-sections.
+- Design Helpers: Functions for verifying buckling resistance, shear capacity, bending moment capacity, and other fundamental checks.
+
 ## Status
 
 Early-stage / evolving. APIs may change as the library grows.
