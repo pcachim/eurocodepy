@@ -47,6 +47,15 @@ If you need any help you can contact the developer via email.
 
 Github: [http://github.com/pcachim/eurocodepy](http://github.com/pcachim/eurocodepy)
 
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Disclaimer
+
+This software is intended for educational, research, and preliminary design purposes. It is not a certified engineering tool. The authors and contributors assume no liability for any design decisions made using this library. Always verify critical calculations with hand checks and consult the latest official Eurocode standards and national annexes for final design.
+
 ## Acknowledgements
 
-I want to thank my plants for providing me with an amount of oxygen each day. Also, I want to thank the sun for providing more than half of their nourishment free of charge.
+Eurocodes and National Annexes are published by their respective standards bodies.
+This project is not affiliated with CEN or national standards organizations.
