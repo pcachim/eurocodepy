@@ -27,14 +27,25 @@ Early-stage / evolving. APIs may change as the library grows.
 
 You can install EurocodePy directly from PyPI using pip:
 
+```shell
 pip install eurocodepy
+```
+
+with uv
+
+```shell
+uv add eurocodepy
+```
+
 Or install the latest development version directly from the source repository:
 
+```shell
 pip install git+https://github.com/pcachim/eurocodepy.git
+```
 
 ## Documentation
 
-Detailed documentation, including a full API reference and worked examples, is available at https://pcachim.github.io/eurocodepy/.
+Detailed documentation, including a full API reference and worked examples, is available at <https://pcachim.github.io/eurocodepy/>.
 
 ## Contributing
 

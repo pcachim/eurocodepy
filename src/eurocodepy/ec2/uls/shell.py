@@ -1,8 +1,14 @@
+# Copyright (c) 2026 Paulo Cachim
+# SPDX-License-Identifier: MIT
+
 import math
+
 import numpy as np
 
+TOLER = 1.0e-12
 
-def calc_reinf_plane(n_xx: float, n_yy:float, n_xy: float) -> list:
+
+def calc_reinf_plane(n_xx: float, n_yy: float, n_xy: float) -> list:
     """Calculate the reinforcement in a plane element.
 
     Args:
@@ -23,20 +29,20 @@ def calc_reinf_plane(n_xx: float, n_yy:float, n_xy: float) -> list:
         asy = n_yy + abs_n_xy
         asc = 2.0 * abs_n_xy
     elif n_xx < -abs_n_xy and n_xx <= n_yy and n_xx_n_yy <= n_xy_2:
-        theta = 0 if abs_n_xy < 1.0e-12 else -n_xx / abs_n_xy
+        theta = 0 if abs_n_xy < TOLER else -n_xx / abs_n_xy
         asx = 0.0
         asy = n_yy + n_xy_2 / abs(n_xx)
-        asc = abs(n_xx) * (1.0 + (abs_n_xy/n_xx)**2)
+        asc = abs(n_xx) * (1.0 + (abs_n_xy / n_xx)**2)
     elif n_yy < -abs_n_xy and n_xx >= n_yy and n_xx_n_yy <= n_xy_2:
         theta = -abs_n_xy / n_yy
         asx = n_xx + n_xy_2 / abs(n_yy)
         asy = 0.0
-        asc = abs(n_yy) * (1.0 + (abs_n_xy/n_yy)**2)
+        asc = abs(n_yy) * (1.0 + (abs_n_xy / n_yy)**2)
     else:
         cen = (n_xx + n_yy) * 0.5
-        rad = math.sqrt(n_xy_2+0.25*(n_xx-n_yy)**2)
-        theta = math.atan2(n_xx-n_yy, 2*n_xy) / 2.0
-        theta = 0 if theta == 0 else 1.0/math.tan(theta)
+        rad = math.sqrt(n_xy_2 + 0.25 * (n_xx - n_yy)**2)
+        theta = math.atan2(n_xx - n_yy, 2 * n_xy) / 2.0
+        theta = 0 if theta == 0 else 1.0 / math.tan(theta)
         asx = 0.0
         asy = 0.0
         asc = abs(cen - rad)
@@ -56,12 +62,13 @@ def cal_reinf_shell_plan(top_forces: tuple, bottom_forces: tuple) -> np.ndarray:
 
     """
     return np.array(
-        calc_reinf_plane(*top_forces) + calc_reinf_plane(*bottom_forces)
+        calc_reinf_plane(*top_forces) + calc_reinf_plane(*bottom_forces),
     )
 
 
-def calc_reinf_shell(n_xx: float, n_yy: float, n_xy: float, m_xx: float, m_yy: float, m_xy: float,
-            rec: float, h: float) -> np.ndarray:
+def calc_reinf_shell(n_xx: float, n_yy: float, n_xy: float,
+                    m_xx: float, m_yy: float, m_xy: float,
+                    rec: float, h: float) -> np.ndarray:
     """Calculate the forces to ccalculate the reinforcement in a shell element.
 
     Args:
@@ -75,7 +82,8 @@ def calc_reinf_shell(n_xx: float, n_yy: float, n_xy: float, m_xx: float, m_yy: f
         h (float): height of the shell
 
     Returns:
-        np.array: the reinforecment in both diretions in top and bottom layer and concrete stresses
+        np.array: the reinforecment in both diretions in top
+            and bottom layer and concrete stresses
 
     """
     t = 2 * rec

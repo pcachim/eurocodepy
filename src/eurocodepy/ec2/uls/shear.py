@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Paulo Cachim
+# SPDX-License-Identifier: MIT
+
 import numpy as np
 
 
@@ -14,7 +17,6 @@ def calc_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float
         g_s (float): steel partial safety coefficient
         cott (float): truss inclination (cot)
         asw_s (float): steel transverse area (Asw/s)
-        alpha (float): coefficient
 
     Returns:
         float: (shear reinforcement max(Asw/s), Vrd.max)
@@ -58,7 +60,6 @@ def calc_asws(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: floa
         g_s (float): steel partial safety coefficient
         cott (float): truss inclination (cot)
         ved (float): design shear force
-        alpha (float): coefficient
 
     Returns:
         Tuple[float, float]: (shear reinforcement (Asw/s), maximum shear force Vrd.max)
