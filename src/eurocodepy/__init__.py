@@ -29,6 +29,7 @@ from eurocodepy import (  # noqa: E402, I001
     ec5 as ec5,
     ec7 as ec7,
     ec8 as ec8,
+    units as units,
     utils as utils,
 )
 
@@ -80,10 +81,18 @@ from eurocodepy.national_parameters import (  # noqa: E402
     NationalParams as NationalParams,
     LocaleData as LocaleData,
 )
+from eurocodepy.units import (  # noqa: E402
+    UnitSystem as UnitSystem,
+    UnitType as UnitType,
+    Default as Default,
+    SI as SI,
+    kN_mm as kN_mm,
+    N_mm as N_mm,
+)
 from eurocodepy.utils import (  # noqa: E402
     crosssection as crosssection,
     section_properties as section_properties,
-    stress as stress
+    stress as stress,
 )
 
 # Materials imports

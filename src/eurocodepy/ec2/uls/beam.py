@@ -287,7 +287,7 @@ class RCBeam:
         return aslt, aslc, alpha, epsst, epssc, asws_val, vrdmax
 
     def calc_bending(self, med: float, iprint: bool = False,
-                ) -> tuple[float, float, float, float, float]:
+                ) -> tuple[float, float | np.ndarray, float, float, float]:
         """Calculate the reinforcement area in a rectangular concrete beam.
 
         Args:
@@ -324,7 +324,7 @@ class RCBeam:
         aslc = np.where(med <= med_max, 0.0,
                     (med - med_max) / ((self.d - self.ac) * self.fyd) * 10.0)
         aslt += aslc
-        epssc = np.where(med <= med_max, None, (alpha - alpha_c) / alpha * epscu2)
+        epssc = np.where(med <= med_max, np.nan, (alpha - alpha_c) / alpha * epscu2)
 
         return aslt, aslc, alpha, epsst, epssc
 

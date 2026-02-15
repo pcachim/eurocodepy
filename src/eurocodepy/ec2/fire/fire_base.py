@@ -1,4 +1,8 @@
+# Copyright (c) 2026 Paulo Cachim
+# SPDX-License-Identifier: MIT
+
 import math
+
 import numpy as np
 import pandas as pd
 
