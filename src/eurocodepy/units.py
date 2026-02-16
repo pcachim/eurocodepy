@@ -5,9 +5,10 @@ from enum import Enum
 
 # ---------------- Base unit enums (scale to SI) ----------------
 
+
 class ForceUnit(Enum):
     N = 1.0
-    kN = 1000.0
+    kN = 1000.0  # noqa: N815
     kgf = 9.80665
     tf = 9806.65
 
@@ -200,11 +201,11 @@ class UnitSystem:
             case UnitType.TIME:
                 return self.time / to_system.time
             case UnitType.MASS:
-                return self.massto_system.mass
+                return self.mass / to_system.mass
             case UnitType.FORCE_LENGTH:
-                return self.force_length / from_system.force_length
+                return self.force_length / to_system.force_length
             case UnitType.FORCE_VOLUME:
-                return self.force_volume / from_system.force_volume
+                return self.force_volume / to_system.force_volume
             case _:
                 return 0.0
 

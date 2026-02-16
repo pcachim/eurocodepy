@@ -7,7 +7,7 @@ import numpy as np
 
 class CrossSectionShape(StrEnum):
     """Enumeration of cross-section shapes.
-
+ 
     Attributes
     ----------
     RECTANGULAR : str

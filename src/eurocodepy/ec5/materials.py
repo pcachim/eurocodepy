@@ -80,6 +80,7 @@ class Timber:
         self.type_label = type_label
         self.type = timber["Type"]
         self.material = TimberType.TIMBER
+        self.timber_product = TimberProduct.ST
 
         self.fmk = timber["fmk"]
         self.ft0k = timber["ft0k"]
@@ -269,7 +270,8 @@ class SolidTimber(Timber):
         self.fvrefk = dbase.TimberParams["fvrefk"][self.type]
         self.theta_twist = dbase.TimberParams["theta_twist"][self.type]
         self.kred = dbase.TimberParams["kred"][self.type]
-        self.material = "Solid"
+        self.material = TimberType.TIMBER
+        self.timber_product = TimberProduct.ST
 
 
 class Glulam(Timber):
@@ -315,6 +317,7 @@ class Glulam(Timber):
         self.theta_twist = dbase.TimberParams["theta_twist"][self.type]
         self.kred = dbase.TimberParams["kred"][self.type]
         self.material = TimberType.GLULAM
+        self.timber_product = TimberProduct.GL
 
     def __str__(self) -> str:  # noqa: D105
         return (
@@ -361,6 +364,7 @@ class CLT(Timber):
 
         super().__init__(type_label)
         self.material = TimberType.CLT
+        self.timber_product = TimberProduct.CLT
 
 
 class LVL(Timber):
@@ -384,6 +388,7 @@ class LVL(Timber):
 
         super().__init__(type_label)
         self.material = TimberType.LVL
+        self.timber_product = TimberProduct.LVL_P
 
 
 class WoodBasedPanels(Timber):

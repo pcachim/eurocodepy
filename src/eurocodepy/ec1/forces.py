@@ -1,17 +1,15 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
 from dataclasses import dataclass, fields, replace
-from enum import Enum
 from typing import Self
 
 import numpy as np
 
-from eurocodepy.units import UnitSystem, SI, Default, UnitType
+from eurocodepy.units import SI, Default, UnitSystem, UnitType
 
 
 class BaseForce:
-    """
-    Provides +, -, *, / operators for dataclasses
+    """Provides +, -, *, / operators for dataclasses
     that contain numeric fields and a 'u' UnitSystem.
     """
 
