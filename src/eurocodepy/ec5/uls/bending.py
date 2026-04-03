@@ -3,8 +3,8 @@
 import numpy as np
 
 import eurocodepy as ec
-from eurocodepy.ec5 import LoadDuration, ServiceClass, Timber
 from eurocodepy.ec5.materials import TimberForcesType
+from eurocodepy.ec5 import LoadDuration, ServiceClass, Timber
 from eurocodepy.utils import CrossSection
 
 LAMBDA_REL_LIM = 0.3

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 import numpy as np
 
-from eurocodepy.ec5 import (
+from eurocodepy.ec5.materials import (
     LoadDuration,
     ServiceClass,
     Timber,
@@ -18,7 +18,7 @@ F_V_REF_K_GLULAM = 2.75  # MPa
 
 def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa: PLR0913, PLR0914, PLR0917
                     section: CrossSection, timber: Timber,
-                    service_class: ServiceClass, load_duration: LoadDuration) -> bool:
+                    service_class: ServiceClass, load_duration: LoadDuration) -> dict:
     """Check shear and torsion according to Eurocode 5.
 
     This function checks if the design shear and torsion stresses are within
@@ -77,7 +77,7 @@ def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa:
         k_shape = 1.2
     elif (section.shape is CrossSectionShape.RECTANGULAR and
             timber.material is TimberType.CLT):
-        k_shape: 1.0
+        k_shape = 1.0
     else:
         k_shape = min(1.0 + 0.05 * ratio, 1.3)
     fvdt: float = k_shape * fvd

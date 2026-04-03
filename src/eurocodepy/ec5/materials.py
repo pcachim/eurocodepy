@@ -3,6 +3,7 @@
 from enum import Enum, StrEnum
 
 from eurocodepy import dbase
+from eurocodepy.ec1 import LoadCombination, LoadCombinations, CombinationType, LoadType
 
 RiskClass = Enum("RiskClasses", dbase.TimberMaterial["RiskClasses"])
 ServiceClass = Enum("ServiceClass", dbase.TimberMaterial["ServiceClasses"])
@@ -19,6 +20,7 @@ class TimberType(StrEnum):
     GLULAM = "glulam"
     CLT = "clt"
     LVL = "lvl"
+    GLVL = "glvl"
     PANEL = "board"
 
 
@@ -33,10 +35,10 @@ class TimberProduct(StrEnum):
     CLT = "CLT"  # "Cross laminated timber"
     LVL_P = "Laminated veneer lumber with parallel veneers"
     LVL_C = "Laminated veneer lumber with crossband veneers"
-    LVL = "LVL"
+    LVL = "LVL"  # "Laminated veneer lumber"
     GLVL_P = "Glued laminated veneer lumber with parallel veneers"
     GLVL_C = "Glued laminated veneer lumber with crossband veneers"
-    GLVL = "GLVL"
+    GLVL = "GLVL"  # "Glued laminated veneer lumber"
     SWP_P = "Single layer solid wood panel"
     SWP_C = "Multi-layered solid wood panel"
     PW = "Plywood"
@@ -113,6 +115,20 @@ class Timber:
         self.fc90d = 0.0
         self.ft90d = 0.0
 
+    def __post_init__(self,  # noqa: D105
+                    service_class: ServiceClass,
+                    load_duration: LoadDuration) -> None:
+        self.design_values(ServiceClass.SC3, LoadDuration.Permanent)
+
+    def set_product(self, product: TimberProduct) -> None:
+        """Set product type.
+
+        Args:
+            product (TimberProduct): The type of timber product.
+
+        """
+        self.timber_product = product
+
     def k_mod(
         self,
         service_class: ServiceClass | str = ServiceClass.SC1,
@@ -132,8 +148,8 @@ class Timber:
 
         """
         if isinstance(load_duration, str) and load_duration not in {
-            "Perm", "Long", "Medium", "Short", "Inst", "Permanent", "LongTerm",
-            "MediumTerm", "ShortTerm", "Instantaneous",
+            "Perm", "Long", "Medium", "Short", "Inst", "Permanent", "LongDuration",
+            "MediumDuration", "ShortDuration", "Instantaneous",
         }:
             load_duration = 0
         if isinstance(load_duration, LoadDuration):
@@ -153,8 +169,8 @@ class Timber:
         self,
         service_class: ServiceClass | str = ServiceClass.SC1,
         load_duration: LoadDuration | str = LoadDuration.MediumDuration,
-    ) -> None:
-        """Calculate the design values of the strengh properties.
+    ) -> dict:
+        """Calculate the design values of the properties and returns them as a dict.
 
         Args:
             service_class (ServiceClass, optional): Service class (SC1, SC2, or SC3).
@@ -162,6 +178,9 @@ class Timber:
             load_duration (LoadDuration, optional): Load duration (Perm, Long,
             Medium, Short, Inst).
                 Defaults to LoadDuration.Medium.
+
+        Returns:
+            A dict with the design values
 
         """
         kmod = self.k_mod(service_class, load_duration)
@@ -173,6 +192,16 @@ class Timber:
         self.fvd = self.fvk * ratio
         self.fc90d = self.fc90k * ratio
         self.ft90d = self.ft90k * ratio
+        return {
+            "fmd": self.fmd,
+            "ft0d": self.ft0d,
+            "fc0d": self.fc0d,
+            "fvd": self.fvd,
+            "fc90d": self.fc90d,
+            "ft90d": self.ft90d,
+            "kmod": self.ft90d,
+            "safety": self.safety,
+        }
 
     def k_def(self, service_class: ServiceClass = ServiceClass.SC1) -> float:
         """Return the kdef value for serviceability limit state.
@@ -433,3 +462,51 @@ def TimberClass(timber: str = "C24") -> Timber:  # noqa: N802
         return CLT(timber)
 
     return Timber(timber)
+
+
+def GetTimberDesignValues(timber: Timber, combos: LoadCombinations) -> dict:  # noqa: N802
+    """Get the design values for a timber class dependending on load combination type.
+
+    Args:
+        timber (Timber): the timber class (C18, GL24c, ...)
+        combos (LoadCombinations): the collection of load combinations
+
+    Returns:
+        dict: the design strength values for each combination
+
+    """
+    design_values: dict = {}
+    for combo in combos:
+        try:
+            service_class = combo.attributes["loadduration"]
+            load_duration: "LoadDuration" = combo.attributes["loadduration"]  # noqa: UP037
+            name: str = combo.name
+            if combo.type in {
+                CombinationType.SLS_K,
+                CombinationType.SLS_FR,
+                CombinationType.SLS_QP}:
+                values = {
+                    "design": False,
+                }
+            else:
+                values = timber.design_values(service_class.name, load_duration)
+                values["design"] = True
+            design_values[name] = values
+        except ValueError as e:
+            print(f"Combination does not have timber indicators: {e}")  # noqa: T201
+            return {}
+    return design_values
+
+
+def GetLoadDurations() -> dict:  # noqa: D103, N802
+    return {
+        LoadType.ACCIDENTAL: LoadDuration.Instantaneous,
+        LoadType.EARTHQUAKE: LoadDuration.Instantaneous,
+        LoadType.FIRE: LoadDuration.Instantaneous,
+        LoadType.LIVE: LoadDuration.MediumDuration,
+        LoadType.OTHER: LoadDuration.Instantaneous,
+        LoadType.PERMANENT: LoadDuration.Permanent,
+        LoadType.SNOW: LoadDuration.ShortDuration,
+        LoadType.TEMPERATURE: LoadDuration.ShortDuration,
+        LoadType.WIND: LoadDuration.ShortDuration,
+    }

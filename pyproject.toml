@@ -30,6 +30,8 @@ dependencies = [
     "mkdocs-literate-nav>=0.6.2",
     "mkdocs-section-index>=0.3.10",
     "seaborn>=0.13.2",
+    "marimo>=0.20.4",
+    "pyzmq>=27.1.0",
 ]
 
 [project.optional-dependencies]

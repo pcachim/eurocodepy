@@ -1,10 +1,15 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
 """Module for Eurocode Load Combinations and Load Types."""
+from __future__ import annotations
+
 from collections import UserDict
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from enum import Enum
 from itertools import chain, product
+
+import numpy as np
 
 COMBO_TOLERANCE: float = 0.001
 
@@ -50,11 +55,11 @@ class CombinationType(Enum):
     """Enum for different types of load combinations as per Eurocode standards."""
 
     ULS = "ULS"  # Ultimate Limit State
+    FLS = "FLS"  # Fatigue Limit State
+    ALS = "ALS"  # Accidental Limit State
     SLS_K = "SLS-K"  # Serviceability Limit State
     SLS_FR = "SLS-FR"  # Serviceability Limit State
     SLS_QP = "SLS-QP"  # Serviceability Limit State
-    FLS = "FLS"  # Fatigue Limit State
-    ALS = "ALS"  # Accidental Limit State
 
     def __str__(self) -> str:  # noqa: D105
         return self.value
@@ -90,17 +95,31 @@ class LoadCombination:
 
     """
 
-    def __init__(self, name: str, combotype: CombinationType, factors: dict) -> None:  # noqa: D107
+    def __init__(self, name: str, factors: dict,  # noqa: D107
+                    combotype: CombinationType = CombinationType.ULS,
+                    **kwargs) -> None:
         self.name = name
         self.type = combotype
         self.factors = factors
+        self.attributes = kwargs if kwargs is not None else {}
 
     def __repr__(self) -> str:  # noqa: D105
-        return f"LoadCombination(name={self.name}, type={self.type}, factors={self.factors})"
-
-    def __str__(self) -> str:  # noqa: D105
         return f"{self.name} ({self.type}): {self.factors}"
 
+    def __str__(self) -> str:  # noqa: D105
+        return (
+            f"LoadCombination\nname={self.name}\n"
+            f"type={self.type}\n"
+            f"factors={self.factors}\n"
+            f"attributes={self.attributes}\n"
+            )
+
+
+DEFAULTCOMBO = LoadCombination(
+    name="Combo",
+    combotype=CombinationType.ULS,
+    factors={"G": 1.35},
+)
 
 @dataclass
 class Load:
@@ -128,7 +147,7 @@ class Load:
     incombo: bool = True
 
 
-class LoadCollection(UserDict):
+class Loads(UserDict):
     """Collection of loads that can be added, removed, and queried.
 
     This class extends UserDict to manage a collection of Load objects.
@@ -387,9 +406,99 @@ class LoadCollection(UserDict):
         return combinations
 
 
+class LoadCombinations:
+    """Container for multiple LoadCombination objects.
+
+    Behaves like a collection with structural utilities.
+    """
+
+    def __init__(self, combinations: Iterable[LoadCombination] = ()) -> None:
+        self._combinations: dict[str, LoadCombination] = {
+            comb.name: comb for comb in combinations
+            }
+
+    # ---------------------------------------------------------
+    # Collection behaviour
+    # ---------------------------------------------------------
+    def __iter__(self):
+        return iter(self._combinations.values())
+
+    def __len__(self) -> int:
+        return len(self._combinations)
+
+    def __getitem__(self, name: str) -> LoadCombination:
+        return self._combinations[name]
+
+    def add(self, comb: LoadCombination) -> None:
+        if comb.name in self._combinations:
+            msg = f"Combination '{comb.name}' already exists."
+            raise ValueError(msg)
+        self._combinations[comb.name] = comb
+
+    def remove(self, name: str) -> None:
+        del self._combinations[name]
+
+    # ---------------------------------------------------------
+    # Structural utilities
+    # ---------------------------------------------------------
+    def evaluate_all(self, loads: Mapping[str, np.ndarray]) -> dict[str, np.ndarray]:
+        """Evaluate all combinations for vectorised load fields.
+
+        Returns:
+            dict[name -> result array]
+
+        """
+        results = {}
+        for comb in self:
+            results[comb.name] = comb.evaluate(loads)
+        return results
+
+    def worst_case(
+        self,
+        loads: Mapping[str, np.ndarray],
+        mode: str = "max"
+    ) -> tuple:
+        """Return worst combination and envelope result.
+
+        mode:
+            "max"  -> maximum value
+            "min"  -> minimum value
+            "abs"  -> maximum absolute value
+
+        Raises:
+            ValueError
+
+        Returns:
+            Worst cases
+
+        """  # noqa: DOC501
+        results = self.evaluate_all(loads)
+
+        stack = np.stack(list(results.values()), axis=0)
+
+        if mode == "max":
+            envelope = stack.max(axis=0)
+            idx = stack.argmax(axis=0)
+        elif mode == "min":
+            envelope = stack.min(axis=0)
+            idx = stack.argmin(axis=0)
+        elif mode == "abs":
+            abs_stack = np.abs(stack)
+            envelope = abs_stack.max(axis=0)
+            idx = abs_stack.argmax(axis=0)
+        else:
+            msg = "mode must be 'max', 'min', or 'abs'"
+            raise ValueError(msg)
+
+        names = list(results.keys())
+        controlling = names[idx[0]] if envelope.ndim == 0 else None
+
+        return (controlling, envelope)
+
+
 if __name__ == "__main__":
     # Example usage
-    loads = LoadCollection()
+    loads = Loads()
     loads.add(Load(name="G", load_type=LoadType.PERMANENT,gamma_fav=1.0, gamma_unf=1.35, psi0=0.0, psi1=0.0, psi2=0.0))
     loads.add(Load(name="Q", load_type=LoadType.LIVE, gamma_fav=0.0, gamma_unf=1.5, psi0=0.0, psi1=0.0, psi2=0.0))
     loads.add(Load(name="WX", load_type=LoadType.WIND, gamma_fav=0.0, gamma_unf=1.5, psi0=0.6, psi1=0.2, psi2=0.0))
@@ -411,5 +520,6 @@ if __name__ == "__main__":
     sls_combinations = loads.get_SLS_combos()
     for key, combo in sls_combinations.items():
         print(key)  # noqa: T201
+        print(combo)  # noqa: T201
         for load_name, (__load, factor) in combo.factors.items():
             print(f"  {load_name}: {factor}")  # noqa: T201

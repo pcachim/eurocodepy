@@ -5,11 +5,10 @@ import numpy as np
 
 from eurocodepy.ec2 import (
     Concrete,
-    ConcreteGrade,
+    C30_37,
     GammaC,
     GammaS,
     Reinforcement,
-    ReinforcementGrade,
     get_concrete,
     get_reinforcement,
 )
@@ -221,8 +220,8 @@ class RCBeam:
     """
 
     def __init__(self, b: float, h: float, at: float, ac: float,
-                conc: str | Concrete | ConcreteGrade = "C20/25",
-                reinf: str | Reinforcement | ReinforcementGrade = "B500B") -> None:
+                conc: str | Concrete = "C20/25",
+                reinf: str | Reinforcement = "B500B") -> None:
         """Reinforced concrete beam object.
 
         Characterized by bredth (b), height (h), reinforcement covers  and materials.
@@ -287,7 +286,7 @@ class RCBeam:
         return aslt, aslc, alpha, epsst, epssc, asws_val, vrdmax
 
     def calc_bending(self, med: float, iprint: bool = False,
-                ) -> tuple[float, float | np.ndarray, float, float, float]:
+                ) -> tuple:
         """Calculate the reinforcement area in a rectangular concrete beam.
 
         Args:
@@ -332,7 +331,7 @@ class RCBeam:
 if __name__ == "__main__":
     # test RCBeam class
     print("\nTest RCBeam:\n")
-    beam = RCBeam(0.3, 0.5, at=0.05, ac=0.05, conc=ConcreteGrade.C30_37, reinf="A500NR")
+    beam = RCBeam(0.3, 0.5, at=0.05, ac=0.05, conc=C30_37, reinf="A500NR")
     a = beam.calc_shear(100.0, 100.0)
     asl, asc, a, epst, epsc = beam.calc_bending(100.0)
     print(f"\n{asl=}, {asc=}, {a=}, {epst=}, {epsc=}")

@@ -2,35 +2,95 @@
 
 ## Overview
 
-The `ec1` module of the *eurocodepy* package provides tools for the analysis and design of structures subjected to actions as defined in Eurocode 1 (EN 1991). It is intended for engineers who need to calculate loads such as self-weight, imposed loads, wind, snow, and thermal actions in accordance with Eurocode 1 standards.
+The `ec1` module provides tools for EN 1991 (Actions on Structures). It covers
+load type definitions, force representations, wind and snow sub-modules, and the
+full EN 1990 load combination engine.
 
-## Features
+---
 
-- **Load Calculations**  
-  Functions to calculate self-weight, imposed loads, wind loads, snow loads, and thermal actions for buildings and civil engineering works.
-- **Parameter Flexibility**  
-  Input parameters include geometry, location, exposure, and usage category.
+## Load combinations
 
-## Typical Usage
+### `LoadType` (enum)
+
+Classifies an individual load for combination purposes.
+
+| Member | Value | Description |
+|--------|-------|-------------|
+| `PERMANENT` | 0 | Self-weight, superimposed dead load |
+| `LIVE` | 1 | Imposed loads (occupancy) |
+| `WIND` | 2 | Wind action |
+| `SNOW` | 3 | Snow load |
+| `EARTHQUAKE` | 4 | Seismic action |
+| `TEMPERATURE` | 5 | Thermal action |
+| `FIRE` | 6 | Fire action |
+| `ACCIDENTAL` | 7 | Other accidental actions |
+| `OTHER` | 8 | — |
+
+### `CombinationType` (enum)
+
+| Member | Description |
+|--------|-------------|
+| `ULS` | Ultimate Limit State (EN 1990 Eq. 6.10) |
+| `ALS` | Accidental Limit State |
+| `FLS` | Fatigue Limit State |
+| `SLS_K` | SLS characteristic combination |
+| `SLS_FR` | SLS frequent combination |
+| `SLS_QP` | SLS quasi-permanent combination |
+
+### `Load` (dataclass)
 
 ```python
-from eurocodepy.ec1 import wind_load, snow_load, imposed_load
-
-# Calculate wind load
-wind = wind_load(height=15, exposure='B', location='coastal')
-
-# Calculate snow load
-snow = snow_load(altitude=500, location='mountain')
-
-# Calculate imposed load for office
-imposed = imposed_load(category='B', area=50)
+Load(name: str, load_type: LoadType, gk: float = 0.0, qk: float = 0.0)
 ```
+
+### `LoadCombinations`
+
+```python
+from eurocodepy.ec1 import Load, LoadType, LoadCombinations, CombinationType
+
+loads = [
+    Load('G', LoadType.PERMANENT, gk=10.0),
+    Load('Q', LoadType.LIVE,      qk=5.0),
+    Load('W', LoadType.WIND,      qk=3.0),
+]
+combos = LoadCombinations(loads)
+for c in combos.get(CombinationType.ULS):
+    print(c)
+```
+
+---
+
+## Force representations
+
+| Class | Description |
+|-------|-------------|
+| `BaseForce` | Abstract base class |
+| `PlaneForce` | In-plane forces (Nx, Ny, Nxy) |
+| `ShellForce` | Shell resultants (Mx, My, Mxy, Vx, Vy, Nx, Ny, Nxy) |
+| `SlabForce` | Slab resultants (Mx, My, Mxy, Vx, Vy) |
+| `FrameForce` | 1-D frame member forces (N, Vy, Vz, Mx, My, Mz) |
+
+---
+
+## Sub-modules
+
+### `ec1.wind`
+
+Functions for wind load calculation following EN 1991-1-4. Exposed via
+`from eurocodepy.ec1 import wind` or `from eurocodepy import wind`.
+
+### `ec1.snow`
+
+Functions for snow load calculation following EN 1991-1-3.
+
+---
 
 ## Compliance
 
-All calculations and checks are based on the requirements and recommendations of Eurocode 1 (EN 1991). The module is updated to reflect changes and amendments to the code.
+All combination logic follows EN 1990:2002 and its amendments.
 
-## Further Reading
+## Further reading
 
-- [Eurocode 1: Actions on structures (EN 1991)](https://eurocodes.jrc.ec.europa.eu/EN-Eurocodes/eurocode-1-actions-structures)
+- [EN 1991 — Actions on structures](https://eurocodes.jrc.ec.europa.eu/EN-Eurocodes/eurocode-1-actions-structures)
+- [EN 1990 — Basis of structural design](https://eurocodes.jrc.ec.europa.eu/EN-Eurocodes/eurocode-basis-structural-design)
 

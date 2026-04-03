@@ -9,13 +9,41 @@ for serviceability and ultimate limit states.
 """
 
 from eurocodepy.ec2.materials import (
+    A400NR,
+    A500NR,
+    A500EL,
+    A400NRSD,
+    A500NRSD,
+    B400A,
+    B400B,
+    B400C,
+    B500A,
+    B500B,
+    B500C,
+    B600A,
+    B600B,
+    B600C,
+    B700A,
+    B700B,
+    B700C,
     Bar,
     BarLayout,
     BarSizes,
     Bundle,
+    C20_25,
+    C25_30,
+    C30_37,
+    C35_45,
+    C40_50,
+    C45_55,
+    C50_60,
+    C55_67,
+    C60_75,
+    C70_85,
+    C80_95,
+    C90_105,
     Concrete,
     ConcreteClass,
-    ConcreteGrade,
     ConcreteGrades,
     CreepParams,
     GammaC,
@@ -26,7 +54,6 @@ from eurocodepy.ec2.materials import (
     PrestressClass,
     Reinforcement,  # noqa: F401
     ReinforcementClass,
-    ReinforcementGrade,
     ReinforcementGrades,
     ShrinkStrainParams,
     beta_cc,
@@ -41,7 +68,7 @@ from eurocodepy.ec2 import fire, sls, uls
 from eurocodepy.ec2.sls import creep, shrinkage
 from eurocodepy.ec2.sls.creep import creep_coef  # EN1992-1:2025
 from eurocodepy.ec2.sls.shrinkage import shrink_strain  # EN1992-1:2025
-from eurocodepy.ec2.uls import beam, shear, shell
+from eurocodepy.ec2.uls import beam as beam, shear as shear, shell as shell
 from eurocodepy.ec2.uls.beam import calc_asl, calc_mrd, get_bend_params
 from eurocodepy.ec2.uls.punch import (
     calc_perimeters,

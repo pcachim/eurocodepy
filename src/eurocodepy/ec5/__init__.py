@@ -27,6 +27,7 @@ from eurocodepy.ec5.materials import (
     TimberGrades,
     TimberProduct,
     TimberType,
+    GetTimberDesignValues,
 )
 from eurocodepy.ec5 import sls, uls
 from eurocodepy.ec5.sls import deformation, vibration

@@ -31,6 +31,39 @@ MIN_E2_PIN: float = 1.25
 BoltGrades = [str(grade).replace("_",".") for grade in dbase.BoltGrades.keys()]
 
 
+class BoltGrade:
+    """Represents a bolt grade with its properties.
+
+    Attributes:
+        grade (str): Bolt grade (e.g., '8.8', '10.9').
+        fub (float): Characteristic ultimate strength (MPa).
+        fyb (float): Characteristic yield strength (MPa).
+
+    """
+
+    def __init__(self, grade: str, 
+                 fub: float | None = None,
+                 fyb: float | None = None) -> None:
+        """Initialize a BoltGrade instance with properties from the specified grade.
+
+        Args:
+            grade (str): Bolt grade (e.g., '8.8', '10.9').
+            fub (float): Characteristic ultimate strength (MPa).
+            fyb (float): Characteristic yield strength (MPa).
+
+        """
+        grade_ = grade.replace(".", "_")
+        if grade_ not in dbase.BoltGrades:
+            self.grade = grade
+            self.fub = fub
+            self.fyb = fyb
+        else:
+            bolt_grade = dbase.BoltGrades[grade_]
+            self.grade = grade
+            self.fub = bolt_grade["fub"]
+            self.fyb = bolt_grade["fyb"]
+
+
 class Bolt:
     """Represents a steel bolt according to Eurocode 3.
 
@@ -50,18 +83,27 @@ class Bolt:
     Methods:
         __str__(): Returns a string representation of the bolt properties.
 
-        Raises:
-            ValueError: If the grade or diameter is not found in the database.
+    Raises:
+        ValueError: If the grade or diameter is not found in the database.
 
     """
 
-    def __init__(self, diameter: str | float | object, grade: str, athread = None, dnut = None) -> None:  # noqa: D107
-        if grade.replace(".", "_") not in dbase.BoltGrades:
-            msg = (
-                f"Bolt grade '{grade}' not found in database. "
-                f"Bolt grade must be one of {list(dbase.BoltGrades.keys())}"
-            )
-            raise ValueError(msg)
+    def __init__(self, diameter: str | float | object, grade: str | BoltGrade, athread = None, dnut = None) -> None:  # noqa: D107
+        if isinstance(grade, BoltGrade):
+            self.steel = grade.grade
+            self.fub = grade.fub
+            self.fyb = grade.fyb
+        else:
+            if grade.replace(".", "_") not in dbase.BoltGrades:
+                msg = (
+                    f"Bolt grade '{grade}' not found in database. "
+                    f"Bolt grade must be one of {list(dbase.BoltGrades.keys())}"
+                )
+                raise ValueError(msg)
+            bolt_grade = dbase.BoltGrades[grade.replace(".", "_")]
+            self.steel = grade.replace("_", ".").upper()
+            self.fub = bolt_grade["fub"]
+            self.fyb = bolt_grade["fyb"]
 
         if isinstance(diameter, (float, int)):
             self.name = f"U{diameter}"  # U = universal diameter
@@ -87,10 +129,6 @@ class Bolt:
             self.A = bolt["A"]
             self.Athread = bolt["Athread"]
 
-        bolt_grade = dbase.BoltGrades[grade.replace(".", "_")]
-        self.steel = grade.replace("_", ".").upper()
-        self.fub = bolt_grade["fub"]
-        self.fyb = bolt_grade["fyb"]
         self.gamma_M0 = dbase.SteelParams["gamma_M0"]  # Partial safety factor
         self.gamma_M1 = dbase.SteelParams["gamma_M1"]  # Partial safety factor
         self.gamma_M2 = dbase.SteelParams["gamma_M2"]  # Partial safety factor
@@ -639,12 +677,12 @@ class BoltedConnection:
 
     def __init__(self,
             bolt: Bolt,
-            steel_plate: SteelPlate,
-            steel_plate_b: SteelPlate | object = None) -> None:
+            outer_plate: SteelPlate,
+            inner_plate: SteelPlate | object = None) -> None:
         """Post-initialization to ensure the bolt is of type Bolt."""
-        self._plate_a = steel_plate
-        self._plate_b: SteelPlate | None = steel_plate_b if (
-            steel_plate_b is not None) else steel_plate
+        self._outer_plate = outer_plate
+        self._inner_plate = inner_plate if (
+            inner_plate is not None) else outer_plate
         self._bolt = bolt
         self._e1 = REC_E1 * self.bolt.d0
         self._p1 = REC_P2 * self.bolt.d0
@@ -655,7 +693,7 @@ class BoltedConnection:
     @property
     def steel(self) -> Steel:
         """Returns the steel grade of the connection."""
-        return self.steel_plate.steel
+        return self.outer_steel_plate.steel
 
     @property
     def bolt(self) -> Bolt:
@@ -685,7 +723,7 @@ class BoltedConnection:
         if value < MIN_E1 * self.d0:
             msg = f"End distance must be at least {MIN_E1} times the hole diameter ({self.d0})."
             raise ValueError(msg)
-        t = min(self.steel_plate.thickness, self.steel_plate_b.thickness)
+        t = min(self.outer_steel_plate.thickness, self.inner_steel_plate.thickness)
         if value > 4.0 * t + 40:
             msg = f"End distance must not exceed 4 times the plate thickness ({t}) plus 40 mm."
             raise ValueError(msg)
@@ -709,7 +747,7 @@ class BoltedConnection:
         if value < MIN_P1 * self.d0:
             msg = f"Spacing parallel to force must be at least {MIN_P1} times the hole diameter ({self.d0})."
             raise ValueError(msg)
-        t = min(self.steel_plate.thickness, self.steel_plate_b.thickness)
+        t = min(self.outer_steel_plate.thickness, self.inner_steel_plate.thickness)
         if value > 14.0 * t or value > 200:  # noqa: PLR2004
             msg = (
                 f"Spacing parallel to force must not exceed 14 "
@@ -738,7 +776,7 @@ class BoltedConnection:
                 f"Edge distance must be at least {MIN_E2} "
                 f"times the hole diameter ({self.d0}).")
             raise ValueError(msg)
-        t = min(self.steel_plate.thickness, self.steel_plate_b.thickness)
+        t = min(self.outer_steel_plate.thickness, self.inner_steel_plate.thickness)
         if value > 4.0 * t + 40:
             msg = (
                 f"Edge distance must not exceed 4 times the plate thickness"
@@ -768,7 +806,7 @@ class BoltedConnection:
                 f"times the hole diameter ({self.d0})."
             )
             raise ValueError(msg)
-        t = min(self.steel_plate.thickness, self.steel_plate_b.thickness)
+        t = min(self.outer_steel_plate.thickness, self.inner_steel_plate.thickness)
         if value > 14.0 * t or value > 200:  # noqa: PLR2004
             msg = (
                 f"Spacing perpendicular to force must not exceed 14 "
@@ -778,14 +816,14 @@ class BoltedConnection:
         self._p2 = value
 
     @property
-    def steel_plate(self) -> SteelPlate:
+    def outer_steel_plate(self) -> SteelPlate:
         """Returns the steel plate used in the connection."""
-        return self._plate_a
+        return self._outer_plate
 
     @property
-    def steel_plate_b(self) -> SteelPlate | None:
+    def inner_steel_plate(self) -> SteelPlate | None:
         """Returns the second steel plate used in the connection."""
-        return self._plate_b
+        return self._inner_plate
 
     @property
     def n1(self) -> int:
@@ -827,15 +865,15 @@ class BoltedConnection:
             raise ValueError(msg)
         self._n2 = value
 
-    @steel_plate.setter
-    def steel_plate(self, value: SteelPlate) -> None:
+    @outer_steel_plate.setter
+    def outer_steel_plate(self, value: SteelPlate) -> None:
         """Set the steel plate used in the connection."""
-        self._plate_a = value
+        self._outer_plate = value
 
-    @steel_plate_b.setter
-    def steel_plate_b(self, value: SteelPlate) -> None:
+    @inner_steel_plate.setter
+    def inner_steel_plate(self, value: SteelPlate) -> None:
         """Set the steel plate used in the connection."""
-        self._plate_b = value
+        self._inner_plate = value
 
     def Fv_Rd(self, threaded: bool = True) -> float:  # noqa: N802
         """Return shear strength.
@@ -862,8 +900,8 @@ class BoltedConnection:
             float: bearing strength
 
         """
-        t = min(self.steel_plate.thickness, self.steel_plate_b.thickness)
-        fu = self.steel_plate.steel.fuk
+        t = min(self.outer_steel_plate.thickness, self.inner_steel_plate.thickness)
+        fu = self.outer_steel_plate.steel.fuk
 
         ad = min(self.e1 / (3 * self.d0), self.p1 / (3 * self.d0) - 1.0 / 4.0)
         k1 = min(2.8 * self.e2 / self.d0 - 1.7, 1.4 * self.p2 / self.d0 - 1.7, 2.5)
@@ -892,11 +930,11 @@ class BoltedConnection:
             float: punching strength of the plate
 
         """
-        t = min(self.steel_plate.thickness, self.steel_plate_b.thickness)
-        return np.round(0.6 * np.pi * self.bolt.dnut * self.steel_plate.steel.fuk *
+        t = min(self.outer_steel_plate.thickness, self.inner_steel_plate.thickness)
+        return np.round(0.6 * np.pi * self.bolt.dnut * self.outer_steel_plate.steel.fuk *
                     t / self.bolt.gamma_M2 / 10.0, 2)
 
-    def check(self, Fv_Ed: np.ndarray, Ft_Ed: np.ndarray,  # noqa: N803
+    def check(self, Fv_Ed: np.ndarray, Ft_Ed: np.ndarray | None,  # noqa: N803
                 threaded: bool = True, countersunk: bool = False) -> dict:  # noqa: FBT001, FBT002
         """Perform design checks for the bolted connection.
 
@@ -962,7 +1000,7 @@ class BoltedConnection:
         """
         s: str = (
             f"\nBOLTED CONNECTION\n"
-            f"\nGeometry and materials: mm\n"
+            f"\nGeometry and materials:\n"
             f"End distance e1: {self.e1} mm\n"
             f"Spacing parallel p1: {self.p1} mm\n"
             f"Edge distance e2: {self.e2} mm\n"
@@ -975,11 +1013,14 @@ class BoltedConnection:
             f"Bolt area thread: {self.bolt.Athread} cm^2\n"
             f"Bolt hole diameter: {self.bolt.d0} mm\n"
             f"Bolt nut 'diameter': {self.bolt.dnut} mm\n"
-            f"Steel plate A thickness: {self.steel_plate.thickness} mm\n"
-            f"Steel plate A grade: {self.steel_plate.steel.ClassType}\n"
-            f"Steel plate B thickness: {self.steel_plate_b.thickness} mm\n"
-            f"Steel plate B grade: {self.steel_plate_b.steel.ClassType}\n"
-            f"\nGeometry and materials:\n"
+            f"Steel plate A thickness: {self.outer_steel_plate.thickness} mm\n"
+            f"Steel plate A grade: {self.outer_steel_plate.steel.ClassType}\n"
+            f"Steel plate B thickness: {self.inner_steel_plate.thickness} mm\n"
+            f"Steel plate B grade: {self.inner_steel_plate.steel.ClassType}\n"
+            f"\nForces:\n"
+            f"Shear force: {self.Fv_Ed} kN\n"
+            f"Tensile force: {self.Ft_Ed} kN\n"
+            f"\nStrength:\n"
             f"Shear strength: {self.Fv_Rd(threaded=True)} kN\n"
             f"Bearing strength: {self.Fb_Rd()} kN\n"
             f"Tensile strength: {self.Ft_Rd()} kN\n"
@@ -1024,11 +1065,11 @@ class PinnedConnection(BoltedConnection):
 
     def __init__(self,
             bolt: Bolt,
-            steel_plate: SteelPlate,
-            steel_plate_b: SteelPlate | object = None,
+            outer_plate: SteelPlate,
+            inner_plate: SteelPlate | object = None,
             gap: float = 0) -> None:
         """Post-initialization to ensure the bolt is of type Bolt."""
-        super().__init__(bolt, steel_plate, steel_plate_b)
+        super().__init__(bolt, outer_plate, inner_plate)
         self._g = gap  # default gap
         self._p1 = 0.0
         self._p2 = 0.0
@@ -1068,11 +1109,11 @@ class PinnedConnection(BoltedConnection):
             float: 0.0
 
         """
-        fy: float = min(self.steel_plate.steel.fyk, self.bolt.fyb)
-        self._Fb_Rd_A = 1.5 * self.steel_plate.thickness * (
+        fy: float = min(self.outer_steel_plate.steel.fyk, self.bolt.fyb)
+        self._Fb_Rd_A = 1.5 * self.outer_steel_plate.thickness * (
             self.bolt.d * fy / self.bolt.gamma_M0 / 1000.0)
-        fy: float = min(self.steel_plate_b.steel.fyk, self.bolt.fyb)
-        self._Fb_Rd_B = 1.5 * self.steel_plate_b.thickness * (
+        fy: float = min(self.inner_steel_plate.steel.fyk, self.bolt.fyb)
+        self._Fb_Rd_B = 1.5 * self.inner_steel_plate.thickness * (
             self.bolt.d * fy / self.bolt.gamma_M0 / 1000.0)
         return (self._Fb_Rd_A, self._Fb_Rd_B)
 
@@ -1105,7 +1146,7 @@ class PinnedConnection(BoltedConnection):
         """
         return 0.0
 
-    def check(self, Fv_Ed: np.ndarray, Ft_Ed: np.ndarray,  # noqa: ARG002, N803
+    def check(self, Fv_Ed: np.ndarray, Ft_Ed: np.ndarray = None,  # noqa: ARG002, N803
             threaded: bool = True, countersunk: bool = False) -> dict:  # noqa: ARG002, FBT001, FBT002
         """Check the design of the pinned connection.
 
@@ -1118,13 +1159,13 @@ class PinnedConnection(BoltedConnection):
         self.Fb_Ed_A = Fv_Ed / 2.0
         self.Fb_Ed_B = Fv_Ed
         self.M_Ed = Fv_Ed * (
-            2.0 * self.steel_plate.thickness +
-            self.steel_plate_b.thickness +  # ty:ignore[possibly-missing-attribute]
+            2.0 * self.outer_steel_plate.thickness +
+            self.inner_steel_plate.thickness +  # ty:ignore[possibly-missing-attribute]
             4.0 * self.g
         ) / 8.0 / 1000.0
         # Perform checks on geometry
-        t = min(self.steel_plate.thickness, self.steel_plate_b.thickness)  # ty:ignore[possibly-missing-attribute]
-        fy = min(self.steel_plate.steel.fyk, self.bolt.fyb)
+        t = min(self.outer_steel_plate.thickness, self.inner_steel_plate.thickness)  # ty:ignore[possibly-missing-attribute]
+        fy = min(self.outer_steel_plate.steel.fyk, self.bolt.fyb)
         e1_lim = Fv_Ed / 2.0 / t * self.bolt.gamma_M0 / fy + 7.0 * self.bolt.d0 / 6.0
         self._e1 = e1_lim
         e2_lim = Fv_Ed / 2.0 / t * self.bolt.gamma_M0 / fy + 5.0 * self.bolt.d0 / 6.0
@@ -1196,10 +1237,13 @@ class PinnedConnection(BoltedConnection):
             f"Pin grade: {self.bolt.steel}\n"
             f"Pin area: {self.bolt.A:.2f} cm^2\n"
             f"Pin hole diameter: {self.bolt.d0} mm\n"
-            f"Steel plate A thickness: {self.steel_plate.thickness} mm\n"
-            f"Steel plate A grade: {self.steel_plate.steel.ClassType}\n"
-            f"Steel plate B thickness: {self.steel_plate_b.thickness} mm\n"
-            f"Steel plate B grade: {self.steel_plate_b.steel.ClassType}\n"
+            f"Steel plate A thickness: {self.outer_steel_plate.thickness} mm\n"
+            f"Steel plate A grade: {self.outer_steel_plate.steel.ClassType}\n"
+            f"Steel plate B thickness: {self.inner_steel_plate.thickness} mm\n"
+            f"Steel plate B grade: {self.inner_steel_plate.steel.ClassType}\n"
+            f"Gap between plates: {self.g} mm\n"
+            f"\nForces:\n"
+            f"Shear force: {self.Fv_Ed} kN\n"
             f"\nStrength:\n"
             f"Shear strength: {self._Fv_Rd} kN\n"
             f"Moment strength: {self._M_Rd} kNm\n"
@@ -1244,19 +1288,19 @@ class PinnedConnectionDouble(PinnedConnection):
 
     def __init__(self,
             bolt: Bolt,
-            steel_plate: SteelPlate,
-            steel_plate_b: SteelPlate | object = None,
+            outer_plate: SteelPlate,
+            inner_plate: SteelPlate | object = None,
             gap: float = 0) -> None:
         """Post-initialization to ensure the bolt is of type Bolt."""
-        super().__init__(bolt, steel_plate, steel_plate_b, gap)
+        super().__init__(bolt, outer_plate, inner_plate, gap)
 
     def check(self, F_Ed: np.ndarray) -> dict:
         self.Fv_Ed = F_Ed / 2.0
         self.Fb_Ed_A = F_Ed / 2.0
         self.Fb_Ed_B = F_Ed / 2.0
         self.M_Ed = F_Ed * (
-            2.0 * self.steel_plate.thickness +
-            2.0 * self.steel_plate_b.thickness +
+            2.0 * self.outer_steel_plate.thickness +
+            2.0 * self.inner_steel_plate.thickness +
             4.0 * self.g
         ) / 8.0 / 1000.0
         shear_ratio = np.round(self.Fv_Ed / self.Fv_Rd(), 2)

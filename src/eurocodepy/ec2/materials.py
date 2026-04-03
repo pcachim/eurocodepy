@@ -14,6 +14,15 @@ cemprops = {
     "Type R": [6, 0.11],
 }
 
+
+class ConcreteStressCurve(Enum):
+    """Stress-strain cruves for concrete according to EN1992-1-1."""
+
+    Parabole = "Parabole equation 3.14"
+    ParaboleRectangle = "Parabole-Rectangle equation 3.17"
+    Rectangle = "Rectangle"
+
+
 MAX_BUNDLE_BARS = 4
 MIN_BUNDLE_BARS = 2
 REF_FCK = 50.0
@@ -296,7 +305,7 @@ class Concrete:
 
     """
 
-    def __init__(self, class_name: str = "C30/37") -> None:
+    def __init__(self, class_name: str = "C30/37") -> None:  # noqa: D107
         self.grade = class_name
 
         class_name = class_name.replace("/", "_").upper()
@@ -367,9 +376,8 @@ class Concrete:
             f")"
         )
 
-
     @classmethod
-    def from_fck(cls, f_ck: int, name: object = None):
+    def from_fck(cls, f_ck: int, name: object = None) -> "Concrete":
         """Create a Concrete instance from characteristic compressive strength.
 
         Args:
@@ -385,8 +393,8 @@ class Concrete:
         concrete.fck = round(fck, 1)  # MPa
         concrete.fcm = round(fck + 8, 1)  # Mean compressive strength (MPa)
         concrete.fctm = round(0.30 * fck**(2 / 3), 1)  # Mean tensile strength (MPa)
-        concrete.fctk_005 = round(0.7 * concrete.fctm, 1)  # 5% fractile
-        concrete.fctk_095 = round(1.3 * concrete.fctm, 1)  # 95% fractile
+        concrete.fctk_05 = round(0.7 * concrete.fctm, 1)  # 5% fractile
+        concrete.fctk_95 = round(1.3 * concrete.fctm, 1)  # 95% fractile
         concrete.Ecm = round(22000 * (concrete.fcm / 10)**0.3, 1)  # Modulus of elasticity (MPa)
         concrete.eps_c2 = 2.0 if fck <= REF_FCK else 2.0 + 0.085 * (fck - 50) ** 0.53
         # Strain at peak stress
@@ -408,36 +416,16 @@ class Concrete:
 
         concrete.gamma_c = GammaC
         concrete.fcd = round(concrete.fck / GammaC, 1)  # Design yield strength (MPa)
-        concrete.fctd = round(concrete.fctk_005 / GammaCT, 1)  # Design yield strength (MPa)
+        concrete.fctd = round(concrete.fctk_05 / GammaCT, 1)  # Design yield strength (MPa)
 
         return concrete
-
-
-class ConcreteGrade(Enum):
-    """Enumeration of standard Eurocode 2 concrete grades.
-
-    Each member represents a concrete grade with its associated properties.
-    """
-
-    C20_25 = Concrete("C20/25")
-    C25_30 = Concrete("C25/30")
-    C30_37 = Concrete("C30/37")
-    C35_45 = Concrete("C35/45")
-    C40_50 = Concrete("C40/50")
-    C45_55 = Concrete("C45/55")
-    C50_60 = Concrete("C50/60")
-    C55_67 = Concrete("C55/67")
-    C60_75 = Concrete("C60/75")
-    C70_85 = Concrete("C70/85")
-    C80_95 = Concrete("C80/95")
-    C90_105 = Concrete("C90/105")
 
 
 ConcreteGrades = {item.replace("_", "/"): Concrete(item.replace("_", "/"))
             for item in dbase.ConcreteGrades}
 
 
-def get_concrete(concrete: str | Concrete | ConcreteGrade) -> Concrete:
+def get_concrete(concrete: str | Concrete) -> Concrete:
     """Return a Concrete instance from a string, Concrete, or ConcreteGrade input.
 
     Parameters
@@ -459,8 +447,6 @@ def get_concrete(concrete: str | Concrete | ConcreteGrade) -> Concrete:
     """
     if isinstance(concrete, Concrete):
         return concrete
-    if isinstance(concrete, ConcreteGrade):
-        return concrete.value
     if isinstance(concrete, str):
         return Concrete(concrete)
 
@@ -561,37 +547,12 @@ class Reinforcement:
         )
 
 
-class ReinforcementGrade(Enum):
-    """Enumeration of standard Eurocode 2 reinforcement steel grades.
-
-    Each member represents a reinforcement grade with its associated properties.
-    """
-
-    A400NR = Reinforcement("A400NR")
-    A500NR = Reinforcement("A500NR")
-    A500EL = Reinforcement("A500EL")
-    A400NRSD = Reinforcement("A400NRSD")
-    A500NRSD = Reinforcement("A500NRSD")
-    B400A = Reinforcement("B400A")
-    B400B = Reinforcement("B400B")
-    B400C = Reinforcement("B400C")
-    B500A = Reinforcement("B500A")
-    B500B = Reinforcement("B500B")
-    B500C = Reinforcement("B500C")
-    B600A = Reinforcement("B600A")
-    B600B = Reinforcement("B600B")
-    B600C = Reinforcement("B600C")
-    B700A = Reinforcement("B700A")
-    B700B = Reinforcement("B700B")
-    B700C = Reinforcement("B700C")
-
-
 ReinforcementGrades = {item: Reinforcement(item)
             for item in dbase.ReinforcementGrades}
 
 
 def get_reinforcement(
-    reinforcement: str | Reinforcement | ReinforcementGrade,
+    reinforcement: str | Reinforcement,
 ) -> Reinforcement:
     """Return a Reinforcement object from string, Reinforcement, or ReinforcementGrade.
 
@@ -614,8 +575,7 @@ def get_reinforcement(
     """
     if isinstance(reinforcement, Reinforcement):
         return reinforcement
-    if isinstance(reinforcement, ReinforcementGrade):
-        return reinforcement.value
+
     if isinstance(reinforcement, str):
         return Reinforcement(reinforcement)
 
@@ -725,6 +685,43 @@ class Prestress:
             f"d = {self.d} mm, Ap = {self.Ap} cm², fpd = {self.fpd} MPa)"
         )
 
+
+C20_25 = Concrete("C20/25")
+C25_30 = Concrete("C25/30")
+C30_37 = Concrete("C30/37")
+C35_45 = Concrete("C35/45")
+C40_50 = Concrete("C40/50")
+C45_55 = Concrete("C45/55")
+C50_60 = Concrete("C50/60")
+C55_67 = Concrete("C55/67")
+C60_75 = Concrete("C60/75")
+C70_85 = Concrete("C70/85")
+C80_95 = Concrete("C80/95")
+C90_105 = Concrete("C90/105")
+
+A400NR = Reinforcement("A400NR")
+A500NR = Reinforcement("A500NR")
+A500EL = Reinforcement("A500EL")
+A400NRSD = Reinforcement("A400NRSD")
+A500NRSD = Reinforcement("A500NRSD")
+B400A = Reinforcement("B400A")
+B400B = Reinforcement("B400B")
+B400C = Reinforcement("B400C")
+B500A = Reinforcement("B500A")
+B500B = Reinforcement("B500B")
+B500C = Reinforcement("B500C")
+B600A = Reinforcement("B600A")
+B600B = Reinforcement("B600B")
+B600C = Reinforcement("B600C")
+B700A = Reinforcement("B700A")
+B700B = Reinforcement("B700B")
+B700C = Reinforcement("B700C")
+
+Y1770S7_16_0a = Prestress("Y1770S7 16.0a")
+Y1860S7_12_5a = Prestress("Y1860S7 12.5a")
+Y1860S7_13_0a = Prestress("Y1860S7 13.0a")
+Y1860S7_15_2a = Prestress("Y1860S7 15.2a")
+Y1860S7_16_0a = Prestress("Y1860S7 16.0a")
 
 def beta_cc(t: float, s: float = 0.25) -> float:
     """Calculate the strength hardening coefficient.
@@ -924,3 +921,49 @@ def calc_shrink_strain(params: ShrinkStrainParams) -> float:
     beta_ds = (t - ts) / ((t - ts) + 0.4 * h0**1.5)
 
     return beta_as * eps_ca + beta_ds * eps_cd
+
+
+def sigma_c(epsilon: float | np.ndarray, conc: Concrete,
+            method: ConcreteStressCurve) -> float | np.ndarray:
+    """Stress value from epsilon.
+
+    Args:
+        epsilon (float | np.ndarray): the deformation (positive compression)
+        conc (Concrete): the concrete object
+        method (ConcreteStressCurve): the curve
+
+    Raises:
+        ValueError: If an invalid concrete stress-strain curve is provided.
+
+    Returns:
+        The concrete stress.
+
+    """
+    epsilon = np.asarray(epsilon)
+
+    if method is ConcreteStressCurve.Parabole:
+        sigc = 0.0
+    elif method is ConcreteStressCurve.ParaboleRectangle:
+        eps_c2 = conc.eps_c2
+        eps_cu2 = conc.eps_cu2
+        n = conc.n
+        sigc = np.where(
+            epsilon <= eps_c2,
+            conc.fcd * (2 * (epsilon / eps_c2) - (epsilon / eps_c2) ** n),
+            np.where(
+                epsilon <= eps_cu2,
+                conc.fcd,
+                0.0,
+                ),
+            )
+    elif method is ConcreteStressCurve.Rectangle:
+        eps_cu2 = conc.eps_cu2
+        sigc = np.where(
+            epsilon <= eps_cu2,
+            conc.fcd,
+            0.0,
+            )
+    else:
+        msg = "Invalid concrete stress-strain curve."
+        raise ValueError(msg)
+    return sigc
