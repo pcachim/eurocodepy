@@ -1,0 +1,3476 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../../../ec5/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>bending - Documentation for EurocodePy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eurocodepy.ec3.uls.bending" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Documentation for EurocodePy" class="md-header__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation for EurocodePy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              bending
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Documentation for EurocodePy" class="md-nav__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation for EurocodePy
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EurocodePy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC5
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC7
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC8
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utils
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Code Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Code Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    eurocodepy
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            eurocodepy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dbase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbase
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec1
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_2" id="__nav_4_1_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            ec1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/combos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    combos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/forces%20copy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    forces copy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/forces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    forces
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/snow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    snow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/stresses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stresses
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_2_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec1/wind/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    wind
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_2_6" id="__nav_4_1_2_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            wind
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/wind/pressure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    pressure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec2
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_3" id="__nav_4_1_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            ec2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/fire/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    fire
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_3_1" id="__nav_4_1_3_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            fire
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/fire/fire_base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fire_base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_3_3" id="__nav_4_1_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/sls/crack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/sls/creep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    creep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/sls/shrinkage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shrinkage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_3_4" id="__nav_4_1_3_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/beam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    beam
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/bend_circ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bend_circ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec3
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_4" id="__nav_4_1_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            ec3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_4_2" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_4_2" id="__nav_4_1_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending" class="md-nav__link">
+    <span class="md-ellipsis">
+      bending
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_chi_lt" class="md-nav__link">
+    <span class="md-ellipsis">
+      calculate_chi_lt
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="calculate_chi_lt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_chi_lt--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_chi_lt--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_lateral_torsional_buckling_factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      calculate_lateral_torsional_buckling_factor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="calculate_lateral_torsional_buckling_factor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_lateral_torsional_buckling_factor--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_lateral_torsional_buckling_factor--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_mc_elastic" class="md-nav__link">
+    <span class="md-ellipsis">
+      calculate_mc_elastic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="calculate_mc_elastic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_mc_elastic--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_mc_elastic--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      calculate_moment_capacity_class1_2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="calculate_moment_capacity_class1_2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class1_2--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class1_2--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class3" class="md-nav__link">
+    <span class="md-ellipsis">
+      calculate_moment_capacity_class3
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="calculate_moment_capacity_class3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class3--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class3--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_bending_capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      check_bending_capacity
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="check_bending_capacity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_bending_capacity--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_bending_capacity--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_combined_bending_shear" class="md-nav__link">
+    <span class="md-ellipsis">
+      check_combined_bending_shear
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="check_combined_bending_shear">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_combined_bending_shear--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_combined_bending_shear--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.design_bending_check" class="md-nav__link">
+    <span class="md-ellipsis">
+      design_bending_check
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="design_bending_check">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.design_bending_check--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.design_bending_check--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec5
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_5" id="__nav_4_1_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            ec5
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_5_2" id="__nav_4_1_5_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/sls/deformation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    deformation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/sls/vibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    vibration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_5_3" id="__nav_4_1_5_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_4_1_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec7/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec7
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_6" id="__nav_4_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            ec7
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/bearing_capacity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bearing_capacity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/earth_pressures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    earth_pressures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec8
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_7" id="__nav_4_1_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            ec8
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec8/spectrum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    spectrum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../national_parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    national_parameters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    units
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../utils/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    utils
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1_10" id="__nav_4_1_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_10">
+            <span class="md-nav__icon md-icon"></span>
+            utils
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/crosssection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crosssection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/section_properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    section_properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/stress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stress
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../copyright/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Copyright & contributing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending" class="md-nav__link">
+    <span class="md-ellipsis">
+      bending
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_chi_lt" class="md-nav__link">
+    <span class="md-ellipsis">
+      calculate_chi_lt
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="calculate_chi_lt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_chi_lt--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_chi_lt--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_lateral_torsional_buckling_factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      calculate_lateral_torsional_buckling_factor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="calculate_lateral_torsional_buckling_factor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_lateral_torsional_buckling_factor--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_lateral_torsional_buckling_factor--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_mc_elastic" class="md-nav__link">
+    <span class="md-ellipsis">
+      calculate_mc_elastic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="calculate_mc_elastic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_mc_elastic--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_mc_elastic--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      calculate_moment_capacity_class1_2
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="calculate_moment_capacity_class1_2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class1_2--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class1_2--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class3" class="md-nav__link">
+    <span class="md-ellipsis">
+      calculate_moment_capacity_class3
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="calculate_moment_capacity_class3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class3--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.calculate_moment_capacity_class3--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_bending_capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      check_bending_capacity
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="check_bending_capacity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_bending_capacity--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_bending_capacity--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_combined_bending_shear" class="md-nav__link">
+    <span class="md-ellipsis">
+      check_combined_bending_shear
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="check_combined_bending_shear">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_combined_bending_shear--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.check_combined_bending_shear--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.design_bending_check" class="md-nav__link">
+    <span class="md-ellipsis">
+      design_bending_check
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="design_bending_check">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.design_bending_check--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.bending.design_bending_check--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>bending</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="eurocodepy.ec3.uls.bending"></a>
+    <div class="doc doc-contents first">
+
+        <p>Eurocode 3 - Steel Design - ULS Bending Design Functions.</p>
+<p>This module provides functions for the design of steel profiles under bending
+according to Eurocode 3 (EN 1993-1-1).</p>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.bending.calculate_chi_lt" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calculate_chi_lt</span><span class="p">(</span><span class="n">slenderness_lt</span><span class="p">,</span> <span class="n">moment_class</span><span class="o">=</span><span class="s1">&#39;class1&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculate lateral-torsional buckling reduction coefficient.</p>
+<h4 id="eurocodepy.ec3.uls.bending.calculate_chi_lt--parameters">Parameters</h4>
+<p>slenderness_lt : float
+    Lateral-torsional slenderness (dimensionless)
+moment_class : str, optional
+    Section class (default: "class1")</p>
+<h4 id="eurocodepy.ec3.uls.bending.calculate_chi_lt--returns">Returns</h4>
+<p>float
+    Lateral-torsional buckling reduction coefficient χLT</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/bending.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calculate_chi_lt</span><span class="p">(</span><span class="n">slenderness_lt</span><span class="p">,</span> <span class="n">moment_class</span><span class="o">=</span><span class="s2">&quot;class1&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate lateral-torsional buckling reduction coefficient.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    slenderness_lt : float</span>
+<span class="sd">        Lateral-torsional slenderness (dimensionless)</span>
+<span class="sd">    moment_class : str, optional</span>
+<span class="sd">        Section class (default: &quot;class1&quot;)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Lateral-torsional buckling reduction coefficient χLT</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">slenderness_lt</span> <span class="o">&lt;=</span> <span class="mf">0.4</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">1.0</span>
+
+    <span class="c1"># Imperfection factor for different section types</span>
+    <span class="n">imperfection_factors</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;class1&quot;</span><span class="p">:</span> <span class="mf">0.21</span><span class="p">,</span>  <span class="c1"># H sections</span>
+        <span class="s2">&quot;class2&quot;</span><span class="p">:</span> <span class="mf">0.21</span><span class="p">,</span>
+        <span class="s2">&quot;class3&quot;</span><span class="p">:</span> <span class="mf">0.24</span><span class="p">,</span>  <span class="c1"># Rolled sections</span>
+        <span class="s2">&quot;class4&quot;</span><span class="p">:</span> <span class="mf">0.21</span>
+    <span class="p">}</span>
+
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">imperfection_factors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">moment_class</span><span class="p">,</span> <span class="mf">0.21</span><span class="p">)</span>
+    <span class="n">lambda_bar</span> <span class="o">=</span> <span class="n">slenderness_lt</span>
+
+    <span class="c1"># EC3 lateral-torsional buckling formula</span>
+    <span class="n">phi_lt</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">lambda_bar</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span> <span class="o">+</span> <span class="n">lambda_bar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">chi_lt</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">phi_lt</span> <span class="o">+</span> <span class="p">(</span><span class="n">phi_lt</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">lambda_bar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">chi_lt</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.bending.calculate_lateral_torsional_buckling_factor" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calculate_lateral_torsional_buckling_factor</span><span class="p">(</span><span class="n">moment_distribution</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculate lateral-torsional buckling reduction factor based on moment distribution.</p>
+<h4 id="eurocodepy.ec3.uls.bending.calculate_lateral_torsional_buckling_factor--parameters">Parameters</h4>
+<p>moment_distribution : str, optional
+    Type of moment distribution: "uniform", "linear", "triangular" (default: "uniform")</p>
+<h4 id="eurocodepy.ec3.uls.bending.calculate_lateral_torsional_buckling_factor--returns">Returns</h4>
+<p>float
+    Correction factor C1 for lateral-torsional buckling</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/bending.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calculate_lateral_torsional_buckling_factor</span><span class="p">(</span><span class="n">moment_distribution</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate lateral-torsional buckling reduction factor based on moment distribution.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    moment_distribution : str, optional</span>
+<span class="sd">        Type of moment distribution: &quot;uniform&quot;, &quot;linear&quot;, &quot;triangular&quot; (default: &quot;uniform&quot;)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Correction factor C1 for lateral-torsional buckling</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">factors</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;uniform&quot;</span><span class="p">:</span> <span class="mf">1.00</span><span class="p">,</span>
+        <span class="s2">&quot;linear&quot;</span><span class="p">:</span> <span class="mf">1.30</span><span class="p">,</span>
+        <span class="s2">&quot;triangular&quot;</span><span class="p">:</span> <span class="mf">1.85</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">factors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">moment_distribution</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.bending.calculate_mc_elastic" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calculate_mc_elastic</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span> <span class="n">iy</span><span class="p">,</span> <span class="n">l_c</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculate elastic critical moment for lateral-torsional buckling.</p>
+<h4 id="eurocodepy.ec3.uls.bending.calculate_mc_elastic--parameters">Parameters</h4>
+<p>fy : float
+    Yield strength (MPa)
+iy : float
+    Second moment of inertia about y-axis (cm4)
+l_c : float
+    Length of compression zone (m)</p>
+<h4 id="eurocodepy.ec3.uls.bending.calculate_mc_elastic--returns">Returns</h4>
+<p>float
+    Elastic critical moment (kNm)</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/bending.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calculate_mc_elastic</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span> <span class="n">iy</span><span class="p">,</span> <span class="n">l_c</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate elastic critical moment for lateral-torsional buckling.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fy : float</span>
+<span class="sd">        Yield strength (MPa)</span>
+<span class="sd">    iy : float</span>
+<span class="sd">        Second moment of inertia about y-axis (cm4)</span>
+<span class="sd">    l_c : float</span>
+<span class="sd">        Length of compression zone (m)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Elastic critical moment (kNm)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Simplified formula for elastic critical moment</span>
+    <span class="c1"># Mcr = π/Lc * sqrt(EIy * GIt)</span>
+    <span class="c1"># This is a simplified version without considering torsional properties</span>
+    <span class="n">e_modulus</span> <span class="o">=</span> <span class="mi">210000</span>  <span class="c1"># MPa</span>
+    <span class="n">mcr</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.14159</span> <span class="o">/</span> <span class="n">l_c</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">e_modulus</span> <span class="o">*</span> <span class="n">iy</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-7</span>  <span class="c1"># Convert to kNm</span>
+    <span class="k">return</span> <span class="n">mcr</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.bending.calculate_moment_capacity_class1_2" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calculate_moment_capacity_class1_2</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span> <span class="n">w_pl</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculate moment capacity for Class 1 and 2 sections (plastic moment).</p>
+<h4 id="eurocodepy.ec3.uls.bending.calculate_moment_capacity_class1_2--parameters">Parameters</h4>
+<p>fy : float
+    Yield strength (MPa)
+w_pl : float
+    Plastic section modulus (cm3)</p>
+<h4 id="eurocodepy.ec3.uls.bending.calculate_moment_capacity_class1_2--returns">Returns</h4>
+<p>float
+    Plastic moment capacity (kNm)</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/bending.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calculate_moment_capacity_class1_2</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span> <span class="n">w_pl</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate moment capacity for Class 1 and 2 sections (plastic moment).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fy : float</span>
+<span class="sd">        Yield strength (MPa)</span>
+<span class="sd">    w_pl : float</span>
+<span class="sd">        Plastic section modulus (cm3)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Plastic moment capacity (kNm)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Mp = fy * Wpl (converted from cm3 to m3)</span>
+    <span class="n">m_pl</span> <span class="o">=</span> <span class="n">fy</span> <span class="o">*</span> <span class="n">w_pl</span> <span class="o">*</span> <span class="mf">1e-3</span>  <span class="c1"># Convert to kNm</span>
+    <span class="k">return</span> <span class="n">m_pl</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.bending.calculate_moment_capacity_class3" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calculate_moment_capacity_class3</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span> <span class="n">w_el</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Calculate moment capacity for Class 3 sections (elastic moment).</p>
+<h4 id="eurocodepy.ec3.uls.bending.calculate_moment_capacity_class3--parameters">Parameters</h4>
+<p>fy : float
+    Yield strength (MPa)
+w_el : float
+    Elastic section modulus (cm3)</p>
+<h4 id="eurocodepy.ec3.uls.bending.calculate_moment_capacity_class3--returns">Returns</h4>
+<p>float
+    Elastic moment capacity (kNm)</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/bending.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calculate_moment_capacity_class3</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span> <span class="n">w_el</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate moment capacity for Class 3 sections (elastic moment).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fy : float</span>
+<span class="sd">        Yield strength (MPa)</span>
+<span class="sd">    w_el : float</span>
+<span class="sd">        Elastic section modulus (cm3)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Elastic moment capacity (kNm)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Mel = fy * Wel (converted from cm3 to m3)</span>
+    <span class="n">m_el</span> <span class="o">=</span> <span class="n">fy</span> <span class="o">*</span> <span class="n">w_el</span> <span class="o">*</span> <span class="mf">1e-3</span>  <span class="c1"># Convert to kNm</span>
+    <span class="k">return</span> <span class="n">m_el</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.bending.check_bending_capacity" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">check_bending_capacity</span><span class="p">(</span><span class="n">moment</span><span class="p">,</span> <span class="n">moment_capacity</span><span class="p">,</span> <span class="n">gamma_m0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Check bending capacity utilization.</p>
+<h4 id="eurocodepy.ec3.uls.bending.check_bending_capacity--parameters">Parameters</h4>
+<p>moment : float
+    Design bending moment (kNm)
+moment_capacity : float
+    Bending moment capacity (kNm)
+gamma_m0 : float, optional
+    Partial factor for material (default: 1.0)</p>
+<h4 id="eurocodepy.ec3.uls.bending.check_bending_capacity--returns">Returns</h4>
+<p>dict
+    Dictionary with utilization ratio and status</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/bending.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_bending_capacity</span><span class="p">(</span><span class="n">moment</span><span class="p">,</span> <span class="n">moment_capacity</span><span class="p">,</span> <span class="n">gamma_m0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check bending capacity utilization.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    moment : float</span>
+<span class="sd">        Design bending moment (kNm)</span>
+<span class="sd">    moment_capacity : float</span>
+<span class="sd">        Bending moment capacity (kNm)</span>
+<span class="sd">    gamma_m0 : float, optional</span>
+<span class="sd">        Partial factor for material (default: 1.0)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Dictionary with utilization ratio and status</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">utilization</span> <span class="o">=</span> <span class="n">moment</span> <span class="o">/</span> <span class="p">(</span><span class="n">moment_capacity</span> <span class="o">/</span> <span class="n">gamma_m0</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;OK&quot;</span> <span class="k">if</span> <span class="n">utilization</span> <span class="o">&lt;=</span> <span class="mf">1.0</span> <span class="k">else</span> <span class="s2">&quot;FAIL&quot;</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;utilization&quot;</span><span class="p">:</span> <span class="n">utilization</span><span class="p">,</span>
+        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+        <span class="s2">&quot;demand&quot;</span><span class="p">:</span> <span class="n">moment</span><span class="p">,</span>
+        <span class="s2">&quot;capacity&quot;</span><span class="p">:</span> <span class="n">moment_capacity</span> <span class="o">/</span> <span class="n">gamma_m0</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.bending.check_combined_bending_shear" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">check_combined_bending_shear</span><span class="p">(</span><span class="n">moment_demand</span><span class="p">,</span> <span class="n">moment_capacity</span><span class="p">,</span> <span class="n">shear_demand</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear_capacity</span><span class="o">=</span><span class="mf">10000000000.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Check combined bending and shear interaction.</p>
+<h4 id="eurocodepy.ec3.uls.bending.check_combined_bending_shear--parameters">Parameters</h4>
+<p>moment_demand : float
+    Design bending moment (kNm)
+moment_capacity : float
+    Bending moment capacity (kNm)
+shear_demand : float, optional
+    Design shear force (kN, default: 0)
+shear_capacity : float, optional
+    Shear capacity (kN, default: very large)</p>
+<h4 id="eurocodepy.ec3.uls.bending.check_combined_bending_shear--returns">Returns</h4>
+<p>dict
+    Dictionary with utilization ratios and status</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/bending.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_combined_bending_shear</span><span class="p">(</span><span class="n">moment_demand</span><span class="p">,</span> <span class="n">moment_capacity</span><span class="p">,</span> <span class="n">shear_demand</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear_capacity</span><span class="o">=</span><span class="mf">1e10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check combined bending and shear interaction.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    moment_demand : float</span>
+<span class="sd">        Design bending moment (kNm)</span>
+<span class="sd">    moment_capacity : float</span>
+<span class="sd">        Bending moment capacity (kNm)</span>
+<span class="sd">    shear_demand : float, optional</span>
+<span class="sd">        Design shear force (kN, default: 0)</span>
+<span class="sd">    shear_capacity : float, optional</span>
+<span class="sd">        Shear capacity (kN, default: very large)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Dictionary with utilization ratios and status</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">util_moment</span> <span class="o">=</span> <span class="n">moment_demand</span> <span class="o">/</span> <span class="n">moment_capacity</span> <span class="k">if</span> <span class="n">moment_capacity</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">util_shear</span> <span class="o">=</span> <span class="n">shear_demand</span> <span class="o">/</span> <span class="n">shear_capacity</span> <span class="k">if</span> <span class="n">shear_capacity</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># If shear utilization &gt; 0.5, reduce moment capacity</span>
+    <span class="k">if</span> <span class="n">util_shear</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="n">reduced_moment_capacity</span> <span class="o">=</span> <span class="n">moment_capacity</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">util_shear</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">util_moment</span> <span class="o">=</span> <span class="n">moment_demand</span> <span class="o">/</span> <span class="n">reduced_moment_capacity</span>
+
+    <span class="n">combined_util</span> <span class="o">=</span> <span class="n">util_moment</span> <span class="o">+</span> <span class="n">util_shear</span> <span class="o">*</span> <span class="mf">0.5</span>  <span class="c1"># Simplified interaction</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;OK&quot;</span> <span class="k">if</span> <span class="n">combined_util</span> <span class="o">&lt;=</span> <span class="mf">1.0</span> <span class="k">else</span> <span class="s2">&quot;FAIL&quot;</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;moment_utilization&quot;</span><span class="p">:</span> <span class="n">util_moment</span><span class="p">,</span>
+        <span class="s2">&quot;shear_utilization&quot;</span><span class="p">:</span> <span class="n">util_shear</span><span class="p">,</span>
+        <span class="s2">&quot;combined_utilization&quot;</span><span class="p">:</span> <span class="n">combined_util</span><span class="p">,</span>
+        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">status</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.bending.design_bending_check" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">design_bending_check</span><span class="p">(</span><span class="n">moment_demand</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">w_pl</span><span class="p">,</span> <span class="n">w_el</span><span class="p">,</span> <span class="n">section_class</span><span class="p">,</span> <span class="n">l_c</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gamma_m0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Perform complete bending design check according to EC3.</p>
+<h4 id="eurocodepy.ec3.uls.bending.design_bending_check--parameters">Parameters</h4>
+<p>moment_demand : float
+    Design bending moment (kNm)
+fy : float
+    Yield strength (MPa)
+w_pl : float
+    Plastic section modulus (cm3)
+w_el : float
+    Elastic section modulus (cm3)
+section_class : int
+    Cross-section class (1, 2, 3, or 4)
+l_c : float, optional
+    Length of compression zone (m, for LT buckling check)
+gamma_m0 : float, optional
+    Partial factor for material (default: 1.0)</p>
+<h4 id="eurocodepy.ec3.uls.bending.design_bending_check--returns">Returns</h4>
+<p>dict
+    Comprehensive design check results</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/bending.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">design_bending_check</span><span class="p">(</span><span class="n">moment_demand</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">w_pl</span><span class="p">,</span> <span class="n">w_el</span><span class="p">,</span> <span class="n">section_class</span><span class="p">,</span> <span class="n">l_c</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gamma_m0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform complete bending design check according to EC3.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    moment_demand : float</span>
+<span class="sd">        Design bending moment (kNm)</span>
+<span class="sd">    fy : float</span>
+<span class="sd">        Yield strength (MPa)</span>
+<span class="sd">    w_pl : float</span>
+<span class="sd">        Plastic section modulus (cm3)</span>
+<span class="sd">    w_el : float</span>
+<span class="sd">        Elastic section modulus (cm3)</span>
+<span class="sd">    section_class : int</span>
+<span class="sd">        Cross-section class (1, 2, 3, or 4)</span>
+<span class="sd">    l_c : float, optional</span>
+<span class="sd">        Length of compression zone (m, for LT buckling check)</span>
+<span class="sd">    gamma_m0 : float, optional</span>
+<span class="sd">        Partial factor for material (default: 1.0)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Comprehensive design check results</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Calculate moment capacity based on section class</span>
+    <span class="k">if</span> <span class="n">section_class</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">moment_capacity</span> <span class="o">=</span> <span class="n">calculate_moment_capacity_class1_2</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span> <span class="n">w_pl</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">moment_capacity</span> <span class="o">=</span> <span class="n">calculate_moment_capacity_class3</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span> <span class="n">w_el</span><span class="p">)</span>
+
+    <span class="c1"># Basic bending check</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">check_bending_capacity</span><span class="p">(</span><span class="n">moment_demand</span><span class="p">,</span> <span class="n">moment_capacity</span><span class="p">,</span> <span class="n">gamma_m0</span><span class="p">)</span>
+
+    <span class="c1"># Add section class info</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;section_class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">section_class</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;moment_capacity_used&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">moment_capacity</span> <span class="k">if</span> <span class="n">section_class</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../../..", "features": [], "search": "../../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

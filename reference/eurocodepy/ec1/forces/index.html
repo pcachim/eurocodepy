@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../section_properties/">
+        <link rel="prev" href="../forces%20copy/">
       
       
-        <link rel="next" href="../../../../copyright/">
+        <link rel="next" href="../snow/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>stress - Documentation for EurocodePy</title>
+        <title>forces - Documentation for EurocodePy</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#eurocodepy.utils.stress" class="md-skip">
+        <a href="#eurocodepy.ec1.forces" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              stress
+              forces
             
           </span>
         </div>
@@ -553,22 +553,24 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_2" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../ec1/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -587,7 +589,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_1_2">
             <span class="md-nav__icon md-icon"></span>
             ec1
@@ -601,7 +603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ec1/combos/" class="md-nav__link">
+      <a href="../combos/" class="md-nav__link">
         
   
   
@@ -624,7 +626,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ec1/forces%20copy/" class="md-nav__link">
+      <a href="../forces%20copy/" class="md-nav__link">
         
   
   
@@ -644,10 +646,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../ec1/forces/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    forces
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -658,6 +680,66 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec1.forces" class="md-nav__link">
+    <span class="md-ellipsis">
+      forces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec1.forces.BaseForce" class="md-nav__link">
+    <span class="md-ellipsis">
+      BaseForce
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseForce">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec1.forces.BaseForce.merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      merge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec1.forces.combine" class="md-nav__link">
+    <span class="md-ellipsis">
+      combine
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -670,7 +752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ec1/snow/" class="md-nav__link">
+      <a href="../snow/" class="md-nav__link">
         
   
   
@@ -693,7 +775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ec1/stresses/" class="md-nav__link">
+      <a href="../stresses/" class="md-nav__link">
         
   
   
@@ -728,7 +810,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../ec1/wind/" class="md-nav__link ">
+            <a href="../wind/" class="md-nav__link ">
               
   
   
@@ -761,7 +843,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ec1/wind/pressure/" class="md-nav__link">
+      <a href="../wind/pressure/" class="md-nav__link">
         
   
   
@@ -1909,24 +1991,22 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_10" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_10" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../utils/" class="md-nav__link ">
               
   
   
@@ -1945,7 +2025,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_10_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_10_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_1_10">
             <span class="md-nav__icon md-icon"></span>
             utils
@@ -1959,7 +2039,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../crosssection/" class="md-nav__link">
+      <a href="../../utils/crosssection/" class="md-nav__link">
         
   
   
@@ -1982,7 +2062,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../section_properties/" class="md-nav__link">
+      <a href="../../utils/section_properties/" class="md-nav__link">
         
   
   
@@ -2002,30 +2082,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    stress
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../utils/stress/" class="md-nav__link">
         
   
   
@@ -2036,78 +2096,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress" class="md-nav__link">
-    <span class="md-ellipsis">
-      stress
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress.FailureCriteria" class="md-nav__link">
-    <span class="md-ellipsis">
-      FailureCriteria
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress.Invariant" class="md-nav__link">
-    <span class="md-ellipsis">
-      Invariant
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress.invariants" class="md-nav__link">
-    <span class="md-ellipsis">
-      invariants
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress.principal_vectors" class="md-nav__link">
-    <span class="md-ellipsis">
-      principal_vectors
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress.principals" class="md-nav__link">
-    <span class="md-ellipsis">
-      principals
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2183,54 +2171,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress" class="md-nav__link">
+  <a href="#eurocodepy.ec1.forces" class="md-nav__link">
     <span class="md-ellipsis">
-      stress
+      forces
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress.FailureCriteria" class="md-nav__link">
+  <a href="#eurocodepy.ec1.forces.BaseForce" class="md-nav__link">
     <span class="md-ellipsis">
-      FailureCriteria
+      BaseForce
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BaseForce">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec1.forces.BaseForce.merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      merge
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress.Invariant" class="md-nav__link">
-    <span class="md-ellipsis">
-      Invariant
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress.invariants" class="md-nav__link">
+  <a href="#eurocodepy.ec1.forces.combine" class="md-nav__link">
     <span class="md-ellipsis">
-      invariants
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress.principal_vectors" class="md-nav__link">
-    <span class="md-ellipsis">
-      principal_vectors
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#eurocodepy.utils.stress.principals" class="md-nav__link">
-    <span class="md-ellipsis">
-      principals
+      combine
     </span>
   </a>
   
@@ -2252,13 +2228,13 @@
 
 
 
-  <h1>stress</h1>
+  <h1>forces</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<a id="eurocodepy.utils.stress"></a>
+<a id="eurocodepy.ec1.forces"></a>
     <div class="doc doc-contents first">
 
 
@@ -2282,20 +2258,27 @@
 
 
 
-<h2 id="eurocodepy.utils.stress.FailureCriteria" class="doc doc-heading">
-            <code>FailureCriteria</code>
+<h2 id="eurocodepy.ec1.forces.BaseForce" class="doc doc-heading">
+            <code>BaseForce</code>
 
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
 
 </h2>
 
 
     <div class="doc doc-contents ">
-            <p class="doc doc-class-bases">
-              Bases: <code><span title="enum.Enum">Enum</span></code></p>
 
 
-        <p>Enum for failure criteria.</p>
+        <p>Generic vectorised structural force container.</p>
 
+
+<details class="internal-representation" open>
+  <summary>Internal representation</summary>
+  <p>forces → (n_components, n_cases)</p>
+</details>
 
 
 
@@ -2303,285 +2286,88 @@
 
 
               <details class="quote">
-                <summary>Source code in <code>eurocodepy/utils/stress.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FailureCriteria</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enum for failure criteria.&quot;&quot;&quot;</span>
-
-    <span class="n">MOHR_COULOMB</span> <span class="o">=</span> <span class="s2">&quot;Mohr-Coulomb&quot;</span>
-    <span class="n">MOHR_CIRCLE</span> <span class="o">=</span> <span class="s2">&quot;Mohr Circle&quot;</span>
-    <span class="n">MAX_SHEAR</span> <span class="o">=</span> <span class="s2">&quot;Max Shear Stress&quot;</span>
-    <span class="n">MAX_PRINCIPAL</span> <span class="o">=</span> <span class="s2">&quot;Max Principal Stress&quot;</span>
-    <span class="n">MIN_PRINCIPAL</span> <span class="o">=</span> <span class="s2">&quot;Min Principal Stress&quot;</span>
-    <span class="n">ELLIPTIC</span> <span class="o">=</span> <span class="s2">&quot;Elliptic&quot;</span>
-    <span class="n">HENCKY</span> <span class="o">=</span> <span class="s2">&quot;Hencky&quot;</span>
-    <span class="n">RANKINE</span> <span class="o">=</span> <span class="s2">&quot;Rankine&quot;</span>
-    <span class="n">VON_MISES</span> <span class="o">=</span> <span class="s2">&quot;Von Mises&quot;</span>
-    <span class="n">TREFFTZ</span> <span class="o">=</span> <span class="s2">&quot;Trefftz&quot;</span>
-    <span class="n">CONCRETE</span> <span class="o">=</span> <span class="s2">&quot;Concrete&quot;</span>
-</code></pre></div></td></tr></table></div>
-              </details>
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-class">
-
-
-
-<h2 id="eurocodepy.utils.stress.Invariant" class="doc doc-heading">
-            <code>Invariant</code>
-
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-            <p class="doc doc-class-bases">
-              Bases: <code><span title="enum.Enum">Enum</span></code></p>
-
-
-        <p>Enum for stress invariants.</p>
-
-
-
-
-
-
-
-              <details class="quote">
-                <summary>Source code in <code>eurocodepy/utils/stress.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Invariant</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enum for stress invariants.&quot;&quot;&quot;</span>
-
-    <span class="n">I1</span> <span class="o">=</span> <span class="s2">&quot;I1&quot;</span>
-    <span class="n">J2</span> <span class="o">=</span> <span class="s2">&quot;J2&quot;</span>
-    <span class="n">J3</span> <span class="o">=</span> <span class="s2">&quot;J3&quot;</span>
-    <span class="n">MEAN_STRESS</span> <span class="o">=</span> <span class="s2">&quot;Mean Stress&quot;</span>
-    <span class="n">EQV_STRESS</span> <span class="o">=</span> <span class="s2">&quot;Equivalent Stress&quot;</span>
-    <span class="n">LODE_R</span> <span class="o">=</span> <span class="s2">&quot;Lode R&quot;</span>
-    <span class="n">LODE_Z</span> <span class="o">=</span> <span class="s2">&quot;Lode Z&quot;</span>
-    <span class="n">LODE_THETA</span> <span class="o">=</span> <span class="s2">&quot;Lode Theta&quot;</span>
-    <span class="n">COS3T</span> <span class="o">=</span> <span class="s2">&quot;Cos(3Theta)&quot;</span>
-    <span class="n">TRIAXIALITY</span> <span class="o">=</span> <span class="s2">&quot;Triaxiality&quot;</span>
-</code></pre></div></td></tr></table></div>
-              </details>
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="eurocodepy.utils.stress.invariants" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">invariants</span><span class="p">(</span><span class="n">sigxx</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">,</span> <span class="n">sigxy</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Calculate the stress invariants.</p>
-<p>Author. Paulo Cachim (2022)</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigxx</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress xx</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigyy</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress yy</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigzz</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress zz</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigxy</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress xy</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigyz</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress yz</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigzx</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress zx</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="tuple">tuple</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress invariants (list): I1, J2, J3, mean_stress, eqv_stress,
-            lode_r, lode_z, lode_theta, cos3t, triaxiality</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-            <details class="quote">
-              <summary>Source code in <code>eurocodepy/utils/stress.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 93</span>
+                <summary>Source code in <code>eurocodepy/ec1/forces.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
 <span class="normal"> 94</span>
 <span class="normal"> 95</span>
 <span class="normal"> 96</span>
@@ -2639,348 +2425,304 @@
 <span class="normal">148</span>
 <span class="normal">149</span>
 <span class="normal">150</span>
-<span class="normal">151</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">invariants</span><span class="p">(</span><span class="n">sigxx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-                        <span class="n">sigxy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the stress invariants.</span>
+<span class="normal">151</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BaseForce</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generic vectorised structural force container.</span>
 
-<span class="sd">    Author. Paulo Cachim (2022)</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        sigxx (float): stress xx</span>
-<span class="sd">        sigyy (float): stress yy</span>
-<span class="sd">        sigzz (float): stress zz</span>
-<span class="sd">        sigxy (float): stress xy</span>
-<span class="sd">        sigyz (float): stress yz</span>
-<span class="sd">        sigzx (float): stress zx</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        stress invariants (list): I1, J2, J3, mean_stress, eqv_stress,</span>
-<span class="sd">                        lode_r, lode_z, lode_theta, cos3t, triaxiality</span>
-
+<span class="sd">    Internal representation:</span>
+<span class="sd">        forces → (n_components, n_cases)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># stresses = [0.0,0.0,0.0,0.0,0.0,0.0]</span>
 
-    <span class="c1"># load the stresses into our matrix and compute the</span>
-    <span class="c1"># deviatoric and isotropic stress matricies</span>
-    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-                            <span class="p">[</span><span class="n">sigxx</span><span class="p">,</span> <span class="n">sigxy</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">],</span>
-                            <span class="p">[</span><span class="n">sigxy</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">],</span>
-                            <span class="p">[</span><span class="n">sigzx</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">]])</span>
-    <span class="n">sigma_iso</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">/</span> <span class="mf">3.0</span>
-    <span class="n">sigma_dev</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">-</span> <span class="n">sigma_iso</span>
+    <span class="n">forces</span><span class="p">:</span> <span class="n">NDArray</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">UnitSystem</span> <span class="o">=</span> <span class="n">Default</span>
 
-    <span class="c1"># # compute max shear stress</span>
-    <span class="c1"># maxshear = (max(eigvals)-min(eigvals))/2.0</span>
+    <span class="c1"># Must be defined in subclasses</span>
+    <span class="n">COMPONENTS</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">UNIT_TYPES</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">UnitType</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="p">()</span>
 
-    <span class="c1"># compute the stress invariants</span>
-    <span class="n">I1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
-    <span class="n">J2</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sigma_dev</span><span class="p">,</span> <span class="n">sigma_dev</span><span class="p">))</span>
-    <span class="n">J3</span> <span class="o">=</span> <span class="mf">0.33333333333333333</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sigma_dev</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sigma_dev</span><span class="p">,</span> <span class="n">sigma_dev</span><span class="p">)))</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="c1"># Shared Initializer</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">components</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">,</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">UnitSystem</span> <span class="o">=</span> <span class="n">Default</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
 
-    <span class="c1"># compute other common stress measures</span>
-    <span class="n">mean_stress</span> <span class="o">=</span> <span class="n">I1</span> <span class="o">/</span> <span class="mf">3.0</span>
-    <span class="n">eqv_stress</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">J2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">COMPONENTS</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> expects </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">COMPONENTS</span><span class="p">)</span><span class="si">}</span><span class="s2"> components.&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="n">msg</span>
+            <span class="p">)</span>
 
-    <span class="c1"># compute lode coordinates</span>
-    <span class="n">lode_r</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">J2</span><span class="p">)</span>
-    <span class="n">lode_z</span> <span class="o">=</span> <span class="n">I1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
+        <span class="n">arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">components</span><span class="p">]</span>
 
-    <span class="n">stresses</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">6.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">sigma_dev</span> <span class="o">/</span> <span class="n">lode_r</span><span class="p">)</span>
-    <span class="n">stresses</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">stresses</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">stresses</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">stresses</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">lode_theta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">asin</span><span class="p">(</span><span class="n">stresses</span><span class="p">)</span>
-    <span class="n">cos3t</span> <span class="o">=</span> <span class="mf">2.5980762114</span> <span class="o">*</span> <span class="n">J3</span> <span class="o">/</span> <span class="p">(</span><span class="n">J2</span><span class="o">**</span><span class="mf">1.5</span><span class="p">)</span>
+        <span class="c1"># Scalars → 1D</span>
+        <span class="n">arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">]</span>
 
-    <span class="c1"># compute the stress triaxiality</span>
-    <span class="n">triaxiality</span> <span class="o">=</span> <span class="n">mean_stress</span> <span class="o">/</span> <span class="n">eqv_stress</span>
+        <span class="c1"># Strict shape check</span>
+        <span class="n">shapes</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arrays</span> <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">}</span>
 
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">I1</span><span class="p">,</span> <span class="n">J2</span><span class="p">,</span> <span class="n">J3</span><span class="p">,</span> <span class="n">mean_stress</span><span class="p">,</span> <span class="n">eqv_stress</span><span class="p">,</span>
-        <span class="n">lode_r</span><span class="p">,</span> <span class="n">lode_z</span><span class="p">,</span> <span class="n">lode_theta</span><span class="p">,</span> <span class="n">cos3t</span><span class="p">,</span> <span class="n">triaxiality</span><span class="p">,</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shapes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;All components must have identical shape. Got </span><span class="si">{</span><span class="n">shapes</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="n">msg</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="k">if</span> <span class="n">shapes</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+
+        <span class="n">expanded</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">item</span><span class="p">())</span> <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">a</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arrays</span>
+        <span class="p">]</span>
+
+        <span class="n">forces</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">expanded</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">forces</span><span class="o">=</span><span class="n">forces</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="n">u</span><span class="p">)</span>
+
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="c1"># Load-case slicing</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">[:,</span> <span class="n">item</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">selected</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">selected</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">forces</span><span class="o">=</span><span class="n">selected</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="c1"># Envelope utilities</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">envelope_max</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span>
+            <span class="n">forces</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">u</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">envelope_min</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span>
+            <span class="n">forces</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">u</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a new BaseForce merged.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot combine different force types.&quot;</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">u</span><span class="p">:</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+
+        <span class="n">merged</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">forces</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">forces</span><span class="o">=</span><span class="n">merged</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">combine</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">one</span><span class="p">:</span> <span class="n">Self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">one</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot combine different force types.&quot;</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">one</span><span class="o">.</span><span class="n">u</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">u</span><span class="p">:</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="n">one</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+
+        <span class="n">merged</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">one</span><span class="o">.</span><span class="n">forces</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">forces</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">one</span><span class="p">)(</span><span class="n">forces</span><span class="o">=</span><span class="n">merged</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="n">one</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="c1"># Unit conversion (generic)</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unit_system</span><span class="p">:</span> <span class="n">UnitSystem</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">==</span> <span class="n">unit_system</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="n">unit_system</span><span class="p">,</span> <span class="n">ut</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ut</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">UNIT_TYPES</span>
+        <span class="p">])[:,</span> <span class="kc">None</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span>
+            <span class="n">forces</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">forces</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span>
+            <span class="n">u</span><span class="o">=</span><span class="n">unit_system</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="c1"># Number of load cases</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="c1"># Dynamic component properties</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">COMPONENTS</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">COMPONENTS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="eurocodepy.ec1.forces.BaseForce.merge" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">merge</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return a new BaseForce merged.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec1/forces.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a new BaseForce merged.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Cannot combine different force types.&quot;</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">u</span><span class="p">:</span>
+        <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">forces</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">forces</span><span class="o">=</span><span class="n">merged</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec1.forces.combine" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">combine</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Safely merge load cases from two force objects.</p>
+<ul>
+<li>Must be same class</li>
+<li>Units are matched automatically</li>
+<li>Concatenates load cases along axis=1</li>
+</ul>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec1/forces.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">combine</span><span class="p">(</span><span class="n">f1</span><span class="p">:</span> <span class="n">BaseForce</span><span class="p">,</span> <span class="n">f2</span><span class="p">:</span> <span class="n">BaseForce</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseForce</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Safely merge load cases from two force objects.</span>
+
+<span class="sd">    - Must be same class</span>
+<span class="sd">    - Units are matched automatically</span>
+<span class="sd">    - Concatenates load cases along axis=1</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: DOC201, DOC501</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">f2</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Cannot combine </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;with </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="n">msg</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Match units</span>
+    <span class="k">if</span> <span class="n">f1</span><span class="o">.</span><span class="n">u</span> <span class="o">!=</span> <span class="n">f2</span><span class="o">.</span><span class="n">u</span><span class="p">:</span>
+        <span class="n">f2</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">convert_to</span><span class="p">(</span><span class="n">f1</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
+
+    <span class="c1"># Safety check: same number of components</span>
+    <span class="k">if</span> <span class="n">f1</span><span class="o">.</span><span class="n">forces</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">f2</span><span class="o">.</span><span class="n">forces</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Force component mismatch.&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="n">msg</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">f1</span><span class="o">.</span><span class="n">forces</span><span class="p">,</span> <span class="n">f2</span><span class="o">.</span><span class="n">forces</span><span class="p">),</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
 
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="eurocodepy.utils.stress.principal_vectors" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">principal_vectors</span><span class="p">(</span><span class="n">sigxx</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">,</span> <span class="n">sigxy</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Calculate the princcipal vectors (size proportional to principal stresses).</p>
-<p>Author. Paulo Cachim (2022)</p>
-<p>Args:
-sigxx (float): stress xx
-sigyy (float): stress yy
-sigzz (float): stress zz
-sigxy (float): stress xy
-sigyz (float): stress yz
-sigzx (float): stress zx</p>
-<p>Returns:
-ndarray: an array of the principal vectors</p>
-
-
-            <details class="quote">
-              <summary>Source code in <code>eurocodepy/utils/stress.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">principal_vectors</span><span class="p">(</span><span class="n">sigxx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>  <span class="c1"># noqa: PLR0913</span>
-    <span class="n">sigxy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the princcipal vectors (size proportional to principal stresses).</span>
-
-<span class="sd">    Author. Paulo Cachim (2022)</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">    sigxx (float): stress xx</span>
-<span class="sd">    sigyy (float): stress yy</span>
-<span class="sd">    sigzz (float): stress zz</span>
-<span class="sd">    sigxy (float): stress xy</span>
-<span class="sd">    sigyz (float): stress yz</span>
-<span class="sd">    sigzx (float): stress zx</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">    ndarray: an array of the principal vectors</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">values</span><span class="p">,</span> <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-                    <span class="p">[</span><span class="n">sigxx</span><span class="p">,</span> <span class="n">sigxy</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">],</span>
-                    <span class="p">[</span><span class="n">sigxy</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">],</span>
-                    <span class="p">[</span><span class="n">sigzx</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">]]))</span>
-
-    <span class="k">return</span> <span class="n">vectors</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">vectors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-            <span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">vectors</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="eurocodepy.utils.stress.principals" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">principals</span><span class="p">(</span><span class="n">sigxx</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">,</span> <span class="n">sigxy</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Calculate the principal stresses and the normalized principal directions.</p>
-<p>Author. Paulo Cachim (2022).</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigxx</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress xx</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigyy</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress yy</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigzz</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress zz</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigxy</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress xy</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigyz</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress yz</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>sigzx</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>stress zx</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="tuple">tuple</span>[<span title="numpy.ndarray">ndarray</span>, <span title="numpy.ndarray">ndarray</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>tuple of ndarray: (principal stresses, normalized principal directions)</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-            <details class="quote">
-              <summary>Source code in <code>eurocodepy/utils/stress.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">principals</span><span class="p">(</span><span class="n">sigxx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>  <span class="c1"># noqa: PLR0913, PLR0917</span>
-            <span class="n">sigxy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the principal stresses and the normalized principal directions.</span>
-
-<span class="sd">    Author. Paulo Cachim (2022).</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        sigxx (float): stress xx</span>
-<span class="sd">        sigyy (float): stress yy</span>
-<span class="sd">        sigzz (float): stress zz</span>
-<span class="sd">        sigxy (float): stress xy</span>
-<span class="sd">        sigyz (float): stress yz</span>
-<span class="sd">        sigzx (float): stress zx</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        tuple of ndarray: (principal stresses, normalized principal directions)</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">sigxx</span><span class="p">,</span> <span class="n">sigxy</span><span class="p">,</span> <span class="n">sigzx</span><span class="p">],</span>
-                    <span class="p">[</span><span class="n">sigxy</span><span class="p">,</span> <span class="n">sigyy</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">],</span>
-                    <span class="p">[</span><span class="n">sigzx</span><span class="p">,</span> <span class="n">sigyz</span><span class="p">,</span> <span class="n">sigzz</span><span class="p">]]))</span>
-    <span class="k">return</span> <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span>
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">f1</span><span class="p">)(</span><span class="n">forces</span><span class="o">=</span><span class="n">merged</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="n">f1</span><span class="o">.</span><span class="n">u</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
