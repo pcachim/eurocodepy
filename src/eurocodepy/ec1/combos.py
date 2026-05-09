@@ -500,14 +500,14 @@ if __name__ == "__main__":
     # Example usage
     loads = Loads()
     loads.add(Load(name="G", load_type=LoadType.PERMANENT,gamma_fav=1.0, gamma_unf=1.35, psi0=0.0, psi1=0.0, psi2=0.0))
-    loads.add(Load(name="Q", load_type=LoadType.LIVE, gamma_fav=0.0, gamma_unf=1.5, psi0=0.0, psi1=0.0, psi2=0.0))
+    loads.add(Load(name="Q", load_type=LoadType.LIVE, gamma_fav=0.0, gamma_unf=1.5, psi0=0.6, psi1=0.0, psi2=0.3))
     loads.add(Load(name="WX", load_type=LoadType.WIND, gamma_fav=0.0, gamma_unf=1.5, psi0=0.6, psi1=0.2, psi2=0.0))
     loads.add(Load(name="WY", load_type=LoadType.WIND, gamma_fav=0.0, gamma_unf=1.5, psi0=0.6, psi1=0.2, psi2=0.0))
     # loads.add(Load(name="T", load_type=LoadType.TEMPERATURE, gamma_fav=0.0, gamma_unf=1.5, psi0=0.3, psi1=0.0, psi2=0.2))
     # loads.add(Load(name="Text", load_type=LoadType.TEMPERATURE, gamma_fav=0.0, gamma_unf=1.5, psi0=0.3, psi1=0.0, psi2=0.1))
-    loads.add(Load(name="S", load_type=LoadType.SNOW, gamma_fav=0.0, gamma_unf=1.5, psi0=0.5, psi1=0.2, psi2=0.0))
-    loads.add(Load(name="E", load_type=LoadType.EARTHQUAKE, gamma_fav=0.0, gamma_unf=1.0, psi0=0.0, psi1=0.0, psi2=0.0))
-    # loads.add(Load(name="E2", load_type=LoadType.EARTHQUAKE, gamma_fav=0.0, gamma_unf=1.0, psi0=0.0, psi1=0.0, psi2=0.0))
+    # loads.add(Load(name="S", load_type=LoadType.SNOW, gamma_fav=0.0, gamma_unf=1.5, psi0=0.5, psi1=0.2, psi2=0.0))
+    loads.add(Load(name="E1", load_type=LoadType.EARTHQUAKE, gamma_fav=0.0, gamma_unf=1.0, psi0=0.0, psi1=0.0, psi2=0.0))
+    loads.add(Load(name="E2", load_type=LoadType.EARTHQUAKE, gamma_fav=0.0, gamma_unf=1.0, psi0=0.0, psi1=0.0, psi2=0.0))
 
     # Calculate ULS and SLS combinations
     print("ULS Combinations:")  # noqa: T201
@@ -520,6 +520,5 @@ if __name__ == "__main__":
     sls_combinations = loads.get_SLS_combos()
     for key, combo in sls_combinations.items():
         print(key)  # noqa: T201
-        print(combo)  # noqa: T201
         for load_name, (__load, factor) in combo.factors.items():
             print(f"  {load_name}: {factor}")  # noqa: T201
