@@ -4,11 +4,11 @@
 import numpy as np
 
 from eurocodepy import utils
-from eurocodepy.ec2 import (
+from eurocodepy.ec2.materials import (
     Concrete,
-    ConcreteGrade,
+    ConcreteClass,
     Reinforcement,
-    ReinforcementGrade,
+    ReinforcementClass,
     get_concrete,
     get_reinforcement,
 )
@@ -83,8 +83,8 @@ def Ac_eff(b: float, d: float, x: float, h: float) -> float:
 
 def crack_opening(b: float, h: float, phi: float,
             As: np.ndarray, ds: np.ndarray, Asc: np.ndarray, dsc: np.ndarray,
-            conc: str | Concrete | ConcreteGrade,
-            reinf: str | Reinforcement | ReinforcementGrade,
+            conc: str | Concrete | ConcreteClass,
+            reinf: str | Reinforcement | ReinforcementClass,
             M: np.ndarray) -> float:
     """Calculate the crack opening of a reinforced cocnrete beam.
 
@@ -126,8 +126,8 @@ def crack_opening(b: float, h: float, phi: float,
 
 def is_cracked(b: float, h: float, As: np.ndarray, ds: np.ndarray,
             Asc: np.ndarray, dsc: np.ndarray,
-            conc: str | Concrete | ConcreteGrade,
-            reinf: str | Reinforcement | ReinforcementGrade,
+            conc: str | Concrete | ConcreteClass,
+            reinf: str | Reinforcement | ReinforcementClass,
             M: np.ndarray) -> bool[bool] | bool:
     """Calculate the crack opening of a reinforced cocnrete beam.
 

@@ -1,15 +1,17 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
 
-"""Eurocode 3 Steel Reinforcement Module.
+"""Eurocode 3 - Design of steel structures.
 
-This module provides classes and functions for Eurocode 3 steel reinforcement design.
-It includes properties for different steel grades and types, as well as profile classes.
+This module provides classes and functions for Eurocode 3 steel design.
+It includes properties for different steel grades and types, profile classes
+(I, CHS, RHS, SHS), bolts, welds, and connection checks.
 """
-from eurocodepy import dbase as dbase  # noqa: I001
+
+from eurocodepy import dbase as dbase
 from eurocodepy.ec3 import (
-    materials,  # noqa: F401
-    uls,  # noqa: F401
+    materials as materials,
+    uls as uls,
 )
 from eurocodepy.ec3.materials import (
     BoltGrade as BoltGrade,
@@ -39,3 +41,35 @@ from eurocodepy.ec3.materials import (
     WeldConnection as WeldConnection,
     WeldTypeEnum as WeldTypeEnum,
 )
+
+__all__ = [
+    "dbase",
+    "materials",
+    "uls",
+    "BoltGrade",
+    "Bolt",
+    "BoltGrades",
+    "BoltsEnum",
+    "Steel",
+    "SteelEnum",
+    "SteelSection",
+    "SteelPlate",
+    "BoltedConnection",
+    "PinnedConnection",
+    "PinnedConnectionDouble",
+    "ProfileCHS",
+    "ProfileI",
+    "ProfileRHS",
+    "ProfileSHS",
+    "ProfilesI",
+    "ProfilesCHS",
+    "ProfilesRHS",
+    "ProfilesSHS",
+    "ProfilesCHSEnum",
+    "ProfilesIEnum",
+    "ProfilesRHSEnum",
+    "ProfilesSHSEnum",
+    "Weld",
+    "WeldConnection",
+    "WeldTypeEnum",
+]
