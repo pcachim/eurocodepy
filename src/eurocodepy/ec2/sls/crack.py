@@ -1,5 +1,6 @@
 # Copyright (c) 2026 Paulo Cachim
 # SPDX-License-Identifier: MIT
+from __future__ import annotations
 
 import numpy as np
 
@@ -128,7 +129,7 @@ def is_cracked(b: float, h: float, As: np.ndarray, ds: np.ndarray,
             Asc: np.ndarray, dsc: np.ndarray,
             conc: str | Concrete | ConcreteClass,
             reinf: str | Reinforcement | ReinforcementClass,
-            M: np.ndarray) -> bool[bool] | bool:
+            M: np.ndarray) -> bool:
     """Calculate the crack opening of a reinforced cocnrete beam.
 
     Args:
