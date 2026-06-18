@@ -231,7 +231,10 @@ class Loads(UserDict):
         temperature_loads = self.find_by_type(LoadType.TEMPERATURE)
         wind_temp = list(product(wind_loads, temperature_loads))
         if len(wind_temp) == 0:
-            wind_temp = [{w} for w in wind_loads]
+            # Fall back to wind-only groups; if there are no wind loads either,
+            # keep a single empty group so live/snow/other variable loads are
+            # still combined (otherwise no combinations are generated at all).
+            wind_temp = [{w} for w in wind_loads] or [set()]
 
         combinations = {}
 
@@ -312,7 +315,10 @@ class Loads(UserDict):
         temperature_loads = self.find_by_type(LoadType.TEMPERATURE)
         wind_temp = list(product(wind_loads, temperature_loads))
         if len(wind_temp) == 0:
-            wind_temp = [{w} for w in wind_loads]
+            # Fall back to wind-only groups; if there are no wind loads either,
+            # keep a single empty group so live/snow/other variable loads are
+            # still combined (otherwise no combinations are generated at all).
+            wind_temp = [{w} for w in wind_loads] or [set()]
 
         combinations = {}
 
@@ -342,8 +348,8 @@ class Loads(UserDict):
                     combo.name += f"+{factor:.2f}_{_name}"
                     combo.factors[load.name] = (load, round(factor, 3))
 
-            if combo.name not in combinations:
-                combinations[combo.name] = combo
+                if combo.name not in combinations:
+                    combinations[combo.name] = combo
 
         # Frequent loads combinations
         for item in wind_temp:
@@ -371,8 +377,8 @@ class Loads(UserDict):
                     combo.name += f"+{factor:.2f}_{_name}"
                     combo.factors[load.name] = (load, round(factor, 3))
 
-            if combo.name not in combinations:
-                combinations[combo.name] = combo
+                if combo.name not in combinations:
+                    combinations[combo.name] = combo
 
         # Quasi-permanent loads combinations
         for item in wind_temp:
