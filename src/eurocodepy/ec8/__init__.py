@@ -7,8 +7,11 @@ soil amplification, reference acceleration, and spectrum shape parameters.
 from eurocodepy import dbase, utils
 from eurocodepy.ec8 import spectrum
 from eurocodepy.ec8.spectrum import (
+    calc_elastic_spectrum,
     calc_spectrum,
+    damping_correction,
     draw_spectrum_ec8,
+    get_elastic_spectrum_user,
     get_spec_params,
     get_spectrum_ec8,
     get_spectrum_parameters,

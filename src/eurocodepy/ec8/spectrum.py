@@ -192,6 +192,95 @@ def calc_spectrum(period: float, a_g: float, s_val: float, q: float,  # noqa: PL
     return spec
 
 
+def damping_correction(damping: float = 5.0) -> float:
+    """Damping correction factor eta per EN 1998-1 (eq. 3.6).
+
+    Args:
+        damping (float): viscous damping ratio in percent. Defaults to 5.0.
+
+    Returns:
+        float: eta = sqrt(10 / (5 + damping)), not less than 0.55.
+
+    """
+    return max((10.0 / (5.0 + damping)) ** 0.5, 0.55)
+
+
+def calc_elastic_spectrum(period: float, a_g: float, s_val: float,  # noqa: PLR0913, PLR0917
+            t_b: float, t_c: float, t_d: float, damping: float = 5.0) -> float:
+    """Elastic horizontal response spectrum Se(T), EN 1998-1 sec. 3.2.2.2.
+
+    Unlike :func:`calc_spectrum` (the *design* spectrum, which uses a behaviour
+    factor q and the beta lower bound), this is the *elastic* spectrum and uses
+    the damping correction factor eta.
+
+    Args:
+        period (float): period (s)
+        a_g (float): design ground acceleration (m/s2)
+        s_val (float): soil amplification factor
+        t_b (float): spectrum parameter
+        t_c (float): spectrum parameter
+        t_d (float): spectrum parameter
+        damping (float, optional): viscous damping ratio (%). Defaults to 5.0.
+
+    Returns:
+        float: the elastic spectral acceleration Se (m/s2)
+
+    """
+    eta = damping_correction(damping)
+    ag_s = a_g * s_val
+
+    if period < t_b:
+        return ag_s * (1.0 + period / t_b * (eta * 2.5 - 1.0))
+    if period < t_c:
+        return ag_s * eta * 2.5
+    if period < t_d:
+        return ag_s * eta * 2.5 * (t_c / period)
+    return ag_s * eta * 2.5 * (t_c * t_d / period ** 2)
+
+
+def get_elastic_spectrum_user(  # noqa: PLR0913, PLR0917
+    a_g: float,
+    s_val: float,
+    t_b: float,
+    t_c: float,
+    t_d: float,
+    damping: float = 5.0,
+    t_max: float = 4.0,
+) -> pd.DataFrame:
+    """Generate the elastic response spectrum Se(T) as a DataFrame.
+
+    Args:
+        a_g (float): design ground acceleration (m/s2)
+        s_val (float): soil amplification factor
+        t_b (float): spectrum parameter
+        t_c (float): spectrum parameter
+        t_d (float): spectrum parameter
+        damping (float, optional): viscous damping ratio (%). Defaults to 5.0.
+        t_max (float, optional): largest period to tabulate (s). Defaults to 4.0.
+
+    Returns:
+        pd.DataFrame: columns "period" and "value".
+
+    """
+    periods = np.linspace(0.0, t_b, 10, endpoint=False)
+    periods = np.append(periods, np.linspace(t_b, t_c, 10, endpoint=False))
+    periods = np.append(periods, np.linspace(t_c, t_d, 10, endpoint=False))
+    periods = np.append(periods, np.linspace(t_d, t_max, 30))
+
+    value = [calc_elastic_spectrum(T, a_g, s_val, t_b, t_c, t_d, damping)
+             for T in periods]
+
+    spec = pd.DataFrame({"period": periods, "value": value})
+    spec.attrs["name"] = (
+        "elastic_t_b_" + str(t_b) + "_t_c_" + str(t_c) +
+        "_t_d_" + str(t_d) + "_xi_" + str(damping)
+    )
+    spec.attrs["S"] = s_val
+    spec.attrs["a_g"] = round(a_g, 5)
+    spec.attrs["damping"] = damping
+    return spec
+
+
 def get_spectrum_ec8(locale: str, code: str, imp_class: str, soil: str, zone: str,  # noqa: PLR0913, PLR0917
                 behaviour: float) -> pd.DataFrame:
     """Generate the spectrum DataFrame for the given parameters.
