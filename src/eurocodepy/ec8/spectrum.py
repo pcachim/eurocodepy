@@ -185,9 +185,10 @@ def calc_spectrum(period: float, a_g: float, s_val: float, q: float,  # noqa: PL
     elif t_c > period:
         spec = ag_s * 2.5 / q
     elif t_d > period:
-        spec = max(ag_s * 2.5 / q * (t_c) / period, beta * ag_s)
+        # Lower bound is beta*ag (EN 1998-1 eq. 3.15) — without the soil factor S.
+        spec = max(ag_s * 2.5 / q * (t_c) / period, beta * a_g)
     else:
-        spec = max(ag_s * 2.5 / q * (t_c * t_d) / period**2, beta * ag_s)
+        spec = max(ag_s * 2.5 / q * (t_c * t_d) / period**2, beta * a_g)
 
     return spec
 

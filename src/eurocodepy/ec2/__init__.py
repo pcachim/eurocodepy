@@ -85,6 +85,10 @@ from eurocodepy.ec2.uls.beam import (
     calc_mrd as calc_mrd,
     get_bend_params as get_bend_params,
 )
+from eurocodepy.ec2.uls.bend_axial import (
+    calc_asl_nm as calc_asl_nm,
+    design_rcbeam_nm as design_rcbeam_nm,
+)
 from eurocodepy.ec2.uls.punch import (
     calc_perimeters as calc_perimeters,
     calc_vedp as calc_vedp,
@@ -168,6 +172,8 @@ __all__ = [
     "shear",
     "shell",
     "calc_asl",
+    "calc_asl_nm",
+    "design_rcbeam_nm",
     "calc_mrd",
     "get_bend_params",
     "calc_perimeters",

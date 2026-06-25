@@ -4,11 +4,12 @@
 """Eurocode 3 steel classes existing in the database."""
 import re
 from dataclasses import dataclass
-from enum import Enum, StrEnum
+from enum import Enum
 
 import numpy as np
 
 from eurocodepy import dbase
+from eurocodepy._compat import StrEnum
 
 
 def extract_steel_from_str(s):  # noqa: ANN201, D103

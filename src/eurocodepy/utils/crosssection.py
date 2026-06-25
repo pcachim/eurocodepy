@@ -1,8 +1,8 @@
 # Copyright (c) 2026 Paulo Cachim
 # SPDX-License-Identifier: MIT
-from enum import StrEnum
-
 import numpy as np
+
+from eurocodepy._compat import StrEnum
 
 
 class CrossSectionShape(StrEnum):

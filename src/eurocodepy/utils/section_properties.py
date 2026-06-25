@@ -240,7 +240,12 @@ def calc_section_T_uncrack(h, bw, bf, hf, As, Asc, Ap, ds, dsc, dp, alpha_Es, al
         (alpha_Es - 1) * (np.sum(Asc * (dsc - zgs)**2) + np.sum(As * (ds - zgs)**2)) + 
         (alpha_Ep - 1) * (np.sum(Ap * (dp - zgs)**2)))
 
-    root_un = zgs + P / Aun / (M - P * np.sum(dp - zgs)) * Iun 
+    # Net moment about the centroid; vanishes under (near-)pure axial through
+    # the centroid, where the uncracked neutral axis tends to infinity.
+    den_un = M - P * np.sum(dp - zgs)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        root_un = zgs + P / Aun / den_un * Iun
+    root_un = np.where(np.abs(den_un) < 1e-12, np.inf, root_un)
 
     e_p = np.round(dp - zgs, 4)
     Ws = Iun/zgs

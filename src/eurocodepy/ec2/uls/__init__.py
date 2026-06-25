@@ -27,6 +27,10 @@ from eurocodepy.ec2.uls.beam import (
     calc_mrd as calc_mrd,
     get_bend_params as get_bend_params,
 )
+from eurocodepy.ec2.uls.bend_axial import (
+    calc_asl_nm as calc_asl_nm,
+    design_rcbeam_nm as design_rcbeam_nm,
+)
 # Shear/torsion checks come from `shear` (their canonical home). `beam` also
 # defines identical copies; importing from one place avoids an ambiguous
 # re-export where the last import silently wins.
@@ -55,6 +59,8 @@ __all__ = [
     "Reinforcement", "ReinforcementClass",
     # bending design
     "RCBeam", "calc_asl", "calc_mrd", "get_bend_params",
+    # combined bending + axial (M-N) design
+    "calc_asl_nm", "design_rcbeam_nm",
     # shear / torsion
     "calc_asws", "calc_vrd", "calc_vrdc", "calc_vrdmax",
     # punching shear

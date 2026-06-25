@@ -1,8 +1,9 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
-from enum import Enum, StrEnum
+from enum import Enum
 
 from eurocodepy import dbase
+from eurocodepy._compat import StrEnum
 from eurocodepy.ec1 import LoadCombination, LoadCombinations, CombinationType, LoadType
 
 RiskClass = Enum("RiskClasses", dbase.TimberMaterial["RiskClasses"])

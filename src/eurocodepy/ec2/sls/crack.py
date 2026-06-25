@@ -86,21 +86,33 @@ def crack_opening(b: float, h: float, phi: float,
             As: np.ndarray, ds: np.ndarray, Asc: np.ndarray, dsc: np.ndarray,
             conc: str | Concrete | ConcreteClass,
             reinf: str | Reinforcement | ReinforcementClass,
-            M: np.ndarray) -> float:
-    """Calculate the crack opening of a reinforced cocnrete beam.
+            M: np.ndarray, N: np.ndarray | float | None = None,
+            k_t: float = 0.4) -> float:
+    """Calculate the crack opening of a reinforced concrete beam.
+
+    EN 1992-1-1 §7.3.4. The cracked-section steel stress accounts for a combined
+    bending moment and axial force.
 
     Args:
         b (float): Bredth of the beam
         h (float): Total section height
         phi (float): bar diameter
-        As (np.ndarray): Reinforcement areas
+        As (np.ndarray): Tension reinforcement areas
         ds (np.ndarray): Effective depths to tension reinforcement
+        Asc (np.ndarray): Compression reinforcement areas
+        dsc (np.ndarray): Effective depths to compression reinforcement
         conc (Concrete): Concrete
         reinf (Reinforcement): Reinforcement
         M (np.ndarray): Bending moments
+        N (np.ndarray | float | None): Axial force, **compression positive**.
+            ``None`` (default) keeps the pure-bending behaviour. When supplied,
+            the steel stress includes the axial term.
+        k_t (float): Load-duration factor for ``eps_sm`` — 0.6 for short-term
+            (characteristic/frequent) and 0.4 for long-term (quasi-permanent)
+            loading.
 
     Returns:
-        float: the crack opening.
+        float: the crack opening [mm].
 
     """
     conc = get_concrete(conc)
@@ -109,17 +121,38 @@ def crack_opening(b: float, h: float, phi: float,
     dp = np.array([h])
     alpha_Es = 15.0
     alpha_Ep = 15.0
-    N = np.full_like(M, 0.001)
     Es = reinf.Es * 1000.0
     fctm = conc.fctm * 1000.0
 
-    _uncrk, crack = calc_section_rectangular(h, b, As,
-        Asc, Ap, ds, dsc, dp, alpha_Es, alpha_Ep, M, N)
-    x = crack["NeutralAxis"]
-    d = np.sum(As * ds + Asc * dsc) / np.sum(As + Asc)
+    # Effective depth uses the *tension* reinforcement only (the compression
+    # steel must not pull the centroid towards the compression face).
+    d = np.sum(As * ds) / np.sum(As)
+
+    if N is None:
+        # Pure bending — preserve the original formulation exactly.
+        Ndummy = np.full_like(M, 0.001)
+        _uncrk, crack = calc_section_rectangular(h, b, As,
+            Asc, Ap, ds, dsc, dp, alpha_Es, alpha_Ep, M, Ndummy)
+        x = crack["NeutralAxis"]
+        sig_s = alpha_Es * M / crack["Inertia"] * (ds - x)
+    else:
+        # Combined M + N. The section solver expresses the axial force as an
+        # equivalent normal force at an eccentricity (es = -M/N), so it divides
+        # by N — guard a (near-)zero axial against that singularity.
+        # The axial force is referenced to the section centroid (≈ h/2), not the
+        # bottom fibre, so it does not introduce a spurious eccentricity moment.
+        Nv = np.asarray(N, dtype=float)
+        Nv = np.where(np.abs(Nv) < 1e-3, 1e-3, Nv)
+        dp_axial = np.array([h / 2.0])
+        _uncrk, crack = calc_section_rectangular(h, b, As,
+            Asc, Ap, ds, dsc, dp_axial, alpha_Es, alpha_Ep, M, Nv)
+        x = crack["NeutralAxis"]
+        e_p = crack["e_p"]
+        sig_s = alpha_Es * (-Nv / crack["Area"]
+                            + (M - Nv * e_p) / crack["Inertia"] * (ds - crack["zGs"]))
+
     rho_p_eff = np.sum(As) / Ac_eff(b, d, x, h)
-    sig_s = alpha_Es * M / crack["Inertia"] * (ds - x)
-    epssm = eps_sm(sig_s, Es, rho_p_eff, fctm, alpha_Es, k_t=0.4)
+    epssm = eps_sm(sig_s, Es, rho_p_eff, fctm, alpha_Es, k_t=k_t)
     srmax = sr_max(h - d, phi, rho_p_eff, k1, k2)
     wk = epssm * srmax * 1000.0
     return wk  # noqa: RET504
@@ -129,22 +162,29 @@ def is_cracked(b: float, h: float, As: np.ndarray, ds: np.ndarray,
             Asc: np.ndarray, dsc: np.ndarray,
             conc: str | Concrete | ConcreteClass,
             reinf: str | Reinforcement | ReinforcementClass,
-            M: np.ndarray) -> bool:
-    """Calculate the crack opening of a reinforced cocnrete beam.
+            M: np.ndarray, N: np.ndarray | float | None = None) -> bool:
+    """Return whether the section is cracked under the given M (and N).
+
+    The section is cracked when the extreme-fibre tensile stress of the
+    uncracked (transformed) section reaches the mean tensile strength fctm
+    (EN 1992-1-1 §7.1). Both faces are checked, so the test is valid for sagging
+    and hogging as well as combined bending and axial force.
 
     Args:
         b (float): Bredth of the beam
         h (float): Total section height
-        As (np.ndarray): Reinforcement areas
-        Asc (np.ndarray): Reinforcement areas in compression
+        As (np.ndarray): Tension reinforcement areas
+        Asc (np.ndarray): Compression reinforcement areas
         ds (np.ndarray): Effective depths to tension reinforcement
         dsc (np.ndarray): Effective depths to compression reinforcement
         conc (Concrete): Concrete
         reinf (Reinforcement): Reinforcement
         M (np.ndarray): Bending moments
+        N (np.ndarray | float | None): Axial force, **compression positive**.
+            ``None`` (default) treats the section in pure bending.
 
     Returns:
-        float: True if cracked, otherwise False
+        bool: True if cracked, otherwise False
 
     """
     conc = get_concrete(conc)
@@ -153,15 +193,27 @@ def is_cracked(b: float, h: float, As: np.ndarray, ds: np.ndarray,
     dp = np.array([h])
     alpha_Es = 15.0
     alpha_Ep = 15.0
-    N = np.full_like(M, 0.001)
     fctm = conc.fctm * 1000.0
 
-    uncrk, _crack = calc_section_rectangular(h, b, As, Asc, Ap,
-                                ds, dsc, dp, alpha_Es, alpha_Ep, M, N)
-    sig_c = M / uncrk["Wi"]
+    if N is None:
+        Nv = np.full_like(M, 0.001)
+    else:
+        Nv = np.asarray(N, dtype=float)
+        Nv = np.where(np.abs(Nv) < 1e-3, 1e-3, Nv)
+        # Reference the axial force to the section centroid (see crack_opening).
+        dp = np.array([h / 2.0])
 
-    cracked = np.all(sig_c < fctm)
-    return cracked  # noqa: RET504
+    uncrk, _crack = calc_section_rectangular(h, b, As, Asc, Ap,
+                                ds, dsc, dp, alpha_Es, alpha_Ep, M, Nv)
+    e_p = uncrk["e_p"]
+    axial = -Nv / uncrk["Area"]
+    bend = (M - Nv * e_p)
+    # Tension is positive; check the most-tensioned fibre (bottom or top).
+    sig_bot = axial + bend / uncrk["Wi"]
+    sig_top = axial - bend / uncrk["Ws"]
+    sig_max = np.maximum(sig_bot, sig_top)
+
+    return bool(np.any(sig_max >= fctm))
 
 
 def iscracked_annexLL(fctm: float, fcm: float,

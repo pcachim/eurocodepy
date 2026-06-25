@@ -16,7 +16,7 @@ The package provides modules for different Eurocodes and utilities, such as:
 * `ec8`: utility functions for ec8 calculations.
 """
 
-__version__ = "2026.4.1"
+__version__ = "2026.7.1"
 version = "This is 'EurocodePy' version " + __version__  # noqa: RUF067
 """Version of EurocodePy package."""
 
