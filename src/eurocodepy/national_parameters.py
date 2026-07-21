@@ -1,10 +1,11 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
+import csv
 from dataclasses import dataclass
 from enum import Enum
+from functools import lru_cache
 from pathlib import Path
-
-import pandas as pd
+from typing import Any
 
 from . import dbase
 from .dbase import SeismicLoads, WindLoads
@@ -12,8 +13,64 @@ from .dbase import SeismicLoads, WindLoads
 # National parameters
 local_name = Path(__file__).parent / "data" / "eurocode_data_portugal.csv"
 locale = Enum("locale", ["EU", "PT"])
-locales = {}
-locales["PT"] = pd.read_csv(local_name)
+
+
+@lru_cache(maxsize=None)
+def _load_locale(name: str = "PT") -> tuple[dict[str, Any], ...]:
+    """The municipality table, as a tuple of row dicts.
+
+    Read with the standard library rather than pandas. The file is 308 rows of
+    municipality data and the only operation performed on it is "find the row
+    whose Concelho matches" — a dependency of some fifty megabytes to do what
+    csv.DictReader does, and one that was imported (and the file read) merely
+    by importing this package.
+
+    That mattered beyond tidiness: importing eurocodepy pulled pandas into
+    every application that uses it, including a packaged desktop app where it
+    arrived as compiled code in the binary.
+
+    Numeric fields are converted so callers get numbers where they had numbers
+    before; anything unparseable stays a string, which is what the '-' entries
+    in the seismic-zone columns need.
+    """
+    path = local_name if name == "PT" else None
+    if path is None or not path.exists():
+        return ()
+
+    def _typed(value: str) -> Any:
+        text = (value or "").strip()
+        if not text:
+            return ""
+        try:
+            return int(text)
+        except ValueError:
+            pass
+        try:
+            return float(text)
+        except ValueError:
+            return text
+
+    # utf-8-sig: the file carries a BOM, which would otherwise become part of
+    # the first column's name and make it unfindable.
+    with local_name.open(encoding="utf-8-sig", newline="") as fh:
+        return tuple({k: _typed(v) for k, v in row.items() if k}
+                     for row in csv.DictReader(fh))
+
+
+class _Locales(dict):
+    """``locales["PT"]`` as before, but read on first use rather than on import.
+
+    A dict subclass so that existing code indexing it keeps working; the only
+    difference is when the file is read.
+    """
+
+    def __missing__(self, key: str) -> tuple:
+        rows = _load_locale(key)
+        self[key] = rows
+        return rows
+
+
+locales = _Locales()
 
 
 @dataclass
@@ -31,12 +88,23 @@ class NationalParams:
 
 
 class LocaleData:
-    """Class to hold locale data."""
+    """Class to hold locale data.
 
-    PT: pd.DataFrame = pd.read_csv(local_name)
+    ``PT`` is a class *property* rather than a class attribute so that the file
+    is read the first time someone asks for it. As an attribute it was read
+    while this module was being imported — a second read of the same file, on
+    top of the one in ``locales``.
+    """
+
+    @classmethod
+    @property
+    def PT(cls) -> tuple[dict[str, Any], ...]:  # noqa: N802
+        """The Portuguese municipality table, as a tuple of row dicts."""
+        return _load_locale("PT")
 
 
-def get_national_params(local: locale = locale.PT, concelho: str = "Lisboa") -> object:
+def get_national_params(local: locale = locale.PT,
+                        concelho: str = "Lisboa") -> dict | None:
     """Get Portuguese data for municipalities.
 
     Args:
@@ -45,19 +113,17 @@ def get_national_params(local: locale = locale.PT, concelho: str = "Lisboa") -> 
         concelho (str, optional): Municipality name. Defaults to "Lisboa".
 
     Returns:
-        dict: the data
+        dict | None: the row for that municipality, or None when there is none.
 
     """
-    pt_data = locale[local.name]
-    row = pt_data[pt_data["Concelho"] == concelho]
-    # Convert to dict if found
-    if not row.empty:
-        result = row.iloc[0].to_dict()
-        print(result)  # noqa: T201
-    else:
-        result = None
-        print("Concelho not found.")  # noqa: T201
-    return result
+    # Was ``locale[local.name]``, which indexes the *Enum* and returns a member
+    # rather than the table: every call raised TypeError on the next line. The
+    # name differs from ``locales`` by one letter, and nothing exercised it.
+    rows = locales[local.name]
+    for row in rows:
+        if row.get("Concelho") == concelho:
+            return dict(row)
+    return None
 
 
 def wind_get_params(code: str = "PT", zone: str = "ZonaA", terrain: str = "II") -> tuple:

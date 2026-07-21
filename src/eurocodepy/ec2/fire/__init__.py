@@ -6,8 +6,17 @@
 Simplified and tabulated methods for the fire resistance of concrete members.
 """
 
-from .fire_base import df_conc as df_conc
-from .fire_base import df_steel as df_steel
+# Not imported eagerly: `from .fire_base import df_conc` would build the
+# DataFrame — and import pandas — at package import, which is exactly what
+# making it lazy in fire_base was meant to avoid.
+def __getattr__(name: str):  # noqa: ANN202
+    """Fetch the lazily built tables from fire_base on first use."""
+    if name in ("df_conc", "df_steel"):
+        from . import fire_base
+        return getattr(fire_base, name)
+    raise AttributeError(name)
+
+
 from .fire_base import sig_kc as sig_kc
 from .fire_base import sig_ks as sig_ks
 from .fire_base import stemp as stemp

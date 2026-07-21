@@ -7,11 +7,22 @@ retrieving national annex parameters, and writing design response spectra to a f
 It also includes classes for representing soil amplification, reference acceleration,
 and spectrum shape parameters.
 """
-import matplotlib.pyplot as plt
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import numpy as np
-import pandas as pd
 
 from eurocodepy import dbase
+
+if TYPE_CHECKING:                      # for type checkers only, never at runtime
+    import pandas as pd
+
+# pandas and matplotlib are imported inside the functions that need them.
+# Both were module-level, so importing eurocodepy — which imports ec8, which
+# imports this — pulled them into every application using the package, whether
+# or not a spectrum was ever calculated. `from __future__ import annotations`
+# is what lets the `-> pd.DataFrame` signatures survive without the import.
 
 
 def get_spec_params(locale: str, code: str, class_imp: str,  # noqa: PLR0914
@@ -84,6 +95,7 @@ def get_spectrum_parameters(code: str, coef_imp: str, soil: str, zone: str) -> t
     """Get the spectrum parameters.
 
     Args:
+    import pandas as pd
         code (str): code to be used (CEN-1, CEN-2, PT-1, PT-2, PT-A)
                 CEN-1, CEN-2: standard Eurocode spectrums
                 PT-1, PT-2, PT-A: Portuguese National Annex spectrums
@@ -263,6 +275,7 @@ def get_elastic_spectrum_user(  # noqa: PLR0913, PLR0917
         pd.DataFrame: columns "period" and "value".
 
     """
+    import pandas as pd
     periods = np.linspace(0.0, t_b, 10, endpoint=False)
     periods = np.append(periods, np.linspace(t_b, t_c, 10, endpoint=False))
     periods = np.append(periods, np.linspace(t_c, t_d, 10, endpoint=False))
@@ -298,6 +311,7 @@ def get_spectrum_ec8(locale: str, code: str, imp_class: str, soil: str, zone: st
         pd.DataFrame: the spectrum DataFrame
 
     """
+    import pandas as pd
     txt = (
         code + "_" + imp_class + "_" + soil + "_"
         + str.replace(zone, "_", ".") + "_" + str(behaviour)
@@ -347,6 +361,7 @@ def get_spectrum_user(  # noqa: PLR0913, PLR0917
         pd.DataFrame: _description_
 
     """
+    import pandas as pd
     txt = (
         "t_b_" + str(t_b) + "_t_c_" + str(t_c) +
         "_t_d_" + str(t_d) + "_b_" + str(beta)
@@ -382,6 +397,7 @@ def write_spectrum_ec8(spectrum: pd.DataFrame, filename: str | None = None,
         separator (str): a string with the separator to be used in the text file
 
     """
+    import pandas as pd
     # separator was defined as " " (space) for SAP2000 compatibility.
     # any other can be used
     if filename is None:
@@ -395,6 +411,8 @@ def draw_spectrum_ec8(spectrum: pd.DataFrame, save: bool = False,  # noqa: FBT00
     """Draw the spectrum using matplotlib.
 
     Args:
+    import pandas as pd
+    import matplotlib.pyplot as plt
         spectrum (pd.DataFrame): a pandas DataFrame with the
             spectrum data (columns: period, value)
         save (bool): whether to save the plot as an image file

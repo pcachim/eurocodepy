@@ -4,7 +4,6 @@
 import math
 
 import numpy as np
-import pandas as pd
 
 
 # Tables for tabulated data fire methods
@@ -159,5 +158,23 @@ values_kc = np.array([
     [ 0.00, 0.00, 0.00, math.nan, math.nan],
     ])
 
-df_conc = pd.DataFrame(data=values_kc, index=stemp, columns=sig_kc)
-df_steel = pd.DataFrame(data=values_ks, index=stemp, columns=sig_ks)
+# The two tables are the only reason this module needed pandas, and importing
+# it here meant that importing eurocodepy — for any purpose at all — pulled in
+# some fifty megabytes to hold twelve rows of constants. They are built on
+# first access instead, through PEP 562's module __getattr__: `from
+# eurocodepy.ec2.fire import df_conc` still works and still returns a
+# DataFrame, but only then is pandas imported.
+_FRAMES: dict = {}
+
+
+def __getattr__(name: str):  # noqa: ANN202
+    """Build df_conc / df_steel on first access."""
+    if name not in ("df_conc", "df_steel"):
+        raise AttributeError(name)
+    if name not in _FRAMES:
+        import pandas as pd
+        _FRAMES["df_conc"] = pd.DataFrame(
+            data=values_kc, index=stemp, columns=sig_kc)
+        _FRAMES["df_steel"] = pd.DataFrame(
+            data=values_ks, index=stemp, columns=sig_ks)
+    return _FRAMES[name]
