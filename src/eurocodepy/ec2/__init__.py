@@ -105,6 +105,9 @@ from eurocodepy.ec2.uls.shell import (
     calc_reinf_plane as calc_reinf_plane,
     calc_reinf_shell as calc_reinf_shell,
 )
+from eurocodepy.ec2.uls.torsion import (
+    calc_torsion as calc_torsion,
+)
 
 __all__ = [
     "A400NR",
@@ -184,6 +187,7 @@ __all__ = [
     "calc_vrd",
     "calc_vrdc",
     "calc_vrdmax",
+    "calc_torsion",
     "calc_reinf_plane",
     "calc_reinf_shell",
 ]

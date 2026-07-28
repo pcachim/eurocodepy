@@ -10,8 +10,20 @@ It includes properties for different steel grades and types, profile classes
 
 from eurocodepy import dbase as dbase
 from eurocodepy.ec3 import (
+    classification as classification,
     materials as materials,
     uls as uls,
+)
+from eurocodepy.ec3.classification import (
+    SectionClass as SectionClass,
+    ClassificationResult as ClassificationResult,
+    EffectiveProperties as EffectiveProperties,
+    epsilon as epsilon,
+    classify_section as classify_section,
+    classify_internal_part as classify_internal_part,
+    classify_outstand_part as classify_outstand_part,
+    classify_chs_part as classify_chs_part,
+    effective_properties as effective_properties,
 )
 from eurocodepy.ec3.materials import (
     BoltGrade as BoltGrade,
@@ -44,8 +56,18 @@ from eurocodepy.ec3.materials import (
 
 __all__ = [
     "dbase",
+    "classification",
     "materials",
     "uls",
+    "SectionClass",
+    "ClassificationResult",
+    "EffectiveProperties",
+    "epsilon",
+    "classify_section",
+    "classify_internal_part",
+    "classify_outstand_part",
+    "classify_chs_part",
+    "effective_properties",
     "BoltGrade",
     "Bolt",
     "BoltGrades",

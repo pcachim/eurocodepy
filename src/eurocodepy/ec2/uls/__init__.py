@@ -20,6 +20,7 @@ from eurocodepy.ec2.uls import (
     punch as punch,
     shear as shear,
     shell as shell,
+    torsion as torsion,
 )
 from eurocodepy.ec2.uls.beam import (
     RCBeam as RCBeam,
@@ -50,10 +51,13 @@ from eurocodepy.ec2.uls.shell import (
     calc_reinf_plane as calc_reinf_plane,
     calc_reinf_shell as calc_reinf_shell,
 )
+from eurocodepy.ec2.uls.torsion import (
+    calc_torsion as calc_torsion,
+)
 
 __all__ = [
     # submodules
-    "beam", "punch", "shear", "shell",
+    "beam", "punch", "shear", "shell", "torsion",
     # materials (re-exported for convenience)
     "Concrete", "ConcreteClass", "Prestress", "PrestressClass",
     "Reinforcement", "ReinforcementClass",
@@ -62,7 +66,7 @@ __all__ = [
     # combined bending + axial (M-N) design
     "calc_asl_nm", "design_rcbeam_nm",
     # shear / torsion
-    "calc_asws", "calc_vrd", "calc_vrdc", "calc_vrdmax",
+    "calc_asws", "calc_vrd", "calc_vrdc", "calc_vrdmax", "calc_torsion",
     # punching shear
     "calc_perimeters", "calc_vedp", "calc_vrdcminp", "calc_vrdcp",
     # shell reinforcement
