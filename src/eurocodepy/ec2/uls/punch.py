@@ -2,6 +2,20 @@
 # SPDX-License-Identifier: MIT
 # Licensed under the MIT License. See the project's LICENSE file for details.
 
+"""Punching shear — **EN 1992-1-1:2004** (§6.4).
+
+The basic control perimeter ``u1`` is taken at **2·d** from the loaded area, the
+load-eccentricity factor ``β`` follows §6.4.3 (the biaxial expression 6.43 for
+internal columns, the recommended values 1.4 / 1.5 for edge / corner) and the
+concrete resistance is ``vRd,c = CRd,c·k·(100·ρl·fck)^(1/3) ≥ vmin`` with
+``CRd,c = 0.18/γc`` (§6.4.4).
+
+The function names match the prEN 1992-1-1:2023 module
+(:mod:`eurocodepy.ec2.uls2023.punch`) so the two editions are drop-in
+swappable, but the signatures differ (2004 uses ``γc``; there is no ``d_dg`` /
+``γv`` / ``η_sys``).
+"""
+
 import numpy as np
 
 
@@ -11,69 +25,65 @@ def calc_perimeters(
     by: float | object = None,
     position: str = "center",
     dx: float = 0.0,
-    dy: float = 0.0
-) -> tuple[float, float]:
-    """Calculate the perimeters for punching.
+    dy: float = 0.0,
+) -> tuple[float, float, float]:
+    """Return (u0, u1, bb) — EN 1992-1-1:2004 §6.4.2.
 
-    The critical sections are located at the face of column and at a
-    distance of 0.5*d from the critical section.
+    ``u0`` is the loaded-area perimeter (at the column face) and ``u1`` the basic
+    control perimeter at **2·d** from it. ``bb`` is the size (column dimension +
+    4·d) used by the eccentricity factor β. Edge/corner cases use the reduced
+    perimeter of §6.4.2(4).
 
     Args:
-        dv (float): Effective depth [mm].
-        bxord (float): Dimension of the column or concentrated load in x direction [mm].
-        by (float or object, optional): Dimension of the column or concentrated
-        load in y direction [mm]. If None, a square section is assumed. Default None.
-        position (str, optional): Position of the load with respect to the slab. Can be
-                "center", "edge" or "corner". By default "center".
-        dx (float, optional): Distance to x border [mm]. Defaults to 0.0.
-        dy (float, optional): Distance to y border [mm]. Defaults to 0.0.
+        dv: Effective depth d [mm].
+        bxord: Column / loaded-area dimension in x (or the diameter) [mm].
+        by: Column dimension in y [mm]; None → circular/square from ``bxord``.
+        position: 'center' | 'edgex' | 'edgey' | 'corner'.
+        dx: Distance to the x border [mm] (edge/corner).
+        dy: Distance to the y border [mm] (edge/corner).
 
     Returns:
-        tuple[float, float]: Perimeter of the critical section [mm], perimeter of the
-                section located at a distance of 0.5*d from the critical section [mm].
+        (u0, u1, bb) in mm.
 
     """
+    two_d = 2.0 * dv
     if by is None:
-        # Circular column
+        # Circular column, diameter d0.
         d0 = bxord
-        d1 = d0 + dv
         if position == "edgex":
-            b0 = np.pi * d0 / 2.0 + d0 + dx
-            b05 = np.pi * d1 / 2.0 + d0 + dx
-            bb = np.sqrt(d1 * (d0 + 0.5 * dv + dx / 2.0))
+            u0 = np.pi * d0 / 2.0 + d0 + dx
+            u1 = np.pi * (d0 / 2.0 + two_d) + d0 + dx
         elif position == "edgey":
-            b0 = np.pi * d0 / 2.0 + d0 + dy
-            b05 = np.pi * d1 / 2.0 + d0 + dy
-            bb = np.sqrt(d1 * (d0 + 0.5 * dv + dy / 2.0))
+            u0 = np.pi * d0 / 2.0 + d0 + dy
+            u1 = np.pi * (d0 / 2.0 + two_d) + d0 + dy
         elif position == "corner":
-            b0 = np.pi * d0 / 4.0 + d0 + (dx + dy) / 2.0
-            b05 = np.pi * d1 / 4.0 + d0 + (dx + dy) / 2.0
-            bb = np.sqrt((d0 + 0.5 * dv + dx / 2.0) * (d0 + 0.5 * dv + dy / 2.0))
+            u0 = np.pi * d0 / 4.0 + d0 + (dx + dy) / 2.0
+            u1 = np.pi * (d0 / 2.0 + two_d) / 2.0 + d0 + (dx + dy) / 2.0
         else:
-            b0 = np.pi * d0
-            b05 = np.pi * (d0 + dv)
-            bb = d1
-    # Rectangular column
-    elif position == "edgex":
-        b0 = 2.0 * bxord + by
-        b05 = b0 + np.pi * dv / 2.0 + dx
-        bb = np.sqrt((bxord + dx / 2.0) * (by + dv))
+            u0 = np.pi * d0
+            u1 = np.pi * (d0 + two_d)
+        bb = d0 + 2.0 * two_d
+        return u0, u1, bb
+
+    # Rectangular column cx × cy.
+    cx, cy = bxord, by
+    if position == "edgex":
+        u0 = 2.0 * cx + cy
+        u1 = u0 + np.pi * two_d + 2.0 * dx
     elif position == "edgey":
-        b0 = bxord + 2.0 * by
-        b05 = b0 + np.pi * dv / 2.0 + dy
-        bb = np.sqrt((bxord + dv) * (by + dy / 2.0))
+        u0 = cx + 2.0 * cy
+        u1 = u0 + np.pi * two_d + 2.0 * dy
     elif position == "corner":
-        b0 = bxord + by
-        b05 = b0 + np.pi * dv / 4.0 + (dx + dy) / 2.0
-        bb = np.sqrt((bxord + dx / 2.0) * (by + dy / 2.0))
+        u0 = cx + cy
+        u1 = u0 + np.pi * two_d / 2.0 + (dx + dy)
     else:
-        b0 = 2.0 * (bxord + by)
-        b05 = b0 + np.pi * dv
-        bb = np.sqrt((bxord + dv) * (by + dv))
-    return b0, b05, bb
+        u0 = 2.0 * (cx + cy)
+        u1 = u0 + 2.0 * np.pi * two_d
+    bb = np.sqrt((cx + 2.0 * two_d) * (cy + 2.0 * two_d))
+    return u0, u1, bb
 
 
-def calc_vedp(  # noqa: PLR0913, PLR0917
+def calc_vedp(  # ruff: ignore[too-many-arguments, too-many-positional-arguments]
     ned: float | np.ndarray,
     medx: float | np.ndarray,
     medy: float | np.ndarray,
@@ -82,110 +92,91 @@ def calc_vedp(  # noqa: PLR0913, PLR0917
     by: float | object = None,
     position: str = "center",
     dx: float = 0.0,
-    dy: float = 0.0
-    ) -> float | np.ndarray:
-    """Calculate design punching shear force.
+    dy: float = 0.0,
+) -> float | np.ndarray:
+    """Design punching shear stress ``vEd = β·VEd/(u1·d)`` [MPa] — §6.4.3.
+
+    β follows the code: for an internal column the biaxial expression (6.43)
+    ``β = 1 + 1.8·√((ey/bz)² + (ez/by)²)`` ( e = M/V, bz/by = column + 4·d), and
+    the recommended constants 1.4 (edge) / 1.5 (corner) otherwise.
 
     Args:
-        ned (float or np.ndarray): Design axial force [kN].
-        medx (float or np.ndarray): Design bending moment about x-axis [kNm].
-        medy (float or np.ndarray): Design bending moment about y-axis [kNm].
-        dv (float): Effective depth [mm].
-        bxord (float): Dimension of the column or concentrated load in x direction [mm].
-        by (float or object, optional): Dimension of the column or
-                concentrated load in y direction [mm]. If None, a square section
-                is assumed. By default None.
-        position (str, optional): Position of the load with respect to the slab. Can be
-                "center", "edge" or "corner". By default "center".
-        dx (float, optional): Distance to x border [mm]. Defaults to 0.0.
-        dy (float, optional): Distance to y border [mm]. Defaults to 0.0.
+        ned: Design axial (punching) force VEd [kN].
+        medx: Design moment about x [kNm].
+        medy: Design moment about y [kNm].
+        dv: Effective depth d [mm].
+        bxord, by, position, dx, dy: see :func:`calc_perimeters`.
 
     Returns:
-        float or np.ndarray: Design punching shear force [kN].
-
-    Raises:
-        ValueError: If position is not "center", "edge" or "corner".
+        Design punching shear stress [MPa].
 
     """
-    # Calculate perimeters
     position = position.lower()
-    if position in {"center", "internal", "centre"}:
+    if position in {"internal", "centre"}:
         position = "center"
-    b0, b05, bb = calc_perimeters(dv, bxord, by, 
-                                position=position, dx=dx, dy=dy)
+    u0, u1, _bb = calc_perimeters(dv, bxord, by, position=position, dx=dx, dy=dy)
 
-    # Calculate beta values
-    ex = medx / ned * 1e3  # [mm]
-    ey = medy / ned * 1e3  # [mm]
-    if position in {"center", "internal", "centre"}:
-        eb = np.sqrt(ex ** 2 + ey ** 2)
+    if position == "center":
+        cx = bxord
+        cy = bxord if by is None else by
+        bz = cx + 4.0 * dv
+        byy = cy + 4.0 * dv
+        with np.errstate(divide="ignore", invalid="ignore"):
+            ex = np.where(ned != 0.0, medx / ned * 1e3, 0.0)   # [mm]
+            ey = np.where(ned != 0.0, medy / ned * 1e3, 0.0)
+        beta = 1.0 + 1.8 * np.sqrt((ey / bz) ** 2 + (ex / byy) ** 2)
     elif position in {"edgex", "edgey", "edge"}:
-        eb = 0.5 * np.abs(ex) + np.abs(ey)
+        beta = 1.4
     elif position == "corner":
-        eb = 0.27 * (np.abs(ex) + np.abs(ey))
+        beta = 1.5
     else:
         msg = 'Position must be "center", "edge" or "corner".'
         raise ValueError(msg)
-    beta = 1.0 + 1.1 * eb / bb
-    beta = np.where(beta < 1.05, 1.05, beta)  # noqa: PLR2004
 
-    # Calculate ved
-    ved = ned / b05 / dv
-    return beta * ved * 1e3  # [N/mm²] = [MPa]
+    ved = ned / u1 / dv          # [kN/mm²]
+    return beta * ved * 1e3      # [N/mm²] = [MPa]
 
 
-def calc_vrdcp(dmax: float, rhol: float,  # noqa: PLR0913, PLR0917
-                fck: float,
-                dv: float,
-                bxord: float,
-                by: float | object = None,
-                gamma_v: float = 1.4,
-                position: str = "center",
-                dx: float = 0.0,
-                dy: float = 0.0
-                ) -> float | np.ndarray:
-    """Calculate punching shear resistance of concrete slab.
+def calc_vrdcp(rhol: float, fck: float,
+               dv: float,
+               gamma_c: float = 1.5,
+               ) -> float | np.ndarray:
+    """Concrete punching resistance ``vRd,c`` [MPa] — EN 1992-1-1:2004 §6.4.4.
+
+    ``vRd,c = CRd,c·k·(100·ρl·fck)^(1/3) ≥ vmin`` with ``CRd,c = 0.18/γc``,
+    ``k = 1 + √(200/d) ≤ 2`` and ``vmin = 0.035·k^1.5·√fck``.
 
     Args:
-        dv (float):  Effective depth [mm].
-        b0 (float): Perimeter of the critical section [mm].
-        b05 (float): Perimeter of the section located at a distance of 0.5*d
-                    from the critical section [mm].
-        dmax (float): Maximum aggregate size [mm].
-        rhol (float): Longitudinal reinforcement ratio.
-        fck (float): Characteristic compressive cylinder strength of concrete [MPa].
-        gamma_v (float, optional): Partial safety factor for shear, by default 1.4.
+        rhol: Longitudinal reinforcement ratio ρl (≤ 0.02).
+        fck: Characteristic concrete strength [MPa].
+        dv: Effective depth d [mm].
+        gamma_c: Partial factor for concrete (default 1.5).
 
     Returns:
-        float or np.ndarray: Punching shear resistance of concrete slab [MPa].
+        vRd,c [MPa].
 
     """
-    b0, b05, bd  = calc_perimeters(dv, bxord, by,
-                            position=position, dx=dx, dy=dy)  # noqa: RUF059
-    kpb = max(1.0, min(3.6 * np.sqrt(1.0 - (b0 / b05)), 2.5))
-    ddg = 16.0 + dmax * min(1.0, (60.0 / fck)**2)
-    vrdc1 = 0.6 * kpb * (100.0 * rhol * fck * ddg / dv) ** (1.0 / 3.0) / gamma_v
-    vrdc2 = 0.5 * np.sqrt(fck) / gamma_v
-    return max(vrdc1, vrdc2)
+    k = min(1.0 + np.sqrt(200.0 / dv), 2.0)
+    rho = min(rhol, 0.02)
+    crdc = 0.18 / gamma_c
+    vrdc = crdc * k * (100.0 * rho * fck) ** (1.0 / 3.0)
+    vmin = calc_vrdcminp(fck, dv)
+    return max(float(vrdc), float(vmin))
 
 
 def calc_vrdcminp(fck: float,
-                    fyd: float,
-                    dv: float,
-                    dmax: float = 20.0,
-                    gamma_v: float = 1.4,
-                    ) -> float | np.ndarray:
-    """Calculate minimum punching shear resistance of concrete slab.
+                  dv: float,
+                  ) -> float | np.ndarray:
+    """Minimum concrete punching resistance ``vmin = 0.035·k^1.5·√fck`` [MPa]
+    (EN 1992-1-1:2004 §6.4.4 / Eq. 6.3N).
 
     Args:
-        fck (float): Characteristic compressive cylinder strength of concrete [MPa].
-        fyd (float): Design tensile strength of reinforcement [MPa].
-        dv (float): Effective depth [mm]. Defaults to 20 mm.
-        gamma_v (float, optional): Partial safety factor for shear, by default 1.4.
+        fck: Characteristic concrete strength [MPa].
+        dv: Effective depth d [mm].
 
     Returns:
-        float or np.ndarray: Minimum punching shear resistance of concrete slab [MPa].
+        vmin [MPa].
 
     """
-    ddg = 16.0 + dmax * min(1.0, (60.0 / fck)**2)
-    return 11.0 * np.sqrt((fck / fyd) * (ddg / dv) ) / gamma_v
+    k = min(1.0 + np.sqrt(200.0 / dv), 2.0)
+    return 0.035 * k ** 1.5 * np.sqrt(fck)
