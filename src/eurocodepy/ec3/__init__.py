@@ -25,6 +25,17 @@ from eurocodepy.ec3.classification import (
     classify_chs_part as classify_chs_part,
     effective_properties as effective_properties,
 )
+from eurocodepy.ec3.uls import (
+    MemberInput as MemberInput,
+    MemberCheckResult as MemberCheckResult,
+    eurocode3_member_check as eurocode3_member_check,
+    member_check_profile as member_check_profile,
+    SectionForces as SectionForces,
+    SectionResistanceInput as SectionResistanceInput,
+    SectionResistanceResult as SectionResistanceResult,
+    eurocode3_section_check as eurocode3_section_check,
+    section_check_profile as section_check_profile,
+)
 from eurocodepy.ec3.materials import (
     BoltGrade as BoltGrade,
     Bolt as Bolt,
@@ -68,6 +79,15 @@ __all__ = [
     "classify_outstand_part",
     "classify_chs_part",
     "effective_properties",
+    "MemberInput",
+    "MemberCheckResult",
+    "eurocode3_member_check",
+    "member_check_profile",
+    "SectionForces",
+    "SectionResistanceInput",
+    "SectionResistanceResult",
+    "eurocode3_section_check",
+    "section_check_profile",
     "BoltGrade",
     "Bolt",
     "BoltGrades",

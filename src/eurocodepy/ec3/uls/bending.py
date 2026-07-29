@@ -1,13 +1,24 @@
 # Copyright (c) 2026 Paulo Cachim
 # SPDX-License-Identifier: MIT
-"""Eurocode 3 - Steel Design - ULS Bending Design Functions.
+"""Eurocode 3 ULS bending helpers — **deprecated**.
 
-This module provides functions for the design of steel profiles under bending
-according to Eurocode 3 (EN 1993-1-1).
+These early, simplified bending helpers have been superseded by the canonical
+modules and are kept only for backward compatibility:
+
+* plastic / elastic moment capacities, χ_LT and the critical moment →
+  :mod:`eurocodepy.ec3.uls.member_buckling` (``reduction_chi_lt``,
+  ``elastic_critical_moment``, ``eurocode3_member_check``);
+* bending + shear interaction →
+  :mod:`eurocodepy.ec3.uls.cross_section` (``eurocode3_section_check``).
+
+Importing this module emits a :class:`DeprecationWarning`.
 """
-import numpy as np
+import warnings
 
-from eurocodepy.ec3.materials import ProfileI, ProfileRHS, SteelSection
+warnings.warn(
+    "eurocodepy.ec3.uls.bending is deprecated; use "
+    "eurocodepy.ec3.uls.member_buckling and eurocodepy.ec3.uls.cross_section.",
+    DeprecationWarning, stacklevel=2)
 
 
 def check_bending_capacity(moment, moment_capacity, gamma_m0=1.0) -> dict:

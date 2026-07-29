@@ -1,15 +1,32 @@
 # Copyright (c) 2025 Paulo Cachim
 # SPDX-License-Identifier: MIT
 
-"""Eurocode 3 ULS (Ultimate Limit State) check functions.
+"""Eurocode 3 ULS check functions — **deprecated**.
 
-Combined cross-section checks, flexural/torsional buckling and lateral-torsional
-buckling resistance according to EN 1993-1-1.
+These early, simplified checks have been superseded by the two canonical
+modules and are kept only for backward compatibility:
+
+* cross-section resistance (N, My, Mz, Vy, Vz, T) →
+  :mod:`eurocodepy.ec3.uls.cross_section` (``eurocode3_section_check``);
+* member flexural / lateral-torsional buckling →
+  :mod:`eurocodepy.ec3.uls.member_buckling` (``eurocode3_member_check``).
+
+The elastic critical forces ``calc_Ncr`` / ``calc_Ncr_T`` / ``calc_Ncr_TF`` now
+live in :mod:`member_buckling` and are re-exported here. Calling the deprecated
+check functions emits a :class:`DeprecationWarning`.
 """
 
+import warnings
 from dataclasses import dataclass
 
 import numpy as np
+
+
+def _deprecated(old: str, new: str) -> None:
+    """Emit a DeprecationWarning pointing from *old* to *new*."""
+    warnings.warn(
+        f"eurocodepy.ec3.uls.checks.{old} is deprecated; use {new} instead.",
+        DeprecationWarning, stacklevel=3)
 
 
 @dataclass
@@ -83,7 +100,7 @@ class SectionProperties:
     fy: float       # Yield strength [MPa]
 
 
-def eurocode3_combined_check(  # noqa: D417, PLR0913, PLR0917
+def eurocode3_combined_check(  # ruff: ignore[undocumented-param, too-many-arguments, too-many-positional-arguments]
     N_Ed: float,
     M_Ed: float,
     V_Ed: float,
@@ -127,6 +144,8 @@ def eurocode3_combined_check(  # noqa: D417, PLR0913, PLR0917
         - pass: True if all checks pass, False otherwise
 
     """
+    _deprecated("eurocode3_combined_check",
+                "eurocodepy.ec3.uls.cross_section.eurocode3_section_check")
     # Convert fy to kN/mm^2
     fy_kN = fy * 1000
 
@@ -176,8 +195,8 @@ def eurocode3_buckling_check(
     *,
     N_Ed: float,
     params: BucklingParameters,
-    buckling_curve: str = 'b',
-    gamma_M1: float = 1.0
+    buckling_curve: str = "b",
+    gamma_M1: float = 1.0,
 ) -> dict[str, float]:
     """Verifica a resistência à flambagem de acordo com o Eurocode 3 (EN 1993-1-1).
 
@@ -191,6 +210,8 @@ def eurocode3_buckling_check(
         dict: Um dicionário com os resultados da verificação, incluindo lambda_bar, chi, N_pl_Rd, N_b_Rd, utilization e pass.
 
     """
+    _deprecated("eurocode3_buckling_check",
+                "eurocodepy.ec3.uls.member_buckling.eurocode3_member_check")
     # Limite de escoamento convertido para kN/mm²
     fy_kN = params.fy / 1000
 
@@ -203,10 +224,10 @@ def eurocode3_buckling_check(
 
     # Parâmetros alfa da curva de flambagem
     alpha_dict = {
-        'a': 0.21,
-        'b': 0.34,
-        'c': 0.49,
-        'd': 0.76
+        "a": 0.21,
+        "b": 0.34,
+        "c": 0.49,
+        "d": 0.76,
     }
     alpha = alpha_dict.get(buckling_curve, 0.34)
 
@@ -243,7 +264,7 @@ def check_ltb_resistance(
     L: float,
     M_Ed: float,
     C1: float = 1.0,
-    alpha_LT: float = 0.34
+    alpha_LT: float = 0.34,
 ) -> dict:
     """Check lateral torsional buckling resistance for an I-section beam.
 
@@ -274,10 +295,13 @@ def check_ltb_resistance(
             - Status: "PASS" or "FAIL"
 
     """
+    _deprecated("check_ltb_resistance",
+                "eurocodepy.ec3.uls.member_buckling (elastic_critical_moment + "
+                "reduction_chi_lt, or eurocode3_member_check)")
     # Elastic critical moment (Annex F)
     pi = np.pi
     M_cr = (C1 * pi**2 * E * I_z / (L**2)) * np.sqrt(
-        (G * I_t * L**2) / (pi**2 * E * I_z) + (pi**2 * I_w) / (L**2 * I_z)
+        (G * I_t * L**2) / (pi**2 * E * I_z) + (pi**2 * I_w) / (L**2 * I_z),
     )
 
     # Design resistance without LTB
@@ -307,123 +331,16 @@ def check_ltb_resistance(
     }
 
 
-def calc_Ncr(E: float, I: float, L: float, K: float = 1.0) -> float:
-    """Calculate Euler's critical buckling force Ncr.
-
-    The Euler critical load is the minimum force required to cause buckling
-    of a column. The critical load depends on the column's length, cross-sectional
-    properties, and the material's Young's modulus.
-
-    Parameters
-    ----------
-    E : float
-        Young's modulus (MPa)
-    I : float
-        Moment of inertia about buckling axis (mm^4)
-    L : float
-        Actual length of the column (mm)
-    K : float, optional
-        Buckling length factor (dimensionless), by default 1.0
-
-    Returns
-    -------
-    float
-        Euler critical load in Newtons (N)
-
-    Notes
-    -----
-    The buckling length factor depends on the end conditions of the column.
-    For example, for a column fixed at both ends, K = 0.5, while for a column
-    pinned at both ends, K = 1.0.
-
-    """
-    Leff = K * L
-    Ncr = (np.pi ** 2 * E * I) / (Leff ** 2)  # in N
-    return Ncr
-
-
-def calc_Ncr_T(
-    E: float,  # Young's modulus [Pa]
-    G: float,  # Shear modulus [Pa]
-    I_w: float,  # Warping constant [m^6]
-    I_t: float,  # Torsional constant [m^4]
-    L: float  # Effective length [m]
-) -> float:
-    """Calculate torsional buckling load Ncr,T.
-
-    Parameters
-    ----------
-    E (float): Young's modulus [Pa]
-    G (float): Shear modulus [Pa]
-    I_w (float): Warping constant [m^6]
-    I_t (float): Torsional constant [m^4]
-    L (float): Effective length [m]
-
-    Returns
-    -------
-    float: Torsional buckling load [N]
-
-    """
-    pi = np.pi
-    return (pi**2 * E * I_w) / (L**2) + G * I_t
-
-
-def calc_Ncr_TF(
-    E: float,  # Young's modulus (MPa)
-    G: float,  # Shear modulus (MPa)
-    L: float,  # Length of the member (mm)
-    Iy: float,  # Minor-axis second moment of area (mm^4)
-    It: float,  # Torsional constant (mm^4)
-    Iw: float,  # Warping constant (mm^6)
-    A: float,  # Cross-sectional area (mm^2)
-    ey: float,  # Distance between shear center and centroid (mm)
-    Ky: float = 1.0,  # Buckling length factor for y-axis (default 1.0)
-    Kt: float = 1.0  # Buckling length factor for torsion (default 1.0)
-) -> float:
-    """Compute critical torsional-flexural buckling force (Ncr,TF) per Eurocode 3.
-
-    Parameters
-    ----------
-    E : float
-        Young's modulus (MPa)
-    G : float
-        Shear modulus (MPa)
-    L : float
-        Length of the member (mm)
-    Iy : float
-        Minor-axis second moment of area (mm^4)
-    It : float
-        Torsional constant (mm^4)
-    Iw : float
-        Warping constant (mm^6)
-    A : float
-        Cross-sectional area (mm^2)
-    ey : float
-        Distance between shear center and centroid (mm)
-    Ky : float, optional
-        Buckling length factor for y-axis (default 1.0)
-    Kt : float, optional
-        Buckling length factor for torsion (default 1.0)
-
-    Returns
-    -------
-    Ncr_TF : float
-        Critical load in N (Newtons)
-
-    Notes
-    -----
-    Eurocode 3 Part 1-1, Section 6.3.1.4
-
-    """
-    # Effective lengths
-    Ly = Ky * L
-    Lt = Kt * L
-
-    # Euler buckling about y-axis
-    Ncr_y = (np.pi**2 * E * Iy) / (Ly**2)
-
-    # Torsional buckling component
-    Ncr_T = (G * It * (np.pi**2) / (Lt**2)) + (E * Iw * (np.pi**4) / (Lt**4))
-
-    # Combined torsional-flexural buckling
-    return 1 / ((1 / Ncr_y) + (1 / Ncr_T))
+# The elastic critical buckling forces moved to ``member_buckling`` (they are
+# the inputs to the flexural/torsional buckling checks). Re-exported here so
+# existing ``from eurocodepy.ec3.uls.checks import calc_Ncr`` imports keep
+# working.
+from eurocodepy.ec3.uls.member_buckling import (  # ruff: ignore[module-import-not-at-top-of-file]
+    calc_Ncr as calc_Ncr,
+)
+from eurocodepy.ec3.uls.member_buckling import (
+    calc_Ncr_T as calc_Ncr_T,
+)
+from eurocodepy.ec3.uls.member_buckling import (
+    calc_Ncr_TF as calc_Ncr_TF,
+)
