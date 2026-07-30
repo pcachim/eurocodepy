@@ -1,308 +1,257 @@
 # Copyright (c) 2026 Paulo Cachim
 # SPDX-License-Identifier: MIT
+
+"""Bending + axial checks — **EN 1995-1-1:2004** (§6).
+
+Baseline (first-generation) Eurocode 5 member verification:
+
+* biaxial bending factor ``k_m`` — 0.7 for rectangular solid timber / glulam /
+  LVL, 1.0 otherwise (§6.1.6, Eqs. 6.11/6.12); exposed as ``calc_k_red`` to keep
+  the function name shared with the :2025 edition;
+* column instability factor ``k_c`` (§6.3.2, Eqs. 6.25-6.29) with
+  ``β_c = 0.2`` (solid timber) / ``0.1`` (glulam, LVL);
+* lateral-torsional factor ``k_crit`` (§6.3.3, Eqs. 6.30-6.34) — exposed as
+  ``calc_k_m`` to keep the shared name — from the critical bending moment
+  ``M_y,crit`` (Eq. 6.31);
+* the combined bending + axial-tension (Eqs. 6.17/6.18), bending +
+  axial-compression (Eqs. 6.19/6.20), the buckling interactions (Eqs. 6.23/6.24)
+  and the lateral-torsional interaction (Eqs. 6.33/6.35).
+
+The EN 1995-1-1:2025 (§8) versions live in
+:mod:`eurocodepy.ec5.uls2025.bending`; the function names match so the two
+editions are drop-in swappable.
+
+Units: forces in kN, moments in kNm, section dimensions / moduli in m, and the
+effective lengths ``l_0y`` / ``l_0z`` / ``l_0m`` in **mm**.
+"""
 import numpy as np
 
 import eurocodepy as ec
-from eurocodepy.ec5.materials import TimberForcesType
-from eurocodepy.ec5.materials import LoadDuration, ServiceClass, Timber
+from eurocodepy.ec5.materials import LoadDuration, ServiceClass, Timber, TimberForcesType
 from eurocodepy.utils import CrossSection
 
-LAMBDA_REL_LIM = 0.3
-LAMBDA_M_REL = 0.55
-EPSILON_TIMBER: float = 1.0 / 400.0
-EPSILON_GLULAM: float = 1.0 / 1000.0
-THETA_TWIST_BASE: float = 1.0 / 1500.0
+LAMBDA_REL_C_LIM = 0.3      # §6.3.2(3): below this k_c = 1.0
+LAMBDA_REL_M_LOW = 0.75     # §6.3.3(4): below this k_crit = 1.0
+LAMBDA_REL_M_HIGH = 1.4     # §6.3.3(4): above this k_crit = 1/λ²
+BETA_C_TIMBER = 0.2         # §6.3.2(3): solid timber
+BETA_C_GLULAM = 0.1         # §6.3.2(3): glulam and LVL
 
 
 def get_safety_factor(timber_type: str) -> float:
-    """Get the safety factor for a given timber type, load duration, and service class.
+    """Partial factor γM for a timber type (EN 1995-1-1 Table 2.3).
 
     Args:
-        timber_type (str): Type of timber ('timber', 'glulam', 'lvl').
+        timber_type (str): 'timber', 'glulam', 'lvl', …
 
     Returns:
-        float: Safety factor gamma_M
+        float: γM.
 
     """
     return ec.TimberParams["safety"][timber_type]
 
 
 def calc_k_red(section: CrossSection) -> float:
-    """Calculate the reduction factor k_red for bending according to Eurocode 5.
+    """Biaxial-bending redistribution factor ``k_m`` (EN 1995-1-1:2004 §6.1.6).
 
-    According to 8.1.8.1.(2) from EN 1995-1-1:2025
+    ``k_m = 0.7`` for a rectangular section of solid timber, glulam or LVL and
+    ``1.0`` for any other shape. Named ``calc_k_red`` so the function is shared
+    with the :2025 edition.
 
     Args:
         section (CrossSection): Cross-section object.
 
     Returns:
-        float: Reduction factor k_red
+        float: k_m.
 
     """
     return 0.7 if section.shape == "rectangular" else 1.0
 
 
-def calc_k_c(l_0y: float, l_0z: float, section: CrossSection,  # noqa: PLR0914
-                timber: Timber) -> tuple[float, float]:
-    """Calculate the k_c factor for compression instability according to Eurocode 5.
+def _beta_c(timber: Timber) -> float:
+    """Straightness factor β_c — 0.2 solid timber, 0.1 glulam/LVL (§6.3.2(3))."""
+    return BETA_C_TIMBER if timber.type == "timber" else BETA_C_GLULAM
 
-    k_c is calculated using equation 8.40 from EN 1995-1-1:2025.
+
+def calc_k_c(l_0y: float, l_0z: float, section: CrossSection,
+             timber: Timber) -> tuple[float, float]:
+    """Column instability factors ``k_c,y`` / ``k_c,z`` (EN 1995-1-1:2004 §6.3.2).
+
+    ``λ_rel = (l_ef / i) / π · √(f_c,0,k / E_0,05)`` (Eq. 6.21/6.22) with the
+    radius of gyration ``i``; then (Eqs. 6.27-6.29)::
+
+        k = 0.5·[1 + β_c·(λ_rel − 0.3) + λ_rel²]
+        k_c = 1 / (k + √(k² − λ_rel²))          for λ_rel > 0.3, else 1.0
 
     Args:
-        l_0y (float): Effective length about the y-axis in mm.
-        l_0z (float): Effective length about the z-axis in mm.
-        section (CrossSection): Cross-section object.
-        timber (Timber): Timber object.
-        section (CrossSection): Cross-section object.
-        timber (Timber): Timber object.
+        l_0y, l_0z (float): Effective (buckling) lengths about y / z [mm].
+        section (CrossSection): Cross-section object (radius of gyration in m).
+        timber (Timber): Timber object (f_c,0,k and E_0,05 = ``E0k``).
 
     Returns:
-        k_c_y (float): k_c factor about the y-axis.
-        k_c_z (float): k_c factor about the z-axis.
+        (k_c_y, k_c_z).
 
     """
-    E0k: float = timber.E0k  # noqa: N806
-    fc0k: float = timber.fc0k
-    k_hy = timber.k_h(section.height, TimberForcesType.Bending)
-    fmky: float = timber.fmk * k_hy  # calc_k_h(section.height, timber.type)
-    k_hz = timber.k_h(section.height, TimberForcesType.Bending)
-    fmkz: float = timber.fmk * k_hz  # calc_k_h(section.width, timber.type)
-    n_cr_y: float = (np.pi**2 * E0k * section.radius_y) / (l_0y**2)
-    n_cr_z: float = (np.pi**2 * E0k * section.radius_z) / (l_0z**2)
-    lambda_rely: float = np.sqrt(timber.fc0k * section.area / n_cr_y)
-    lambda_relz: float = np.sqrt(timber.fc0k * section.area / n_cr_z)
+    e005 = timber.E0k
+    fc0k = timber.fc0k
+    beta_c = _beta_c(timber)
 
-    epsilon: float = EPSILON_TIMBER if (timber.type ==
-                            "timber") else EPSILON_GLULAM
-    beta_c: float = epsilon * np.pi * np.sqrt(3.0 *
-                        E0k / fc0k) * fc0k  # Table 8.2
-    beta_cy: float = beta_c / fmky  # Table 8.2
-    beta_cz: float = beta_c / fmkz  # Table 8.2
+    def _kc(l0_mm: float, i_gyr: float) -> float:
+        if l0_mm <= 0.0 or i_gyr <= 0.0:
+            return 1.0                                # no buckling data → k_c = 1
+        lam = (l0_mm / 1e3) / i_gyr                   # slenderness λ (Eq. 6.21)
+        lam_rel = lam / np.pi * np.sqrt(fc0k / e005)  # Eq. 6.22
+        if lam_rel <= LAMBDA_REL_C_LIM:
+            return 1.0
+        k = 0.5 * (1.0 + beta_c * (lam_rel - LAMBDA_REL_C_LIM) + lam_rel**2)
+        return float(1.0 / (k + np.sqrt(k**2 - lam_rel**2)))
 
-    if lambda_rely <= LAMBDA_REL_LIM:
-        k_c_y = 1.0
-    else:
-        phi: float = 0.5 * (1 + beta_cy * (lambda_rely -
-                                LAMBDA_REL_LIM) + lambda_rely**2)
-        k_c_y: float = 1.0 / (phi + np.sqrt(phi**2 - lambda_rely**2))
-
-    if lambda_relz <= LAMBDA_REL_LIM:
-        k_c_z = 1.0
-    else:
-        phi: float = 0.5 * (1 + beta_cz * (lambda_relz -
-                                LAMBDA_REL_LIM) + lambda_relz**2)
-        k_c_z: float = 1.0 / (phi + np.sqrt(phi**2 - lambda_relz**2))
-
-    return (k_c_y, k_c_z)
+    return (_kc(l_0y, section.radius_y), _kc(l_0z, section.radius_z))
 
 
 def calc_mcr(l_0m: float, section: CrossSection, timber: Timber) -> float:
-    """Calculate the critical bending moment m_cr according to Eurocode 5.
+    """Critical bending moment ``M_y,crit`` (EN 1995-1-1:2004 §6.3.3, Eq. 6.31).
 
-    m_cr is calculated using equation 6.31  from EN 1995-1-1:2004.
+    ``M_y,crit = (π / l_ef)·√(E_0,05·I_z·G_0,05·I_tor)`` — the elastic
+    lateral-torsional buckling moment of the beam.
 
     Args:
-        l_0m (float): Effective length about the minor axis in m.
+        l_0m (float): Effective length for lateral-torsional buckling [mm].
         section (CrossSection): Cross-section object.
-        timber (Timber): Timber object.
+        timber (Timber): Timber object (``E0k`` = E_0,05, ``Gk`` = G_0,05).
 
     Returns:
-        m_cr (float): Critical bending moment in Nm.
+        float: M_y,crit [kNm] (∞ when ``l_0m`` ≤ 0 → no LTB).
 
     """
-    E0k: float = timber.E0k  # noqa: N806
-    G0k: float = timber.Gk  # noqa: N806
-    Itor: float = section.torsional_inertia  # noqa: N806
-    Iz: float = section.inertia_z  # noqa: N806
-    m_cr: float = np.pi * np.sqrt(E0k * G0k * Itor * Iz) / l_0m
-
-    return m_cr
+    lef = l_0m / 1e3                                  # mm → m
+    if lef <= 0.0:
+        return float("inf")
+    e005 = timber.E0k
+    g005 = timber.Gk
+    iz = section.inertia_z
+    itor = section.torsional_inertia
+    return float(np.pi / lef * np.sqrt(e005 * g005 * iz * itor))
 
 
 def calc_k_m(l_0m: float, section: CrossSection, timber: Timber) -> float:
-    """Calculate the k_m factor for bending instability according to Eurocode 5.
+    """Lateral-torsional stability factor ``k_crit`` (EN 1995-1-1:2004 §6.3.3).
 
-    k_m is calculated using equation 8.46 from EN 1995-1-1:2025.
+    ``λ_rel,m = √(f_m,k / σ_m,crit)`` with ``σ_m,crit = M_y,crit / W_y``
+    (Eq. 6.30), then (Eq. 6.34)::
+
+        k_crit = 1.0                       λ_rel,m ≤ 0.75
+        k_crit = 1.56 − 0.75·λ_rel,m       0.75 < λ_rel,m ≤ 1.4
+        k_crit = 1 / λ_rel,m²              λ_rel,m > 1.4
+
+    Named ``calc_k_m`` so the function is shared with the :2025 edition.
 
     Args:
-        l_0m (float): Effective length about the major axis in mm.
+        l_0m (float): Effective length for lateral-torsional buckling [mm].
         section (CrossSection): Cross-section object.
         timber (Timber): Timber object.
 
     Returns:
-        k_m (float): k_m factor.
+        float: k_crit.
 
     """
-    E0k: float = timber.E0k  # noqa: N806
-    G0k: float = timber.Gk  # noqa: N806
-    m_cr_y: float = calc_mcr(l_0m, section, timber)
-    lambda_relm: float = np.sqrt(timber.fmk *
-                                section.bend_mod_y / m_cr_y)  # equation (8.43)
-    ratio: float = section.height / section.width
-
-    epsilon: float = EPSILON_TIMBER if (timber.type
-                            == "timber") else EPSILON_GLULAM  # Table 8.2
-    beta_m: float = epsilon * ratio * np.pi / 2.0 * np.sqrt(3.0 *
-                                        E0k / G0k)  # Table 8.2
-    beta_twist: float = THETA_TWIST_BASE / section.height * ratio  # Table 8.2
-
-    if lambda_relm <= LAMBDA_REL_LIM:
-        k_m = 1.0
-    else:
-        phi: float = 0.5 * (1 + beta_m * beta_twist * (lambda_relm - LAMBDA_M_REL)
-                            + lambda_relm**2)  # equation (8.47)
-        k_m: float = 1.0 / (phi + np.sqrt(phi**2 - lambda_relm**2))  # equation (8.46)
-
-    return k_m
+    m_cr = calc_mcr(l_0m, section, timber)
+    wy = section.bend_mod_y
+    if not np.isfinite(m_cr) or m_cr <= 0.0 or wy <= 0.0:
+        return 1.0
+    sig_crit = m_cr / wy                              # σ_m,crit (Eq. 6.30)
+    lam_rel_m = np.sqrt(timber.fmk / sig_crit)
+    if lam_rel_m <= LAMBDA_REL_M_LOW:
+        return 1.0
+    if lam_rel_m <= LAMBDA_REL_M_HIGH:
+        return float(1.56 - 0.75 * lam_rel_m)
+    return float(1.0 / lam_rel_m**2)
 
 
 def check_bending_with_normal(n_ed: float, m_ed_y: float, m_ed_z: float,  # noqa: PLR0913, PLR0914, PLR0917
                     section: CrossSection, timber: Timber,
                     l_0y: float, l_0z: float, l_0m: float,
                     service_class: ServiceClass, load_duration: LoadDuration) -> dict:
-    """Check bending according to Eurocode 5.
+    """Combined bending + axial check (EN 1995-1-1:2004 §6.2 / §6.3).
 
-    This function checks if the design bending stresses in both principal directions
-    are within the design bending strength of the timber member.
-    Uses equation 6.1 from Eurocode 5.
+    Compression (``n_ed`` < 0):
+      * ``check1`` / ``check2`` — cross-section, Eqs. 6.19 / 6.20;
+      * ``check3`` — column buckling, max of Eqs. 6.23 / 6.24 (with ``k_c``);
+      * ``check4`` — lateral-torsional + compression, Eq. 6.35 (with ``k_crit``).
+
+    Tension (``n_ed`` ≥ 0):
+      * ``check1`` / ``check2`` — cross-section, Eqs. 6.17 / 6.18;
+      * ``check3`` — not applicable (sentinel);
+      * ``check4`` — lateral-torsional, Eq. 6.33 (bending only, with ``k_crit``).
 
     Args:
-        n_ed (float): Design axial force in N.
-        m_ed_y (float): Design bending moment about the y-axis in Nm.
-        m_ed_z (float): Design bending moment about the z-axis in Nm.
-        section (CrossSection): Cross-section object.
-        timber (Timber): Timber object.
-        l_0y (float): Effective length about the y-axis in mm.
-        l_0z (float): Effective length about the z-axis in mm.
-        l_0m (float): Effective length about the major axis in mm.
-        service_class (ServiceClass): Service class category.
-        load_duration (LoadDuration): Load duration category.
+        n_ed (float): Axial force [kN] (negative = compression).
+        m_ed_y, m_ed_z (float): Bending moments about y / z [kNm].
+        section, timber: Cross-section / material objects.
+        l_0y, l_0z, l_0m (float): Effective lengths [mm].
+        service_class, load_duration: EN 1995-1-1 design conditions.
 
     Returns:
-        bool: True if the bending check is satisfied, False otherwise.
+        dict with ``report``, ``is_ok``, ``utilization``, ``checks``, ``k_c``,
+        ``k_m`` (= k_crit).
 
     """
-    # calculate design strengths
     timber.design_values(service_class=service_class, load_duration=load_duration)
-    # kmod: float = calc_k_mod(timber.type,
-    #                         load_duration,
-    #                         service_class)
-    kred: float = calc_k_red(section)
-    fc0d: float = (timber.fc0d)
-    ft0d: float = (timber.ft0d)
+    km = calc_k_red(section)                          # §6.1.6 biaxial factor
+    fc0d = timber.fc0d
+    ft0d = timber.ft0d
     k_hy = timber.k_h(section.height, TimberForcesType.Bending)
-    fmdy: float = (timber.fmd) * k_hy  # calc_k_h(section.height, timber.type)
+    fmdy = timber.fmd * k_hy
     k_hz = timber.k_h(section.width, TimberForcesType.Bending)
-    fmdz: float = (timber.fmd) * k_hz  # calc_k_h(section.width, timber.type)
+    fmdz = timber.fmd * k_hz
 
-    # calculate stresses
-    sig_n: float = n_ed / section.area / 1e3  # convert to MPa
-    sig_my: float = m_ed_y / section.bend_mod_y / 1e3  # convert to MPa
-    sig_mz: float = m_ed_z / section.bend_mod_z / 1e3  # convert to MPa
+    # Stresses [MPa] (kN, kNm with section in m → /1e3 gives MPa).
+    sig_ax = abs(n_ed) / section.area / 1e3
+    sig_my = abs(m_ed_y) / section.bend_mod_y / 1e3
+    sig_mz = abs(m_ed_z) / section.bend_mod_z / 1e3
 
-    # calculate k_c and k_m
-    k_c: tuple[float, float] = calc_k_c(l_0y=l_0y, l_0z=l_0z,
-                                        section=section, timber=timber)
-    k_m: float = calc_k_m(l_0m=l_0m, section=section, timber=timber)
+    k_c = calc_k_c(l_0y=l_0y, l_0z=l_0z, section=section, timber=timber)
+    k_crit = calc_k_m(l_0m=l_0m, section=section, timber=timber)
 
-    # check for bending
-    if n_ed < 0.0:  # compression
-        p: float = 2.0 if section.shape == "rectangular" else 1.0
-        check1: float = (  # equation (8.26) EN1995-1-1:2025
-                            (sig_n / fc0d)**p +
-                            (sig_my / fmdy) +
-                            kred * (sig_mz / fmdz)
-                        )
-        check2: float = (  # equation (8.27) EN1995-1-1:2025
-                            (sig_n / fc0d)**p +
-                            kred * (sig_my / fmdy) +
-                            (sig_mz / fmdz)
-                        )
-        check3: float = (  # equation (8.39) EN1995-1-1:2025
-                            (sig_n / (k_c[0] * fc0d)) +
-                            (sig_my / fmdy) +
-                            kred * (sig_mz / fmdz)
-                        )
-        check4: float = (  # equation (8.44) EN1995-1-1:2025
-                            (sig_n / (k_c[1] * fc0d)) +
-                            (sig_my / (k_m * fmdy))**2 +
-                            kred * (sig_mz / fmdz)
-                        )
-    else:  # tension
-        check1: float = (  # equation (8.24) EN1995-1-1:2025
-                            (sig_n / ft0d) +
-                            (sig_my / fmdy) +
-                            kred * (sig_mz / fmdz)
-                        )
-        check2: float = (  # equation (8.25) EN1995-1-1:2025
-                            (sig_n / ft0d) +
-                            kred * (sig_my / fmdy) +
-                            (sig_mz / fmdz)
-                        )
-        check3: float = True  # Not applicable in tension
-        check4: float = (  # equation (8.45) EN1995-1-1:2025
-                            (sig_n / (k_c[1] * ft0d)) +
-                            (sig_my / (k_m * fmdy)) +
-                            kred * (sig_mz / fmdz)
-                        )
+    if n_ed < 0.0:                                    # compression
+        rc = sig_ax / fc0d
+        check1 = rc**2 + (sig_my / fmdy) + km * (sig_mz / fmdz)          # 6.19
+        check2 = rc**2 + km * (sig_my / fmdy) + (sig_mz / fmdz)          # 6.20
+        # Column buckling (governing of the two axes), Eqs. 6.23 / 6.24.
+        c23 = sig_ax / (k_c[0] * fc0d) + (sig_my / fmdy) + km * (sig_mz / fmdz)
+        c24 = sig_ax / (k_c[1] * fc0d) + km * (sig_my / fmdy) + (sig_mz / fmdz)
+        check3 = max(c23, c24)
+        # Lateral-torsional buckling + compression, Eq. 6.35.
+        check4 = (sig_my / (k_crit * fmdy))**2 + sig_ax / (k_c[1] * fc0d)
+    else:                                             # tension
+        rt = sig_ax / ft0d
+        check1 = rt + (sig_my / fmdy) + km * (sig_mz / fmdz)             # 6.17
+        check2 = rt + km * (sig_my / fmdy) + (sig_mz / fmdz)             # 6.18
+        check3 = True                                 # no column buckling in tension
+        check4 = sig_my / (k_crit * fmdy) + km * (sig_mz / fmdz)         # 6.33
 
-    check: bool = check1 <= 1.0 and check2 <= 1.0 and check3 <= 1.0 and check4 <= 1.0
+    check = (check1 <= 1.0 and check2 <= 1.0
+             and (check3 is True or check3 <= 1.0) and check4 <= 1.0)
+    _c3 = 0.0 if check3 is True else float(check3)
+    utilization = max(float(check1), float(check2), _c3, float(check4))
 
     s = (
-        f"Bending check results:\n"
-        f"  Cross-section: {section}\n"
-        f"    width = {section.width} m\n"
-        f"    height = {section.height} m\n"
-        f"    A = {section.area:.4f} m²\n"
-        f"    W_y = {section.bend_mod_y:.6f} m³\n"
-        f"    W_z = {section.bend_mod_z:.6f} m³\n"
-        f"  Design forces:\n"
-        f"    N_ed = {n_ed:.2f} kN\n"
-        f"    M_ed_y = {m_ed_y:.2f} kNm\n"
-        f"    M_ed_z = {m_ed_z:.2f} kNm\n"
-        f"  Design strengths:\n"
-        f"    kmod = {timber.kmod:.2f}\n"
-        f"    gamma_M = {timber.safety:.2f}\n"
-        f"    fc0d = {fc0d:.2f} MPa\n"
-        f"    ft0d = {ft0d:.2f} MPa\n"
-        f"    kred = {kred:.2f}\n"
-        f".   khy = {k_hy:.2f}\n"
-        f".   khz = {k_hz:.2f}\n"
-        f"    fmdy = {fmdy:.2f} MPa\n"
-        f"    fmdz = {fmdz:.2f} MPa\n"
-        f"  Stresses:\n"
-        f"    sigma_n = {sig_n:.2f} MPa\n"
-        f"    sigma_my = {sig_my:.2f} MPa\n"
-        f"    sigma_mz = {sig_mz:.2f} MPa\n"
-        f"  Stability factors:\n"
-        f"    k_cy = {k_c[0]:.2f}\n"
-        f"    k_cz = {k_c[1]:.2f}\n"
-        f"    k_m = {k_m:.2f}\n"
+        f"EC5:2004 bending + axial check\n"
+        f"  A = {section.area:.4f} m²  W_y = {section.bend_mod_y:.6f} m³\n"
+        f"  N_ed = {n_ed:.2f} kN  M_y = {m_ed_y:.2f} kNm  M_z = {m_ed_z:.2f} kNm\n"
+        f"  fc0d = {fc0d:.2f}  ft0d = {ft0d:.2f}  fmdy = {fmdy:.2f}  "
+        f"fmdz = {fmdz:.2f} MPa  km = {km:.2f}\n"
+        f"  k_cy = {k_c[0]:.3f}  k_cz = {k_c[1]:.3f}  k_crit = {k_crit:.3f}\n"
+        f"  checks: {float(check1):.3f} / {float(check2):.3f} / {_c3:.3f} / "
+        f"{float(check4):.3f}  → util {utilization:.3f} "
+        f"({'OK' if check else 'NOT OK'})\n"
     )
-    if n_ed < 0.0:  # compression
-        s += (
-            f"  Bending with compression checks (n_ed < 0):\n"
-            f"    Check 1 (Eq. 8.26): {check1:.3f} <= 1.0 -> "
-            f"{'OK' if check1 <= 1.0 else 'NOT OK'}\n"
-            f"    Check 2 (Eq. 8.27): {check2:.3f} <= 1.0 -> "
-            f"{'OK' if check2 <= 1.0 else 'NOT OK'}\n"
-            f"    Check 3 (Eq. 8.39): {check3:.3f} <= 1.0 -> "
-            f"{'OK' if check3 <= 1.0 else 'NOT OK'}\n"
-            f"    Check 4 (Eq. 8.44): {check4:.3f} <= 1.0 -> "
-            f"{'OK' if check4 <= 1.0 else 'NOT OK'}\n"
-        )
-    else:  # tension
-        s += (
-            f"  Bending with tension checks (n_ed >= 0):\n"
-            f"    Check 1 (Eq. 8.24): {check1:.3f} <= 1.0 -> "
-            f"{'OK' if check1 <= 1.0 else 'NOT OK'}\n"
-            f"    Check 2 (Eq. 8.25): {check2:.3f} <= 1.0 -> "
-            f"{'OK' if check2 <= 1.0 else 'NOT OK'}\n"
-            f"    Check 4 (Eq. 8.45): {check4:.3f} <= 1.0 -> "
-            f"{'OK' if check4 <= 1.0 else 'NOT OK'}\n"
-        )
 
     return {
         "report": s,
         "is_ok": check,
+        "utilization": utilization,
+        "checks": {"check1": float(check1), "check2": float(check2),
+                   "check3": _c3, "check4": float(check4)},
+        "k_c": (float(k_c[0]), float(k_c[1])),
+        "k_m": float(k_crit),
     }

@@ -320,12 +320,16 @@ class MemberCheckResult:
 
 # ── the check ───────────────────────────────────────────────────────────────
 
-def eurocode3_member_check(inp: MemberInput) -> MemberCheckResult:
+def eurocode3_member_check(inp: MemberInput, trace=None) -> MemberCheckResult:
     """Verify a member under N + My + Mz (EN 1993-1-1 Eqs 6.61 & 6.62).
 
     Args:
         inp: A :class:`MemberInput` with the forces, section properties, member
             geometry, buckling curves, moment factors and material.
+        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
+            the check records its steps (clause, expression, substitution, value)
+            into it for a full calculation report. ``None`` (default) is a no-op
+            and leaves the computed result identical — the trace only *records*.
 
     Returns:
         A :class:`MemberCheckResult` with both interaction utilizations, the
@@ -333,16 +337,44 @@ def eurocode3_member_check(inp: MemberInput) -> MemberCheckResult:
         slendernesses and interaction factors used.
 
     """
+    rep = trace
+
+    def _t(*a, **k):                       # record a step only in explain mode
+        if rep is not None:
+            rep.step(*a, **k)
+
+    def _sec(title):
+        if rep is not None:
+            rep.section(title)
+
     fy = inp.fy
     area = inp.area
     area_eff = inp.area_eff if inp.area_eff is not None else area
     gm1 = inp.gamma_m1
     l_lt = inp.l_lt or inp.lcr_z
 
+    _sec("Inputs")
+    _t("N_Ed", inp.n_ed, "kN", note="compression positive")
+    _t("My_Ed", inp.my_ed, "kNm")
+    _t("Mz_Ed", inp.mz_ed, "kNm")
+    _t("f_y", fy, "N/mm²")
+    _t("γ_M1", gm1, "—", clause="EN 1993-1-1 §6.1")
+    _t("L_cr,y", inp.lcr_y, "mm")
+    _t("L_cr,z", inp.lcr_z, "mm")
+    _t("L_LT", l_lt, "mm")
+
     # ── characteristic resistances (N, N·mm) ──
     n_rk = area_eff * fy                       # [N]  (Aeff = A for class 1-3)
     my_rk = inp.w_y * fy                        # [N·mm]
     mz_rk = inp.w_z * fy
+
+    _sec("Characteristic resistances (§6.2)")
+    _t("N_Rk", n_rk / 1e3, "kN", clause="EN 1993-1-1 §6.3.1.3",
+       expr="N_Rk = A_eff·f_y",
+       subst=f"{area_eff:.0f}·{fy:.0f}/1e3")
+    _t("My_Rk", my_rk / 1e6, "kNm", expr="My_Rk = W_y·f_y",
+       subst=f"{inp.w_y:.0f}·{fy:.0f}/1e6")
+    _t("Mz_Rk", mz_rk / 1e6, "kNm", expr="Mz_Rk = W_z·f_y")
 
     # ── flexural buckling ──
     def _lambda(icr_i, lcr):
@@ -353,6 +385,39 @@ def eurocode3_member_check(inp: MemberInput) -> MemberCheckResult:
     lam_z = _lambda(inp.iz, inp.lcr_z)
     chi_y = reduction_chi(lam_y, inp.curve_y)
     chi_z = reduction_chi(lam_z, inp.curve_z)
+
+    # Elastic critical loads, recomputed here only for the report substitution
+    # (identical to what `_lambda` used above — display only, no effect on the
+    # result).
+    ncr_y = (math.pi**2 * inp.e_mod * inp.iy / inp.lcr_y**2
+             if inp.lcr_y > 0 else math.inf)
+    ncr_z = (math.pi**2 * inp.e_mod * inp.iz / inp.lcr_z**2
+             if inp.lcr_z > 0 else math.inf)
+    _sec("Flexural buckling (§6.3.1)")
+    _t("N_cr,y", ncr_y / 1e3, "kN", clause="EN 1993-1-1 §6.3.1.3",
+       expr="N_cr,y = π²·E·I_y / L_cr,y²",
+       latex=r"N_{cr,y}=\frac{\pi^2 E I_y}{L_{cr,y}^2}",
+       subst=f"π²·{inp.e_mod:.0f}·{inp.iy:.4g}/{inp.lcr_y:.0f}²/1e3")
+    _t("λ̄_y", lam_y, "—", clause="EN 1993-1-1 §6.3.1.2",
+       expr="λ̄_y = √(A_eff·f_y / N_cr,y)",
+       latex=r"\bar\lambda_y=\sqrt{A_{eff}f_y/N_{cr,y}}",
+       subst=f"√({area_eff:.0f}·{fy:.0f}/{ncr_y:.4g})")
+    _t("χ_y", chi_y, "—", clause="EN 1993-1-1 §6.3.1.2",
+       expr="χ = 1/(Φ+√(Φ²−λ̄²)) ≤ 1",
+       latex=r"\chi=\frac{1}{\Phi+\sqrt{\Phi^2-\bar\lambda^2}}\le1",
+       note=f"buckling curve {inp.curve_y}")
+    _t("N_cr,z", ncr_z / 1e3, "kN", clause="EN 1993-1-1 §6.3.1.3",
+       expr="N_cr,z = π²·E·I_z / L_cr,z²",
+       latex=r"N_{cr,z}=\frac{\pi^2 E I_z}{L_{cr,z}^2}",
+       subst=f"π²·{inp.e_mod:.0f}·{inp.iz:.4g}/{inp.lcr_z:.0f}²/1e3")
+    _t("λ̄_z", lam_z, "—", clause="EN 1993-1-1 §6.3.1.2",
+       expr="λ̄_z = √(A_eff·f_y / N_cr,z)",
+       latex=r"\bar\lambda_z=\sqrt{A_{eff}f_y/N_{cr,z}}",
+       subst=f"√({area_eff:.0f}·{fy:.0f}/{ncr_z:.4g})")
+    _t("χ_z", chi_z, "—", clause="EN 1993-1-1 §6.3.1.2",
+       expr="χ = 1/(Φ+√(Φ²−λ̄²)) ≤ 1",
+       latex=r"\chi=\frac{1}{\Phi+\sqrt{\Phi^2-\bar\lambda^2}}\le1",
+       note=f"buckling curve {inp.curve_z}")
 
     # ── lateral-torsional buckling ──
     if inp.susceptible_lt and inp.my_ed != 0.0:
@@ -365,11 +430,46 @@ def eurocode3_member_check(inp: MemberInput) -> MemberCheckResult:
         lam_lt = 0.0
         chi_lt = 1.0
 
+    _sec("Lateral-torsional buckling (§6.3.2)")
+    _t("M_cr", m_cr / 1e6 if math.isfinite(m_cr) else math.inf, "kNm",
+       clause="EN 1993-1-1 §6.3.2",
+       expr="M_cr = C1·π²EI_z/L² · √(I_w/I_z + L²·G·I_t/(π²EI_z))",
+       latex=r"M_{cr}=C_1\frac{\pi^2EI_z}{L^2}"
+             r"\sqrt{\frac{I_w}{I_z}+\frac{L^2 G I_t}{\pi^2 E I_z}}",
+       note="LTB not relevant" if not math.isfinite(m_cr) else f"C₁={inp.c1:g}")
+    _t("λ̄_LT", lam_lt, "—", clause="EN 1993-1-1 §6.3.2.2",
+       expr="λ̄_LT = √(My_Rk / M_cr)",
+       latex=r"\bar\lambda_{LT}=\sqrt{M_{y,Rk}/M_{cr}}",
+       subst=(f"√({my_rk / 1e6:.4g}/{m_cr / 1e6:.4g})"
+              if math.isfinite(m_cr) else ""))
+    _t("χ_LT", chi_lt, "—", clause="EN 1993-1-1 §6.3.2.3",
+       expr="χ_LT = 1/(Φ_LT+√(Φ_LT²−β·λ̄_LT²)) ≤ 1",
+       latex=r"\chi_{LT}=\frac{1}{\Phi_{LT}+"
+             r"\sqrt{\Phi_{LT}^2-\beta\bar\lambda_{LT}^2}}\le1",
+       note=f"curve {inp.curve_lt}, {'rolled' if inp.rolled_lt else 'welded'}")
+
     # ── design resistances (kN, kNm) ──
     n_b_rd_y = chi_y * n_rk / gm1 / 1e3
     n_b_rd_z = chi_z * n_rk / gm1 / 1e3
     my_b_rd = chi_lt * my_rk / gm1 / 1e6
     mz_rd = mz_rk / gm1 / 1e6
+
+    _sec("Design resistances")
+    _t("N_b,Rd,y", n_b_rd_y, "kN", clause="EN 1993-1-1 §6.3.1.1",
+       expr="N_b,Rd,y = χ_y·N_Rk/γ_M1",
+       latex=r"N_{b,Rd,y}=\chi_y N_{Rk}/\gamma_{M1}",
+       subst=f"{chi_y:.3f}·{n_rk / 1e3:.4g}/{gm1:g}")
+    _t("N_b,Rd,z", n_b_rd_z, "kN", clause="EN 1993-1-1 §6.3.1.1",
+       expr="N_b,Rd,z = χ_z·N_Rk/γ_M1",
+       latex=r"N_{b,Rd,z}=\chi_z N_{Rk}/\gamma_{M1}",
+       subst=f"{chi_z:.3f}·{n_rk / 1e3:.4g}/{gm1:g}")
+    _t("My_b,Rd", my_b_rd, "kNm", clause="EN 1993-1-1 §6.3.2.1",
+       expr="My_b,Rd = χ_LT·My_Rk/γ_M1",
+       latex=r"M_{y,b,Rd}=\chi_{LT} M_{y,Rk}/\gamma_{M1}",
+       subst=f"{chi_lt:.3f}·{my_rk / 1e6:.4g}/{gm1:g}")
+    _t("Mz_Rd", mz_rd, "kNm", expr="Mz_Rd = Mz_Rk/γ_M1",
+       latex=r"M_{z,Rd}=M_{z,Rk}/\gamma_{M1}",
+       subst=f"{mz_rk / 1e6:.4g}/{gm1:g}")
 
     # ── interaction factors ──
     n_y = inp.n_ed / n_b_rd_y if n_b_rd_y > 0 else 0.0
@@ -377,6 +477,12 @@ def eurocode3_member_check(inp: MemberInput) -> MemberCheckResult:
     kyy, kyz, kzy, kzz = _interaction_factors(
         n_y, n_z, lam_y, lam_z, inp.cmy, inp.cmz, inp.cm_lt,
         inp.section_class, inp.susceptible_lt)
+
+    _sec("Interaction factors (§6.3.3)")
+    _t("k_yy", kyy, "—", clause="EN 1993-1-1 Annex A/B")
+    _t("k_yz", kyz, "—")
+    _t("k_zy", kzy, "—")
+    _t("k_zz", kzz, "—")
 
     # ── total moments (add the Class-4 shift) ──
     my = inp.my_ed + inp.d_my
@@ -390,6 +496,23 @@ def eurocode3_member_check(inp: MemberInput) -> MemberCheckResult:
              + kzy * my / my_b_rd
              + kzz * mz / mz_rd) if mz_rd else math.inf
     util = max(u_661, u_662)
+
+    _sec("Combined check (§6.3.3)")
+    _t("Eq. (6.61)", u_661, "—", clause="EN 1993-1-1 Eq. 6.61",
+       expr="N_Ed/N_b,Rd,y + k_yy·My/My_b,Rd + k_yz·Mz/Mz_Rd ≤ 1",
+       latex=r"\frac{N_{Ed}}{N_{b,Rd,y}}+k_{yy}\frac{M_{y}}{M_{y,b,Rd}}"
+             r"+k_{yz}\frac{M_{z}}{M_{z,Rd}}\le1",
+       subst=(f"{n_y:.3f}+{kyy:.3f}·{my:.4g}/{my_b_rd:.4g}"
+              f"+{kyz:.3f}·{mz:.4g}/{mz_rd:.4g}") if mz_rd else "",
+       ok=u_661 <= 1.0)
+    _t("Eq. (6.62)", u_662, "—", clause="EN 1993-1-1 Eq. 6.62",
+       expr="N_Ed/N_b,Rd,z + k_zy·My/My_b,Rd + k_zz·Mz/Mz_Rd ≤ 1",
+       latex=r"\frac{N_{Ed}}{N_{b,Rd,z}}+k_{zy}\frac{M_{y}}{M_{y,b,Rd}}"
+             r"+k_{zz}\frac{M_{z}}{M_{z,Rd}}\le1",
+       subst=(f"{n_z:.3f}+{kzy:.3f}·{my:.4g}/{my_b_rd:.4g}"
+              f"+{kzz:.3f}·{mz:.4g}/{mz_rd:.4g}") if mz_rd else "",
+       ok=u_662 <= 1.0)
+    _t("Utilization", util, "—", note="max of (6.61), (6.62)", ok=util <= 1.0)
 
     return MemberCheckResult(
         util_6_61=u_661, util_6_62=u_662, utilization=util,

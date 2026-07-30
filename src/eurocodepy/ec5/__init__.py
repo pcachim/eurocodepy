@@ -32,6 +32,7 @@ from eurocodepy.ec5.materials import (
 from eurocodepy.ec5 import (
     sls as sls,
     uls as uls,
+    uls2025 as uls2025,
 )
 from eurocodepy.ec5.sls import (
     deformation as deformation,
@@ -67,6 +68,7 @@ __all__ = [
     "GetTimberDesignValues",
     "sls",
     "uls",
+    "uls2025",
     "deformation",
     "vibration",
     "a_from_b",

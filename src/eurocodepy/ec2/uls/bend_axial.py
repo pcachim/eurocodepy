@@ -59,6 +59,7 @@ def calc_asl_nm(
     gamma_s: float = GammaS,
     alpha_cc: float = 1.0,
     iprint: bool = False,
+    trace=None,
 ) -> dict:
     """Design a rectangular RC section for combined bending and axial force.
 
@@ -170,6 +171,40 @@ def calc_asl_nm(
             f"mu={mu:.3f} (mu_lim={mu_lim:.3f}) x/d={x_d:.3f} | "
             f"As1={as1:.2f} cm2 As2={as2:.2f} cm2 {note}",
         )
+
+    if trace is not None:
+        trace.section("Inputs")
+        trace.step("M_Ed", med, "kNm")
+        trace.step("N_Ed", ned, "kN", note="compression positive")
+        trace.step("f_ck", fck, "MPa")
+        trace.step("f_yk", fyk, "MPa")
+        trace.step("d = h − d1", d, "m", expr="d = h − d1")
+        trace.section("Design strengths")
+        trace.step("f_cd", fcd, "MPa", clause="EN 1992-1-1 §3.1.6",
+                   expr="f_cd = α_cc·f_ck/γ_c",
+                   subst=f"{alpha_cc:g}·{fck:g}/{gamma_c:g}")
+        trace.step("f_yd", fyd, "MPa", expr="f_yd = f_yk/γ_s",
+                   subst=f"{fyk:g}/{gamma_s:g}")
+        trace.section("Flexure (EN 1992-1-1 §6.1)")
+        trace.step("M_Eds", med_s, "kNm", clause="EN 1992-1-1 §6.1",
+                   expr="M_Eds = |M_Ed| + N_Ed·(h/2 − d1)",
+                   subst=f"{abs(med):.4g} + {ned:.4g}·{zs:.4g}")
+        trace.step("μ", mu, "—", clause="EN 1992-1-1 §6.1",
+                   expr="μ = M_Eds/(b·d²·f_cd)",
+                   latex=r"\mu=\frac{M_{Eds}}{b\,d^2 f_{cd}}",
+                   subst=f"{med_s_abs:.4g}/({b:g}·{d:.4g}²·{fcd:g})/1000")
+        trace.step("μ_lim", mu_lim, "—", clause="EN 1992-1-1 §5.5",
+                   note="doubly reinforced" if mu > mu_lim else "singly reinforced")
+        trace.step("ω", omega, "—", expr="ω = 1 − √(1 − 2μ)",
+                   latex=r"\omega=1-\sqrt{1-2\mu}")
+        trace.step("x/d", x_d, "—", expr="x/d = 1.25·ω")
+        trace.section("Reinforcement")
+        trace.step("As,min", as_min, "cm²", clause="EN 1992-1-1 §9.2.1.1",
+                   expr="As,min = max(0.26·f_ctm/f_yk, 0.0013)·b·d")
+        trace.step("As1 (tension)", as1, "cm²", ok=True,
+                   note=note or "governing tension steel")
+        trace.step("As2 (compression)", as2, "cm²",
+                   note="doubly reinforced" if mu > mu_lim else "not required")
 
     return {
         "As1": as1,

@@ -42,11 +42,21 @@ from eurocodepy.ec2.uls.shear import (
     calc_vrdc as calc_vrdc,
     calc_vrdmax as calc_vrdmax,
 )
+from eurocodepy.ec2.uls.shear_check import (
+    ShearInput as ShearInput,
+    ShearResult as ShearResult,
+    eurocode2_shear_check as eurocode2_shear_check,
+)
 from eurocodepy.ec2.uls.punch import (
     calc_perimeters as calc_perimeters,
     calc_vedp as calc_vedp,
     calc_vrdcminp as calc_vrdcminp,
     calc_vrdcp as calc_vrdcp,
+)
+from eurocodepy.ec2.uls.punch_check import (
+    PunchInput as PunchInput,
+    PunchResult as PunchResult,
+    eurocode2_punching_check as eurocode2_punching_check,
 )
 from eurocodepy.ec2.uls.shell import (
     calc_reinf_plane as calc_reinf_plane,
@@ -68,8 +78,12 @@ __all__ = [
     "calc_asl_nm", "design_rcbeam_nm",
     # shear / torsion
     "calc_asws", "calc_vrd", "calc_vrdc", "calc_vrdmax", "calc_torsion",
+    # composite shear check (§6.2)
+    "eurocode2_shear_check", "ShearInput", "ShearResult",
     # punching shear
     "calc_perimeters", "calc_vedp", "calc_vrdcminp", "calc_vrdcp",
+    # composite punching check (§6.4 / :2023 §8.4)
+    "eurocode2_punching_check", "PunchInput", "PunchResult",
     # shell reinforcement
     "calc_reinf_plane", "calc_reinf_shell",
 ]

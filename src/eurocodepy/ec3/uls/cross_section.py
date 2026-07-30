@@ -203,22 +203,49 @@ class SectionResistanceInput:
 
 
 def eurocode3_section_check(inp: SectionResistanceInput,
-                            f: SectionForces) -> SectionResistanceResult:
+                            f: SectionForces,
+                            trace=None) -> SectionResistanceResult:
     """Verify a cross-section under N + My + Mz + Vy + Vz + T (EN 1993-1-1 §6.2).
 
     Args:
         inp: The cross-section data.
         f: The design forces.
+        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
+            the check records its steps (clause, expression, substitution,
+            value) into it. ``None`` (default) is a no-op and leaves the result
+            identical — the trace only *records* what was computed.
 
     Returns:
         A :class:`SectionResistanceResult` with the shear, torsion and
         bending+axial utilisations, the governing value and pass/fail.
 
     """
+    rep = trace
+
+    def _t(*a, **k):
+        if rep is not None:
+            rep.step(*a, **k)
+
+    def _sec(title):
+        if rep is not None:
+            rep.section(title)
+
     fy, gm0 = inp.fy, inp.gamma_M0
     hollow = inp.kind in ("RHS", "SHS", "CHS")
     area = inp.area
     area_eff = inp.area_eff if inp.area_eff is not None else area
+
+    _sec("Inputs")
+    _t("N_Ed", f.n_ed, "kN", note="compression positive")
+    _t("My_Ed", f.my_ed, "kNm")
+    _t("Mz_Ed", f.mz_ed, "kNm")
+    _t("Vy_Ed", f.vy_ed, "kN")
+    _t("Vz_Ed", f.vz_ed, "kN")
+    _t("T_Ed", f.t_ed, "kNm")
+    _t("f_y", fy, "N/mm²")
+    _t("γ_M0", gm0, "—", clause="EN 1993-1-1 §6.1")
+    _t("Section class", inp.section_class, "—", clause="EN 1993-1-1 §5.5",
+       note=f"{inp.kind} section")
 
     # ── shear resistances (with torsion reduction) ──
     vpl_y = shear_resistance(inp.av_y, fy, gm0)
@@ -237,6 +264,31 @@ def eurocode3_section_check(inp: SectionResistanceInput,
 
     web_sb = shear_buckling_susceptible(inp.hw, inp.tw, inp.eps)
 
+    _sec("Shear resistance (§6.2.6)")
+    _t("Vpl,Rd,y", vpl_y, "kN", clause="EN 1993-1-1 §6.2.6(2)",
+       expr="Vpl,Rd = A_v·(f_y/√3)/γ_M0",
+       latex=r"V_{pl,Rd}=\frac{A_v (f_y/\sqrt3)}{\gamma_{M0}}",
+       subst=f"{inp.av_y:.0f}·({fy:.0f}/√3)/{gm0:g}/1e3")
+    _t("Vpl,Rd,z", vpl_z, "kN", clause="EN 1993-1-1 §6.2.6(2)",
+       expr="Vpl,Rd = A_v·(f_y/√3)/γ_M0",
+       subst=f"{inp.av_z:.0f}·({fy:.0f}/√3)/{gm0:g}/1e3")
+    if web_sb:
+        _t("Web shear buckling", "check", "—", clause="EN 1993-1-1 §6.2.6(6)",
+           expr="h_w/t_w > 72·ε/η", note="slender web — verify per EN 1993-1-5")
+    if f.t_ed != 0.0 and inp.wt > 0:
+        _sec("Torsion (§6.2.7)")
+        _t("τ_t,Ed", tau_t, "N/mm²", expr="τ_t = T_Ed/W_t")
+        _t("T_Rd", t_rd, "kNm", clause="EN 1993-1-1 §6.2.7",
+           expr="T_Rd = W_t·(f_y/√3)/γ_M0")
+        _t("Vpl,T,Rd,y", vpl_ty, "kN", clause="EN 1993-1-1 §6.2.7(9)",
+           note="torsion-reduced shear resistance")
+        _t("Vpl,T,Rd,z", vpl_tz, "kN", clause="EN 1993-1-1 §6.2.7(9)")
+        _t("U_T = T_Ed/T_Rd", u_t, "—", ok=u_t <= 1.0)
+    _t("U_Vy = Vy_Ed/Vpl,Rd,y", u_vy, "—", clause="EN 1993-1-1 §6.2.6",
+       ok=u_vy <= 1.0)
+    _t("U_Vz = Vz_Ed/Vpl,Rd,z", u_vz, "—", clause="EN 1993-1-1 §6.2.6",
+       ok=u_vz <= 1.0)
+
     # ── shear → moment reduction (§6.2.8): ρ when V > 0.5·Vpl ──
     def _rho(v_ed, vpl):
         if vpl <= 0 or abs(v_ed) <= 0.5 * vpl:
@@ -247,9 +299,22 @@ def eurocode3_section_check(inp: SectionResistanceInput,
     rho_y = _rho(f.vy_ed, vpl_ty)     # affects Mz (flange shear)
     shear_reduces = rho_z > 0.0 or rho_y > 0.0
 
+    if shear_reduces:
+        _sec("Shear–moment reduction (§6.2.8)")
+        _t("ρ_z", rho_z, "—", clause="EN 1993-1-1 §6.2.8",
+           expr="ρ = (2·V_Ed/Vpl,Rd − 1)²  for V_Ed > 0.5·Vpl,Rd",
+           latex=r"\rho=\left(\frac{2V_{Ed}}{V_{pl,Rd}}-1\right)^2",
+           note="reduces My")
+        _t("ρ_y", rho_y, "—", clause="EN 1993-1-1 §6.2.8", note="reduces Mz")
+
     # ── bending + axial ──
     npl_rd = area_eff * fy / gm0 / 1e3
     my, mz = f.my_ed, f.mz_ed
+
+    _sec("Bending + axial (§6.2.9)")
+    _t("Npl,Rd", npl_rd, "kN", clause="EN 1993-1-1 §6.2.4",
+       expr="Npl,Rd = A·f_y/γ_M0",
+       subst=f"{area_eff:.0f}·{fy:.0f}/{gm0:g}/1e3")
 
     if inp.section_class <= 2:
         # Plastic. Reduce Wpl for high coincident shear (§6.2.8): the web area
@@ -278,6 +343,18 @@ def eurocode3_section_check(inp: SectionResistanceInput,
         # plus the individual limits (so a uniaxial case reads as the linear
         # ratio, and pure axial as N/Npl,Rd — §6.2.4/§6.2.9).
         u_nm = max(interaction, ratio_y, ratio_z, n)
+        _t("n = N_Ed/Npl,Rd", n, "—")
+        _t("Mpl,Rd,y", mpl_y, "kNm", expr="Mpl,Rd = W_pl,y·f_y/γ_M0")
+        _t("Mpl,Rd,z", mpl_z, "kNm", expr="Mpl,Rd = W_pl,z·f_y/γ_M0")
+        _t("MN,Rd,y", mn_y, "kNm", clause="EN 1993-1-1 §6.2.9.1",
+           note="axial-reduced plastic moment")
+        _t("MN,Rd,z", mn_z, "kNm", clause="EN 1993-1-1 §6.2.9.1")
+        _t("Interaction", interaction, "—", clause="EN 1993-1-1 §6.2.9.1(6)",
+           expr="(My/MN,y)^α + (Mz/MN,z)^β ≤ 1",
+           latex=r"\left(\frac{M_y}{M_{N,y}}\right)^{\alpha}"
+                 r"+\left(\frac{M_z}{M_{N,z}}\right)^{\beta}\le1",
+           subst=f"({abs(my):.4g}/{mn_y:.4g})^{alpha:g}"
+                 f"+({abs(mz):.4g}/{mn_z:.4g})^{beta:g}")
     else:
         # Elastic (Class 3) / effective (Class 4): σx,Ed ≤ fy/γM0.
         if inp.section_class == 3 or (inp.weff_y <= 0 and inp.weff_z <= 0):
@@ -294,8 +371,19 @@ def eurocode3_section_check(inp: SectionResistanceInput,
         u_nm = sig / fyd if fyd > 0 else 0.0
         if rho_z > 0:
             u_nm = max(u_nm, sig / (fyd * math.sqrt(max(1.0 - rho_z, 1e-9))))
+        cls_note = ("elastic (Class 3)" if inp.section_class == 3
+                    else "effective (Class 4)")
+        _t("σ_x,Ed", sig, "N/mm²", clause="EN 1993-1-1 §6.2.9.2/§6.2.9.3",
+           expr="σ_x = N/A + My/W_y + Mz/W_z", note=cls_note)
+        _t("f_yd", fyd, "N/mm²", expr="f_yd = f_y/γ_M0")
+        _t("U = σ_x,Ed/f_yd", u_nm, "—", ok=u_nm <= 1.0)
 
     utilization = max(u_vy, u_vz, u_t, u_nm)
+    _sec("Combined utilisation (§6.2.10)")
+    _t("U_N+M", u_nm, "—", ok=u_nm <= 1.0)
+    _t("Utilisation", utilization, "—", clause="EN 1993-1-1 §6.2.1(7)",
+       expr="max(U_Vy, U_Vz, U_T, U_N+M) ≤ 1", ok=utilization <= 1.0,
+       note="governing cross-section check")
     return SectionResistanceResult(
         util_shear_y=u_vy, util_shear_z=u_vz, util_torsion=u_t,
         util_bending_axial=u_nm, utilization=utilization,
