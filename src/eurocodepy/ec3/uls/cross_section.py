@@ -236,7 +236,8 @@ def eurocode3_section_check(inp: SectionResistanceInput,
     area_eff = inp.area_eff if inp.area_eff is not None else area
 
     _sec("Inputs")
-    _t("N_Ed", f.n_ed, "kN", note="compression positive")
+    _t("N_Ed", f.n_ed,
+       "kN (compression)" if f.n_ed >= 0 else "kN (tension)")
     _t("My_Ed", f.my_ed, "kNm")
     _t("Mz_Ed", f.mz_ed, "kNm")
     _t("Vy_Ed", f.vy_ed, "kN")

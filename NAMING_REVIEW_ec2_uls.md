@@ -46,7 +46,7 @@ Most helpers use `calc_*`. Off-pattern:
   mixed styles (`conc_stress` abbreviated+underscored vs `concreteforces` /
   `steelforces` unseparated). Several read like helpers that should be private.
 
-### 3. Punching `…p` suffix is cryptic and asymmetric
+### 3. Punching `…p` suffix is cryptic and assymmetric
 Punching appends `p`: `calc_vedp`, `calc_vrdcp`, `calc_vrdcminp`. Shear does not
 (`calc_vrdc`). So `vrdc` (shear) vs `vrdcp` (punching) differ by one trailing
 letter, and `vrdcminp` is dense. The module (`shear` vs `punch`) already

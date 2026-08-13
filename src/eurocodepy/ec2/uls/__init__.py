@@ -62,6 +62,16 @@ from eurocodepy.ec2.uls.shell import (
     calc_reinf_plane as calc_reinf_plane,
     calc_reinf_shell as calc_reinf_shell,
 )
+from eurocodepy.ec2.uls.membrane_check import (
+    MembraneInput as MembraneInput,
+    MembraneResult as MembraneResult,
+    eurocode2_membrane_check as eurocode2_membrane_check,
+)
+from eurocodepy.ec2.uls.slab_check import (
+    SlabInput as SlabInput,
+    SlabResult as SlabResult,
+    eurocode2_slab_check as eurocode2_slab_check,
+)
 from eurocodepy.ec2.uls.torsion import (
     calc_torsion as calc_torsion,
 )
@@ -86,4 +96,8 @@ __all__ = [
     "eurocode2_punching_check", "PunchInput", "PunchResult",
     # shell reinforcement
     "calc_reinf_plane", "calc_reinf_shell",
+    # composite membrane check (§6.109)
+    "eurocode2_membrane_check", "MembraneInput", "MembraneResult",
+    # composite slab flexural check (§6.1 / §9.3.1.1)
+    "eurocode2_slab_check", "SlabInput", "SlabResult",
 ]

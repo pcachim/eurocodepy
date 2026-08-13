@@ -173,18 +173,21 @@ def calc_asl_nm(
         )
 
     if trace is not None:
-        trace.section("Inputs")
-        trace.step("M_Ed", med, "kNm")
-        trace.step("N_Ed", ned, "kN", note="compression positive")
-        trace.step("f_ck", fck, "MPa")
-        trace.step("f_yk", fyk, "MPa")
-        trace.step("d = h − d1", d, "m", expr="d = h − d1")
+        # Design strengths first, so the reader immediately sees what the
+        # whole check is based on before the forces/checks that use them.
         trace.section("Design strengths")
         trace.step("f_cd", fcd, "MPa", clause="EN 1992-1-1 §3.1.6",
                    expr="f_cd = α_cc·f_ck/γ_c",
                    subst=f"{alpha_cc:g}·{fck:g}/{gamma_c:g}")
         trace.step("f_yd", fyd, "MPa", expr="f_yd = f_yk/γ_s",
                    subst=f"{fyk:g}/{gamma_s:g}")
+        trace.section("Inputs")
+        trace.step("M_Ed", med, "kNm")
+        trace.step("N_Ed", ned,
+                   "kN (compression)" if ned >= 0 else "kN (tension)")
+        trace.step("f_ck", fck, "MPa")
+        trace.step("f_yk", fyk, "MPa")
+        trace.step("d = h − d1", d, "m", expr="d = h − d1")
         trace.section("Flexure (EN 1992-1-1 §6.1)")
         trace.step("M_Eds", med_s, "kNm", clause="EN 1992-1-1 §6.1",
                    expr="M_Eds = |M_Ed| + N_Ed·(h/2 − d1)",

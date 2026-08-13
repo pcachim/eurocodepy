@@ -125,10 +125,14 @@ Open an issue or start a discussion on GitHub:
 
 ## Disclaimer
 
-This software is intended for **educational, research, and preliminary design** purposes only.
-It is not a certified engineering tool. Always verify critical calculations against the
-official Eurocode standards and applicable national annexes before use in final designs.
-The authors assume no liability for design decisions made using this library.
+This software is intended for **educational and research** purposes only. It is not a
+certified engineering tool and must not be used for final structural designs. Always
+verify calculations against the official Eurocode standards and applicable national
+annexes, and have final designs reviewed and approved by a qualified structural
+engineer. The authors assume no liability for design decisions made using this library.
+
+This disclaimer is in addition to, and does not limit, the warranty disclaimer in the
+LGPLv3 license (see [License & Contributing](copyright.md)).
 
 ## Acknowledgements
 

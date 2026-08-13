@@ -1,5 +1,5 @@
 # Copyright (c) 2024 Paulo Cachim
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: LGPL-3.0-or-later
 
 # EurocodePy
 """Provide several functions to help designers working with Eurocodes.
@@ -14,9 +14,22 @@ The package provides modules for different Eurocodes and utilities, such as:
 * `ec5`: utility functions for ec5 calculations.<br>
 * `ec7`: utility functions for ec7 calculations.<br>
 * `ec8`: utility functions for ec8 calculations.
+
+Disclaimer:
+    This library is intended for educational and research purposes only. It is
+    not a certified engineering tool and must not be used for final structural
+    designs. Always verify calculations against the official Eurocode standards
+    and applicable national annexes, and have final designs reviewed and
+    approved by a qualified structural engineer. The authors assume no
+    liability for design decisions made using this library.
+
+License:
+    Licensed under the GNU Lesser General Public License v3.0 (LGPLv3) or,
+    at your option, any later version. See the LICENSE.md and COPYING files
+    in the project repository for the full license text.
 """
 
-__version__ = "2026.7.2"
+__version__ = "2027.0.0"
 version = "This is 'EurocodePy' version " + __version__  # noqa: RUF067
 """Version of EurocodePy package."""
 

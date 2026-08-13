@@ -54,6 +54,20 @@ def test_sign_independent():
         calc_torsion(50.0, B, H, FCK, GC, FYK, GS, COTT)["Asw_tor_s"]
 
 
+def test_trace_invariant_and_structure():
+    """Passing a trace must not change the result and must record the steps."""
+    from eurocodepy.calc_report import CalcReport
+    base = calc_torsion(50.0, B, H, FCK, GC, FYK, GS, COTT, cover=0.04)
+    rep = CalcReport(title="torsion")
+    traced = calc_torsion(50.0, B, H, FCK, GC, FYK, GS, COTT, cover=0.04,
+                          trace=rep)
+    assert base == traced
+    d = rep.to_dict()
+    symbols = [st["symbol"] for s in d["sections"] for st in s["steps"]]
+    assert "T_Ed" in symbols and "T_Rd,max" in symbols
+    assert "Asw,tor/s" in symbols and "Asl,tor" in symbols
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_") and callable(fn):

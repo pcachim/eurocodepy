@@ -34,22 +34,30 @@ Thank you for contributing to our project!
 
 ## Copyright Notice
 
-Copyright (c) 2025 Paulo Cachim
+Copyright (C) 2026 Paulo Cachim
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at
+your option) any later version.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+General Public License for more details.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+You should have received a copy of the GNU Lesser General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+The full text of the GNU Lesser General Public License v3.0 (LGPLv3), together
+with the GNU General Public License v3.0 (GPLv3) it incorporates by reference,
+is available in the [LICENSE.md](https://github.com/pcachim/eurocodepy/blob/main/LICENSE.md)
+and [COPYING](https://github.com/pcachim/eurocodepy/blob/main/COPYING) files in the
+project repository.
+
+This disclaimer is in addition to, and does not limit, the warranty disclaimer
+above: this software is intended for **educational and research** purposes
+only. It is not a certified engineering tool and must not be used for final
+structural designs. Always verify calculations against the official Eurocode
+standards and applicable national annexes, and have final designs reviewed
+and approved by a qualified structural engineer.

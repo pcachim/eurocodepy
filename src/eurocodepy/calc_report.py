@@ -97,8 +97,42 @@ class CalcReport:
         }
 
     def to_markdown(self) -> str:
+        import re
+
         def _fmt(v):
             return f"{v:.4g}" if isinstance(v, float) else str(v)
+
+        # Steps use a plain "M_Ed" / "f_yk" convention (underscore = subscript)
+        # rather than real LaTeX grouping. Outside a math environment a lone
+        # "_" is just a literal underscore to a Markdown renderer, not a
+        # subscript, so texify it ("M_Ed" -> "M_{Ed}") and wrap in inline math.
+        _sub_re = re.compile(r'([A-Za-zΑ-Ωα-ω][A-Za-z0-9]*)_([A-Za-z0-9,]+)')
+
+        def _texify_one(m):
+            prefix, sub = m.group(1), m.group(2)
+            # "My_Ed" -> "M_{y,Ed}", not "My_{Ed}": a 2-letter prefix that is
+            # BASE + one lower-case axis/component letter belongs inside the
+            # subscript group too. A longer spelled-out name like "chi_y"
+            # (prefix "chi") is a single symbol, left as plain "chi_{y}".
+            if len(prefix) == 2 and prefix[0].isupper() and prefix[1].islower():
+                return f'{prefix[0]}_{{{prefix[1]},{sub}}}'
+            return f'{prefix}_{{{sub}}}'
+
+        def _mathify(s):
+            if not s:
+                return s
+            texified = _sub_re.sub(_texify_one, s)
+            return f"${texified}$"
+
+        def _mathify_bold(s):
+            # Bold via LaTeX's own \mathbf{}, not Markdown's **…** — a "**"
+            # glued directly onto a "$" delimiter trips up several
+            # Markdown+LaTeX pipelines (pandoc, MathJax); \mathbf sidesteps
+            # the interaction entirely.
+            if not s:
+                return s
+            texified = _sub_re.sub(_texify_one, s)
+            return "$\\mathbf{" + texified + "}$"
 
         out: list[str] = []
         if self.title:
@@ -107,14 +141,16 @@ class CalcReport:
             if s.title:
                 out.append(f"## {s.title}\n")
             for st in s.steps:
-                head = f"**{st.symbol}** = {_fmt(st.value)} {st.unit}".rstrip()
+                head = f"{_mathify_bold(st.symbol)} = {_fmt(st.value)} {st.unit}".rstrip()
                 if st.clause:
                     head += f"  _[{st.clause}]_"
                 out.append(head)
-                if st.expr:
-                    out.append(f"  - {st.expr}")
+                if st.latex:
+                    out.append(f"$$ {st.latex} $$")
+                elif st.expr:
+                    out.append(f"  - {_mathify(st.expr)}")
                 if st.subst:
-                    out.append(f"  - = {st.subst}")
+                    out.append(f"  - = {_mathify(st.subst)}")
                 if st.ok is not None:
                     out.append(f"  - {'✓ verified' if st.ok else '✗ NOT verified'}")
                 if st.note:

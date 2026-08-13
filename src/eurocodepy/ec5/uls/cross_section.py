@@ -133,8 +133,29 @@ def eurocode5_section_check(inp: TimberSectionInput,
         k_m = float(bend.get("k_m", 1.0))
         bchecks = bend.get("checks", {})
         schecks = shear.get("checks", {})
+        # Design strengths first — check_bending_with_normal() already called
+        # timber.design_values(), so kmod/fmd/f{c,t}0d/fvd are populated on
+        # inp.timber; report them before the forces so the reader immediately
+        # sees which material values the whole check is based on.
+        t = inp.timber
+        trace.section("Design strengths")
+        trace.step("k_mod", getattr(t, "kmod", 0.0), "—",
+                   clause="EN 1995-1-1 §3.1.3, Table 3.1",
+                   note=f"{getattr(inp.service_class, 'name', inp.service_class)} · "
+                        f"{getattr(inp.load_duration, 'name', inp.load_duration)}")
+        trace.step("γ_M", getattr(t, "safety", 0.0), "—",
+                   clause="EN 1995-1-1 Table 2.3")
+        trace.step("f_md", getattr(t, "fmd", 0.0), "MPa",
+                   expr="f_md = k_mod·f_mk/γ_M")
+        trace.step("f_t0d", getattr(t, "ft0d", 0.0), "MPa",
+                   expr="f_t0d = k_mod·f_t0k/γ_M")
+        trace.step("f_c0d", getattr(t, "fc0d", 0.0), "MPa",
+                   expr="f_c0d = k_mod·f_c0k/γ_M")
+        trace.step("f_vd", getattr(t, "fvd", 0.0), "MPa",
+                   expr="f_vd = k_mod·f_vk/γ_M")
         trace.section("Inputs")
-        trace.step("N_Ed", f.n_ed, "kN", note="compression negative")
+        trace.step("N_Ed", f.n_ed,
+                   "kN (tension)" if f.n_ed >= 0 else "kN (compression)")
         trace.step("My_Ed", f.my_ed, "kNm")
         trace.step("Mz_Ed", f.mz_ed, "kNm")
         trace.step("Vy_Ed", f.vy_ed, "kN")

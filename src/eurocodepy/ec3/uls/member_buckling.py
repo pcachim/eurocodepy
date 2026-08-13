@@ -354,7 +354,8 @@ def eurocode3_member_check(inp: MemberInput, trace=None) -> MemberCheckResult:
     l_lt = inp.l_lt or inp.lcr_z
 
     _sec("Inputs")
-    _t("N_Ed", inp.n_ed, "kN", note="compression positive")
+    _t("N_Ed", inp.n_ed,
+       "kN (compression)" if inp.n_ed >= 0 else "kN (tension)")
     _t("My_Ed", inp.my_ed, "kNm")
     _t("Mz_Ed", inp.mz_ed, "kNm")
     _t("f_y", fy, "N/mm²")

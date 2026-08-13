@@ -2,7 +2,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/eurocodepy)](https://pypi.org/project/eurocodepy/)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](LICENSE.md)
 
 A Python library for structural design calculations according to the **Eurocode** standards.
 `eurocodepy` provides composable, engineering-focused building blocks — material databases,
@@ -163,16 +163,20 @@ applicable. See `CONTRIBUTING_GUIDELINES.md` for more detail.
 
 ## License
 
-MIT — see [LICENSE.md](LICENSE.md) for the full text.
+GNU Lesser General Public License v3.0 (LGPLv3) — see [LICENSE.md](LICENSE.md) and [COPYING](COPYING) for the full text.
 
 ---
 
 ## Disclaimer
 
-This software is intended for **educational, research, and preliminary design** purposes
-only. It is not a certified engineering tool. Always verify critical calculations against
-the official Eurocode standards and applicable national annexes before use in final
-designs. The authors assume no liability for design decisions made using this library.
+This software is intended for **educational and research** purposes only. It is not a
+certified engineering tool and must not be used for final structural designs. Always
+verify calculations against the official Eurocode standards and applicable national
+annexes, and have final designs reviewed and approved by a qualified structural
+engineer. The authors assume no liability for design decisions made using this library.
+
+This disclaimer is in addition to, and does not limit, the warranty disclaimer in the
+LGPLv3 license (see [LICENSE.md](LICENSE.md)).
 
 ---
 

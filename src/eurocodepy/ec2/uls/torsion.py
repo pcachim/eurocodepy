@@ -19,7 +19,7 @@ m² for the total longitudinal area), and resistances in kN·m.
 def calc_torsion(ted: float, b: float, h: float,
                  fck: float, g_c: float, fyk: float, g_s: float,
                  cott: float, cover: float = 0.0,
-                 alpha_cc: float = 1.0) -> dict:
+                 alpha_cc: float = 1.0, trace=None) -> dict:
     """Design a solid rectangular section for St-Venant torsion (EC2 §6.3).
 
     Args:
@@ -35,6 +35,10 @@ def calc_torsion(ted: float, b: float, h: float,
             lower bound of 2·cover is applied to the effective wall thickness
             (EC2 §6.3.2(1)). Defaults to 0.0 (no lower bound).
         alpha_cc (float): long-term/loading coefficient on f_cd. Defaults to 1.0.
+        trace: optional :class:`eurocodepy.calc_report.CalcReport`. When given,
+            the design records its steps into it. ``None`` (default) is a no-op —
+            the trace only *records* what was computed, so the result is
+            unchanged.
 
     Returns:
         dict with keys:
@@ -70,6 +74,32 @@ def calc_torsion(ted: float, b: float, h: float,
 
     asw_tor_s = ted / (2.0 * a_k * fyd * cott) / 1000.0 if a_k > 0 else 0.0
     asl_tor = ted * cott * u_k / (2.0 * a_k * fyd) / 1000.0 if a_k > 0 else 0.0
+    util = (ted / trd_max) if trd_max > 0.0 else float("inf")
+
+    if trace is not None:
+        trace.section("Torsion (EN 1992-1-1 §6.3)")
+        trace.step("T_Ed", ted, "kN·m", clause="EN 1992-1-1 §6.3")
+        trace.step("t_ef", t_ef, "m", clause="EN 1992-1-1 §6.3.2(1)",
+                   expr="t_ef = A/u (≥ 2·cover)", latex=r"t_{ef}=A/u")
+        trace.step("A_k", a_k, "m²", clause="EN 1992-1-1 §6.3.2",
+                   expr="A_k = (b − t_ef)·(h − t_ef)",
+                   latex=r"A_k=(b-t_{ef})(h-t_{ef})")
+        trace.step("u_k", u_k, "m", expr="u_k = 2·[(b − t_ef) + (h − t_ef)]")
+        trace.step("cot θ", cott, "—", note="1.0 ≤ cot θ ≤ 2.5")
+        trace.step("T_Rd,max", trd_max, "kN·m", clause="EN 1992-1-1 §6.3.2(4)",
+                   expr="T_Rd,max = 2·ν·f_cd·A_k·t_ef·sinθ·cosθ",
+                   latex=r"T_{Rd,max}=2\nu f_{cd}A_k t_{ef}\sin\theta\cos\theta",
+                   ok=(util <= 1.0))
+        trace.step("Asw,tor/s", asw_tor_s, "m²/m", clause="EN 1992-1-1 §6.3.2(3)",
+                   expr="Asw,tor/s = T_Ed/(2·A_k·f_yd·cot θ)",
+                   latex=r"\frac{A_{sw,tor}}{s}=\frac{T_{Ed}}{2A_k f_{yd}\cot\theta}",
+                   note="closed stirrups, per single leg")
+        trace.step("Asl,tor", asl_tor, "m²", clause="EN 1992-1-1 §6.3.2(3)",
+                   expr="Asl,tor = T_Ed·cot θ·u_k/(2·A_k·f_yd)",
+                   latex=r"A_{sl,tor}=\frac{T_{Ed}\cot\theta\,u_k}{2A_k f_{yd}}",
+                   note="total longitudinal, distributed around u_k")
+        trace.step("T_Ed/T_Rd,max", util, "—", clause="EN 1992-1-1 Eq. 6.29",
+                   note="torsion side of the shear–torsion interaction")
 
     return {
         "t_ef": t_ef,
@@ -78,5 +108,5 @@ def calc_torsion(ted: float, b: float, h: float,
         "TRd_max": trd_max,
         "Asw_tor_s": asw_tor_s,
         "Asl_tor": asl_tor,
-        "util": (ted / trd_max) if trd_max > 0.0 else float("inf"),
+        "util": util,
     }
