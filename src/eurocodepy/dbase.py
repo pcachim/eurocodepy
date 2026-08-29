@@ -1,6 +1,7 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
 
+import copy
 import json
 from pathlib import Path
 
@@ -111,3 +112,142 @@ Loads = db["Loads"]
 WindLoads = Loads["Wind"]
 DeadLoads = Loads["Dead"]
 SeismicLoads = Loads["Seismic"]
+
+
+# ---------------------------------------------------------------------------
+# Edition-aware access (additive; does not change any of the module-level
+# convenience variables above, which keep resolving to the "2004" edition by
+# omission, exactly as before this section was added).
+# ---------------------------------------------------------------------------
+
+
+def _deep_merge(existing: dict, value: dict) -> None:
+    """Recursively merge ``value`` into ``existing`` (in place, value wins).
+
+    Unlike ``dict.update``, a nested dict in ``value`` patches only the keys
+    it contains at every level, instead of replacing the whole nested
+    sub-dict -- e.g. ``{"C20_25": {"Ecm": 28847.6}}`` merged into
+    ``{"C20_25": {"fck": 20.0, "Ecm": 30000.0, ...}}`` updates only ``Ecm``
+    and leaves ``fck`` and every other sibling field untouched.
+    """
+    for key, val in value.items():
+        if isinstance(val, dict) and isinstance(existing.get(key), dict):
+            _deep_merge(existing[key], val)
+        else:
+            existing[key] = val
+
+
+def _set_by_dotpath(target: dict, path: str, value: object) -> None:
+    """Set ``value`` at a dot-notation ``path`` inside ``target`` (in place).
+
+    Intermediate dicts are created if missing. If the existing value at the
+    final key is itself a dict and ``value`` is also a dict, they are
+    deep-merged (see ``_deep_merge``) instead of replacing the whole
+    sub-dict, so an override can patch a single field (e.g. a single grade's
+    ``Ecm``) without wiping out sibling fields (e.g. ``fck``) or sibling
+    grades that were not meant to change.
+    """
+    keys = path.split(".")
+    node = target
+    for key in keys[:-1]:
+        node = node.setdefault(key, {})
+    last = keys[-1]
+    existing = node.get(last)
+    if isinstance(existing, dict) and isinstance(value, dict):
+        _deep_merge(existing, value)
+    else:
+        node[last] = value
+
+
+def get_edition_data(eurocode: str, edition: str | None = None) -> dict:
+    """Return the ``Materials`` dict resolved for the requested edition.
+
+    Applies the deltas in ``Editions.<eurocode>.<edition>.overrides`` on top
+    of a deep copy of ``db["Materials"]``. Never mutates or returns a
+    reference to the shared global ``db`` state.
+
+    Parameters
+    ----------
+    eurocode:
+        Key into ``db["Editions"]``, e.g. ``"ec2"``, ``"ec3"``, ``"ec5"``.
+    edition:
+        Edition name, e.g. ``"2004"`` or ``"2023"``. If ``None``, the
+        edition marked ``"default": true`` for that eurocode is used. If
+        there is no ``Editions`` entry for this eurocode at all (e.g. an
+        older ``eurocodes.json`` without the ``Editions`` section, or an
+        eurocode that has not been given any edition overrides yet), the
+        base ``Materials`` dict is returned unchanged — identical to
+        today's behaviour before this function existed.
+
+    Returns
+    -------
+    dict
+        A standalone deep copy of ``Materials`` with the requested
+        edition's overrides applied (if any).
+    """
+    base = copy.deepcopy(db["Materials"])
+    editions = db.get("Editions", {}).get(eurocode, {})
+    if edition is None:
+        edition = next((e for e, v in editions.items() if v.get("default")), None)
+    if edition is None or edition not in editions:
+        return base
+    for path, value in editions[edition].get("overrides", {}).items():
+        _set_by_dotpath(base, path, value)
+    return base
+
+
+def get_edition_params(eurocode: str, section: str, edition: str | None = None) -> dict:
+    """Return a non-material parameter section for one eurocode edition.
+
+    Some edition-specific design parameters are not material properties (so
+    they do not belong under ``Materials``) -- e.g. the punching-shear
+    ``dmax``/``eta_sys`` factors of prEN 1992-1-1:2023 SS8.4. These live at
+    ``db["Editions"][eurocode][edition][section]`` (a sibling of
+    ``"overrides"``), and this accessor resolves them the same way as
+    :func:`get_edition_data`: same default-edition lookup, and an empty dict
+    (never an exception) when the eurocode, edition, or section is absent --
+    e.g. calling this for the "2004" edition, which has no ``punch_params``
+    section, simply returns ``{}``.
+
+    Returns a shallow copy, so callers cannot mutate the shared ``db`` state.
+    """
+    editions = db.get("Editions", {}).get(eurocode, {})
+    if edition is None:
+        edition = next((e for e, v in editions.items() if v.get("default")), None)
+    if edition is None or edition not in editions:
+        return {}
+    return dict(editions[edition].get(section, {}))
+
+
+class EurocodeMaterials:
+    """Thin, optional, read-only wrapper around an edition-resolved dict.
+
+    This does NOT replace the existing module-level convenience variables
+    (``ConcreteParams``, ``SteelGrades``, etc.) — those keep working exactly
+    as before. Use this only when you explicitly need a specific edition's
+    values, e.g.::
+
+        mats = EurocodeMaterials("ec2", "2023")
+        mats.Concrete["Parameters"]["alpha_cc"]
+    """
+
+    def __init__(self, eurocode: str, edition: str | None = None) -> None:
+        self._eurocode = eurocode
+        self._edition = edition
+        self._data = get_edition_data(eurocode, edition)
+
+    def __getattr__(self, name: str) -> object:
+        try:
+            return self._data[name]
+        except KeyError as exc:
+            msg = f"{self.__class__.__name__!r} object has no attribute {name!r}"
+            raise AttributeError(msg) from exc
+
+    def __getitem__(self, key: str) -> object:
+        return self._data[key]
+
+    def __repr__(self) -> str:
+        return (
+            f"EurocodeMaterials(eurocode={self._eurocode!r}, "
+            f"edition={self._edition!r})"
+        )

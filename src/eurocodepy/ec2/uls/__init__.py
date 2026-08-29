@@ -18,8 +18,10 @@ from eurocodepy.ec2.materials import (
 )
 from eurocodepy.ec2.uls import (
     beam as beam,
+    column as column,
     punch as punch,
     shear as shear,
+    shear_torsion as shear_torsion,
     shell as shell,
     torsion as torsion,
 )
@@ -75,10 +77,31 @@ from eurocodepy.ec2.uls.slab_check import (
 from eurocodepy.ec2.uls.torsion import (
     calc_torsion as calc_torsion,
 )
+from eurocodepy.ec2.uls.shear_torsion import (
+    ShearTorsionInput as ShearTorsionInput,
+    ShearTorsionResult as ShearTorsionResult,
+    distribute_torsion_longitudinal as distribute_torsion_longitudinal,
+    eurocode2_shear_torsion_check as eurocode2_shear_torsion_check,
+)
+from eurocodepy.ec2.uls.column import (
+    ColumnInput as ColumnInput,
+    ColumnResult as ColumnResult,
+    RebarLayout as RebarLayout,
+    biaxial_interaction_exponent as biaxial_interaction_exponent,
+    design_column_reinforcement as design_column_reinforcement,
+    effective_length as effective_length,
+    eurocode2_column_check as eurocode2_column_check,
+    maximum_column_reinforcement_m2 as maximum_column_reinforcement_m2,
+    minimum_column_reinforcement_m2 as minimum_column_reinforcement_m2,
+    nominal_curvature_e2 as nominal_curvature_e2,
+    nominal_stiffness_moment as nominal_stiffness_moment,
+    slenderness_limit as slenderness_limit,
+    uniaxial_moment_resistance as uniaxial_moment_resistance,
+)
 
 __all__ = [
     # submodules
-    "beam", "punch", "shear", "shell", "torsion",
+    "beam", "column", "punch", "shear", "shear_torsion", "shell", "torsion",
     # materials (re-exported for convenience)
     "Concrete", "ConcreteClass", "Prestress", "PrestressClass",
     "Reinforcement", "ReinforcementClass",
@@ -88,6 +111,14 @@ __all__ = [
     "calc_asl_nm", "design_rcbeam_nm",
     # shear / torsion
     "calc_asws", "calc_vrd", "calc_vrdc", "calc_vrdmax", "calc_torsion",
+    # composite column check (§5.8 / §6.1)
+    "eurocode2_column_check", "ColumnInput", "ColumnResult", "RebarLayout",
+    "slenderness_limit", "effective_length", "biaxial_interaction_exponent",
+    "nominal_curvature_e2", "nominal_stiffness_moment",
+    "uniaxial_moment_resistance",
+    # automatic column reinforcement design (Fase 4)
+    "design_column_reinforcement", "minimum_column_reinforcement_m2",
+    "maximum_column_reinforcement_m2",
     # composite shear check (§6.2)
     "eurocode2_shear_check", "ShearInput", "ShearResult",
     # punching shear
@@ -100,4 +131,7 @@ __all__ = [
     "eurocode2_membrane_check", "MembraneInput", "MembraneResult",
     # composite slab flexural check (§6.1 / §9.3.1.1)
     "eurocode2_slab_check", "SlabInput", "SlabResult",
+    # composite shear + torsion check (§6.2 + §6.3, Eq. 6.29)
+    "eurocode2_shear_torsion_check", "ShearTorsionInput", "ShearTorsionResult",
+    "distribute_torsion_longitudinal",
 ]

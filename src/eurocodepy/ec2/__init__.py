@@ -109,6 +109,21 @@ from eurocodepy.ec2.uls.shell import (
 from eurocodepy.ec2.uls.torsion import (
     calc_torsion as calc_torsion,
 )
+from eurocodepy.ec2.uls.column import (
+    ColumnInput as ColumnInput,
+    ColumnResult as ColumnResult,
+    RebarLayout as RebarLayout,
+    biaxial_interaction_exponent as biaxial_interaction_exponent,
+    design_column_reinforcement as design_column_reinforcement,
+    effective_length as effective_length,
+    eurocode2_column_check as eurocode2_column_check,
+    maximum_column_reinforcement_m2 as maximum_column_reinforcement_m2,
+    minimum_column_reinforcement_m2 as minimum_column_reinforcement_m2,
+    nominal_curvature_e2 as nominal_curvature_e2,
+    nominal_stiffness_moment as nominal_stiffness_moment,
+    slenderness_limit as slenderness_limit,
+    uniaxial_moment_resistance as uniaxial_moment_resistance,
+)
 
 __all__ = [
     "A400NR",
@@ -192,4 +207,17 @@ __all__ = [
     "calc_torsion",
     "calc_reinf_plane",
     "calc_reinf_shell",
+    "eurocode2_column_check",
+    "ColumnInput",
+    "ColumnResult",
+    "RebarLayout",
+    "slenderness_limit",
+    "effective_length",
+    "biaxial_interaction_exponent",
+    "nominal_curvature_e2",
+    "nominal_stiffness_moment",
+    "design_column_reinforcement",
+    "minimum_column_reinforcement_m2",
+    "maximum_column_reinforcement_m2",
+    "uniaxial_moment_resistance",
 ]

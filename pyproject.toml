@@ -40,15 +40,25 @@ dev = [
     "ty>=0.0.1a10",
     "pre-commit>=4.2.0",
     "pytest>=8.0",
+    "jsonschema>=4.23.0",
 ]
 test = [
     "pytest>=8.0",
+    "jsonschema>=4.23.0",
 ]
 
 [project.urls]
 "Homepage" = "https://github.com/pcachim/eurocodepy"
 "Bug Tracker" = "https://github.com/pcachim/eurocodepy/issues"
 
+
+[tool.setuptools.package-data]
+# Glob-based, so a new data file (a new JSON/CSV/XLSX under data/) is picked
+# up automatically -- unlike the old MANIFEST.in, which listed each file by
+# name and had already silently dropped eurocode_data_portugal.json from the
+# sdist because nobody remembered to add it. See dev/dbase_versioning.md
+# problem 5 / phase 6 (xdfem2d repository).
+eurocodepy = ["data/*.json", "data/*.csv", "data/*.xlsx"]
 
 [tool.ruff]
 line-length = 88

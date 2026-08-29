@@ -20,11 +20,23 @@ like the shear / EC3 / EC5 checks:
 
 Units: lengths in **m**, strengths in **MPa**, forces in **kN**, moments in
 **kNm** (converted to the mm the punch helpers expect internally).
+
+``dmax``/``eta_sys`` (:2023 only) default from
+``dbase.get_edition_params("ec2", "punch_params", "2023")`` -- i.e. from
+``Editions.ec2.2023.punch_params`` in eurocodes.json -- instead of being
+hard-coded on this dataclass. See ``dev/dbase_versioning.md`` phases 3-4 in
+the xdfem2d repository: this replaces the previous approach, where these two
+prEN 1992-1-1:2023 SS8.4 values were baked in as Python literal defaults, with
+a single versioned source of truth that ``get_edition_data``/
+``EurocodeMaterials`` consumers can also read. The resolved defaults are
+unchanged (20.0 mm / 1.5) -- only where they come from has moved.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+
+from eurocodepy import dbase
 
 _MM = 1000.0     # m → mm
 
@@ -45,9 +57,28 @@ class PunchInput:
     gamma_s: float = 1.15
     gamma_v: float = 1.4
     alpha_cc: float = 1.0
-    dmax: float = 20.0        # max aggregate size [mm] (:2023)
-    eta_sys: float = 1.5      # system factor η_sys (:2023)
+    dmax: float | None = None     # max aggregate size [mm] (:2023); None -> from Editions
+    eta_sys: float | None = None  # system factor η_sys (:2023); None -> from Editions
     edition: str = "2004"     # '2004' | '2023'
+
+    def __post_init__(self) -> None:
+        """Resolve ``dmax``/``eta_sys`` from the versioned edition data.
+
+        Only fills in values left as ``None`` (explicit constructor args
+        always win), and only looks the ``2023`` section up for the
+        ``2023`` edition -- the ``2004`` edition never uses these fields.
+        """
+        if str(self.edition) == "2023":
+            params = dbase.get_edition_params("ec2", "punch_params", "2023")
+            if self.dmax is None:
+                self.dmax = params.get("dmax", 20.0)
+            if self.eta_sys is None:
+                self.eta_sys = params.get("eta_sys", 1.5)
+        else:
+            if self.dmax is None:
+                self.dmax = 20.0
+            if self.eta_sys is None:
+                self.eta_sys = 1.5
 
 
 @dataclass

@@ -1,7 +1,5 @@
-include src/eurocodepy/data/eurocodes.json
-include src/eurocodepy/data/i_profiles_euro.json
-include src/eurocodepy/data/chs_profiles_euro.json
-include src/eurocodepy/data/rhs_profiles_euro.json
-include src/eurocodepy/data/shs_profiles_euro.json
-include src/eurocodepy/data/eurocode_data_portugal.csv
-include src/eurocodepy/data/eurocode_data_portugal.xlsx
+# Glob-based (dev/dbase_versioning.md phase 6): a new JSON/CSV/XLSX file
+# added under src/eurocodepy/data/ is picked up automatically, instead of
+# needing a manual "include" line here -- the previous explicit list had
+# already silently missed eurocode_data_portugal.json.
+recursive-include src/eurocodepy/data *.json *.csv *.xlsx

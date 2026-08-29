@@ -1,0 +1,210 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/pcachim/eurocodepy/eurocodes.schema.json",
+  "title": "eurocodepy Eurocodes database",
+  "description": "Light structural validation for eurocodes.json (dev/dbase_versioning.md phase 5, xdfem2d repository). Catches gross regressions -- a grade missing fck, a malformed Editions entry -- without pinning every leaf value, so the schema doesn't need to be rewritten every time a grade or load table gains a field.",
+  "type": "object",
+  "required": ["Eurocodes"],
+  "additionalProperties": false,
+  "properties": {
+    "Eurocodes": {
+      "type": "object",
+      "required": ["version", "Materials", "SteelProfiles", "Loads"],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Should track pyproject.toml's [project].version (dev/dbase_versioning.md problem 3) -- not enforced by this schema, just documented here."
+        },
+        "Editions": {
+          "type": "object",
+          "description": "Optional and additive (dev/dbase_versioning.md phases 1-4). Absent or {} means only the base ('2004'-equivalent) edition exists; nothing here changes how Materials below is read by default.",
+          "additionalProperties": {
+            "type": "object",
+            "description": "Editions.<eurocode>, e.g. Editions.ec2",
+            "additionalProperties": {
+              "type": "object",
+              "description": "Editions.<eurocode>.<edition-year>",
+              "properties": {
+                "default": {"type": "boolean"},
+                "source": {"type": "string"},
+                "overrides": {
+                  "type": "object",
+                  "description": "Dot-path deltas merged onto Materials by dbase.get_edition_data()."
+                },
+                "punch_params": {
+                  "type": "object",
+                  "description": "Non-material edition parameters read via dbase.get_edition_params(), e.g. ec2 2023 punching dmax/eta_sys."
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "Materials": {
+          "type": "object",
+          "required": ["Concrete", "Reinforcement", "Prestress", "Steel", "Timber", "Bolts"],
+          "additionalProperties": false,
+          "properties": {
+            "Concrete": {
+              "type": "object",
+              "required": ["Grade", "Parameters"],
+              "properties": {
+                "Grade": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": ["fck", "fcm", "fctm", "fctk05", "Ecm"],
+                    "properties": {
+                      "fck": {"type": "number"},
+                      "fcm": {"type": "number"},
+                      "fctm": {"type": "number"},
+                      "fctk05": {"type": "number"},
+                      "Ecm": {"type": "number"}
+                    },
+                    "additionalProperties": true
+                  }
+                },
+                "Parameters": {
+                  "type": "object",
+                  "required": ["gamma_cc", "gamma_ct", "weigh"],
+                  "additionalProperties": true
+                }
+              }
+            },
+            "Reinforcement": {
+              "type": "object",
+              "required": ["Grade", "Parameters", "Rebars"],
+              "properties": {
+                "Grade": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": ["fyk", "Es"],
+                    "properties": {
+                      "fyk": {"type": "number"},
+                      "Es": {"type": "number"}
+                    },
+                    "additionalProperties": true
+                  }
+                },
+                "Parameters": {
+                  "type": "object",
+                  "required": ["gamma_s", "weigh"],
+                  "additionalProperties": true
+                },
+                "Rebars": {"type": "object"},
+                "Meshes": {"type": "object"}
+              }
+            },
+            "Prestress": {
+              "type": "object",
+              "required": ["Grade", "Parameters"],
+              "properties": {
+                "Grade": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": ["fpk", "Ep"],
+                    "properties": {
+                      "fpk": {"type": "number"},
+                      "Ep": {"type": "number"}
+                    },
+                    "additionalProperties": true
+                  }
+                },
+                "Parameters": {
+                  "type": "object",
+                  "required": ["gamma_p", "weigh"],
+                  "additionalProperties": true
+                }
+              }
+            },
+            "Steel": {
+              "type": "object",
+              "required": ["Grade", "Parameters"],
+              "properties": {
+                "Grade": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": ["fyk", "fuk"],
+                    "properties": {
+                      "fyk": {"type": "number"},
+                      "fuk": {"type": "number"}
+                    },
+                    "additionalProperties": true
+                  }
+                },
+                "Parameters": {
+                  "type": "object",
+                  "required": ["gamma_M0", "gamma_M1", "gamma_M2", "weigh"],
+                  "additionalProperties": true
+                }
+              }
+            },
+            "Timber": {
+              "type": "object",
+              "required": ["Grade", "ServiceClasses", "RiskClasses", "LoadDuration", "Parameters"],
+              "properties": {
+                "Grade": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": ["fmk", "fc0k", "E0mean"],
+                    "properties": {
+                      "fmk": {"type": "number"},
+                      "fc0k": {"type": "number"},
+                      "E0mean": {"type": "number"}
+                    },
+                    "additionalProperties": true
+                  }
+                },
+                "ServiceClasses": {"type": "array"},
+                "RiskClasses": {"type": "array"},
+                "LoadDuration": {"type": "object"},
+                "Parameters": {"type": "object"}
+              }
+            },
+            "Bolts": {
+              "type": "object",
+              "required": ["Grade", "Diameters"],
+              "properties": {
+                "Grade": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": ["fub", "fyb"],
+                    "properties": {
+                      "fub": {"type": "number"},
+                      "fyb": {"type": "number"}
+                    },
+                    "additionalProperties": true
+                  }
+                },
+                "Diameters": {"type": "object"}
+              }
+            }
+          }
+        },
+        "SteelProfiles": {
+          "type": "object",
+          "description": "Populated in-memory at runtime by dbase.py from the separate profile JSON files (EuroI/EuroSHS/EuroRHS/EuroCHS) -- always {} in eurocodes.json itself."
+        },
+        "Loads": {
+          "type": "object",
+          "required": ["Dead", "Live", "Seismic", "Wind"],
+          "properties": {
+            "Dead": {"type": "object"},
+            "Live": {"type": "object"},
+            "Seismic": {"type": "object"},
+            "Wind": {
+              "type": "object",
+              "description": "TODO (legacy, dev/dbase_versioning.md problem 4): uses lowercase 'locale', unlike Live.Locale/Seismic.Locale (uppercase). Accepted as-is here, not corrected -- fixing the casing is a separate, deliberate change."
+            }
+          }
+        }
+      }
+    }
+  }
+}
