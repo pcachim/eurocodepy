@@ -268,7 +268,7 @@ def eurocode3_section_check(inp: SectionResistanceInput,
     _sec("Shear resistance (§6.2.6)")
     _t("Vpl,Rd,y", vpl_y, "kN", clause="EN 1993-1-1 §6.2.6(2)",
        expr="Vpl,Rd = A_v·(f_y/√3)/γ_M0",
-       latex=r"V_{pl,Rd}=\frac{A_v (f_y/\sqrt3)}{\gamma_{M0}}",
+       latex=r"V_{pl,Rd}=\frac{A_v (f_y/\sqrt{3})}{\gamma_{M0}}",
        subst=f"{inp.av_y:.0f}·({fy:.0f}/√3)/{gm0:g}/1e3")
     _t("Vpl,Rd,z", vpl_z, "kN", clause="EN 1993-1-1 §6.2.6(2)",
        expr="Vpl,Rd = A_v·(f_y/√3)/γ_M0",
@@ -353,7 +353,7 @@ def eurocode3_section_check(inp: SectionResistanceInput,
         _t("Interaction", interaction, "—", clause="EN 1993-1-1 §6.2.9.1(6)",
            expr="(My/MN,y)^α + (Mz/MN,z)^β ≤ 1",
            latex=r"\left(\frac{M_y}{M_{N,y}}\right)^{\alpha}"
-                 r"+\left(\frac{M_z}{M_{N,z}}\right)^{\beta}\le1",
+                 r"+\left(\frac{M_z}{M_{N,z}}\right)^{\beta}\leq1",
            subst=f"({abs(my):.4g}/{mn_y:.4g})^{alpha:g}"
                  f"+({abs(mz):.4g}/{mn_z:.4g})^{beta:g}")
     else:
@@ -398,12 +398,24 @@ def eurocode3_section_check(inp: SectionResistanceInput,
 # ── convenience: build the input from a eurocodepy profile ─────────────────
 
 def section_check_profile(profile, fy: float, forces: SectionForces, *,  # ruff: ignore[missing-type-function-argument]
-                          gamma_M0: float = 1.0) -> SectionResistanceResult:
+                          gamma_M0: float = 1.0,
+                          trace=None) -> SectionResistanceResult:
     """Run the §6.2 check for a eurocodepy profile under the given forces.
 
     The section is classified under N + My; the resistance moduli, shear areas,
     torsional modulus and (for Class 4) effective properties are taken from the
     profile / classification. Geometry is read from the profile (cm → mm).
+
+    Args:
+        profile: A eurocodepy profile object.
+        fy: Yield strength [N/mm²].
+        forces: The design forces.
+        gamma_M0: Partial factor γ_M0.
+        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When
+            given, both the §5.5 classification derivation and the §6.2
+            resistance steps are recorded into it. ``None`` (default) is a
+            no-op.
+
     """
     from eurocodepy.ec3 import classification as _cl
 
@@ -417,7 +429,8 @@ def section_check_profile(profile, fy: float, forces: SectionForces, *,  # ruff:
     r = float(getattr(profile, "r", 0.0) or 0.0) * 10.0
     hw = h - 2.0 * tf - 2.0 * r if kind == "I" else h - 2.0 * tw
 
-    res = _cl.classify_section(profile, fy, n_ed=forces.n_ed, m_ed=forces.my_ed)
+    res = _cl.classify_section(profile, fy, n_ed=forces.n_ed, m_ed=forces.my_ed,
+                               trace=trace)
     cls = int(res.section_class)
     d_my = d_mz = 0.0
     weff_y = weff_z = 0.0
@@ -439,4 +452,4 @@ def section_check_profile(profile, fy: float, forces: SectionForces, *,  # ruff:
         wt=float(getattr(profile, "WT", 0.0)) * cm3,
         av_y=float(profile.Av_y) * cm2, av_z=float(profile.Av_z) * cm2,
         d_my=d_my, d_mz=d_mz)
-    return eurocode3_section_check(inp, forces)
+    return eurocode3_section_check(inp, forces, trace=trace)

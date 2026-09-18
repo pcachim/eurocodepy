@@ -405,7 +405,7 @@ def eurocode3_member_check(inp: MemberInput, trace=None) -> MemberCheckResult:
        subst=f"√({area_eff:.0f}·{fy:.0f}/{ncr_y:.4g})")
     _t("χ_y", chi_y, "—", clause="EN 1993-1-1 §6.3.1.2",
        expr="χ = 1/(Φ+√(Φ²−λ̄²)) ≤ 1",
-       latex=r"\chi=\frac{1}{\Phi+\sqrt{\Phi^2-\bar\lambda^2}}\le1",
+       latex=r"\chi=\frac{1}{\Phi+\sqrt{\Phi^2-\bar\lambda^2}}\leq1",
        note=f"buckling curve {inp.curve_y}")
     _t("N_cr,z", ncr_z / 1e3, "kN", clause="EN 1993-1-1 §6.3.1.3",
        expr="N_cr,z = π²·E·I_z / L_cr,z²",
@@ -417,7 +417,7 @@ def eurocode3_member_check(inp: MemberInput, trace=None) -> MemberCheckResult:
        subst=f"√({area_eff:.0f}·{fy:.0f}/{ncr_z:.4g})")
     _t("χ_z", chi_z, "—", clause="EN 1993-1-1 §6.3.1.2",
        expr="χ = 1/(Φ+√(Φ²−λ̄²)) ≤ 1",
-       latex=r"\chi=\frac{1}{\Phi+\sqrt{\Phi^2-\bar\lambda^2}}\le1",
+       latex=r"\chi=\frac{1}{\Phi+\sqrt{\Phi^2-\bar\lambda^2}}\leq1",
        note=f"buckling curve {inp.curve_z}")
 
     # ── lateral-torsional buckling ──
@@ -446,7 +446,7 @@ def eurocode3_member_check(inp: MemberInput, trace=None) -> MemberCheckResult:
     _t("χ_LT", chi_lt, "—", clause="EN 1993-1-1 §6.3.2.3",
        expr="χ_LT = 1/(Φ_LT+√(Φ_LT²−β·λ̄_LT²)) ≤ 1",
        latex=r"\chi_{LT}=\frac{1}{\Phi_{LT}+"
-             r"\sqrt{\Phi_{LT}^2-\beta\bar\lambda_{LT}^2}}\le1",
+             r"\sqrt{\Phi_{LT}^2-\beta\bar\lambda_{LT}^2}}\leq1",
        note=f"curve {inp.curve_lt}, {'rolled' if inp.rolled_lt else 'welded'}")
 
     # ── design resistances (kN, kNm) ──
@@ -473,8 +473,13 @@ def eurocode3_member_check(inp: MemberInput, trace=None) -> MemberCheckResult:
        subst=f"{mz_rk / 1e6:.4g}/{gm1:g}")
 
     # ── interaction factors ──
-    n_y = inp.n_ed / n_b_rd_y if n_b_rd_y > 0 else 0.0
-    n_z = inp.n_ed / n_b_rd_z if n_b_rd_z > 0 else 0.0
+    # n_y/n_z feed Annex B Tables B.1/B.2 (e.g. kyy = cmy·min(1+0.8·n_y, ...)),
+    # which are only defined for a non-negative compression-utilisation ratio
+    # — abs() here, same as the sign fix already applied in ec3/uls/
+    # cross_section.py and ec5 (a negative n_ed, e.g. net tension, must not
+    # silently reduce the k-factors it feeds).
+    n_y = abs(inp.n_ed) / n_b_rd_y if n_b_rd_y > 0 else 0.0
+    n_z = abs(inp.n_ed) / n_b_rd_z if n_b_rd_z > 0 else 0.0
     kyy, kyz, kzy, kzz = _interaction_factors(
         n_y, n_z, lam_y, lam_z, inp.cmy, inp.cmz, inp.cm_lt,
         inp.section_class, inp.susceptible_lt)
@@ -490,30 +495,37 @@ def eurocode3_member_check(inp: MemberInput, trace=None) -> MemberCheckResult:
     mz = inp.mz_ed + inp.d_mz
 
     # ── Eqs 6.61 / 6.62 ──
+    # Both equations are LINEAR in n_y/n_z/my/mz (only kyy/kyz/kzy/kzz are
+    # nonlinear), so a negative-signed my/mz (a completely normal bending-
+    # moment-diagram sign, e.g. hogging) would otherwise SUBTRACT from the
+    # reported utilisation instead of adding to it — n_y/n_z are already
+    # non-negative (see above), abs() here closes the same gap for my/mz.
+    my_abs = abs(my)
+    mz_abs = abs(mz)
     u_661 = (n_y
-             + kyy * my / my_b_rd
-             + kyz * mz / mz_rd) if mz_rd else math.inf
+             + kyy * my_abs / my_b_rd
+             + kyz * mz_abs / mz_rd) if mz_rd else math.inf
     u_662 = (n_z
-             + kzy * my / my_b_rd
-             + kzz * mz / mz_rd) if mz_rd else math.inf
+             + kzy * my_abs / my_b_rd
+             + kzz * mz_abs / mz_rd) if mz_rd else math.inf
     util = max(u_661, u_662)
 
     _sec("Combined check (§6.3.3)")
     _t("Eq. (6.61)", u_661, "—", clause="EN 1993-1-1 Eq. 6.61",
-       expr="N_Ed/N_b,Rd,y + k_yy·My/My_b,Rd + k_yz·Mz/Mz_Rd ≤ 1",
+       expr="N_Ed/N_b,Rd,y + k_yy·|My|/My_b,Rd + k_yz·|Mz|/Mz_Rd ≤ 1",
        latex=r"\frac{N_{Ed}}{N_{b,Rd,y}}+k_{yy}\frac{M_{y}}{M_{y,b,Rd}}"
-             r"+k_{yz}\frac{M_{z}}{M_{z,Rd}}\le1",
-       subst=(f"{n_y:.3f}+{kyy:.3f}·{my:.4g}/{my_b_rd:.4g}"
-              f"+{kyz:.3f}·{mz:.4g}/{mz_rd:.4g}") if mz_rd else "",
+             r"+k_{yz}\frac{M_{z}}{M_{z,Rd}}\leq1",
+       subst=(f"{n_y:.3f}+{kyy:.3f}·{my_abs:.4g}/{my_b_rd:.4g}"
+              f"+{kyz:.3f}·{mz_abs:.4g}/{mz_rd:.4g}") if mz_rd else "",
        ok=u_661 <= 1.0)
     _t("Eq. (6.62)", u_662, "—", clause="EN 1993-1-1 Eq. 6.62",
-       expr="N_Ed/N_b,Rd,z + k_zy·My/My_b,Rd + k_zz·Mz/Mz_Rd ≤ 1",
+       expr="N_Ed/N_b,Rd,z + k_zy·|My|/My_b,Rd + k_zz·|Mz|/Mz_Rd ≤ 1",
        latex=r"\frac{N_{Ed}}{N_{b,Rd,z}}+k_{zy}\frac{M_{y}}{M_{y,b,Rd}}"
-             r"+k_{zz}\frac{M_{z}}{M_{z,Rd}}\le1",
-       subst=(f"{n_z:.3f}+{kzy:.3f}·{my:.4g}/{my_b_rd:.4g}"
-              f"+{kzz:.3f}·{mz:.4g}/{mz_rd:.4g}") if mz_rd else "",
+             r"+k_{zz}\frac{M_{z}}{M_{z,Rd}}\leq1",
+       subst=(f"{n_z:.3f}+{kzy:.3f}·{my_abs:.4g}/{my_b_rd:.4g}"
+              f"+{kzz:.3f}·{mz_abs:.4g}/{mz_rd:.4g}") if mz_rd else "",
        ok=u_662 <= 1.0)
-    _t("Utilization", util, "—", note="max of (6.61), (6.62)", ok=util <= 1.0)
+    _t("Utilisation", util, "—", note="max of (6.61), (6.62)", ok=util <= 1.0)
 
     return MemberCheckResult(
         util_6_61=u_661, util_6_62=u_662, utilization=util,

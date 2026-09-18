@@ -39,7 +39,10 @@ def check_bending_capacity(moment, moment_capacity, gamma_m0=1.0) -> dict:
         Dictionary with utilization ratio and status
 
     """
-    utilization = moment / (moment_capacity / gamma_m0)
+    # abs(): a linear ratio — a negative-signed moment (hogging, or just the
+    # sign convention of the caller's M diagram) must not subtract from the
+    # reported utilisation, same fix as eurocodepy.ec3.uls.member_buckling.
+    utilization = abs(moment) / (moment_capacity / gamma_m0)
     status = "OK" if utilization <= 1.0 else "FAIL"
 
     return {
@@ -196,13 +199,14 @@ def check_combined_bending_shear(moment_demand, moment_capacity, shear_demand=0,
         Dictionary with utilization ratios and status
 
     """
-    util_moment = moment_demand / moment_capacity if moment_capacity > 0 else 0
-    util_shear = shear_demand / shear_capacity if shear_capacity > 0 else 0
+    # abs(): same linear-ratio sign issue as check_bending_capacity() above.
+    util_moment = abs(moment_demand) / moment_capacity if moment_capacity > 0 else 0
+    util_shear = abs(shear_demand) / shear_capacity if shear_capacity > 0 else 0
 
     # If shear utilization > 0.5, reduce moment capacity
     if util_shear > 0.5:
         reduced_moment_capacity = moment_capacity * (1 - (2 * util_shear - 1)**2)
-        util_moment = moment_demand / reduced_moment_capacity
+        util_moment = abs(moment_demand) / reduced_moment_capacity
 
     combined_util = util_moment + util_shear * 0.5  # Simplified interaction
     status = "OK" if combined_util <= 1.0 else "FAIL"

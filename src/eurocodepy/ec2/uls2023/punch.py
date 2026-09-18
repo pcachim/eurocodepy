@@ -123,8 +123,15 @@ def calc_vedp(  # noqa: PLR0913, PLR0917
                                 position=position, dx=dx, dy=dy)
 
     # Calculate beta values
-    ex = medx / ned * 1e3  # [mm]
-    ey = medy / ned * 1e3  # [mm]
+    # ned == 0 (or very close to it) with a nonzero transferred moment would
+    # otherwise raise ZeroDivisionError (scalar) or produce inf/nan silently
+    # (np.ndarray) — with no axial force there is no meaningful eccentricity,
+    # so fall back to eb = 0 (beta = 1.0, its floor) for those entries rather
+    # than propagating a division-by-zero result into the punching check.
+    ned_arr = np.asarray(ned, dtype=float)
+    safe_ned = np.where(ned_arr == 0, np.inf, ned_arr)
+    ex = medx / safe_ned * 1e3  # [mm]
+    ey = medy / safe_ned * 1e3  # [mm]
     if position in {"center", "internal", "centre"}:
         eb = np.sqrt(ex ** 2 + ey ** 2)
     elif position in {"edgex", "edgey", "edge"}:

@@ -120,16 +120,60 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
     _t("f_yd", fyd / 1e3, "MPa", expr="f_yd = f_yk/γ_s",
        subst=f"{inp.fyk:g}/{inp.gamma_s:g}")
 
+    # Wood/Baumann is a 4-branch formula (calc_reinf_plane, ec2.uls.shell) —
+    # which branch actually ran decides which n_sx/n_sy formula is true, so
+    # the trace must pick the matching expr/subst rather than always showing
+    # the biaxial-tension one. This re-derives *only which branch* from the
+    # same conditions calc_reinf_plane uses (a pure function of n_xx/n_yy/n_xy,
+    # already known here) — never used to recompute nsx/nsy/nc themselves,
+    # which always come from calc_reinf_plane's actual return values.
+    n_xx, n_yy, n_xy = inp.n_xx, inp.n_yy, inp.n_xy
+    abs_nxy = abs(n_xy)
+    nxx_nyy = n_xx * n_yy
+    nxy2 = n_xy * n_xy
+    if n_xx >= -abs_nxy and n_yy >= -abs_nxy:
+        branch = "biaxial tension"
+    elif n_xx < -abs_nxy and n_xx <= n_yy and nxx_nyy <= nxy2:
+        branch = "x compression"
+    elif n_yy < -abs_nxy and n_xx >= n_yy and nxx_nyy <= nxy2:
+        branch = "y compression"
+    else:
+        branch = "biaxial compression"
+
     _sec("Reinforcement (Wood/Baumann)")
     _t("θ", theta, "—", clause="EN 1992-1-1 §6.109",
-       note="compression-field angle parameter (cot θ) from the membrane solution")
-    _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 §6.109",
-       expr="n_sx = n_xx + |n_xy| (tension branch)")
-    _t("n_sy", nsy, "kN/m", expr="n_sy = n_yy + |n_xy| (tension branch)")
+       note=f"compression-field angle parameter (cot θ), branch: {branch}")
+    if branch == "biaxial tension":
+        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 §6.109",
+           expr="n_sx = n_xx + |n_xy|", note="biaxial-tension branch",
+           subst=f"{n_xx:.4g} + |{n_xy:.4g}|")
+        _t("n_sy", nsy, "kN/m", expr="n_sy = n_yy + |n_xy|",
+           note="biaxial-tension branch",
+           subst=f"{n_yy:.4g} + |{n_xy:.4g}|")
+    elif branch == "x compression":
+        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 §6.109",
+           expr="n_sx = 0", note="x-compression branch (concrete alone carries x)")
+        _t("n_sy", nsy, "kN/m", expr="n_sy = n_yy + n_xy²/|n_xx|",
+           note="x-compression branch",
+           subst=f"{n_yy:.4g} + {n_xy:.4g}²/|{n_xx:.4g}|")
+    elif branch == "y compression":
+        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 §6.109",
+           expr="n_sx = n_xx + n_xy²/|n_yy|", note="y-compression branch",
+           subst=f"{n_xx:.4g} + {n_xy:.4g}²/|{n_yy:.4g}|")
+        _t("n_sy", nsy, "kN/m", expr="n_sy = 0",
+           note="y-compression branch (concrete alone carries y)")
+    else:
+        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 §6.109",
+           expr="n_sx = 0", note="biaxial-compression branch — no reinforcement "
+                                  "governs, concrete-only compression field")
+        _t("n_sy", nsy, "kN/m", expr="n_sy = 0",
+           note="biaxial-compression branch")
     _t("A_sx", asx * 1e4, "cm²/m", clause="EN 1992-1-1 §6.109",
-       expr="A_sx = max(n_sx, 0)/f_yd", latex=r"A_{sx}=\max(n_{sx},0)/f_{yd}")
+       expr="A_sx = max(n_sx, 0)/f_yd", latex=r"A_{sx}=\max(n_{sx},0)/f_{yd}",
+       subst=f"max({nsx:.4g}, 0)/{fyd / 1e3:.4g}")
     _t("A_sy", asy * 1e4, "cm²/m",
-       expr="A_sy = max(n_sy, 0)/f_yd", latex=r"A_{sy}=\max(n_{sy},0)/f_{yd}")
+       expr="A_sy = max(n_sy, 0)/f_yd", latex=r"A_{sy}=\max(n_{sy},0)/f_{yd}",
+       subst=f"max({nsy:.4g}, 0)/{fyd / 1e3:.4g}")
     _t("A_sx,bot", asx / 2.0 * 1e4, "cm²/m", note="even top/bottom split")
     _t("A_sx,top", asx / 2.0 * 1e4, "cm²/m")
     _t("A_sy,bot", asy / 2.0 * 1e4, "cm²/m")
@@ -137,8 +181,10 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
 
     _sec("Concrete crushing")
     _t("σ_c", sigma_c / 1e3, "MPa", clause="EN 1992-1-1 §6.109",
-       expr="σ_c = n_c/t", latex=r"\sigma_c=n_c/t")
-    _t("f_cd", fcd / 1e3, "MPa", expr="f_cd = α_cc·f_ck/γ_c")
+       expr="σ_c = n_c/t", latex=r"\sigma_c=n_c/t",
+       subst=f"{nc:.4g}/{t:g}")
+    _t("f_cd", fcd / 1e3, "MPa", expr="f_cd = α_cc·f_ck/γ_c",
+       subst=f"{inp.alpha_cc:g}·{inp.fck:g}/{inp.gamma_c:g}")
     _t("σ_c ≤ f_cd", sigma_c / 1e3, "MPa", ok=(not crushing),
        subst=f"{sigma_c / 1e3:.3g} ≤ {fcd / 1e3:.3g}",
        note="simplified crushing check (no §6.109 ν reduction)")

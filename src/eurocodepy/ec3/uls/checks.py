@@ -154,18 +154,22 @@ def eurocode3_combined_check(  # ruff: ignore[undocumented-param, too-many-argum
     M_Rd = W_el * fy_kN / gamma_M1  # kNm
     V_pl_Rd = 0.5 * area_v * fy_kN / gamma_M0  # kN (approx. for I-beams in shear)
 
-    # Checks
-    axial_util = N_Ed / N_Rd
-    bending_util = M_Ed / M_Rd
-    shear_util = V_Ed / V_pl_Rd
+    # Checks — unsigned magnitudes: N_Ed/M_Ed/V_Ed feed linear (not squared)
+    # ratios below, so a negative-signed force/moment (a normal sign
+    # convention, e.g. tension or hogging) must not subtract from the
+    # reported utilisation — same fix applied to the canonical
+    # eurocodepy.ec3.uls.member_buckling.eurocode3_member_check.
+    axial_util = abs(N_Ed) / N_Rd
+    bending_util = abs(M_Ed) / M_Rd
+    shear_util = abs(V_Ed) / V_pl_Rd
 
     interaction_util = axial_util + bending_util
 
-    shear_reduction = V_Ed / V_pl_Rd > 0.5
+    shear_reduction = shear_util > 0.5
     if shear_reduction:
         # Simplified reduction
-        M_Rd_red = M_Rd * (1 - 0.5 * (V_Ed / V_pl_Rd - 0.5))
-        bending_util = M_Ed / M_Rd_red
+        M_Rd_red = M_Rd * (1 - 0.5 * (shear_util - 0.5))
+        bending_util = abs(M_Ed) / M_Rd_red
         interaction_util = axial_util + bending_util
 
     return SectionCheckResult(
@@ -238,8 +242,8 @@ def eurocode3_buckling_check(
     # Resistência de cálculo com flambagem
     N_b_Rd = chi * N_pl_Rd  # [kN]
 
-    # Utilização
-    utilization = N_Ed / N_b_Rd
+    # Utilização — abs(): ver nota em eurocode3_combined_check acima.
+    utilization = abs(N_Ed) / N_b_Rd
 
     return {
         "lambda_bar": round(lambda_bar, 3),
@@ -317,8 +321,8 @@ def check_ltb_resistance(
     # LTB design resistance
     M_b_Rd = chi_LT * M_y_Rd
 
-    # Check utilization
-    utilization = M_Ed / M_b_Rd
+    # Check utilization — abs(): see note in eurocode3_combined_check above.
+    utilization = abs(M_Ed) / M_b_Rd
     status = "PASS" if utilization <= 1.0 else "FAIL"
 
     return {

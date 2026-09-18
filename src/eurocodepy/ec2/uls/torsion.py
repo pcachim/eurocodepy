@@ -80,25 +80,35 @@ def calc_torsion(ted: float, b: float, h: float,
         trace.section("Torsion (EN 1992-1-1 §6.3)")
         trace.step("T_Ed", ted, "kN·m", clause="EN 1992-1-1 §6.3")
         trace.step("t_ef", t_ef, "m", clause="EN 1992-1-1 §6.3.2(1)",
-                   expr="t_ef = A/u (≥ 2·cover)", latex=r"t_{ef}=A/u")
+                   expr="t_ef = A/u (≥ 2·cover)", latex=r"t_{ef}=A/u",
+                   subst=f"{area:.4g}/{peri:.4g}" + (f" (≥ 2·{cover:g})" if cover > 0.0 else ""))
         trace.step("A_k", a_k, "m²", clause="EN 1992-1-1 §6.3.2",
                    expr="A_k = (b − t_ef)·(h − t_ef)",
-                   latex=r"A_k=(b-t_{ef})(h-t_{ef})")
-        trace.step("u_k", u_k, "m", expr="u_k = 2·[(b − t_ef) + (h − t_ef)]")
+                   latex=r"A_k=(b-t_{ef})(h-t_{ef})",
+                   subst=f"({b:g} − {t_ef:.4g})·({h:g} − {t_ef:.4g})")
+        trace.step("u_k", u_k, "m", expr="u_k = 2·[(b − t_ef) + (h − t_ef)]",
+                   subst=f"2·[({b:g} − {t_ef:.4g}) + ({h:g} − {t_ef:.4g})]")
         trace.step("cot θ", cott, "—", note="1.0 ≤ cot θ ≤ 2.5")
         trace.step("T_Rd,max", trd_max, "kN·m", clause="EN 1992-1-1 §6.3.2(4)",
                    expr="T_Rd,max = 2·ν·f_cd·A_k·t_ef·sinθ·cosθ",
                    latex=r"T_{Rd,max}=2\nu f_{cd}A_k t_{ef}\sin\theta\cos\theta",
+                   subst=(f"ν={niu:.3g}, f_cd={fcd:.4g}, sinθ·cosθ={sin_cos:.3g} "
+                          f"(cot θ={cott:g}) → 2·{niu:.3g}·{fcd:.4g}·{a_k:.4g}"
+                          f"·{t_ef:.4g}·{sin_cos:.3g}"),
                    ok=(util <= 1.0))
         trace.step("Asw,tor/s", asw_tor_s, "m²/m", clause="EN 1992-1-1 §6.3.2(3)",
                    expr="Asw,tor/s = T_Ed/(2·A_k·f_yd·cot θ)",
                    latex=r"\frac{A_{sw,tor}}{s}=\frac{T_{Ed}}{2A_k f_{yd}\cot\theta}",
+                   subst=f"{ted:.4g}/(2·{a_k:.4g}·{fyd:.4g}·{cott:g})/1000",
                    note="closed stirrups, per single leg")
         trace.step("Asl,tor", asl_tor, "m²", clause="EN 1992-1-1 §6.3.2(3)",
                    expr="Asl,tor = T_Ed·cot θ·u_k/(2·A_k·f_yd)",
                    latex=r"A_{sl,tor}=\frac{T_{Ed}\cot\theta\,u_k}{2A_k f_{yd}}",
+                   subst=f"{ted:.4g}·{cott:g}·{u_k:.4g}/(2·{a_k:.4g}·{fyd:.4g})/1000",
                    note="total longitudinal, distributed around u_k")
         trace.step("T_Ed/T_Rd,max", util, "—", clause="EN 1992-1-1 Eq. 6.29",
+                   expr="T_Ed/T_Rd,max",
+                   subst=f"{ted:.4g}/{trd_max:.4g}",
                    note="torsion side of the shear–torsion interaction")
 
     return {

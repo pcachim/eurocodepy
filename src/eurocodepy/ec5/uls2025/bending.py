@@ -218,9 +218,17 @@ def check_bending_with_normal(n_ed: float, m_ed_y: float, m_ed_z: float,  # noqa
     fmdz: float = (timber.fmd) * k_hz  # calc_k_h(section.width, timber.type)
 
     # calculate stresses
-    sig_n: float = n_ed / section.area / 1e3  # convert to MPa
-    sig_my: float = m_ed_y / section.bend_mod_y / 1e3  # convert to MPa
-    sig_mz: float = m_ed_z / section.bend_mod_z / 1e3  # convert to MPa
+    # Stresses are unsigned magnitudes — same convention as the 2004 edition
+    # (eurocodepy.ec5.uls.bending): a unity check adds how much of the
+    # strength each action uses up, regardless of which way the moment or
+    # axial force happens to be signed. Without abs() here, check3/check4
+    # (which are never squared, unlike check1/check2 for a non-rectangular
+    # section) would let a negative n_ed/m_ed *reduce* the reported
+    # utilisation instead of adding to it — a genuine sign bug, not a
+    # cosmetic one, found while wiring this edition's calculation trace.
+    sig_n: float = abs(n_ed) / section.area / 1e3  # convert to MPa
+    sig_my: float = abs(m_ed_y) / section.bend_mod_y / 1e3  # convert to MPa
+    sig_mz: float = abs(m_ed_z) / section.bend_mod_z / 1e3  # convert to MPa
 
     # calculate k_c and k_m
     k_c: tuple[float, float] = calc_k_c(l_0y=l_0y, l_0z=l_0z,

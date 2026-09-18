@@ -52,11 +52,15 @@ def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa:
     fvd: float = timber.fvd
 
     # calculate stresses
-    tau_v_y: float = 1.5 * v_ed_y / section.area / 1e3  # convert to MPa
-    tau_v_z: float = 1.5 * v_ed_z / section.area / 1e3  # convert to MPa
+    # Unsigned magnitudes, same reasoning as check_bending_with_normal(): the
+    # torsion check (check2 = tau_tor/fvdt) and, for CLT (a=1), the shear
+    # terms in check3 are never squared, so a negative v_ed/t_ed would
+    # otherwise *reduce* the reported utilisation instead of adding to it.
+    tau_v_y: float = 1.5 * abs(v_ed_y) / section.area / 1e3  # convert to MPa
+    tau_v_z: float = 1.5 * abs(v_ed_z) / section.area / 1e3  # convert to MPa
     ratio: float = section.height / section.width
     alpha: float = (1.0 / 3.0) * (1.0 - 0.672 * ratio + 0.3 * ratio**2)
-    tau_tor: float = alpha * t_ed / section.area / 1e3  # convert to MPa
+    tau_tor: float = alpha * abs(t_ed) / section.area / 1e3  # convert to MPa
 
     # calculate strengths
 

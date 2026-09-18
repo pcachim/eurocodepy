@@ -565,7 +565,8 @@ def uniaxial_moment_resistance(inp: "ColumnInput", n_ed: float, axis: str,
         trace.step("N_Ed", n_ed, "kN")
         trace.step("x (neutral axis)", x, "m", clause="EN 1992-1-1 §3.1.7",
                    note="strain-compatibility, eps_cu2 at extreme compression fibre")
-        trace.step(f"M_Rd_{axis}", m_rd, "kNm", clause="EN 1992-1-1 §6.1", ok=True)
+        trace.step(f"M_Rd_{axis}", m_rd, "kNm", clause="EN 1992-1-1 §6.1",
+                   note="strain-compatibility bisection (60 iterations) — no closed form to substitute")
 
     return m_rd
 
@@ -604,8 +605,10 @@ def eurocode2_column_check(inp: "ColumnInput", trace=None) -> "ColumnResult":
     _t("N_Ed", n_ed, "kN", note="compression positive")
     _t("My_Ed", inp.my_ed, "kNm")
     _t("Mz_Ed", inp.mz_ed, "kNm")
-    _t("n = N_Ed/(Ac.f_cd)", n_ratio, "--")
-    _t("omega = As.f_yd/(Ac.f_cd)", omega, "--")
+    _t("n", n_ratio, "—", expr="n = N_Ed/(A_c·f_cd)",
+       subst=f"{n_ed:.4g}/({ac:.4g}·{fcd:.4g}·1000)")
+    _t("ω", omega, "—", expr="ω = A_s·f_yd/(A_c·f_cd)",
+       subst=f"{as_total_m2:.4g}·{fyd:.4g}/({ac:.4g}·{fcd:.4g})")
 
     l0_y = effective_length(inp.length_m, inp.k_y)
     l0_z = effective_length(inp.length_m, inp.k_z)
@@ -620,11 +623,19 @@ def eurocode2_column_check(inp: "ColumnInput", trace=None) -> "ColumnResult":
     slender_z = lam_z > lam_lim_z
 
     _sec("Slenderness (§5.8.3)")
-    _t("lambda_y", lam_y, "--")
-    _t("lambda_lim_y", lam_lim_y, "--", clause="EN 1992-1-1 Eq. 5.13N",
+    _t("λ_y", lam_y, "—", expr="λ_y = l0_y/i_y",
+       subst=f"{l0_y:.4g}/{section.radius_y:.4g}")
+    _t("λ_lim,y", lam_lim_y, "—", clause="EN 1992-1-1 Eq. 5.13N",
+       expr="λ_lim = f(n, φ_ef, ω, r_m)",
+       subst=f"n={n_ratio:.3g}, φ_ef={inp.phi_ef:g}, ω={omega:.3g}, "
+             f"r_m={(f'{rm_y:.3g}' if rm_y is not None else '—')}",
        ok=(not slender_y))
-    _t("lambda_z", lam_z, "--")
-    _t("lambda_lim_z", lam_lim_z, "--", clause="EN 1992-1-1 Eq. 5.13N",
+    _t("λ_z", lam_z, "—", expr="λ_z = l0_z/i_z",
+       subst=f"{l0_z:.4g}/{section.radius_z:.4g}")
+    _t("λ_lim,z", lam_lim_z, "—", clause="EN 1992-1-1 Eq. 5.13N",
+       expr="λ_lim = f(n, φ_ef, ω, r_m)",
+       subst=f"n={n_ratio:.3g}, φ_ef={inp.phi_ef:g}, ω={omega:.3g}, "
+             f"r_m={(f'{rm_z:.3g}' if rm_z is not None else '—')}",
        ok=(not slender_z))
 
     theta0 = 1.0 / 200.0
@@ -688,9 +699,12 @@ def eurocode2_column_check(inp: "ColumnInput", trace=None) -> "ColumnResult":
     passed = utilization <= 1.0
 
     _sec("Biaxial interaction (§5.8.9)")
-    _t("a", a, "--", clause="EN 1992-1-1 Eq. 5.8.9(4)")
-    _t("utilization", utilization, "--",
-       expr="(M_Ed,y/M_Rd,y)^a + (M_Ed,z/M_Rd,z)^a", ok=passed)
+    _t("a", a, "—", clause="EN 1992-1-1 Eq. 5.8.9(4)")
+    _t("Utilisation", utilization, "—",
+       expr="(M_Ed,y/M_Rd,y)^a + (M_Ed,z/M_Rd,z)^a",
+       subst=f"({med_y_design:.4g}/{mrd_y:.4g})^{a:.3g} + "
+             f"({med_z_design:.4g}/{mrd_z:.4g})^{a:.3g}",
+       ok=passed)
 
     return ColumnResult(
         lambda_y=lam_y, lambda_z=lam_z,

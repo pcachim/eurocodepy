@@ -106,11 +106,15 @@ def eurocode2_shear_check(inp: ShearInput, v_ed: float,
     _t("f_ck", fck, "MPa")
     _t("f_yk", fyk, "MPa")
     _t("ρ_l", rho_l, "—", clause="EN 1992-1-1 §6.2.2",
-       expr="ρ_l = min(As_l/(b·d), 0.02)")
+       expr="ρ_l = min(As_l/(b·d), 0.02)",
+       subst=f"min({inp.as_long:.4g}/({b:g}·{d:.4g}), 0.02)")
 
     _sec("Concrete shear resistance (§6.2.2)")
     _t("V_Rd,c", vrdc, "kN", clause="EN 1992-1-1 §6.2.2(1)",
-       expr="V_Rd,c = [C_Rd,c·k·(100·ρ_l·f_ck)^(1/3)]·b·d ≥ v_min·b·d")
+       expr="V_Rd,c = [C_Rd,c·k·(100·ρ_l·f_ck)^(1/3)]·b·d ≥ v_min·b·d",
+       subst=(f"k={min(2.0, 1.0 + math.sqrt(0.2 / d)):.3g}; "
+              f"180/{gc:g}·k·(100·{rho_l:.4g}·{fck:g})^(1/3)·{b:g}·{d:.4g}, "
+              f"v_min·b·d = 35·k^1.5·√f_ck·{b:g}·{d:.4g}"))
 
     if v <= vrdc:
         _t("V_Ed ≤ V_Rd,c", True, "—", ok=True,
@@ -118,7 +122,8 @@ def eurocode2_shear_check(inp: ShearInput, v_ed: float,
                 else "no shear reinforcement required")
         if inp.min_shear:
             _t("Asw/s,min", asw_min, "m²/m", clause="EN 1992-1-1 §9.2.2",
-               expr="ρ_w,min = 0.08·√f_ck/f_yk")
+               expr="ρ_w,min = 0.08·√f_ck/f_yk",
+               subst=f"0.08·√{fck:g}/{fyk:g}·{b:g}")
         return ShearResult(
             asw_s=float(asw_min), vrd_c=vrdc, vrd_max=None, cot=2.5,
             crushing=False, mode="no_shear_reinf",
@@ -157,12 +162,16 @@ def eurocode2_shear_check(inp: ShearInput, v_ed: float,
        note="flattest strut carried (1.0 ≤ cot θ ≤ 2.5)")
     _t("V_Rd,max", vrd_max, "kN", clause="EN 1992-1-1 §6.2.3(3)",
        expr="V_Rd,max = α_cw·b·z·ν₁·f_cd/(cot θ + tan θ)",
+       subst=(f"z=0.9·{d:.4g}={0.9*d:.4g}, ν₁=0.6·(1−{fck:g}/250)"
+              f"={0.6*(1.0 - fck/250):.3g}, cot θ={cot_used:g}"),
        ok=(not crushing))
     if crushing:
         _t("Strut crushing", True, "—", clause="EN 1992-1-1 §6.2.3(3)",
            ok=False, note="V_Ed > V_Rd,max even at θ = 45°")
     _t("Asw/s", asw_s, "m²/m", clause="EN 1992-1-1 §6.2.3(3)",
-       expr="Asw/s = V_Ed/(z·f_ywd·cot θ)", ok=(not crushing))
+       expr="Asw/s = V_Ed/(z·f_ywd·cot θ)",
+       subst=f"{v:.4g}/({0.9*d:.4g}·{fyk/gs:.4g}·{cot_used:g})/1000",
+       ok=(not crushing))
 
     return ShearResult(
         asw_s=asw_s, vrd_c=vrdc, vrd_max=vrd_max, cot=cot_used,

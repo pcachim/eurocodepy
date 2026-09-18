@@ -92,14 +92,14 @@ class PunchResult:
     beta: float                    # eccentricity factor used
     u1: float                      # control perimeter [m]
     u_out_eff: float | None        # outer perimeter [m] (:2023) or None
-    utilisation: float
+    utilization: float
     needs_reinf: bool
     crushing: bool
     edition: str
     details: dict = field(default_factory=dict)
 
     def __str__(self) -> str:
-        return (f"EC2 punching ({self.edition}) — util {self.utilisation:.3f}"
+        return (f"EC2 punching ({self.edition}) — util {self.utilization:.3f}"
                 + (" | needs reinf." if self.needs_reinf else "")
                 + (" | CRUSHING" if self.crushing else ""))
 
@@ -172,9 +172,11 @@ def eurocode2_punching_check(inp: PunchInput, n_ed: float,
     _sec("Design punching stress (§6.4.3)")
     _t("β", beta_eff, "—", clause="EN 1992-1-1 §6.4.3",
        expr="β = v_Ed(with moment) / v_Ed(N only), floored at β_min",
+       subst=f"max({beta:.3g}, {beta_min or 1.0:g})",
        note=f"β_min = {beta_min:g}")
     _t("v_Ed", v_ed, "MPa", clause="EN 1992-1-1 §6.4.3",
-       expr="v_Ed = β·V_Ed/(u1·d)")
+       expr="v_Ed = β·V_Ed/(u1·d)",
+       subst=f"{beta_eff:.3g}·{ned:.4g}/({u1/_MM:.4g}·{dv/_MM:.4g})·1e3")
 
     if is_2023:
         v_rdc = float(_p.calc_vrdcp(inp.dmax, rho_l, inp.fck, dv, bx, by,
@@ -188,10 +190,13 @@ def eurocode2_punching_check(inp: PunchInput, n_ed: float,
         u_out_eff = (beta_eff * ned * 1e3 / (v_rdc * dv) / _MM
                      if (needs0 and v_rdc > 0) else None)
         _sec("Resistance (prEN 1992-1-1:2023 §8.4)")
-        _t("v_Rd,c", v_rdc, "MPa", clause="prEN 1992-1-1:2023 §8.4.3")
-        _t("v_Rd,min", v_rd_min, "MPa", clause="prEN 1992-1-1:2023 §8.4.3")
+        _t("v_Rd,c", v_rdc, "MPa", clause="prEN 1992-1-1:2023 §8.4.3",
+           subst=f"d_max={inp.dmax:g}, ρ_l={rho_l:.4g}, f_ck={inp.fck:g}, d={dv:.4g} mm")
+        _t("v_Rd,min", v_rd_min, "MPa", clause="prEN 1992-1-1:2023 §8.4.3",
+           subst=f"f_ck={inp.fck:g}, f_yd={fyd:.4g}, d={dv:.4g} mm, d_max={inp.dmax:g}")
         _t("v_Rd,max", v_rd_max, "MPa", clause="prEN 1992-1-1:2023 §8.4.4",
-           expr="v_Rd,max = η_sys·v_Rd,c", note=f"η_sys = {inp.eta_sys:g}")
+           expr="v_Rd,max = η_sys·v_Rd,c",
+           subst=f"{inp.eta_sys:g}·{v_rdc:.4g}", note=f"η_sys = {inp.eta_sys:g}")
     else:
         v_rdc = float(_p.calc_vrdcp(rho_l, inp.fck, dv, gamma_c=inp.gamma_c))
         v_rd_min = float(_p.calc_vrdcminp(inp.fck, dv))
@@ -202,10 +207,13 @@ def eurocode2_punching_check(inp: PunchInput, n_ed: float,
         u_out_eff = None
         _sec("Resistance (EN 1992-1-1:2004 §6.4.4/§6.4.5)")
         _t("v_Rd,c", v_rdc, "MPa", clause="EN 1992-1-1 §6.4.4",
-           expr="v_Rd,c = C_Rd,c·k·(100·ρ_l·f_ck)^(1/3) ≥ v_min")
-        _t("v_Rd,min", v_rd_min, "MPa", clause="EN 1992-1-1 §6.4.4")
+           expr="v_Rd,c = C_Rd,c·k·(100·ρ_l·f_ck)^(1/3) ≥ v_min",
+           subst=f"ρ_l={rho_l:.4g}, f_ck={inp.fck:g}, d={dv:.4g} mm, γ_c={inp.gamma_c:g}")
+        _t("v_Rd,min", v_rd_min, "MPa", clause="EN 1992-1-1 §6.4.4",
+           subst=f"f_ck={inp.fck:g}, d={dv:.4g} mm")
         _t("v_Rd,max", v_rd_max, "MPa", clause="EN 1992-1-1 §6.4.5(3)",
-           expr="v_Rd,max = 0.5·ν·f_cd  (at u0)")
+           expr="v_Rd,max = 0.5·ν·f_cd  (at u0)",
+           subst=f"0.5·{nu:.3g}·{fcd:.4g}")
 
     v_rd = max(v_rdc, v_rd_min)
     util = v_ed / v_rd if v_rd > 0 else float("inf")
@@ -213,20 +221,24 @@ def eurocode2_punching_check(inp: PunchInput, n_ed: float,
     crushing = bool(v_ed_max > v_rd_max)
 
     _sec("Verdict")
-    _t("Utilisation", util, "—", clause="EN 1992-1-1 §6.4",
-       expr="v_Ed / max(v_Rd,c, v_Rd,min)", ok=not needs)
+    _t("Utilisation", util, "—",
+       clause=("prEN 1992-1-1:2023 §8.4" if is_2023 else "EN 1992-1-1 §6.4"),
+       expr="v_Ed / max(v_Rd,c, v_Rd,min)",
+       subst=f"{v_ed:.4g}/max({v_rdc:.4g}, {v_rd_min:.4g})", ok=not needs)
     _t("Needs reinforcement", needs, "—", ok=not needs)
     _t("Crushing", crushing, "—", ok=not crushing,
        note="v_Ed(max) > v_Rd,max")
     if u_out_eff is not None:
         _t("u_out,ef", u_out_eff, "m", clause="prEN 1992-1-1:2023 §8.4.5",
+           expr="u_out,ef = β·V_Ed/(v_Rd,c·d)",
+           subst=f"{beta_eff:.3g}·{ned:.4g}·1e3/({v_rdc:.4g}·{dv:.4g})/{_MM:g}",
            note="beyond this perimeter no punching reinforcement is needed")
 
     return PunchResult(
         v_ed=float(v_ed), v_rdc=float(v_rdc), v_rd_min=float(v_rd_min),
         v_rd_max=float(v_rd_max), beta=float(beta_eff), u1=float(u1 / _MM),
         u_out_eff=(float(u_out_eff) if u_out_eff is not None else None),
-        utilisation=float(util), needs_reinf=needs, crushing=crushing,
+        utilization=float(util), needs_reinf=needs, crushing=crushing,
         edition="2023" if is_2023 else "2004",
         details={"u0": float(u0 / _MM), "v_ed_max": float(v_ed_max),
                  "rho_l": float(rho_l)})

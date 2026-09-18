@@ -72,7 +72,8 @@ def epsilon(fy: float) -> float:
 # ── part classification (EN 1993-1-1 Table 5.2) ─────────────────────────────
 
 def classify_internal_part(c_over_t: float, eps: float,
-                           psi: float = 1.0, alpha: float = 1.0) -> SectionClass:
+                           psi: float = 1.0, alpha: float = 1.0,
+                           trace=None, name: str = "part") -> SectionClass:
     """Classify an *internal* compression part (web, box wall) — Table 5.2/1.
 
     Class 1 and 2 limits use the plastic compressed fraction ``alpha`` (0…1),
@@ -84,6 +85,10 @@ def classify_internal_part(c_over_t: float, eps: float,
         eps: Material factor ε.
         psi: Elastic end-stress ratio σ2/σ1 of the part.
         alpha: Plastic compressed length fraction of the part (0…1).
+        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When
+            given, records the three class limits the part is checked
+            against and which one governs. ``None`` (default) is a no-op.
+        name: Label used in the trace step symbols (e.g. ``"web"``).
 
     Returns:
         The :class:`SectionClass` of the part.
@@ -92,25 +97,53 @@ def classify_internal_part(c_over_t: float, eps: float,
     a = min(max(alpha, 1.0e-9), 1.0)
     # Class 1
     limit_1 = 396.0 * eps / (13.0 * a - 1.0) if a > 0.5 else 36.0 * eps / a
-    if c_over_t <= limit_1:
-        return SectionClass.CLASS_1
     # Class 2
     limit_2 = 456.0 * eps / (13.0 * a - 1.0) if a > 0.5 else 41.5 * eps / a
-    if c_over_t <= limit_2:
-        return SectionClass.CLASS_2
     # Class 3 (elastic stress distribution)
     if psi > -1.0:
         limit_3 = 42.0 * eps / (0.67 + 0.33 * psi)
     else:
         limit_3 = 62.0 * eps * (1.0 - psi) * math.sqrt(-psi)
-    if c_over_t <= limit_3:
-        return SectionClass.CLASS_3
-    return SectionClass.CLASS_4
+
+    if c_over_t <= limit_1:
+        result = SectionClass.CLASS_1
+    elif c_over_t <= limit_2:
+        result = SectionClass.CLASS_2
+    elif c_over_t <= limit_3:
+        result = SectionClass.CLASS_3
+    else:
+        result = SectionClass.CLASS_4
+
+    if trace is not None:
+        trace.step(f"{name}: c/t", c_over_t, "—", clause="EN 1993-1-1 Table 5.2 (1)",
+                   note=f"internal part, ψ={psi:+.2f}, α={alpha:.2f}")
+        trace.step(f"{name}: Class 1 limit", limit_1, "—",
+                   expr=("396ε/(13α−1)" if a > 0.5 else "36ε/α"),
+                   subst=(f"396·{eps:.4g}/(13·{a:.3g}−1)" if a > 0.5
+                          else f"36·{eps:.4g}/{a:.3g}"),
+                   ok=(c_over_t <= limit_1))
+        trace.step(f"{name}: Class 2 limit", limit_2, "—",
+                   expr=("456ε/(13α−1)" if a > 0.5 else "41.5ε/α"),
+                   subst=(f"456·{eps:.4g}/(13·{a:.3g}−1)" if a > 0.5
+                          else f"41.5·{eps:.4g}/{a:.3g}"),
+                   ok=(c_over_t <= limit_2))
+        trace.step(f"{name}: Class 3 limit", limit_3, "—",
+                   expr=("42ε/(0.67+0.33ψ)" if psi > -1.0
+                         else "62ε(1−ψ)√(−ψ)"),
+                   subst=(f"42·{eps:.4g}/(0.67+0.33·{psi:.3g})" if psi > -1.0
+                          else f"62·{eps:.4g}·(1−{psi:.3g})·√{-psi:.3g}"),
+                   ok=(c_over_t <= limit_3))
+        trace.step(f"{name}: class", int(result), "—",
+                   clause="EN 1993-1-1 §5.5",
+                   note=f"governing limit: {'Class 1' if result==1 else 'Class 2' if result==2 else 'Class 3' if result==3 else 'Class 4 (exceeds Class 3)'}")
+
+    return result
 
 
 def classify_outstand_part(c_over_t: float, eps: float,
                            psi: float = 1.0, alpha: float = 1.0,
-                           tip_in_compression: bool = True) -> SectionClass:
+                           tip_in_compression: bool = True,
+                           trace=None, name: str = "part") -> SectionClass:
     """Classify an *outstand* flange — Table 5.2/2 (general stress gradient).
 
     For uniform compression (``psi = 1, alpha = 1``) the well-known limits
@@ -126,6 +159,10 @@ def classify_outstand_part(c_over_t: float, eps: float,
         alpha: Plastic compressed length fraction of the outstand (0…1).
         tip_in_compression: True if the free edge (tip) is the more compressed
             one; False if the maximum compression is at the supported (web) edge.
+        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When
+            given, records the three class limits the part is checked
+            against and which one governs. ``None`` (default) is a no-op.
+        name: Label used in the trace step symbols (e.g. ``"flange"``).
 
     Returns:
         The :class:`SectionClass` of the outstand.
@@ -138,39 +175,93 @@ def classify_outstand_part(c_over_t: float, eps: float,
     else:
         limit_1 = 9.0 * eps / (a * math.sqrt(a))
         limit_2 = 10.0 * eps / (a * math.sqrt(a))
-    if c_over_t <= limit_1:
-        return SectionClass.CLASS_1
-    if c_over_t <= limit_2:
-        return SectionClass.CLASS_2
     # Class 3: uniform compression keeps the tabulated 14ε; a gradient uses kσ.
     if psi >= 1.0 - 1.0e-9:
         limit_3 = 14.0 * eps
     else:
-        limit_3 = 21.0 * eps * math.sqrt(k_sigma_outstand(psi, tip_in_compression))
-    if c_over_t <= limit_3:
-        return SectionClass.CLASS_3
-    return SectionClass.CLASS_4
+        k_sig = k_sigma_outstand(psi, tip_in_compression)
+        limit_3 = 21.0 * eps * math.sqrt(k_sig)
+
+    if c_over_t <= limit_1:
+        result = SectionClass.CLASS_1
+    elif c_over_t <= limit_2:
+        result = SectionClass.CLASS_2
+    elif c_over_t <= limit_3:
+        result = SectionClass.CLASS_3
+    else:
+        result = SectionClass.CLASS_4
+
+    if trace is not None:
+        trace.step(f"{name}: c/t", c_over_t, "—", clause="EN 1993-1-1 Table 5.2 (2)",
+                   note=f"outstand, ψ={psi:+.2f}, α={alpha:.2f}, "
+                        f"tip {'in compression' if tip_in_compression else 'in tension'}")
+        if tip_in_compression:
+            trace.step(f"{name}: Class 1 limit", limit_1, "—", expr="9ε/α",
+                       subst=f"9·{eps:.4g}/{a:.3g}", ok=(c_over_t <= limit_1))
+            trace.step(f"{name}: Class 2 limit", limit_2, "—", expr="10ε/α",
+                       subst=f"10·{eps:.4g}/{a:.3g}", ok=(c_over_t <= limit_2))
+        else:
+            trace.step(f"{name}: Class 1 limit", limit_1, "—", expr="9ε/(α√α)",
+                       subst=f"9·{eps:.4g}/({a:.3g}·√{a:.3g})", ok=(c_over_t <= limit_1))
+            trace.step(f"{name}: Class 2 limit", limit_2, "—", expr="10ε/(α√α)",
+                       subst=f"10·{eps:.4g}/({a:.3g}·√{a:.3g})", ok=(c_over_t <= limit_2))
+        if psi >= 1.0 - 1.0e-9:
+            trace.step(f"{name}: Class 3 limit", limit_3, "—", expr="14ε",
+                       subst=f"14·{eps:.4g}", ok=(c_over_t <= limit_3))
+        else:
+            trace.step(f"{name}: Class 3 limit", limit_3, "—", expr="21ε·√kσ",
+                       subst=f"21·{eps:.4g}·√{k_sig:.3g}", note=f"kσ={k_sig:.3g} (EN 1993-1-5 Table 4.2)",
+                       ok=(c_over_t <= limit_3))
+        trace.step(f"{name}: class", int(result), "—",
+                   clause="EN 1993-1-1 §5.5",
+                   note=f"governing limit: {'Class 1' if result==1 else 'Class 2' if result==2 else 'Class 3' if result==3 else 'Class 4 (exceeds Class 3)'}")
+
+    return result
 
 
-def classify_chs_part(d_over_t: float, eps: float) -> SectionClass:
+def classify_chs_part(d_over_t: float, eps: float,
+                      trace=None, name: str = "tube") -> SectionClass:
     """Classify a circular hollow section (tube) — Table 5.2/3.
 
     Args:
         d_over_t: Outer-diameter-to-thickness ratio d/t.
         eps: Material factor ε.
+        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When
+            given, records the three class limits the tube is checked
+            against and which one governs. ``None`` (default) is a no-op.
+        name: Label used in the trace step symbols.
 
     Returns:
         The :class:`SectionClass` of the tube.
 
     """
     e2 = eps * eps
-    if d_over_t <= 50.0 * e2:
-        return SectionClass.CLASS_1
-    if d_over_t <= 70.0 * e2:
-        return SectionClass.CLASS_2
-    if d_over_t <= 90.0 * e2:
-        return SectionClass.CLASS_3
-    return SectionClass.CLASS_4
+    limit_1 = 50.0 * e2
+    limit_2 = 70.0 * e2
+    limit_3 = 90.0 * e2
+
+    if d_over_t <= limit_1:
+        result = SectionClass.CLASS_1
+    elif d_over_t <= limit_2:
+        result = SectionClass.CLASS_2
+    elif d_over_t <= limit_3:
+        result = SectionClass.CLASS_3
+    else:
+        result = SectionClass.CLASS_4
+
+    if trace is not None:
+        trace.step(f"{name}: d/t", d_over_t, "—", clause="EN 1993-1-1 Table 5.2 (3)")
+        trace.step(f"{name}: Class 1 limit", limit_1, "—", expr="50ε²",
+                   subst=f"50·{eps:.4g}²", ok=(d_over_t <= limit_1))
+        trace.step(f"{name}: Class 2 limit", limit_2, "—", expr="70ε²",
+                   subst=f"70·{eps:.4g}²", ok=(d_over_t <= limit_2))
+        trace.step(f"{name}: Class 3 limit", limit_3, "—", expr="90ε²",
+                   subst=f"90·{eps:.4g}²", ok=(d_over_t <= limit_3))
+        trace.step(f"{name}: class", int(result), "—",
+                   clause="EN 1993-1-1 §5.5",
+                   note=f"governing limit: {'Class 1' if result==1 else 'Class 2' if result==2 else 'Class 3' if result==3 else 'Class 4 (exceeds Class 3)'}")
+
+    return result
 
 
 # ── geometry extraction ─────────────────────────────────────────────────────
@@ -397,7 +488,7 @@ def _ratio(c: float, t: float) -> float:
 
 def classify_section(section, fy: float,  # ruff: ignore[missing-type-function-argument]
                      n_ed: float = 0.0, m_ed: float = 0.0,
-                     axis: str = "y") -> ClassificationResult:
+                     axis: str = "y", trace=None) -> ClassificationResult:
     """Classify a steel cross-section under N + M (EN 1993-1-1 §5.5).
 
     Args:
@@ -409,6 +500,12 @@ def classify_section(section, fy: float,  # ruff: ignore[missing-type-function-a
         m_ed: Bending moment [kNm] about the chosen axis.
         axis: ``"y"`` for major-axis bending (default) or ``"z"`` for minor-axis
             bending.
+        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When
+            given, the classification records the c/t ratio and the three
+            class limits of every part it checks (not just the resulting
+            class) — the derivation behind EN 1993-1-1 §5.5, Table 5.2.
+            ``None`` (default) is a no-op; the trace only *records* what was
+            computed, so the returned class is unaffected.
 
     Returns:
         A :class:`ClassificationResult` with the governing (highest) class and
@@ -420,9 +517,14 @@ def classify_section(section, fy: float,  # ruff: ignore[missing-type-function-a
     axis = axis.lower()
     parts: list[PartClassification] = []
 
+    if trace is not None:
+        trace.section("Classification (EN 1993-1-1 §5.5)")
+        trace.step("ε", eps, "—", clause="EN 1993-1-1 Table 5.2",
+                   expr="ε = √(235/f_y)", subst=f"√(235/{fy:g})")
+
     if geo.kind == "CHS":
         d_t = _ratio(geo.h, geo.tf)
-        cls = classify_chs_part(d_t, eps)
+        cls = classify_chs_part(d_t, eps, trace=trace, name="tube")
         parts.append(PartClassification("tube", d_t, cls, psi=1.0, alpha=1.0))
 
     elif geo.kind in ("RHS", "SHS"):
@@ -432,22 +534,26 @@ def classify_section(section, fy: float,  # ruff: ignore[missing-type-function-a
         alpha, psi = web_alpha_psi(gg, fy, n_ed, m_ed)
         web_ct = _ratio(gg.c_web, gg.tw)
         parts.append(PartClassification(
-            "web", web_ct, classify_internal_part(web_ct, eps, psi=psi, alpha=alpha),
+            "web", web_ct, classify_internal_part(
+                web_ct, eps, psi=psi, alpha=alpha, trace=trace, name="web"),
             psi=psi, alpha=alpha))
         fl_ct = _ratio(gg.c_flange, gg.tf)
         parts.append(PartClassification(
-            "flange", fl_ct, classify_internal_part(fl_ct, eps, psi=1.0, alpha=1.0),
+            "flange", fl_ct, classify_internal_part(
+                fl_ct, eps, psi=1.0, alpha=1.0, trace=trace, name="flange"),
             psi=1.0, alpha=1.0))
 
     elif axis == "y":                              # I / H — major axis
         alpha, psi = web_alpha_psi(geo, fy, n_ed, m_ed)
         web_ct = _ratio(geo.c_web, geo.tw)
         parts.append(PartClassification(
-            "web", web_ct, classify_internal_part(web_ct, eps, psi=psi, alpha=alpha),
+            "web", web_ct, classify_internal_part(
+                web_ct, eps, psi=psi, alpha=alpha, trace=trace, name="web"),
             psi=psi, alpha=alpha))
         fl_ct = _ratio(geo.c_flange, geo.tf)       # outstand, uniform compression
         parts.append(PartClassification(
-            "flange", fl_ct, classify_outstand_part(fl_ct, eps),
+            "flange", fl_ct, classify_outstand_part(
+                fl_ct, eps, trace=trace, name="flange"),
             psi=1.0, alpha=1.0))
 
     else:                                          # I / H — minor axis
@@ -458,17 +564,26 @@ def classify_section(section, fy: float,  # ruff: ignore[missing-type-function-a
         parts.append(PartClassification(
             "flange", fl_ct,
             classify_outstand_part(fl_ct, eps, psi=psi_f, alpha=a_f,
-                                   tip_in_compression=tip),
+                                   tip_in_compression=tip,
+                                   trace=trace, name="flange"),
             psi=psi_f, alpha=a_f))
         web_ct = _ratio(geo.c_web, geo.tw)
         if n_ed > 0.0:
-            web_cls = classify_internal_part(web_ct, eps, psi=1.0, alpha=1.0)
+            web_cls = classify_internal_part(
+                web_ct, eps, psi=1.0, alpha=1.0, trace=trace, name="web")
         else:
             web_cls = SectionClass.CLASS_1         # unstressed / in tension
+            if trace is not None:
+                trace.step("web: c/t", web_ct, "—", clause="EN 1993-1-1 §5.5",
+                           note="web not in compression (N_Ed ≤ 0) → Class 1 by inspection")
         parts.append(PartClassification("web", web_ct, web_cls,
                                         psi=1.0, alpha=1.0))
 
     section_class = SectionClass(max(int(p.part_class) for p in parts))
+    if trace is not None:
+        trace.step("Section class", int(section_class), "—",
+                   clause="EN 1993-1-1 §5.5",
+                   note="governing (highest) class among all checked parts")
     return ClassificationResult(section_class=section_class, epsilon=eps,
                                 fy=fy, n_ed=n_ed, m_ed=m_ed, parts=parts)
 

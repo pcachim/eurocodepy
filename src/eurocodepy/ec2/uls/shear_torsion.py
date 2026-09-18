@@ -243,11 +243,16 @@ def eurocode2_shear_torsion_check(inp: ShearTorsionInput, v_ed: float, t_ed: flo
     _sec("Shear + torsion interaction (EC2 §6.3.2(3) / Eq. 6.29)")
     _t("cot θ (shared)", cot, "—", clause="EN 1992-1-1 §6.3.2(3)",
        note="same strut angle used for both V_Rd,max and T_Rd,max")
-    _t("V_Ed/V_Rd,max", v_ratio, "—")
-    _t("T_Ed/T_Rd,max", t_ratio, "—")
+    _t("V_Ed/V_Rd,max", v_ratio, "—", expr="V_Ed/V_Rd,max",
+       subst=(f"{v_ed_abs:.4g}/{vrd_max:.4g}" if vrd_max else "—"))
+    _t("T_Ed/T_Rd,max", t_ratio, "—", expr="T_Ed/T_Rd,max",
+       subst=f"{t_ed_abs:.4g}/{float(tors['TRd_max']):.4g}")
     _t("Interaction", interaction, "—", clause="EN 1992-1-1 Eq. 6.29",
-       expr="T_Ed/T_Rd,max + V_Ed/V_Rd,max ≤ 1.0", ok=(interaction <= 1.0))
-    _t("Asw/s (shear + 2·torsion)", asw_total_s, "m²/m")
+       expr="T_Ed/T_Rd,max + V_Ed/V_Rd,max ≤ 1.0",
+       subst=f"{t_ratio:.4g} + {v_ratio:.4g}", ok=(interaction <= 1.0))
+    _t("Asw/s (shear + 2·torsion)", asw_total_s, "m²/m",
+       expr="Asw/s = Asw/s,shear + 2·Asw,tor/s",
+       subst=f"{asw_shear_s:.4g} + 2·{asw_tor_s:.4g}")
     _t("Crushing", crushing, "—", ok=(not crushing))
 
     return ShearTorsionResult(
