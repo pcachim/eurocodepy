@@ -10,6 +10,8 @@ checks are the second-generation §8 versions from :mod:`eurocodepy.ec5.uls2025`
 
 from __future__ import annotations
 
+import math
+
 from eurocodepy.ec5.materials import TimberForcesType, TimberType
 
 # The force / input / result dataclasses are edition-independent — re-use them.
@@ -18,7 +20,15 @@ from eurocodepy.ec5.uls.cross_section import (
     TimberSectionInput as TimberSectionInput,
     TimberSectionResult as TimberSectionResult,
 )
-from eurocodepy.ec5.uls2025.bending import check_bending_with_normal
+from eurocodepy.ec5.uls2025.bending import (
+    EPSILON_GLULAM,
+    EPSILON_TIMBER,
+    LAMBDA_M_REL,
+    LAMBDA_REL_LIM,
+    THETA_TWIST_BASE,
+    calc_mcr,
+    check_bending_with_normal,
+)
 from eurocodepy.ec5.uls2025.shear import (
     F_V_REF_K_GLULAM,
     F_V_REF_K_TIMBER,
@@ -26,6 +36,58 @@ from eurocodepy.ec5.uls2025.shear import (
     check_shear_with_torsion,
 )
 from eurocodepy.utils import CrossSectionShape
+
+
+def _kc_axis_detail_2025(l0_mm: float, i_gyr: float, fc0k: float, e0k: float,
+                         fmk_axis: float, epsilon: float) -> dict:
+    """Re-derive :func:`eurocodepy.ec5.uls2025.bending.calc_k_c`'s single-axis
+    ``λ_rel, β_c, φ, k_c`` chain (EN 1995-1-1:2025 §8.3, Table 8.2, Eq. 8.40)
+    purely for display — a pure function of already-known inputs, re-run
+    only so the trace can show the intermediate values calc_k_c itself
+    discards; never used to recompute the design result.
+
+    Unlike the 2004 edition's single β_c per timber type, here β_c is scaled
+    by that axis's size-factored bending strength ``f_mk_axis`` (Table 8.2),
+    so y and z genuinely differ even for the same timber/E/A.
+    """
+    if l0_mm <= 0.0 or i_gyr <= 0.0 or fmk_axis <= 0.0:
+        return {"lam_rel": 0.0, "beta_c": 0.0, "phi": None, "k_c": 1.0,
+                "buckles": False}
+    lam_rel = (l0_mm / 1e3) / i_gyr / math.pi * math.sqrt(fc0k / e0k)
+    beta_c_base = epsilon * math.pi * math.sqrt(3.0 * e0k / fc0k) * fc0k
+    beta_c = beta_c_base / fmk_axis
+    if lam_rel <= LAMBDA_REL_LIM:
+        return {"lam_rel": lam_rel, "beta_c": beta_c, "phi": None,
+                "k_c": 1.0, "buckles": False}
+    phi = 0.5 * (1.0 + beta_c * (lam_rel - LAMBDA_REL_LIM) + lam_rel**2)
+    k_c = 1.0 / (phi + math.sqrt(phi**2 - lam_rel**2))
+    return {"lam_rel": lam_rel, "beta_c": beta_c, "phi": phi, "k_c": k_c,
+            "buckles": True}
+
+
+def _k_m_detail_2025(l_0m: float, section, timber) -> dict:
+    """Re-derive :func:`eurocodepy.ec5.uls2025.bending.calc_k_m`'s ``M_y,crit,
+    λ_rel,m, β_m, β_twist, φ`` chain (EN 1995-1-1:2025 §8.3, Table 8.2,
+    Eqs. 8.43/8.46/8.47) purely for display, same rationale as
+    :func:`_kc_axis_detail_2025`."""
+    m_cr = calc_mcr(l_0m, section, timber)
+    wy = section.bend_mod_y
+    if not math.isfinite(m_cr) or m_cr <= 0.0 or wy <= 0.0:
+        return {"m_cr": m_cr, "lam_rel_m": None, "beta_m": None,
+                "beta_twist": None, "phi": None, "k_m": 1.0, "governs": False}
+    lam_rel_m = math.sqrt(timber.fmk * wy / m_cr)
+    ratio = section.height / section.width
+    epsilon = EPSILON_TIMBER if timber.type == "timber" else EPSILON_GLULAM
+    beta_m = epsilon * ratio * math.pi / 2.0 * math.sqrt(3.0 * timber.E0k / timber.Gk)
+    beta_twist = THETA_TWIST_BASE / section.height * ratio
+    if lam_rel_m <= LAMBDA_REL_LIM:
+        return {"m_cr": m_cr, "lam_rel_m": lam_rel_m, "beta_m": beta_m,
+                "beta_twist": beta_twist, "phi": None, "k_m": 1.0,
+                "governs": False}
+    phi = 0.5 * (1.0 + beta_m * beta_twist * (lam_rel_m - LAMBDA_M_REL) + lam_rel_m**2)
+    k_m = 1.0 / (phi + math.sqrt(phi**2 - lam_rel_m**2))
+    return {"m_cr": m_cr, "lam_rel_m": lam_rel_m, "beta_m": beta_m,
+            "beta_twist": beta_twist, "phi": phi, "k_m": k_m, "governs": True}
 
 
 def eurocode5_section_check(inp: TimberSectionInput,
@@ -47,10 +109,12 @@ def eurocode5_section_check(inp: TimberSectionInput,
             ``with_reports`` silently produced *zero* reports for any member
             using the 2025 edition (caught by an ``except TypeError``); this
             parameter closes that gap. The stability factors ``k_c``/``k_m``
-            are reported as single values (their Table 8.2 β/φ derivation is
-            not broken out step-by-step yet, unlike the 2004 edition's
-            λ_rel/k/k_c chain) — a narrower trace than :mod:`eurocodepy.ec5.uls`
-            for now.
+            now break out their full Table 8.2 β/φ derivation step-by-step
+            (:func:`_kc_axis_detail_2025` / :func:`_k_m_detail_2025`), matching
+            the 2004 edition's λ_rel/k/k_c chain — the only structural
+            difference is that here β_c is scaled per-axis by that axis's
+            size-factored f_mk (Table 8.2), rather than a single β_c per
+            timber type as in 2004.
 
     """
     bend = check_bending_with_normal(
@@ -130,10 +194,61 @@ def eurocode5_section_check(inp: TimberSectionInput,
                    note="0.7 rectangular, else 1.0")
 
         trace.section("Stability factors (§8.3)")
-        trace.step("k_c,y", k_c[0], "—", clause="EN 1995-1-1:2025 Eq. 8.40",
-                   note="Table 8.2 β/φ derivation not broken out step-by-step yet")
-        trace.step("k_c,z", k_c[1], "—", clause="EN 1995-1-1:2025 Eq. 8.40")
-        trace.step("k_m (LTB)", k_m, "—", clause="EN 1995-1-1:2025 Eq. 8.46")
+        fmky = t.fmk * k_hy
+        fmkz = t.fmk * k_hz
+        epsilon = EPSILON_TIMBER if t.type == "timber" else EPSILON_GLULAM
+        kd_y = _kc_axis_detail_2025(inp.l_0y, sec.radius_y, t.fc0k, t.E0k, fmky, epsilon)
+        kd_z = _kc_axis_detail_2025(inp.l_0z, sec.radius_z, t.fc0k, t.E0k, fmkz, epsilon)
+        for axis, kd, k_c_i in (("y", kd_y, k_c[0]), ("z", kd_z, k_c[1])):
+            if not kd["buckles"]:
+                trace.step(f"k_c,{axis}", k_c_i, "—", clause="EN 1995-1-1:2025 §8.3",
+                           note=f"λ_rel={kd['lam_rel']:.3g} ≤ {LAMBDA_REL_LIM} "
+                                "→ no buckling reduction")
+                continue
+            trace.step(f"λ_rel,{axis}", kd["lam_rel"], "—",
+                       clause="EN 1995-1-1:2025 §8.3",
+                       expr="(l_0/i)/π·√(f_c0k/E_0,05)",
+                       subst=f"({(inp.l_0y if axis == 'y' else inp.l_0z):.4g}/1e3/"
+                             f"{(sec.radius_y if axis == 'y' else sec.radius_z):.4g})"
+                             f"/π·√({t.fc0k:.4g}/{t.E0k:.4g})")
+            trace.step(f"β_c,{axis}", kd["beta_c"], "—",
+                       clause="EN 1995-1-1:2025 Table 8.2",
+                       expr="ε·π·√(3·E_0,05/f_c0k)·f_c0k/f_mk",
+                       note=f"f_mk,{axis} (size-factored) = "
+                            f"{(fmky if axis == 'y' else fmkz):.4g} MPa")
+            trace.step(f"φ_{axis}", kd["phi"], "—",
+                       clause="EN 1995-1-1:2025 Eq. 8.40",
+                       expr="0.5·[1+β_c·(λ_rel−0.3)+λ_rel²]",
+                       subst=f"0.5·[1+{kd['beta_c']:.4g}·({kd['lam_rel']:.4g}−0.3)"
+                             f"+{kd['lam_rel']:.4g}²]")
+            trace.step(f"k_c,{axis}", k_c_i, "—", clause="EN 1995-1-1:2025 Eq. 8.40",
+                       expr="1/(φ+√(φ²−λ_rel²))",
+                       subst=f"1/({kd['phi']:.4g}+√({kd['phi']:.4g}²−{kd['lam_rel']:.4g}²))",
+                       latex=r"k_c=\dfrac{1}{arphi+\sqrt{arphi^2-\lambda_{rel}^2}}",
+                       note=f"flexural buckling ({axis})")
+        kmd = _k_m_detail_2025(inp.l_0m, sec, t)
+        if not kmd["governs"]:
+            note = ("no LTB data (l_0m = 0)" if kmd["lam_rel_m"] is None
+                    else f"λ_rel,m={kmd['lam_rel_m']:.3g} ≤ {LAMBDA_REL_LIM} "
+                         "→ no LTB reduction")
+            trace.step("k_m (LTB)", k_m, "—", clause="EN 1995-1-1:2025 §8.3", note=note)
+        else:
+            trace.step("M_y,crit", kmd["m_cr"], "kNm", clause="EN 1995-1-1:2025 §8.3",
+                       expr="(π/l_ef)·√(E_0,05·G_0,05·I_tor·I_z)")
+            trace.step("λ_rel,m", kmd["lam_rel_m"], "—",
+                       clause="EN 1995-1-1:2025 Eq. 8.43",
+                       expr="√(f_mk·W_y/M_y,crit)",
+                       subst=f"√({t.fmk:.4g}·{sec.bend_mod_y:.4g}/{kmd['m_cr']:.4g})")
+            trace.step("β_m / β_twist", (round(kmd["beta_m"], 4), round(kmd["beta_twist"], 5)),
+                       "—", clause="EN 1995-1-1:2025 Table 8.2",
+                       note="β_m=ε·(h/b)·π/2·√(3·E_0,05/G_0,05); "
+                            "β_twist=θ_0/h·(h/b)")
+            trace.step("φ", kmd["phi"], "—", clause="EN 1995-1-1:2025 Eq. 8.47",
+                       expr="0.5·[1+β_m·β_twist·(λ_rel,m−0.55)+λ_rel,m²]")
+            trace.step("k_m (LTB)", k_m, "—", clause="EN 1995-1-1:2025 Eq. 8.46",
+                       expr="1/(φ+√(φ²−λ_rel,m²))",
+                       latex=r"k_m=\dfrac{1}{arphi+\sqrt{arphi^2-\lambda_{rel,m}^2}}",
+                       note="lateral-torsional stability")
 
         trace.section("Bending + axial (§8.1.8)")
         p_exp = 2.0 if sec.shape == "rectangular" else 1.0

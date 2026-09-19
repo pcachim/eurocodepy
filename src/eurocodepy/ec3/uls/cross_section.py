@@ -266,12 +266,12 @@ def eurocode3_section_check(inp: SectionResistanceInput,
     web_sb = shear_buckling_susceptible(inp.hw, inp.tw, inp.eps)
 
     _sec("Shear resistance (§6.2.6)")
-    _t("Vpl,Rd,y", vpl_y, "kN", clause="EN 1993-1-1 §6.2.6(2)",
-       expr="Vpl,Rd = A_v·(f_y/√3)/γ_M0",
+    _t("V_pl,Rd,y", vpl_y, "kN", clause="EN 1993-1-1 §6.2.6(2)",
+       expr="V_pl,Rd = A_v·(f_y/√3)/γ_M0",
        latex=r"V_{pl,Rd}=\frac{A_v (f_y/\sqrt{3})}{\gamma_{M0}}",
        subst=f"{inp.av_y:.0f}·({fy:.0f}/√3)/{gm0:g}/1e3")
-    _t("Vpl,Rd,z", vpl_z, "kN", clause="EN 1993-1-1 §6.2.6(2)",
-       expr="Vpl,Rd = A_v·(f_y/√3)/γ_M0",
+    _t("V_pl,Rd,z", vpl_z, "kN", clause="EN 1993-1-1 §6.2.6(2)",
+       expr="V_pl,Rd = A_v·(f_y/√3)/γ_M0",
        subst=f"{inp.av_z:.0f}·({fy:.0f}/√3)/{gm0:g}/1e3")
     if web_sb:
         _t("Web shear buckling", "check", "—", clause="EN 1993-1-1 §6.2.6(6)",
@@ -281,13 +281,13 @@ def eurocode3_section_check(inp: SectionResistanceInput,
         _t("τ_t,Ed", tau_t, "N/mm²", expr="τ_t = T_Ed/W_t")
         _t("T_Rd", t_rd, "kNm", clause="EN 1993-1-1 §6.2.7",
            expr="T_Rd = W_t·(f_y/√3)/γ_M0")
-        _t("Vpl,T,Rd,y", vpl_ty, "kN", clause="EN 1993-1-1 §6.2.7(9)",
+        _t("V_pl,T,Rd,y", vpl_ty, "kN", clause="EN 1993-1-1 §6.2.7(9)",
            note="torsion-reduced shear resistance")
-        _t("Vpl,T,Rd,z", vpl_tz, "kN", clause="EN 1993-1-1 §6.2.7(9)")
+        _t("V_pl,T,Rd,z", vpl_tz, "kN", clause="EN 1993-1-1 §6.2.7(9)")
         _t("U_T = T_Ed/T_Rd", u_t, "—", ok=u_t <= 1.0)
-    _t("U_Vy = Vy_Ed/Vpl,Rd,y", u_vy, "—", clause="EN 1993-1-1 §6.2.6",
+    _t("U_Vy = V_y,Ed/V_pl,Rd,y", u_vy, "—", clause="EN 1993-1-1 §6.2.6",
        ok=u_vy <= 1.0)
-    _t("U_Vz = Vz_Ed/Vpl,Rd,z", u_vz, "—", clause="EN 1993-1-1 §6.2.6",
+    _t("U_Vz = V_z,Ed/V_pl,Rd,z", u_vz, "—", clause="EN 1993-1-1 §6.2.6",
        ok=u_vz <= 1.0)
 
     # ── shear → moment reduction (§6.2.8): ρ when V > 0.5·Vpl ──
@@ -303,7 +303,7 @@ def eurocode3_section_check(inp: SectionResistanceInput,
     if shear_reduces:
         _sec("Shear–moment reduction (§6.2.8)")
         _t("ρ_z", rho_z, "—", clause="EN 1993-1-1 §6.2.8",
-           expr="ρ = (2·V_Ed/Vpl,Rd − 1)²  for V_Ed > 0.5·Vpl,Rd",
+           expr="ρ = (2·V_Ed/V_pl,Rd − 1)²  for V_Ed > 0.5·V_pl,Rd",
            latex=r"\rho=\left(\frac{2V_{Ed}}{V_{pl,Rd}}-1\right)^2",
            note="reduces My")
         _t("ρ_y", rho_y, "—", clause="EN 1993-1-1 §6.2.8", note="reduces Mz")
@@ -313,8 +313,8 @@ def eurocode3_section_check(inp: SectionResistanceInput,
     my, mz = f.my_ed, f.mz_ed
 
     _sec("Bending + axial (§6.2.9)")
-    _t("Npl,Rd", npl_rd, "kN", clause="EN 1993-1-1 §6.2.4",
-       expr="Npl,Rd = A·f_y/γ_M0",
+    _t("N_pl,Rd", npl_rd, "kN", clause="EN 1993-1-1 §6.2.4",
+       expr="N_pl,Rd = A·f_y/γ_M0",
        subst=f"{area_eff:.0f}·{fy:.0f}/{gm0:g}/1e3")
 
     if inp.section_class <= 2:
@@ -344,14 +344,14 @@ def eurocode3_section_check(inp: SectionResistanceInput,
         # plus the individual limits (so a uniaxial case reads as the linear
         # ratio, and pure axial as N/Npl,Rd — §6.2.4/§6.2.9).
         u_nm = max(interaction, ratio_y, ratio_z, n)
-        _t("n = N_Ed/Npl,Rd", n, "—")
-        _t("Mpl,Rd,y", mpl_y, "kNm", expr="Mpl,Rd = W_pl,y·f_y/γ_M0")
-        _t("Mpl,Rd,z", mpl_z, "kNm", expr="Mpl,Rd = W_pl,z·f_y/γ_M0")
-        _t("MN,Rd,y", mn_y, "kNm", clause="EN 1993-1-1 §6.2.9.1",
+        _t("n = N_Ed/N_pl,Rd", n, "—")
+        _t("M_pl,Rd,y", mpl_y, "kNm", expr="M_pl,Rd = W_pl,y·f_y/γ_M0")
+        _t("M_pl,Rd,z", mpl_z, "kNm", expr="M_pl,Rd = W_pl,z·f_y/γ_M0")
+        _t("M_N,Rd,y", mn_y, "kNm", clause="EN 1993-1-1 §6.2.9.1",
            note="axial-reduced plastic moment")
-        _t("MN,Rd,z", mn_z, "kNm", clause="EN 1993-1-1 §6.2.9.1")
+        _t("M_N,Rd,z", mn_z, "kNm", clause="EN 1993-1-1 §6.2.9.1")
         _t("Interaction", interaction, "—", clause="EN 1993-1-1 §6.2.9.1(6)",
-           expr="(My/MN,y)^α + (Mz/MN,z)^β ≤ 1",
+           expr="(M_y/M_N,y)^α + (M_z/M_N,z)^β ≤ 1",
            latex=r"\left(\frac{M_y}{M_{N,y}}\right)^{\alpha}"
                  r"+\left(\frac{M_z}{M_{N,z}}\right)^{\beta}\leq1",
            subst=f"({abs(my):.4g}/{mn_y:.4g})^{alpha:g}"
