@@ -96,13 +96,13 @@ def calc_torsion(ted: float, b: float, h: float,
                           f"(cot θ={cott:g}) → 2·{niu:.3g}·{fcd:.4g}·{a_k:.4g}"
                           f"·{t_ef:.4g}·{sin_cos:.3g}"),
                    ok=(util <= 1.0))
-        trace.step("Asw,tor/s", asw_tor_s, "m²/m", clause="EN 1992-1-1 §6.3.2(3)",
-                   expr="Asw,tor/s = T_Ed/(2·A_k·f_yd·cot θ)",
+        trace.step("A_sw,tor /s", asw_tor_s, "m²/m", clause="EN 1992-1-1 §6.3.2(3)",
+                   expr="A_sw,tor /s = T_Ed/(2·A_k·f_yd·cot θ)",
                    latex=r"\frac{A_{sw,tor}}{s}=\frac{T_{Ed}}{2A_k f_{yd}\cot\theta}",
                    subst=f"{ted:.4g}/(2·{a_k:.4g}·{fyd:.4g}·{cott:g})/1000",
                    note="closed stirrups, per single leg")
-        trace.step("Asl,tor", asl_tor, "m²", clause="EN 1992-1-1 §6.3.2(3)",
-                   expr="Asl,tor = T_Ed·cot θ·u_k/(2·A_k·f_yd)",
+        trace.step("A_sl,tor", asl_tor, "m²", clause="EN 1992-1-1 §6.3.2(3)",
+                   expr="A_sl,tor = T_Ed·cot θ·u_k/(2·A_k·f_yd)",
                    latex=r"A_{sl,tor}=\frac{T_{Ed}\cot\theta\,u_k}{2A_k f_{yd}}",
                    subst=f"{ted:.4g}·{cott:g}·{u_k:.4g}/(2·{a_k:.4g}·{fyd:.4g})/1000",
                    note="total longitudinal, distributed around u_k")

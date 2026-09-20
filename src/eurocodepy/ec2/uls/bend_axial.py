@@ -202,11 +202,11 @@ def calc_asl_nm(
                    latex=r"\omega=1-\sqrt{1-2\mu}")
         trace.step("x/d", x_d, "—", expr="x/d = 1.25·ω")
         trace.section("Reinforcement")
-        trace.step("As,min", as_min, "cm²", clause="EN 1992-1-1 §9.2.1.1",
-                   expr="As,min = max(0.26·f_ctm/f_yk, 0.0013)·b·d")
-        trace.step("As1 (tension)", as1, "cm²", ok=True,
+        trace.step("A_s,min", as_min, "cm²", clause="EN 1992-1-1 §9.2.1.1",
+                   expr="A_s,min = max(0.26·f_ctm/f_yk, 0.0013)·b·d")
+        trace.step("A_s1 (tension)", as1, "cm²", ok=True,
                    note=note or "governing tension steel")
-        trace.step("As2 (compression)", as2, "cm²",
+        trace.step("A_s2 (compression)", as2, "cm²",
                    note="doubly reinforced" if mu > mu_lim else "not required")
 
     return {

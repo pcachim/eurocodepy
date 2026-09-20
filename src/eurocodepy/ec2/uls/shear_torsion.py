@@ -250,7 +250,7 @@ def eurocode2_shear_torsion_check(inp: ShearTorsionInput, v_ed: float, t_ed: flo
     _t("Interaction", interaction, "—", clause="EN 1992-1-1 Eq. 6.29",
        expr="T_Ed/T_Rd,max + V_Ed/V_Rd,max ≤ 1.0",
        subst=f"{t_ratio:.4g} + {v_ratio:.4g}", ok=(interaction <= 1.0))
-    _t("Asw/s (shear + 2·torsion)", asw_total_s, "m²/m",
+    _t("A_sw/s (shear + 2·torsion)", asw_total_s, "m²/m",
        expr="Asw/s = Asw/s,shear + 2·Asw,tor/s",
        subst=f"{asw_shear_s:.4g} + 2·{asw_tor_s:.4g}")
     _t("Crushing", crushing, "—", ok=(not crushing))

@@ -121,7 +121,7 @@ def eurocode2_shear_check(inp: ShearInput, v_ed: float,
            note="no designed stirrups — minimum only" if inp.min_shear
                 else "no shear reinforcement required")
         if inp.min_shear:
-            _t("Asw/s,min", asw_min, "m²/m", clause="EN 1992-1-1 §9.2.2",
+            _t("A_sw,min /s", asw_min, "m²/m", clause="EN 1992-1-1 §9.2.2",
                expr="ρ_w,min = 0.08·√f_ck/f_yk",
                subst=f"0.08·√{fck:g}/{fyk:g}·{b:g}")
         return ShearResult(
@@ -168,8 +168,8 @@ def eurocode2_shear_check(inp: ShearInput, v_ed: float,
     if crushing:
         _t("Strut crushing", True, "—", clause="EN 1992-1-1 §6.2.3(3)",
            ok=False, note="V_Ed > V_Rd,max even at θ = 45°")
-    _t("Asw/s", asw_s, "m²/m", clause="EN 1992-1-1 §6.2.3(3)",
-       expr="Asw/s = V_Ed/(z·f_ywd·cot θ)",
+    _t("A_sw /s", asw_s, "m²/m", clause="EN 1992-1-1 §6.2.3(3)",
+       expr="A_sw /s = V_Ed/(z·f_ywd·cot θ)",
        subst=f"{v:.4g}/({0.9*d:.4g}·{fyk/gs:.4g}·{cot_used:g})/1000",
        ok=(not crushing))
 

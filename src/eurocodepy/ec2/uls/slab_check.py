@@ -126,7 +126,7 @@ def eurocode2_slab_check(inp: SlabInput, trace=None) -> SlabResult:
        subst=f"{inp.alpha_cc:g}·{inp.fck:g}/{inp.gamma_c:g}")
     _t("f_yd", fyd_mpa, "MPa", expr="f_yd = f_yk/γ_s",
        subst=f"{inp.fyk:g}/{inp.gamma_s:g}")
-    _t("As,min/bd", as_min_coef, "—", clause="EN 1992-1-1 §9.3.1.1",
+    _t("A_s,min /bd", as_min_coef, "—", clause="EN 1992-1-1 §9.3.1.1",
        expr="max(0.26·f_ctm/f_yk, 0.0013)")
 
     _sec("Flexural reinforcement (EN 1992-1-1 §6.1)")
