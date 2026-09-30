@@ -29,9 +29,13 @@ License:
     in the project repository for the full license text.
 """
 
-__version__ = "2027.0.0"
-version = "This is 'EurocodePy' version " + __version__  # noqa: RUF067
-"""Version of EurocodePy package."""
+from importlib.metadata import PackageNotFoundError, version as _pkg_version
+
+try:
+    __version__ = _pkg_version("eurocodepy")
+except PackageNotFoundError:  # source tree that was never installed
+    __version__ = "0+unknown"
+"""Version of EurocodePy package (single source: ``pyproject.toml``)."""
 
 
 from eurocodepy import (  # noqa: E402, I001

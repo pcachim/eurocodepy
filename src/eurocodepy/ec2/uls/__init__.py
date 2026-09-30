@@ -33,6 +33,7 @@ from eurocodepy.ec2.uls.beam import (
 )
 from eurocodepy.ec2.uls.bend_axial import (
     calc_asl_nm as calc_asl_nm,
+    calc_asl_nm_strain as calc_asl_nm_strain,
     design_rcbeam_nm as design_rcbeam_nm,
 )
 # Shear/torsion checks come from `shear` (their canonical home). `beam` also
@@ -108,7 +109,7 @@ __all__ = [
     # bending design
     "RCBeam", "calc_asl", "calc_mrd", "get_bend_params",
     # combined bending + axial (M-N) design
-    "calc_asl_nm", "design_rcbeam_nm",
+    "calc_asl_nm", "calc_asl_nm_strain", "design_rcbeam_nm",
     # shear / torsion
     "calc_asws", "calc_vrd", "calc_vrdc", "calc_vrdmax", "calc_torsion",
     # composite column check (§5.8 / §6.1)

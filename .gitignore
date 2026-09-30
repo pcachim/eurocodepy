@@ -261,4 +261,8 @@ dist
 .pypirc
 mkdocs/site
 makeme.md
+INIT_REVIEW.md
 
+# Ficheiros de trabalho
+.vscode/
+NAMING_REVIEW_ec2_uls.md

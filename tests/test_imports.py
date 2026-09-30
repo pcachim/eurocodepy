@@ -78,3 +78,21 @@ if __name__ == "__main__":
     test_key_public_api()
     print("OK — all import checks passed (" +
           str(len(_all_module_names())) + " modules)")
+
+
+def test_version_matches_pyproject():
+    """__version__ comes from the package metadata, i.e. from pyproject.toml.
+
+    Fails when pyproject.toml was edited but the package was not reinstalled
+    (``uv sync``), which is exactly the stale-metadata case of an editable
+    install.
+    """
+    import tomllib
+    from pathlib import Path
+
+    import eurocodepy
+
+    pyproject = Path(__file__).resolve().parents[1] / "pyproject.toml"
+    declared = tomllib.loads(pyproject.read_text(encoding="utf-8"))["project"]["version"]
+    assert eurocodepy.__version__ == declared
+    assert not hasattr(eurocodepy, "version")

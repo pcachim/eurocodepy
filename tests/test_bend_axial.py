@@ -7,6 +7,8 @@ or:
 """
 import math
 
+import numpy as np
+
 from eurocodepy.ec2.uls import calc_asl, calc_asl_nm
 
 # Reference section / materials used throughout.
@@ -105,3 +107,125 @@ if __name__ == "__main__":
     test_sagging_hogging_magnitude_symmetry()
     test_moment_transfer_sign()
     print("All bend_axial tests passed.")
+
+
+# ---------------------------------------------------------------------------
+# Strain-compatibility design (calc_asl_nm_strain / method="auto")
+# ---------------------------------------------------------------------------
+
+from eurocodepy.ec2.uls import calc_asl_nm_strain  # noqa: E402
+
+
+def _fibre_mrd(as1, as2, ned, b=B, h=H, d1=D1, d2=D2, nf=1500):
+    """Independent M_Rd at N_Ed: numerical fibres + bisection on x (sagging)."""
+    fcd, fyd, es = FCK / GC, FYK / GS, 200e3
+    ys = (np.arange(nf) + 0.5) / nf * h
+    dy = h / nf
+
+    def forces(x):
+        k = 3.5e-3 / x if x <= h else 2e-3 / (x - 3 / 7 * h)
+        ec = np.clip(k * (x - ys), 0.0, None)
+        sc = np.where(ec < 2e-3, fcd * (1 - (1 - ec / 2e-3) ** 2), fcd) * (ec > 0)
+        fc = (sc * b * dy * 1e3).sum()
+        mc = (sc * b * dy * 1e3 * (h / 2 - ys)).sum()
+        s1 = np.clip(es * k * (x - (h - d1)), -fyd, fyd)
+        s2 = np.clip(es * k * (x - d2), -fyd, fyd)
+        f1, f2 = as1 * 1e-4 * s1 * 1e3, as2 * 1e-4 * s2 * 1e3
+        return fc + f1 + f2, mc + f2 * (h / 2 - d2) - f1 * (h / 2 - d1)
+
+    lo, hi = 1e-4, 500 * h
+    for _ in range(100):
+        mid = math.sqrt(lo * hi)
+        if forces(mid)[0] < ned:
+            lo = mid
+        else:
+            hi = mid
+    return forces(hi)[1]
+
+
+def test_strain_matches_simplified_when_tension_controlled():
+    """Where the simplified method applies, both agree to a few percent."""
+    for med, ned in ((150.0, 0.0), (300.0, 0.0), (150.0, -200.0), (250.0, 300.0)):
+        s = calc_asl_nm(B, H, D1, D2, med, ned, FCK, FYK, GC, GS)
+        q = calc_asl_nm_strain(B, H, D1, D2, med, ned, FCK, FYK, GC, GS)
+        assert abs(q["As1"] - s["As1"]) <= 0.03 * s["As1"] + 1e-6, (med, ned)
+        assert q["As2"] == 0.0
+
+
+def test_strain_design_is_exact_against_independent_fibres():
+    """The returned steel carries (N, M) exactly (M_Rd/M_Ed = 1 on the boundary)."""
+    for med, ned in ((300.0, 1000.0), (450.0, 1000.0), (450.0, 2000.0),
+                     (300.0, 3000.0)):
+        q = calc_asl_nm_strain(B, H, D1, D2, med, ned, FCK, FYK, GC, GS)
+        assert q["feasible"]
+        mrd = _fibre_mrd(q["As1"], q["As2"], ned)
+        assert mrd >= med * 0.995, (med, ned, mrd)      # safe
+        assert mrd <= med * 1.02, (med, ned, mrd)       # and not wasteful
+
+
+def test_strain_beats_simplified_in_compression_controlled_range():
+    """Small eccentricity + high N: the simplified result is far too heavy."""
+    s = calc_asl_nm(B, H, D1, D2, 300.0, 3000.0, FCK, FYK, GC, GS)
+    q = calc_asl_nm_strain(B, H, D1, D2, 300.0, 3000.0, FCK, FYK, GC, GS)
+    assert s["note"]                                   # simplified flags it
+    assert q["As1"] + q["As2"] < 0.7 * (s["As1"] + s["As2"])
+
+
+def test_auto_uses_simplified_at_low_axial_force_and_strain_above():
+    fcd_ac = B * H * FCK / GC * 1000.0                   # kN, nu = 1 reference
+    for ned in (-300.0, 0.0, 0.04 * fcd_ac):             # tension, flexure, nu<=0.05
+        auto = calc_asl_nm(B, H, D1, D2, 150.0, ned, FCK, FYK, GC, GS, method="auto")
+        ref = calc_asl_nm(B, H, D1, D2, 150.0, ned, FCK, FYK, GC, GS)
+        assert auto == ref and auto["method"] == "simplified"
+    ned = 0.2 * fcd_ac                                   # nu = 0.2
+    auto = calc_asl_nm(B, H, D1, D2, 300.0, ned, FCK, FYK, GC, GS, method="auto")
+    strain = calc_asl_nm_strain(B, H, D1, D2, 300.0, ned, FCK, FYK, GC, GS)
+    assert auto == strain and auto["method"] == "strain"
+
+
+def test_auto_threshold_is_configurable():
+    ned = 0.2 * B * H * FCK / GC * 1000.0
+    low = calc_asl_nm(B, H, D1, D2, 300.0, ned, FCK, FYK, GC, GS, method="auto",
+                      nu_simplified=0.05)
+    high = calc_asl_nm(B, H, D1, D2, 300.0, ned, FCK, FYK, GC, GS, method="auto",
+                       nu_simplified=0.5)
+    assert low["method"] == "strain" and high["method"] == "simplified"
+
+
+def test_auto_still_falls_back_when_simplified_flags_low_nu():
+    # nu just under the threshold but very small eccentricity: the simplified
+    # method flags itself, so auto must not return its As_min answer.
+    ned = 0.049 * B * H * FCK / GC * 1000.0
+    plain = calc_asl_nm(B, H, D1, D2, 5.0, ned, FCK, FYK, GC, GS)
+    auto = calc_asl_nm(B, H, D1, D2, 5.0, ned, FCK, FYK, GC, GS, method="auto")
+    if plain["note"]:
+        assert auto["method"] == "strain"
+    else:
+        assert auto["method"] == "simplified"
+
+
+def test_strain_has_no_neutral_axis_limit():
+    """High moment, some compression: strain uses less steel than the
+    simplified method, whose x/d <= 0.45 cap forces compression steel."""
+    ned = 0.2 * B * H * FCK / GC * 1000.0
+    s = calc_asl_nm(B, H, D1, D2, 450.0, ned, FCK, FYK, GC, GS)
+    q = calc_asl_nm_strain(B, H, D1, D2, 450.0, ned, FCK, FYK, GC, GS)
+    assert q["x_d"] > 0.45 or q["As1"] + q["As2"] <= s["As1"] + s["As2"]
+
+
+def test_strain_hogging_mirrors_sagging():
+    up = calc_asl_nm_strain(B, H, D1, D2, 300.0, 1500.0, FCK, FYK, GC, GS)
+    dn = calc_asl_nm_strain(B, H, D1, D2, -300.0, 1500.0, FCK, FYK, GC, GS)
+    assert abs(up["As1"] - dn["As1"]) < 1e-9
+    assert abs(up["As2"] - dn["As2"]) < 1e-9
+
+
+def test_strain_flags_section_too_small():
+    q = calc_asl_nm_strain(B, H, D1, D2, 300.0, 12000.0, FCK, FYK, GC, GS)
+    assert q["note"]                                   # > 4 % Ac or infeasible
+
+
+def test_bad_method_rejected():
+    import pytest
+    with pytest.raises(ValueError):
+        calc_asl_nm(B, H, D1, D2, 100.0, 0.0, FCK, FYK, GC, GS, method="nope")

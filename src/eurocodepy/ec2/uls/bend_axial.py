@@ -25,7 +25,7 @@ This reduces exactly to the pure-bending result of :func:`calc_asl` when
 
 import math
 
-from eurocodepy.ec2.materials import GammaC, GammaS
+from eurocodepy.ec2.materials import Concrete, GammaC, GammaS
 from eurocodepy.ec2.uls.beam import calc_asl
 
 
@@ -60,6 +60,8 @@ def calc_asl_nm(
     alpha_cc: float = 1.0,
     iprint: bool = False,
     trace=None,
+    method: str = "simplified",
+    nu_simplified: float = 0.05,
 ) -> dict:
     """Design a rectangular RC section for combined bending and axial force.
 
@@ -79,6 +81,21 @@ def calc_asl_nm(
         alpha_cc (float, optional): long-term/loading coefficient on fcd.
             Defaults to 1.0 (EN 1992-1-1 recommended / Portuguese NA).
         iprint (bool, optional): print a summary. Defaults to False.
+        trace: optional ``CalcReport`` the steps are recorded into.
+        method (str, optional): ``"simplified"`` (default) is the rectangular
+            stress block / transferred-moment method described above.
+            ``"strain"`` always uses :func:`calc_asl_nm_strain`.
+            ``"auto"`` uses the simplified method where it is reliable — flexure
+            with little axial compression, ``nu <= nu_simplified``, tension
+            included — and strain compatibility otherwise, or whenever the
+            simplified method flags itself inapplicable.
+        nu_simplified (float, optional): for ``method="auto"``, the largest
+            reduced axial force ``nu = N_Ed/(b*h*fcd)`` (compression positive)
+            still designed with the simplified method. Defaults to 0.05: up to
+            there it stays within about +10 % / -1 % of steel and 1.1 % of
+            capacity against strain compatibility (the excess at high moments
+            is the x/d <= 0.45 limit it imposes, EN 1992-1-1 §5.5(4), which
+            the strain method does not).
 
     Returns:
         dict: with keys
@@ -101,6 +118,16 @@ def calc_asl_nm(
         required and should be used instead.
 
     """
+    if method not in ("simplified", "auto", "strain"):
+        msg = f"method must be 'simplified', 'auto' or 'strain', not {method!r}."
+        raise ValueError(msg)
+    if method == "strain":
+        return calc_asl_nm_strain(b, h, d1, d2, med, ned, fck, fyk,
+                                  gamma_c, gamma_s, alpha_cc, trace=trace)
+    if method == "auto" and ned / (b * h * alpha_cc * fck / gamma_c * 1000.0) > nu_simplified:
+        return calc_asl_nm_strain(b, h, d1, d2, med, ned, fck, fyk,
+                                  gamma_c, gamma_s, alpha_cc, trace=trace)
+
     d = h - d1
     if d <= 0:
         msg = "Effective depth d = h - d1 must be positive."
@@ -165,6 +192,12 @@ def calc_asl_nm(
 
     as2 = max(as2, 0.0)
 
+    if note and method == "auto":
+        # Still flagged inapplicable inside the low-nu range: solve by strain
+        # compatibility instead of returning As_min.
+        return calc_asl_nm_strain(b, h, d1, d2, med, ned, fck, fyk,
+                                  gamma_c, gamma_s, alpha_cc, trace=trace)
+
     if iprint:
         print(
             f"M_Ed={med:.1f} kNm N_Ed={ned:.1f} kN -> M_Eds={med_s:.1f} kNm | "
@@ -219,6 +252,245 @@ def calc_asl_nm(
         "med_s": med_s,
         "doubly": mu > mu_lim,
         "note": note,
+        "method": "simplified",
+    }
+
+
+# ---------------------------------------------------------------------------
+# Strain-compatibility design (any eccentricity, including compression-controlled)
+# ---------------------------------------------------------------------------
+
+_ES_MPA = 200_000.0          # reinforcing steel modulus [MPa] (EN 1992-1-1 §3.2.7)
+_AS_MAX_RATIO = 0.04         # EN 1992-1-1 §9.2.1.1(3) / §9.5.2(3): As,max = 0.04 Ac
+
+
+def _concrete_block(x, h, w, fcd, eps_c2, eps_cu2, n):
+    """Force and moment of the parabola-rectangle concrete block.
+
+    Closed-form integration (no fibres) of the EN 1992-1-1 §3.1.7 diagram over
+    a rectangle of width ``w`` and depth ``h``, for a linear strain profile
+    with neutral axis at ``x`` from the more compressed face. Above ``x = h``
+    the profile pivots about the point at ``h(1 - eps_c2/eps_cu2)`` (strain
+    ``eps_c2``), as in Figure 6.1 (pivot C).
+
+    Returns ``(k, Fc, Mc)``: curvature [1/m], compression force [kN] and its
+    moment about the section centroid [kNm] (positive = compression on the
+    ``u = 0`` face).
+    """
+    if x <= h:
+        k = eps_cu2 / x
+    else:
+        k = eps_c2 / (x - h * (1.0 - eps_c2 / eps_cu2))
+    hh = min(x, h)
+    u1 = x - eps_c2 / k                     # strain = eps_c2 here
+    ua = min(max(u1, 0.0), hh)
+    a = 1.0 - k * x / eps_c2                # t(u) = 1 - eps/eps_c2 = a + c*u
+    c = k / eps_c2
+    t_hh = max(a + c * hh, 0.0)
+    t_a = max(a + c * ua, 0.0)
+    i0 = (t_hh ** (n + 1) - t_a ** (n + 1)) / (c * (n + 1))
+    j0 = ((t_hh ** (n + 2) - t_a ** (n + 2)) / (n + 2)
+          - a * (t_hh ** (n + 1) - t_a ** (n + 1)) / (n + 1)) / (c * c)
+    f_per_fcd = hh - i0                      # ∫ sigma/fcd du
+    s_per_fcd = 0.5 * hh * hh - j0           # ∫ sigma/fcd * u du
+    fc = fcd * w * f_per_fcd * 1000.0
+    mc = fcd * w * (0.5 * h * f_per_fcd - s_per_fcd) * 1000.0
+    return k, fc, mc
+
+
+def _steel_stress(k, x, u, fyd):
+    """Steel stress [MPa, compression positive] at depth ``u`` from the face."""
+    return max(-fyd, min(fyd, _ES_MPA * k * (x - u)))
+
+
+def calc_asl_nm_strain(
+    b: float,
+    h: float,
+    d1: float,
+    d2: float,
+    med: float,
+    ned: float,
+    fck: float,
+    fyk: float,
+    gamma_c: float = GammaC,
+    gamma_s: float = GammaS,
+    alpha_cc: float = 1.0,
+    trace=None,
+) -> dict:
+    """Design a rectangular section for M-N by strain compatibility.
+
+    Same inputs and result keys as :func:`calc_asl_nm`, but valid for **any**
+    eccentricity, including the compression-controlled range where the
+    simplified method breaks down (there it over-designs by a factor that grows
+    with N, e.g. 2-3x for small eccentricities).
+
+    Method. The parabola-rectangle diagram (EN 1992-1-1 §3.1.7, closed-form
+    integrals) and an elastic-perfectly-plastic steel (``f_yd``, no hardening)
+    give, for a strain profile fixed by the neutral-axis depth ``x``, the
+    concrete force/moment and the steel stresses ``s1``, ``s2``. With those
+    known, equilibrium in N and M is **linear** in the two steel areas, so for
+    each ``x`` the pair ``(As1, As2)`` follows from a 2x2 solve; the design is
+    the ``x`` that minimises ``As1 + As2`` with both non-negative and
+    ``As1 >= As_min``. A section already adequate with ``As1 = As_min`` and
+    ``As2 = 0`` is returned as such.
+
+    The tension face is the one selected by the sign of ``med`` (positive =
+    tension at the bottom, as in :func:`calc_asl_nm`); ``As1`` is the steel on
+    that face and ``As2`` on the opposite one. ``ned`` is compression-positive.
+
+    No limit is placed on the neutral-axis depth: the ``x/d <= 0.45`` bound of
+    §5.5(4) exists for beam ductility/redistribution and the simplified method
+    applies it; with significant axial compression it does not govern.
+
+    Returns the :func:`calc_asl_nm` keys (``mu`` and ``omega`` are ``None``:
+    the stress-block quantities do not exist here; ``med_s`` is ``med``) plus
+    ``x`` [m] and ``feasible``; ``note`` reports when the total steel exceeds
+    the 4 % ``A_c`` limit of §9.2.1.1(3), in which case the section must be
+    enlarged.
+    """
+    d = h - d1
+    if d <= 0:
+        msg = "Effective depth d = h - d1 must be positive."
+        raise ValueError(msg)
+
+    conc = Concrete.from_fck(fck)
+    eps_c2, eps_cu2, n_exp = conc.eps_c2 / 1000.0, conc.eps_cu2 / 1000.0, conc.n
+    fcd = alpha_cc * fck / gamma_c
+    fyd = fyk / gamma_s
+
+    m_abs = abs(med)
+    u1, u2 = h - d1, d2                # depth of tension / compression steel
+    z1 = h / 2.0 - u1                  # lever arms about the centroid [m]
+    z2 = h / 2.0 - u2
+    fctm = _fctm(fck)
+    as_min = max(0.26 * fctm / fyk, 0.0013) * b * d * 10000.0     # [cm2]
+
+    def state(x):
+        k, fc, mc = _concrete_block(x, h, b, fcd, eps_c2, eps_cu2, n_exp)
+        return (fc, mc, _steel_stress(k, x, u1, fyd),
+                _steel_stress(k, x, u2, fyd))
+
+    def forces(x):
+        """Steel forces P1, P2 [kN] (on top of As_min) and stresses at profile x."""
+        fc, mc, s1, s2 = state(x)
+        p1_min = 0.1 * as_min * s1                       # [kN]
+        nr = ned - fc - p1_min
+        mr = m_abs - mc - p1_min * z1
+        p2 = (mr - nr * z1) / (z2 - z1)
+        return nr - p2, p2, s1, s2
+
+    def areas(p1, p2, s1, s2):
+        """(a1, a2) [cm2] carrying forces p1, p2; None where a steel is unstressed."""
+        if abs(s1) < 1.0e-9 or abs(s2) < 1.0e-9:
+            return None
+        return p1 / (0.1 * s1), p2 / (0.1 * s2)
+
+    def capacity_ok(as1, as2):
+        """Is (N, |M|) inside the M-N diagram of this layout?"""
+        lo, hi = 1.0e-4 * h, 500.0 * h
+        for _ in range(80):
+            mid = math.sqrt(lo * hi)
+            fc, _mc, s1, s2 = state(mid)
+            if fc + 0.1 * (as1 * s1 + as2 * s2) < ned:
+                lo = mid
+            else:
+                hi = mid
+        fc, mc, s1, s2 = state(hi)
+        if abs(fc + 0.1 * (as1 * s1 + as2 * s2) - ned) > 1.0e-3 * max(abs(ned), 1.0) + 1.0e-6:
+            return False, hi
+        mrd = mc + 0.1 * (as1 * s1 * z1 + as2 * s2 * z2)
+        return mrd >= m_abs - 1.0e-9, hi
+
+    def root(fun, lo, hi):
+        """Bisection of a continuous ``fun`` that changes sign on [lo, hi]."""
+        flo = fun(lo)
+        for _ in range(60):
+            mid = 0.5 * (lo + hi)
+            fm = fun(mid)
+            if (fm > 0.0) == (flo > 0.0):
+                lo, flo = mid, fm
+            else:
+                hi = mid
+        return 0.5 * (lo + hi)
+
+    ok, x_sol = capacity_ok(as_min, 0.0)
+    as1, as2 = as_min, 0.0
+    feasible = True
+    if not ok:
+        # Candidate designs, each an exact equilibrium of (N, M) at some profile
+        # x with a1, a2 >= 0. The minimum of a1 + a2 lies on a boundary of the
+        # feasible set (a1 = 0 or a2 = 0, i.e. P1 = 0 or P2 = 0: continuous in x,
+        # no division by the steel stress) or in its interior; so collect the
+        # roots of P1 and P2 plus every feasible grid point, and keep the best.
+        x_lo, x_hi, n_grid = 0.005 * h, 200.0 * h, 400
+        ratio = (x_hi / x_lo) ** (1.0 / (n_grid - 1))
+        xs = [x_lo * ratio ** i for i in range(n_grid)]
+        fs = [forces(x) for x in xs]
+        best = None                                      # (total, a1, a2, x)
+
+        def consider(x):
+            nonlocal best
+            p1, p2, s1, s2 = forces(x)
+            ar = areas(p1, p2, s1, s2)
+            if ar is None:
+                return
+            a1_, a2_ = ar
+            if a1_ < -1.0e-6 or a2_ < -1.0e-6:
+                return
+            a1_ = a1_ if a1_ > 1.0e-9 else 0.0           # drop round-off
+            a2_ = a2_ if a2_ > 1.0e-9 else 0.0
+            if best is None or a1_ + a2_ < best[0]:
+                best = (a1_ + a2_, a1_, a2_, x)
+
+        for i, x in enumerate(xs):
+            consider(x)
+            if i == 0:
+                continue
+            for idx in (0, 1):                           # P1 and P2 sign changes
+                if (fs[i - 1][idx] > 0.0) != (fs[i][idx] > 0.0):
+                    consider(root(lambda t, j=idx: forces(t)[j], xs[i - 1], x))
+        if best is None:
+            feasible = False
+            x_sol = xs[0]
+        else:
+            _tot, a1, a2, x_sol = best
+            as1, as2 = as_min + a1, a2
+            ok2, _ = capacity_ok(as1, as2)
+            if not ok2:                                  # numerical guard: safe side
+                as1, as2 = as1 * 1.001, as2 * 1.001 + 1.0e-6
+    note = ""
+    if not feasible:
+        note = "no strain-compatibility solution: enlarge the section"
+    elif as1 + as2 > _AS_MAX_RATIO * b * h * 1.0e4:
+        note = ("total steel exceeds 4% Ac (EN 1992-1-1 9.2.1.1(3)): "
+                "enlarge the section")
+
+    if trace is not None:
+        trace.section("Flexure with axial force — strain compatibility "
+                      "(EN 1992-1-1 §6.1)")
+        trace.step("f_cd", fcd, "MPa", clause="EN 1992-1-1 §3.1.6")
+        trace.step("f_yd", fyd, "MPa")
+        trace.step("M_Ed", med, "kNm")
+        trace.step("N_Ed", ned, "kN (compression)" if ned >= 0 else "kN (tension)")
+        trace.step("x (neutral axis)", x_sol, "m", clause="EN 1992-1-1 §3.1.7",
+                   note="parabola-rectangle diagram, minimum total steel")
+        trace.step("A_s,min", as_min, "cm²", clause="EN 1992-1-1 §9.2.1.1")
+        trace.step("A_s1 (tension face)", as1, "cm²", ok=feasible)
+        trace.step("A_s2 (opposite face)", as2, "cm²")
+
+    return {
+        "As1": as1,
+        "As2": as2,
+        "As_min": as_min,
+        "mu": None,
+        "omega": None,
+        "x_d": x_sol / d,
+        "x": x_sol,
+        "med_s": med,
+        "doubly": as2 > 0.0,
+        "feasible": feasible,
+        "note": note,
+        "method": "strain",
     }
 
 
