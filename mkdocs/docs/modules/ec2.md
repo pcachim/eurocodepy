@@ -111,6 +111,38 @@ asx_bot, asy_bot, asx_top, asy_top = calc_reinf_shell(
 )
 ```
 
+### Anchorage and lap lengths — `ec2.uls.anchorage`
+
+Ribbed bars, EN 1992-1-1:2004 §8.4 and §8.7. **Units: mm, mm², MPa** (the units of
+the bond clauses themselves).
+
+```python
+from eurocodepy.ec2.uls import (
+    bond_conditions_beam, beam_cover_distance,
+    design_anchorage_length, lap_length,
+)
+
+bond = bond_conditions_beam(h=500, face="top")            # "poor" (h > 250 mm)
+cd = beam_cover_distance(width=300, cover=38, n_bars=4, phi=16)   # Fig. 8.3
+
+a = design_anchorage_length(phi=16, fck=30, fyk=500, cd=cd,
+                            good_bond=(bond == "good"))
+a["fbd"], a["lb_rqd"], a["lbd"]          # bond stress, basic and design length
+l = lap_length(phi=16, fck=30, fyk=500, cd=cd, rho1=50)
+l["alpha6"], l["l0"]                     # lap length of Eq. 8.10
+```
+
+* `bond_strength` — `f_bd = 2.25·η1·η2·f_ctd` (§8.4.2; `f_ctd` capped at C60/75).
+* `basic_anchorage_length` — `l_b,rqd = (φ/4)·σ_sd/f_bd` (Eq. 8.3).
+* `anchorage_coefficients` — `α1 … α5` of Table 8.2 (shape, cover, confinement,
+  welded bars, transverse pressure; `α2·α3·α5 ≥ 0.7`).
+* `design_anchorage_length` — `l_bd = α1·α2·α3·α4·α5·l_b,rqd ≥ l_b,min`
+  (Eq. 8.4, 8.6, 8.7); `σ_sd` defaults to `f_yd` (the safe choice for a curtailed bar).
+* `lap_length` — `l_0 = α1·α2·α3·α5·α6·l_b,rqd ≥ l_0,min` (Eq. 8.10, 8.11),
+  `α6 = √(ρ1/25)` between 1 and 1.5 (Table 8.3).
+
+Every function accepts `trace=` (a `CalcReport`) to record the steps.
+
 ### Punching shear — `ec2.uls.punch`
 
 ```python

@@ -17,6 +17,7 @@ from eurocodepy.ec2.materials import (
     ReinforcementClass as ReinforcementClass,
 )
 from eurocodepy.ec2.uls import (
+    anchorage as anchorage,
     beam as beam,
     column as column,
     punch as punch,
@@ -78,6 +79,16 @@ from eurocodepy.ec2.uls.slab_check import (
 from eurocodepy.ec2.uls.torsion import (
     calc_torsion as calc_torsion,
 )
+from eurocodepy.ec2.uls.anchorage import (
+    anchorage_coefficients as anchorage_coefficients,
+    basic_anchorage_length as basic_anchorage_length,
+    beam_cover_distance as beam_cover_distance,
+    bond_conditions_beam as bond_conditions_beam,
+    bond_strength as bond_strength,
+    design_anchorage_length as design_anchorage_length,
+    lap_coefficient_alpha6 as lap_coefficient_alpha6,
+    lap_length as lap_length,
+)
 from eurocodepy.ec2.uls.shear_torsion import (
     ShearTorsionInput as ShearTorsionInput,
     ShearTorsionResult as ShearTorsionResult,
@@ -102,7 +113,8 @@ from eurocodepy.ec2.uls.column import (
 
 __all__ = [
     # submodules
-    "beam", "column", "punch", "shear", "shear_torsion", "shell", "torsion",
+    "anchorage", "beam", "column", "punch", "shear", "shear_torsion", "shell",
+    "torsion",
     # materials (re-exported for convenience)
     "Concrete", "ConcreteClass", "Prestress", "PrestressClass",
     "Reinforcement", "ReinforcementClass",
@@ -110,6 +122,10 @@ __all__ = [
     "RCBeam", "calc_asl", "calc_mrd", "get_bend_params",
     # combined bending + axial (M-N) design
     "calc_asl_nm", "calc_asl_nm_strain", "design_rcbeam_nm",
+    # anchorage and lap lengths (§8.4, §8.7)
+    "anchorage_coefficients", "basic_anchorage_length", "beam_cover_distance",
+    "bond_conditions_beam", "bond_strength", "design_anchorage_length",
+    "lap_coefficient_alpha6", "lap_length",
     # shear / torsion
     "calc_asws", "calc_vrd", "calc_vrdc", "calc_vrdmax", "calc_torsion",
     # composite column check (§5.8 / §6.1)
