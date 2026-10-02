@@ -83,6 +83,12 @@ class CrossSection:
         raise NotImplementedError(msg)
 
     @property
+    def torsion_modulus(self) -> float:
+        """Calculate the torsional section modulus (``τ_tor,max = T/W_t``)."""
+        msg = "Subclasses must implement this method."
+        raise NotImplementedError(msg)
+
+    @property
     def polar_inertia(self) -> float:
         """Calculate the polar moment of inertia."""
         msg = "Subclasses must implement this method."
@@ -140,10 +146,30 @@ class RectangularCrossSection(CrossSection):
 
     @property
     def torsional_inertia(self) -> float:
-        """Calculate the torsional inertia."""
-        b: float = self.width
-        h: float = self.height
-        return (b * h**3) * (1.0 / 3.0) * (1.0 - 0.672 * (h / b) + 0.3 * (h / b)**2)
+        """Calculate the St-Venant torsional constant ``I_t``.
+
+        ``I_t = h·b³/3 · (1 − 0.63·b/h + 0.052·(b/h)⁵)`` with ``h`` the larger
+        and ``b`` the smaller side (the sides are ordered, so the result does
+        not depend on which one is called width).
+        """
+        b, h = sorted((self.width, self.height))
+        r = b / h
+        return h * b**3 / 3.0 * (1.0 - 0.63 * r + 0.052 * r**5)
+
+    @property
+    def torsion_modulus(self) -> float:
+        """Calculate the torsional section modulus ``W_t`` (isotropic rectangle).
+
+        ``W_t = α·h·b²`` with ``h`` the larger and ``b`` the smaller side and
+        ``α ≈ (1/3)·(1 − 0.672·b/h + 0.3·(b/h)²)``. The maximum St-Venant shear
+        stress, at the middle of the long side, is ``τ_tor = T/W_t`` (α = 0.208
+        for a square, → 1/3 for a thin rectangle; within ±1.5 % of the exact
+        series for any ``b/h``).
+        """
+        b, h = sorted((self.width, self.height))
+        r = b / h
+        alpha = (1.0 / 3.0) * (1.0 - 0.672 * r + 0.3 * r**2)
+        return alpha * h * b**2
 
     @property
     def polar_inertia(self) -> float:
@@ -201,6 +227,16 @@ class CircularCrossSection(CrossSection):
     def radius_y(self) -> float:
         """Calculate the radius of gyration about the y-axis."""
         return self.radius / np.sqrt(2)
+
+    @property
+    def torsional_inertia(self) -> float:
+        """Calculate the torsional constant (= polar moment of inertia)."""
+        return (np.pi * (self.radius ** 4)) / 2
+
+    @property
+    def torsion_modulus(self) -> float:
+        """Calculate the torsional section modulus ``W_t = π·d³/16``."""
+        return (np.pi * (self.radius ** 3)) / 2
 
     @property
     def polar_inertia(self) -> float:

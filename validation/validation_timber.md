@@ -1,9 +1,8 @@
 # Validação EC5 (EN 1995-1-1) — madeira
 
 Cálculo independente: as expressões do Eurocódigo 5 são escritas aqui
-diretamente a partir do texto da norma (ou, para a torção, a partir do
-código-fonte de `check_shear_with_torsion`, onde a norma remete para teoria
-da elasticidade) e comparadas com o resultado real das funções do
+diretamente a partir do texto da norma (para a torção, W_t da teoria da
+elasticidade de Saint-Venant) e comparadas com o resultado real das funções do
 `eurocodepy.ec5`. **19/19** comparações numéricas OK.
 
 Secção-tipo: 0.10×0.20 m, madeira C24, classe de serviço 1, duração média —
@@ -86,50 +85,45 @@ check1=0.60937.
 
 ### Esforço transverso puro — EN 1995-1-1 §6.1.7 (Eq. 6.13)
 
-Secção retangular: τ_d = 1.5·V_Ed/A (fator 1.5 da distribuição parabólica).
+Secção retangular: τ_d = 1.5·V_Ed/(k_cr·A) (fator 1.5 da distribuição
+parabólica; b_ef = k_cr·b, k_cr = 0.67 para madeira maciça, §6.1.7(2)).
 V_z,Ed = 8.0 kN.
 
 ```
-τ_d = 1.5·V_Ed/A                           = 0.6000 MPa
-utilização = τ_d/f_vd                      = 0.24375
+τ_d = 1.5·V_Ed/(k_cr·A)                    = 0.8955 MPa
+utilização = τ_d/f_vd                      = 0.36381
 ```
 
 `check_shear_with_torsion(v_ed_y=0, v_ed_z=8.0, t_ed=0, ...)` →
-util_shear=0.24375.
+util_shear=0.36381.
 
 | Verificação | Resultado |
 |---|---|
 | τ_d à mão ≈ 0.600 MPa | ✓ PASS |
 | Fórmula à mão == função | ✓ PASS |
-| Confere com A7.4 de `design_cases_manual.md` | ✓ PASS |
+| Confere com A7.4 de `design_cases_manual.md` (÷ k_cr) | ✓ PASS |
 
 ### Torção pura — EN 1995-1-1 §6.1.8 (Eq. 6.14)
 
-Secção retangular, coeficiente de forma de Saint-Venant
-α = (1/3)(1 − 0.672·h/b + 0.3·(h/b)²), h/b=2.0. T_Ed = 0.5 kN·m.
+Secção retangular, módulo de torção W_t = α·h·b², α = (1/3)(1 − 0.672·b/h + 0.3·(b/h)²), com h o lado
+maior e b o menor (h/b=2.0). T_Ed = 0.5 kN·m.
 
 ```
-α                                           = 0.28533
-τ_tor,d = α·T_Ed/A                          = 0.0071 MPa
+α                                           = 0.24633
+W_t = α·h·b²                                = 4.926667e-04 m³
+τ_tor,d = T_Ed/W_t                          = 1.0149 MPa
 k_shape = min(1+0.15·h/b, 2.0)              = 1.3000
 f_vd,tor = k_shape·f_vd                     = 3.2000 MPa
-utilização = τ_tor,d/f_vd,tor               = 0.00223
+utilização = τ_tor,d/f_vd,tor               = 0.31715
 ```
 
 `check_shear_with_torsion(v_ed_y=0, v_ed_z=0, t_ed=0.5, ...)` →
-util_torsion=0.00223.
-
-**Nota:** o valor A7.5 de `design_cases_manual.md` (torção retangular
-simples, sem passar pelo `eurocodepy`) tinha ficado sinalizado como *não
-verificado* porque essa fórmula simples ("Wtor + k_shape·f_vd") não batia
-certo com o resultado do motor. Aqui reproduz-se exatamente o α e o
-k_shape que `check_shear_with_torsion` usa internamente (lidos do
-código-fonte), não uma fórmula alternativa — por isso bate certo.
+util_torsion=0.31715.
 
 | Verificação | Resultado |
 |---|---|
-| α(h/b) à mão | ✓ PASS |
-| k_shape à mão == função | ✓ PASS |
+| W_t à mão == função | ✓ PASS |
+| k_shape à mão | ✓ PASS |
 | Utilização à mão == função | ✓ PASS |
 
 

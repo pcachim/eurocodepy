@@ -218,7 +218,7 @@ check1={r['checks']['check1']:.5f}.
 
 
 def case_shear() -> None:
-    """Esforço transverso puro — EN 1995-1-1 §6.1.7 (Eq. 6.13), τ=1.5V/(b·h)."""
+    """Esforço transverso puro — EN 1995-1-1 §6.1.7 (Eq. 6.13), τ=1.5V/(k_cr·b·h)."""
     timber, sc, ld = _make_c24()
     section = _section()
     from eurocodepy.ec5.uls.shear import check_shear_with_torsion
@@ -227,20 +227,22 @@ def case_shear() -> None:
     r = check_shear_with_torsion(v_ed_y=0.0, v_ed_z=vz_ed, t_ed=0.0,
                                  section=section, timber=timber,
                                  service_class=sc, load_duration=ld)
-    tau_hand = 1.5 * vz_ed / section.area / 1e3
+    kcr = 0.67   # §6.1.7(2): madeira maciça, b_ef = k_cr·b
+    tau_hand = 1.5 * vz_ed / (kcr * section.area) / 1e3
     util_hand = tau_hand / timber.fvd
 
-    ok1 = _check("Shear: τ = 1.5·V/(b·h)", tau_hand, 0.600, 1e-3, " MPa")
+    ok1 = _check("Shear: τ = 1.5·V/(k_cr·b·h)", tau_hand, 0.600 / kcr, 1e-3, " MPa")
     ok2 = _check("Shear: utilização (τ/f_vd)", r["util_shear"], util_hand, 1e-6)
     ok3 = _check("Shear: confere com A7.4 de design_cases_manual.md",
-                r["util_shear"], 0.24375, 5e-5)
+                r["util_shear"], 0.24375 / kcr, 5e-5)
     _md.append(f"""### Esforço transverso puro — EN 1995-1-1 §6.1.7 (Eq. 6.13)
 
-Secção retangular: τ_d = 1.5·V_Ed/A (fator 1.5 da distribuição parabólica).
+Secção retangular: τ_d = 1.5·V_Ed/(k_cr·A) (fator 1.5 da distribuição
+parabólica; b_ef = k_cr·b, k_cr = 0.67 para madeira maciça, §6.1.7(2)).
 V_z,Ed = {vz_ed} kN.
 
 ```
-τ_d = 1.5·V_Ed/A                           = {tau_hand:.4f} MPa
+τ_d = 1.5·V_Ed/(k_cr·A)                    = {tau_hand:.4f} MPa
 utilização = τ_d/f_vd                      = {util_hand:.5f}
 ```
 
@@ -251,21 +253,17 @@ util_shear={r['util_shear']:.5f}.
 |---|---|
 | τ_d à mão ≈ 0.600 MPa | {'✓ PASS' if ok1 else '✗ FAIL'} |
 | Fórmula à mão == função | {'✓ PASS' if ok2 else '✗ FAIL'} |
-| Confere com A7.4 de `design_cases_manual.md` | {'✓ PASS' if ok3 else '✗ FAIL'} |
+| Confere com A7.4 de `design_cases_manual.md` (÷ k_cr) | {'✓ PASS' if ok3 else '✗ FAIL'} |
 """)
 
 
 def case_torsion() -> None:
     """Torção pura — EN 1995-1-1 §6.1.8 (Eq. 6.14), com k_shape.
 
-    Ao contrário de A7.5 em ``design_cases_manual.md`` (onde a fórmula
-    simples de torção retangular não batia certo com o modelo combinado do
-    ``eurocodepy``), aqui a fórmula à mão usa exatamente o mesmo α(h/b) e
-    k_shape que ``check_shear_with_torsion`` usa internamente — reproduzida
-    linha a linha a partir do código-fonte, não da norma pura, porque a
-    norma deixa o coeficiente de forma da tensão de torção em barra
-    retangular como um resultado de teoria da elasticidade (Saint-Venant),
-    não uma fórmula do texto do Eurocódigo em si.
+    τ_tor,d = T/W_t, com W_t o módulo de torção (Saint-Venant) da secção
+    retangular, W_t = α·h·b², α = (1/3)(1 − 0.672·b/h + 0.3·(b/h)²) (h lado
+    maior, b lado menor), escrito
+    aqui de forma independente da função.
     """
     timber, sc, ld = _make_c24()
     section = _section()
@@ -275,28 +273,29 @@ def case_torsion() -> None:
     r = check_shear_with_torsion(v_ed_y=0.0, v_ed_z=0.0, t_ed=t_ed,
                                  section=section, timber=timber,
                                  service_class=sc, load_duration=ld)
-    ratio = section.height / section.width
-    alpha = (1.0 / 3.0) * (1.0 - 0.672 * ratio + 0.3 * ratio**2)
-    tau_tor_hand = alpha * t_ed / section.area / 1e3
+    b, h = sorted((section.width, section.height))
+    ratio = h / b
+    alpha_hand = (1.0 / 3.0) * (1.0 - 0.672 * (b / h) + 0.3 * (b / h)**2)
+    wt_hand = alpha_hand * h * b**2
+    tau_tor_hand = t_ed / wt_hand / 1e3
     k_shape = min(1.0 + 0.15 * ratio, 2.0)
     fvdt_hand = k_shape * timber.fvd
     util_hand = tau_tor_hand / fvdt_hand
 
-    alpha_hand2 = (1.0 / 3.0) * (1.0 - 0.672 * 2.0 + 0.3 * 2.0**2)  # h/b=0.20/0.10=2.0
-    ok1 = _check("Torsion: α(h/b) (Saint-Venant, seção retangular, h/b=2.0)",
-                alpha, alpha_hand2, 1e-9)
-    ok2 = _check("Torsion: k_shape (Eq. 6.15)", k_shape, min(1.0 + 0.15 * ratio, 2.0),
-                1e-9)
+    ok1 = _check("Torsion: W_t (h=0.20, b=0.10)", section.torsion_modulus, wt_hand,
+                 1e-9, " m³")
+    ok2 = _check("Torsion: k_shape (Eq. 6.15)", k_shape, 1.3, 1e-9)
     ok3 = _check("Torsion: utilização (τ_tor/(k_shape·f_vd))",
                 r["util_torsion"], util_hand, 1e-6)
     _md.append(f"""### Torção pura — EN 1995-1-1 §6.1.8 (Eq. 6.14)
 
-Secção retangular, coeficiente de forma de Saint-Venant
-α = (1/3)(1 − 0.672·h/b + 0.3·(h/b)²), h/b={ratio}. T_Ed = {t_ed} kN·m.
+Secção retangular, módulo de torção W_t = α·h·b², α = (1/3)(1 − 0.672·b/h + 0.3·(b/h)²), com h o lado
+maior e b o menor (h/b={ratio}). T_Ed = {t_ed} kN·m.
 
 ```
-α                                           = {alpha:.5f}
-τ_tor,d = α·T_Ed/A                          = {tau_tor_hand:.4f} MPa
+α                                           = {alpha_hand:.5f}
+W_t = α·h·b²                                = {wt_hand:.6e} m³
+τ_tor,d = T_Ed/W_t                          = {tau_tor_hand:.4f} MPa
 k_shape = min(1+0.15·h/b, 2.0)              = {k_shape:.4f}
 f_vd,tor = k_shape·f_vd                     = {fvdt_hand:.4f} MPa
 utilização = τ_tor,d/f_vd,tor               = {util_hand:.5f}
@@ -305,17 +304,10 @@ utilização = τ_tor,d/f_vd,tor               = {util_hand:.5f}
 `check_shear_with_torsion(v_ed_y=0, v_ed_z=0, t_ed={t_ed}, ...)` →
 util_torsion={r['util_torsion']:.5f}.
 
-**Nota:** o valor A7.5 de `design_cases_manual.md` (torção retangular
-simples, sem passar pelo `eurocodepy`) tinha ficado sinalizado como *não
-verificado* porque essa fórmula simples ("Wtor + k_shape·f_vd") não batia
-certo com o resultado do motor. Aqui reproduz-se exatamente o α e o
-k_shape que `check_shear_with_torsion` usa internamente (lidos do
-código-fonte), não uma fórmula alternativa — por isso bate certo.
-
 | Verificação | Resultado |
 |---|---|
-| α(h/b) à mão | {'✓ PASS' if ok1 else '✗ FAIL'} |
-| k_shape à mão == função | {'✓ PASS' if ok2 else '✗ FAIL'} |
+| W_t à mão == função | {'✓ PASS' if ok1 else '✗ FAIL'} |
+| k_shape à mão | {'✓ PASS' if ok2 else '✗ FAIL'} |
 | Utilização à mão == função | {'✓ PASS' if ok3 else '✗ FAIL'} |
 """)
 
@@ -325,9 +317,8 @@ def _write_md(path: str) -> None:
     header = f"""# Validação EC5 (EN 1995-1-1) — madeira
 
 Cálculo independente: as expressões do Eurocódigo 5 são escritas aqui
-diretamente a partir do texto da norma (ou, para a torção, a partir do
-código-fonte de `check_shear_with_torsion`, onde a norma remete para teoria
-da elasticidade) e comparadas com o resultado real das funções do
+diretamente a partir do texto da norma (para a torção, W_t da teoria da
+elasticidade de Saint-Venant) e comparadas com o resultado real das funções do
 `eurocodepy.ec5`. **{n_pass}/{n_total}** comparações numéricas OK.
 
 Secção-tipo: 0.10×0.20 m, madeira C24, classe de serviço 1, duração média —

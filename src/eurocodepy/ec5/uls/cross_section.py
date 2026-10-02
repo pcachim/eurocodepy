@@ -330,22 +330,29 @@ def eurocode5_section_check(inp: TimberSectionInput,
                              f"+{(sig_mz/fmdz if fmdz else 0):.4g} ≤ 1",
                        latex=r"\frac{\sigma_N}{f}+k_m\frac{\sigma_{m,y}}{f_m}+\frac{\sigma_{m,z}}{f_m}\leq 1",
                        ok=float(bchecks["check2"]) <= 1.0)
-        trace.step("U_N+M", u_nm, "—", expr="max of the checks above", ok=u_nm <= 1.0)
+        trace.step("U_{N+M}", u_nm, "—", expr="max of the checks above", ok=u_nm <= 1.0)
 
         trace.section("Shear + torsion (§6.1.7 / §6.1.8)")
-        tau_v_y = 1.5 * abs(f.vy_ed) / sec.area / 1e3
-        tau_v_z = 1.5 * abs(f.vz_ed) / sec.area / 1e3
-        ratio = sec.height / sec.width
-        alpha = (1.0 / 3.0) * (1.0 - 0.672 * ratio + 0.3 * ratio**2)
-        tau_tor = alpha * abs(f.t_ed) / sec.area / 1e3
-        k_shape = (1.2 if sec.shape is CrossSectionShape.CIRCULAR
-                   else min(1.0 + 0.15 * ratio, 2.0))
+        kcr = t.kcr
+        a_ef = kcr * sec.area
+        tau_v_y = 1.5 * abs(f.vy_ed) / a_ef / 1e3
+        tau_v_z = 1.5 * abs(f.vz_ed) / a_ef / 1e3
+        w_t = sec.torsion_modulus
+        tau_tor = abs(f.t_ed) / w_t / 1e3
+        if sec.shape is CrossSectionShape.CIRCULAR:
+            k_shape = 1.2
+        else:
+            small, large = sorted((sec.width, sec.height))
+            ratio = large / small
+            k_shape = min(1.0 + 0.15 * ratio, 2.0)
         fvdt = k_shape * t.fvd
         trace.step("τ_v,y / τ_v,z", (round(tau_v_y, 4), round(tau_v_z, 4)), "MPa",
-                   expr="1.5·V/A", latex=r"\tau_v=1.5\,V/A")
-        trace.step("τ_tor", tau_tor, "MPa", expr="α·T_Ed/A",
-                   subst=f"{alpha:.4g}·{abs(f.t_ed):.4g}/{sec.area:.4g}/1e3",
-                   note=f"α={alpha:.3g} from h/b={ratio:.3g}")
+                   expr="1.5·V/(k_cr·A)",
+                   subst=f"k_cr={kcr:.3g} (b_ef = k_cr·b)",
+                   latex=r"\tau_v=1.5\,V/(k_{cr}A)")
+        trace.step("τ_tor", tau_tor, "MPa", expr="T_Ed/W_t",
+                   subst=f"{abs(f.t_ed):.4g}/{w_t:.4g}/1e3",
+                   note="W_t: torsional section modulus")
         trace.step("k_shape", k_shape, "—", clause="EN 1995-1-1 §6.1.8 Eq. 6.15",
                    note="1.2 circular, else min(1+0.15·h/b, 2.0)")
         trace.step("f_v,d,tor", fvdt, "MPa", expr="k_shape·f_v,d",
@@ -354,15 +361,23 @@ def eurocode5_section_check(inp: TimberSectionInput,
                    expr="τ_d/f_v,d ≤ 1",
                    subst=f"max({tau_v_y:.4g}, {tau_v_z:.4g})/{t.fvd:.4g} ≤ 1",
                    latex=r"\tau_d/f_{v,d}\leq 1", ok=u_v <= 1.0)
-        trace.step("U_T", u_t, "—", clause="EN 1995-1-1 §6.1.8",
+        u_t_only = float(shear.get("checks", {}).get("check_t", u_t))
+        u_vt = float(shear.get("checks", {}).get("check_comb", u_t))
+        trace.step("U_T", u_t_only, "—", clause="EN 1995-1-1 §6.1.8",
                    expr="τ_tor,d/(k_shape·f_v,d) ≤ 1",
                    subst=f"{tau_tor:.4g}/{fvdt:.4g} ≤ 1",
-                   latex=r"\tau_{tor,d}/(k_{shape}\,f_{v,d})\leq 1", ok=u_t <= 1.0)
+                   latex=r"\tau_{tor,d}/(k_{shape}\,f_{v,d})\leq 1", ok=u_t_only <= 1.0)
+        trace.step("U_{V+T}", u_vt, "—",
+                   clause="EN 1995-1-1 §6.1.8",
+                   expr="τ_tor,d/(k_shape·f_v,d) + (τ_y,d/f_v,d)² + (τ_z,d/f_v,d)² ≤ 1",
+                   subst=f"{tau_tor:.4g}/{fvdt:.4g} + ({tau_v_y:.4g}/{t.fvd:.4g})² "
+                         f"+ ({tau_v_z:.4g}/{t.fvd:.4g})² ≤ 1",
+                   ok=u_vt <= 1.0)
         trace.section("Combined utilisation")
         trace.step("Utilisation", utilization, "—",
-                   expr="max(U_N+M, U_V, U_T) ≤ 1",
-                   subst=f"max({u_nm:.4g}, {u_v:.4g}, {u_t:.4g}) ≤ 1",
-                   latex=r"\max(U_{N+M},\,U_V,\,U_T)\leq 1", ok=utilization <= 1.0,
+                   expr="max(U_{N+M}, U_V, U_T, U_{V+T}) ≤ 1",
+                   subst=f"max({u_nm:.4g}, {u_v:.4g}, {u_t_only:.4g}, {u_vt:.4g}) ≤ 1",
+                   latex=r"\max(U_{N+M},\,U_V,\,U_T,\,U_{V+T})\leq 1", ok=utilization <= 1.0,
                    note="governing timber section check")
 
     return TimberSectionResult(

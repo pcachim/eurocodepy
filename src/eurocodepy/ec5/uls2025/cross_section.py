@@ -224,7 +224,7 @@ def eurocode5_section_check(inp: TimberSectionInput,
             trace.step(f"k_c,{axis}", k_c_i, "—", clause="EN 1995-1-1:2025 Eq. 8.40",
                        expr="1/(φ+√(φ²−λ_rel²))",
                        subst=f"1/({kd['phi']:.4g}+√({kd['phi']:.4g}²−{kd['lam_rel']:.4g}²))",
-                       latex=r"k_c=\dfrac{1}{arphi+\sqrt{arphi^2-\lambda_{rel}^2}}",
+                       latex=r"k_c=\dfrac{1}{\varphi+\sqrt{\varphi^2-\lambda_{rel}^2}}",
                        note=f"flexural buckling ({axis})")
         kmd = _k_m_detail_2025(inp.l_0m, sec, t)
         if not kmd["governs"]:
@@ -247,7 +247,7 @@ def eurocode5_section_check(inp: TimberSectionInput,
                        expr="0.5·[1+β_m·β_twist·(λ_rel,m−0.55)+λ_rel,m²]")
             trace.step("k_m (LTB)", k_m, "—", clause="EN 1995-1-1:2025 Eq. 8.46",
                        expr="1/(φ+√(φ²−λ_rel,m²))",
-                       latex=r"k_m=\dfrac{1}{arphi+\sqrt{arphi^2-\lambda_{rel,m}^2}}",
+                       latex=r"k_m=\dfrac{1}{\varphi+\sqrt{\varphi^2-\lambda_{rel,m}^2}}",
                        note="lateral-torsional stability")
 
         trace.section("Bending + axial (§8.1.8)")
@@ -271,19 +271,18 @@ def eurocode5_section_check(inp: TimberSectionInput,
         trace.step(f"Eq. ({eqs[3]})", float(bchecks.get("check4", u_nm)), "—",
                    clause="EN 1995-1-1:2025 §8.1.8 (LTB)",
                    ok=float(bchecks.get("check4", u_nm)) <= 1.0)
-        trace.step("U_N+M", u_nm, "—", expr="max of the checks above", ok=u_nm <= 1.0)
+        trace.step("U_{N+M}", u_nm, "—", expr="max of the checks above", ok=u_nm <= 1.0)
 
         trace.section("Shear + torsion (§8.1.9)")
         tau_v_y = 1.5 * abs(f.vy_ed) / sec.area / 1e3
         tau_v_z = 1.5 * abs(f.vz_ed) / sec.area / 1e3
-        ratio = sec.height / sec.width
-        alpha = (1.0 / 3.0) * (1.0 - 0.672 * ratio + 0.3 * ratio**2)
-        tau_tor = alpha * abs(f.t_ed) / sec.area / 1e3
+        w_t = sec.torsion_modulus
+        tau_tor = abs(f.t_ed) / w_t / 1e3
         trace.step("τ_v,y / τ_v,z", (round(tau_v_y, 4), round(tau_v_z, 4)), "MPa",
                    expr="1.5·|V|/A")
-        trace.step("τ_tor", tau_tor, "MPa", expr="α·|T_Ed|/A",
-                   subst=f"{alpha:.4g}·|{f.t_ed:.4g}|/{sec.area:.4g}/1e3",
-                   note=f"α={alpha:.3g} from h/b={ratio:.3g}")
+        trace.step("τ_tor", tau_tor, "MPa", expr="|T_Ed|/W_t",
+                   subst=f"|{f.t_ed:.4g}|/{w_t:.4g}/1e3",
+                   note="W_t: torsional section modulus (§8.1.12)")
         f_v_ref = (F_V_REF_K_GLULAM if t.material is TimberType.GLULAM
                    else F_V_REF_K_TIMBER)
         trace.step("k_v (size, y/z)", "from k_h·k_var·f_v,ref,k/f_vk (§8.1.9, Table 8.3)",
@@ -299,7 +298,7 @@ def eurocode5_section_check(inp: TimberSectionInput,
 
         trace.section("Combined utilisation")
         trace.step("Utilisation", utilization, "—",
-                   expr="max(U_N+M, U_V, U_T) ≤ 1",
+                   expr="max(U_{N+M}, U_V, U_T) ≤ 1",
                    subst=f"max({u_nm:.4g}, {u_v:.4g}, {u_t:.4g}) ≤ 1",
                    latex=r"\max(U_{N+M},\,U_V,\,U_T)\leq 1", ok=utilization <= 1.0,
                    note="governing timber section check")

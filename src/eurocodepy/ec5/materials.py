@@ -121,6 +121,26 @@ class Timber:
                     load_duration: LoadDuration) -> None:
         self.design_values(ServiceClass.SC3, LoadDuration.Permanent)
 
+    @property
+    def kcr(self) -> float:
+        """Crack factor for shear, ``b_ef = k_cr·b`` (EN 1995-1-1:2004 §6.1.7(2)).
+
+        Defaults to 0.67 for solid timber and glued laminated timber and 1.0
+        for the other products; assign a value to override it (e.g. a National
+        Annex value). Not used by the 2025 edition, which has no ``b_ef``
+        (the cracking effect is in ``k_v``, §8.1.11.1).
+        """
+        override = getattr(self, "_kcr", None)
+        if override is not None:
+            return override
+        if self.material in (TimberType.TIMBER, TimberType.GLULAM):
+            return 0.67
+        return 1.0
+
+    @kcr.setter
+    def kcr(self, value: float | None) -> None:
+        self._kcr = value
+
     def set_product(self, product: TimberProduct) -> None:
         """Set product type.
 

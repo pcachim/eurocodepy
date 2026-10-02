@@ -381,7 +381,7 @@ def eurocode3_section_check(inp: SectionResistanceInput,
 
     utilization = max(u_vy, u_vz, u_t, u_nm)
     _sec("Combined utilisation (§6.2.10)")
-    _t("U_N+M", u_nm, "—", ok=u_nm <= 1.0)
+    _t("U_{N+M}", u_nm, "—", ok=u_nm <= 1.0)
     _t("Utilisation", utilization, "—", clause="EN 1993-1-1 §6.2.1(7)",
        expr="max(U_Vy, U_Vz, U_T, U_N+M) ≤ 1", ok=utilization <= 1.0,
        note="governing cross-section check")

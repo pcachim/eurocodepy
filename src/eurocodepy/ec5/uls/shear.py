@@ -5,13 +5,14 @@
 
 Baseline (first-generation) Eurocode 5:
 
-* **shear** (§6.1.7, Eq. 6.13): ``τ_d = 1.5·V / A ≤ f_v,d`` for a rectangular
-  section, checked in each direction — there is **no** biaxial shear interaction
-  in the 2004 edition;
-* **torsion** (§6.1.8, Eqs. 6.14/6.15): ``τ_tor,d ≤ k_shape·f_v,d`` with
-  ``k_shape = 1.2`` (circular) or ``min(1 + 0.15·h/b ; 2.0)`` (rectangular).
-  Shear and torsion are checked **separately** (no combined interaction — that
-  is a :2025 addition).
+* **shear** (§6.1.7, Eq. 6.13): ``τ_d = 1.5·V / A_ef ≤ f_v,d`` for a rectangular
+  section, with ``A_ef = k_cr·A`` (``b_ef = k_cr·b``, §6.1.7(2); ``k_cr`` from
+  :attr:`Timber.kcr`), checked in each direction;
+* **torsion** (§6.1.8, Eqs. 6.14/6.15): ``τ_tor,d = T/W_t ≤ k_shape·f_v,d`` with
+  ``W_t`` the torsional section modulus and ``k_shape = 1.2`` (circular) or
+  ``min(1 + 0.15·h/b ; 2.0)`` (rectangular, ``h`` larger and ``b`` smaller side).
+  Combined shear + torsion (§6.1.8):
+  ``τ_tor,d/(k_shape·f_v,d) + (τ_y,d/f_v,d)² + (τ_z,d/f_v,d)² ≤ 1``.
 
 The EN 1995-1-1:2025 (§8) versions live in
 :mod:`eurocodepy.ec5.uls2025.shear`; the function names match so the two
@@ -36,26 +37,27 @@ def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa:
 
     Returns:
         dict with ``report``, ``is_ok``, ``utilization``, ``util_shear``,
-        ``util_torsion`` and the individual ``checks``.
+        ``util_torsion`` (max of torsion alone and shear + torsion) and the individual ``checks``.
 
     """
     timber.design_values(service_class=service_class, load_duration=load_duration)
     fvd = timber.fvd
 
-    # Shear stresses [MPa]: τ = 1.5·V/A for a rectangular section (§6.1.7).
-    tau_v_y = 1.5 * abs(v_ed_y) / section.area / 1e3
-    tau_v_z = 1.5 * abs(v_ed_z) / section.area / 1e3
+    # Shear stresses [MPa]: τ = 1.5·V/(k_cr·A) (§6.1.7(2), b_ef = k_cr·b).
+    kcr = timber.kcr
+    a_ef = kcr * section.area
+    tau_v_y = 1.5 * abs(v_ed_y) / a_ef / 1e3
+    tau_v_z = 1.5 * abs(v_ed_z) / a_ef / 1e3
 
-    # Torsional shear stress [MPa] (same section convention as the codebase).
-    ratio = section.height / section.width
-    alpha = (1.0 / 3.0) * (1.0 - 0.672 * ratio + 0.3 * ratio**2)
-    tau_tor = alpha * abs(t_ed) / section.area / 1e3
+    # Torsional shear stress [MPa]: τ_tor = T/W_t (§6.1.8).
+    tau_tor = abs(t_ed) / section.torsion_modulus / 1e3
 
-    # k_shape (§6.1.8, Eq. 6.15).
+    # k_shape (§6.1.8, Eq. 6.15); h = larger, b = smaller side.
     if section.shape is CrossSectionShape.CIRCULAR:
         k_shape = 1.2
     else:
-        k_shape = min(1.0 + 0.15 * ratio, 2.0)
+        small, large = sorted((section.width, section.height))
+        k_shape = min(1.0 + 0.15 * large / small, 2.0)
     fvdt = k_shape * fvd
 
     # Shear — each direction separately (no 2004 interaction), Eq. 6.13.
@@ -65,15 +67,19 @@ def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa:
     check_t = tau_tor / fvdt if fvdt > 0 else 0.0
 
     util_shear = max(float(check_vy), float(check_vz))
-    util_torsion = float(check_t)
+    # Combined shear + torsion (§6.1.8).
+    check_comb = check_t + ((tau_v_y / fvd)**2 + (tau_v_z / fvd)**2 if fvd > 0 else 0.0)
+    util_torsion = max(float(check_t), float(check_comb))
     check = util_shear <= 1.0 and util_torsion <= 1.0
 
     s = (
         f"EC5:2004 shear + torsion check\n"
-        f"  A = {section.area:.4f} m²  k_shape = {k_shape:.2f}\n"
+        f"  A = {section.area:.4f} m²  k_cr = {kcr:.2f}  "
+        f"W_t = {section.torsion_modulus:.6f} m³  k_shape = {k_shape:.2f}\n"
         f"  V_y = {v_ed_y:.2f} kN  V_z = {v_ed_z:.2f} kN  T = {t_ed:.2f} kNm\n"
         f"  τvy = {tau_v_y:.3f}  τvz = {tau_v_z:.3f}  τtor = {tau_tor:.3f} MPa\n"
         f"  fvd = {fvd:.2f}  fvdt = {fvdt:.2f} MPa\n"
+        f"  torsion = {check_t:.3f}  shear + torsion = {check_comb:.3f}\n"
         f"  shear util = {util_shear:.3f}  torsion util = {util_torsion:.3f} "
         f"({'OK' if check else 'NOT OK'})\n"
     )
@@ -85,5 +91,5 @@ def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa:
         "util_shear": util_shear,
         "util_torsion": util_torsion,
         "checks": {"check_vy": float(check_vy), "check_vz": float(check_vz),
-                   "check_t": float(check_t)},
+                   "check_t": float(check_t), "check_comb": float(check_comb)},
     }

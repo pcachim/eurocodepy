@@ -58,9 +58,13 @@ def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa:
     # otherwise *reduce* the reported utilisation instead of adding to it.
     tau_v_y: float = 1.5 * abs(v_ed_y) / section.area / 1e3  # convert to MPa
     tau_v_z: float = 1.5 * abs(v_ed_z) / section.area / 1e3  # convert to MPa
-    ratio: float = section.height / section.width
-    alpha: float = (1.0 / 3.0) * (1.0 - 0.672 * ratio + 0.3 * ratio**2)
-    tau_tor: float = alpha * abs(t_ed) / section.area / 1e3  # convert to MPa
+    # τ_tor from the torsional section modulus (§8.1.12(1)); h = larger and
+    # b = smaller side for the rectangular k_shape (Eq. 8.35).
+    ratio: float = 1.0
+    if section.shape is not CrossSectionShape.CIRCULAR:
+        small, large = sorted((section.width, section.height))
+        ratio = large / small
+    tau_tor: float = abs(t_ed) / section.torsion_modulus / 1e3  # convert to MPa
 
     # calculate strengths
 
@@ -122,7 +126,7 @@ def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa:
         f"    width = {section.width} m\n"
         f"    height = {section.height} m\n"
         f"    A = {section.area:.4f} m²\n"
-        f"    alpha = {alpha:.4f} m²\n"
+        f"    W_t = {section.torsion_modulus:.6f} m³\n"
         f"  Design forces:\n"
         f"    T_ed = {t_ed:.2f} kNm\n"
         f"    V_ed_y = {v_ed_y:.2f} kN\n"
