@@ -6,7 +6,8 @@
 This module verifies a uniform steel member subjected to an axial force and
 bi-axial bending against the two interaction equations (6.61) and (6.62),
 accounting for flexural buckling about both axes (§6.3.1), lateral-torsional
-buckling (§6.3.2) and the interaction factors ``kij`` of Annex B (Method 2).
+buckling (§6.3.2) and the interaction factors ``kij`` of Annex A (Method 1) or
+Annex B (Method 2), selected with :attr:`MemberInput.method`.
 
 Consistent units
 ----------------
@@ -204,7 +205,7 @@ def _interaction_factors(n_y: float, n_z: float,
     # kyy, kzz — common to both tables.
     if plastic:
         kyy = cmy * min(1.0 + (lam_y - 0.2) * n_y, 1.0 + 0.8 * n_y)
-        kzz = cmz * min(1.0 + (lam_z - 0.2) * n_z, 1.0 + 0.8 * n_z)
+        kzz = cmz * min(1.0 + (2.0 * lam_z - 0.6) * n_z, 1.0 + 1.4 * n_z)
     else:
         kyy = cmy * min(1.0 + 0.6 * lam_y * n_y, 1.0 + 0.6 * n_y)
         kzz = cmz * min(1.0 + 0.6 * lam_z * n_z, 1.0 + 0.6 * n_z)
@@ -225,6 +226,111 @@ def _interaction_factors(n_y: float, n_z: float,
         kzy = max(1.0 - (coef * lam_z) / denom * n_z,
                   1.0 - coef / denom * n_z)
     return kyy, kyz, kzy, kzz
+
+
+# ── Annex A interaction factors (Method 1) ─────────────────────────────────
+
+def _annex_a_factors(inp: "MemberInput", *, area_eff: float, n_ed: float,
+                     ncr_y: float, ncr_z: float, ncr_t: float,
+                     lam_y: float, lam_z: float, lam_lt: float,
+                     chi_y: float, chi_lt: float,
+                     n_rk: float, my_rk: float, mz_rk: float,
+                     my_ed: float, mz_ed: float, l_lt: float) -> tuple:
+    """Return ``(kyy, kyz, kzy, kzz, info)`` per EN 1993-1-1 Annex A (Tables A.1
+    and A.2). Forces in N, moments in N·mm, ``info`` holds the intermediate
+    coefficients. ``ncr_*`` and ``chi_y`` are the values already computed by the
+    caller."""
+    cls = inp.section_class
+    gm1 = inp.gamma_m1
+    fy = inp.fy
+    n = abs(n_ed)
+    wpl_y = inp.wpl_y if inp.wpl_y is not None else inp.w_y
+    wpl_z = inp.wpl_z if inp.wpl_z is not None else inp.w_z
+    wel_y = inp.wel_y if inp.wel_y is not None else inp.w_y
+    wel_z = inp.wel_z if inp.wel_z is not None else inp.w_z
+    chi_z = reduction_chi(lam_z, inp.curve_z)
+
+    ry, rz = n / ncr_y, n / ncr_z
+    rt = n / ncr_t
+    npl = n / (n_rk / gm1)
+    lam_max = max(lam_y, lam_z)
+    wy = min(1.5, wpl_y / wel_y) if wel_y > 0 else 1.0
+    wz = min(1.5, wpl_z / wel_z) if wel_z > 0 else 1.0
+    mu_y = (1.0 - ry) / (1.0 - chi_y * ry)
+    mu_z = (1.0 - rz) / (1.0 - chi_z * rz)
+    a_lt = max(0.0, 1.0 - inp.it / inp.iy) if inp.iy > 0 else 0.0
+
+    # Table A.2 — C_m0 for a linear moment diagram (uniform: ψ = 1).
+    cmy0 = (inp.cmy0 if inp.cmy0 is not None else
+            0.79 + 0.21 * inp.psi_y + 0.36 * (inp.psi_y - 0.33) * ry)
+    cmz0 = (inp.cmz0 if inp.cmz0 is not None else
+            0.79 + 0.21 * inp.psi_z + 0.36 * (inp.psi_z - 0.33) * rz)
+
+    # λ̄0: slenderness for LTB under uniform moment (C1 = 1, i.e. Mcr,0).
+    mcr0 = elastic_critical_moment(inp.iz, inp.it, inp.iw, l_lt, 1.0,
+                                   inp.e_mod, inp.g_mod)
+    lam0 = math.sqrt(my_rk / mcr0) if (mcr0 > 0 and math.isfinite(mcr0)) else 0.0
+    lim = (0.2 * math.sqrt(inp.c1)
+           * max((1.0 - rz) * (1.0 - rt), 0.0) ** 0.25)
+    ltb = inp.susceptible_lt and my_ed != 0.0 and lam0 > lim
+
+    mpl_y = wpl_y * fy / gm1
+    mpl_z = wpl_z * fy / gm1
+    if ltb:
+        # ε_y = My/N · A/Wel,y (Class 4: Aeff, Weff,y — w_y already is Weff).
+        w_eps = inp.w_y if cls >= 3 else wel_y
+        if n > 0 and w_eps > 0:
+            eps_y = abs(my_ed) / n * area_eff / w_eps
+            sq = math.sqrt(eps_y) * a_lt
+            cmy = cmy0 + (1.0 - cmy0) * sq / (1.0 + sq)
+        else:
+            cmy = 1.0 if cmy0 < 1.0 else cmy0
+            eps_y = math.inf
+        cmz = cmz0
+        denom = math.sqrt(max((1.0 - rz) * (1.0 - rt), 1e-12))
+        cm_lt = max(1.0, cmy**2 * a_lt / denom)
+        mr = abs(my_ed) / (cmy * chi_lt * mpl_y) if chi_lt * mpl_y > 0 else 0.0
+        mzr = abs(mz_ed) / (cmz * mpl_z) if mpl_z > 0 else 0.0
+        b_lt = (0.5 * a_lt * lam0**2 * abs(my_ed) / (chi_lt * mpl_y)
+                * abs(mz_ed) / mpl_z) if (chi_lt * mpl_y > 0 and mpl_z > 0) else 0.0
+        c_lt = 10.0 * a_lt * lam0**2 / (5.0 + lam_z**4) * mr
+        d_lt = 2.0 * a_lt * lam0 / (0.1 + lam_z**4) * mr * mzr
+        e_lt = 1.7 * a_lt * lam0 / (0.1 + lam_z**4) * mr
+    else:
+        cmy, cmz, cm_lt = cmy0, cmz0, 1.0
+        b_lt = c_lt = d_lt = e_lt = 0.0
+        eps_y = 0.0
+
+    if cls in (1, 2):
+        c_yy = max(1.0 + (wy - 1.0) * ((2.0 - 1.6 / wy * cmy**2 * lam_max
+                                        - 1.6 / wy * cmy**2 * lam_max**2) * npl
+                                       - b_lt), wel_y / wpl_y)
+        c_yz = max(1.0 + (wz - 1.0) * ((2.0 - 14.0 * cmz**2 * lam_max**2
+                                        / wz**5) * npl - c_lt),
+                   0.6 * math.sqrt(wz / wy) * wel_z / wpl_z)
+        c_zy = max(1.0 + (wy - 1.0) * ((2.0 - 14.0 * cmy**2 * lam_max**2
+                                        / wy**5) * npl - d_lt),
+                   0.6 * math.sqrt(wy / wz) * wel_y / wpl_y)
+        c_zz = max(1.0 + (wz - 1.0) * (2.0 - 1.6 / wz * cmz**2 * lam_max
+                                       - 1.6 / wz * cmz**2 * lam_max**2
+                                       - e_lt) * npl, wel_z / wpl_z)
+        kyy = cmy * cm_lt * mu_y / (1.0 - ry) / c_yy
+        kyz = cmz * mu_y / (1.0 - rz) / c_yz * 0.6 * math.sqrt(wz / wy)
+        kzy = cmy * cm_lt * mu_z / (1.0 - ry) / c_zy * 0.6 * math.sqrt(wy / wz)
+        kzz = cmz * mu_z / (1.0 - rz) / c_zz
+    else:
+        c_yy = c_yz = c_zy = c_zz = 1.0
+        kyy = cmy * cm_lt * mu_y / (1.0 - ry)
+        kyz = cmz * mu_y / (1.0 - rz)
+        kzy = cmy * cm_lt * mu_z / (1.0 - ry)
+        kzz = cmz * mu_z / (1.0 - rz)
+
+    info = {"cmy0": cmy0, "cmz0": cmz0, "cmy": cmy, "cmz": cmz, "cm_lt": cm_lt,
+            "npl": npl, "lambda0": lam0, "eps_y": eps_y, "wy": wy, "wz": wz,
+            "mu_y": mu_y, "mu_z": mu_z, "a_lt": a_lt, "b_lt": b_lt, "c_lt": c_lt,
+            "d_lt": d_lt, "e_lt": e_lt, "Cyy": c_yy, "Cyz": c_yz, "Czy": c_zy,
+            "Czz": c_zz, "ltb_effect": ltb, "Ncr_T": ncr_t}
+    return kyy, kyz, kzy, kzz, info
 
 
 # ── inputs / results ────────────────────────────────────────────────────────
@@ -277,6 +383,22 @@ class MemberInput:
     d_my: float = 0.0
     d_mz: float = 0.0
     m_cr: float | None = None         # override the computed M_cr [N·mm]
+    # interaction-factor method: "B" = Annex B (Method 2, default), "A" = Annex A
+    method: str = "B"
+    # Annex A only. End-moment ratios ψ of the linear moment diagrams (Table
+    # A.2, uniform = 1.0) and optional explicit C_m0 overrides (e.g. for
+    # transverse loading, where C_m0 depends on μ and δx).
+    psi_y: float = 1.0
+    psi_z: float = 1.0
+    cmy0: float | None = None
+    cmz0: float | None = None
+    # Annex A only. Plastic / elastic moduli [mm³] (default to w_y / w_z) and the
+    # torsional buckling length [mm] (defaults to the LTB length).
+    wpl_y: float | None = None
+    wpl_z: float | None = None
+    wel_y: float | None = None
+    wel_z: float | None = None
+    l_t: float | None = None
 
 
 @dataclass
@@ -480,11 +602,32 @@ def eurocode3_member_check(inp: MemberInput, trace=None) -> MemberCheckResult:
     # silently reduce the k-factors it feeds).
     n_y = abs(inp.n_ed) / n_b_rd_y if n_b_rd_y > 0 else 0.0
     n_z = abs(inp.n_ed) / n_b_rd_z if n_b_rd_z > 0 else 0.0
-    kyy, kyz, kzy, kzz = _interaction_factors(
-        n_y, n_z, lam_y, lam_z, inp.cmy, inp.cmz, inp.cm_lt,
-        inp.section_class, inp.susceptible_lt)
+    method = (inp.method or "B").upper()
+    annex_a = None
+    if method == "A":
+        l_t = inp.l_t or l_lt
+        iy_, iz_ = inp.iy, inp.iz
+        i0sq = (iy_ + iz_) / area if area > 0 else 0.0
+        ncr_t = ((inp.g_mod * inp.it + math.pi**2 * inp.e_mod * inp.iw / l_t**2)
+                 / i0sq) if (i0sq > 0 and l_t > 0) else math.inf
+        kyy, kyz, kzy, kzz, annex_a = _annex_a_factors(
+            inp, area_eff=area_eff, n_ed=inp.n_ed * 1e3, ncr_y=ncr_y, ncr_z=ncr_z,
+            ncr_t=ncr_t, lam_y=lam_y, lam_z=lam_z, lam_lt=lam_lt,
+            chi_y=chi_y, chi_lt=chi_lt, n_rk=n_rk, my_rk=my_rk, mz_rk=mz_rk,
+            my_ed=(inp.my_ed + inp.d_my) * 1e6,
+            mz_ed=(inp.mz_ed + inp.d_mz) * 1e6, l_lt=l_lt)
+    else:
+        kyy, kyz, kzy, kzz = _interaction_factors(
+            n_y, n_z, lam_y, lam_z, inp.cmy, inp.cmz, inp.cm_lt,
+            inp.section_class, inp.susceptible_lt)
 
     _sec("Interaction factors (§6.3.3)")
+    _t("method", 1.0 if method == "A" else 2.0, "—",
+       note="Annex A (Method 1)" if method == "A" else "Annex B (Method 2)")
+    if annex_a is not None:
+        for _k, _v in annex_a.items():
+            if isinstance(_v, float) and math.isfinite(_v):
+                _t(_k, _v, "—", clause="EN 1993-1-1 Annex A")
     _t("k_yy", kyy, "—", clause="EN 1993-1-1 Annex A/B")
     _t("k_yz", kyz, "—")
     _t("k_zy", kzy, "—")
@@ -535,7 +678,7 @@ def eurocode3_member_check(inp: MemberInput, trace=None) -> MemberCheckResult:
         lambda_y=lam_y, lambda_z=lam_z, lambda_lt=lam_lt,
         m_cr=m_cr / 1e6 if math.isfinite(m_cr) else math.inf,
         kyy=kyy, kyz=kyz, kzy=kzy, kzz=kzz,
-        details={"n_y": n_y, "n_z": n_z,
+        details={"method": method, "annex_a": annex_a, "n_y": n_y, "n_z": n_z,
                  "Nb_Rd_y": n_b_rd_y, "Nb_Rd_z": n_b_rd_z,
                  "My_b_Rd": my_b_rd, "Mz_Rd": mz_rd})
 

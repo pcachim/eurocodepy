@@ -126,3 +126,66 @@ def test_member_check_profile_runs_for_a_catalogue_ipe():
     assert isinstance(r, mb.MemberCheckResult)
     assert 0.0 < r.utilization < 2.0
     assert math.isfinite(r.m_cr)
+
+
+# ── regression: Annex B Table B.1 kzz (class 1/2) vs EurocodeApplied example ─
+
+def test_annex_b_kzz_class_1_2_uses_2lambda_minus_0_6():
+    """IPE300 S235, L=5 m, N=-30 kN, My=50, Mz=10 kNm, uniform moments
+    (Cm=1): reference kzz=1.107, kyz=0.664, Eq. 6.61=0.802, Eq. 6.62=0.995."""
+    inp = mb.MemberInput(
+        n_ed=30.0, my_ed=50.0, mz_ed=10.0, area=5381.0, area_eff=5381.0,
+        w_y=628356.0, w_z=125219.0, iy=83561092.0, iz=6037784.0, it=197500.0,
+        iw=124260000000.0, lcr_y=5000.0, lcr_z=5000.0, l_lt=5000.0,
+        curve_y="a", curve_z="b", curve_lt="b", c1=1.0, cmy=1.0, cmz=1.0,
+        cm_lt=1.0, fy=235.0, e_mod=210000.0, g_mod=80769.0, gamma_m1=1.0,
+        section_class=1, susceptible_lt=True, rolled_lt=True, d_my=0.0)
+    r = mb.eurocode3_member_check(inp)
+    assert r.kzz == pytest.approx(1.107, abs=1e-3)
+    assert r.kyz == pytest.approx(0.664, abs=1e-3)
+    assert r.util_6_61 == pytest.approx(0.802, abs=2e-3)
+    assert r.util_6_62 == pytest.approx(0.995, abs=2e-3)
+
+
+# ── Annex A (Method 1) against two EurocodeApplied worked examples ──────────
+
+_CASE_IPE300 = dict(
+    n_ed=30.0, my_ed=50.0, mz_ed=10.0, area=5381.0, w_y=628356.0, w_z=125219.0,
+    wpl_y=628356.0, wpl_z=125219.0, wel_y=557074.0, wel_z=80504.0,
+    iy=83561092.0, iz=6037784.0, it=197500.0, iw=124260000000.0,
+    lcr_y=5000.0, lcr_z=5000.0, l_lt=5000.0, curve_y="a", curve_z="b",
+    curve_lt="b", fy=235.0, g_mod=80769.0, section_class=1)
+_CASE_HEA180 = dict(
+    n_ed=30.0, my_ed=50.0, mz_ed=0.0, area=4525.0, w_y=293601.0, w_z=102734.0,
+    wpl_y=324853.0, wpl_z=156495.0, wel_y=293601.0, wel_z=102734.0,
+    iy=25102868.0, iz=9246053.0, it=146600.0, iw=59014000000.0,
+    lcr_y=6000.0, lcr_z=6000.0, l_lt=6000.0, curve_y="b", curve_z="c",
+    curve_lt="b", fy=420.0, g_mod=80769.0, section_class=3)
+
+
+def test_annex_a_class_1_ipe300():
+    r = mb.eurocode3_member_check(mb.MemberInput(**_CASE_IPE300, method="A"))
+    a = r.details["annex_a"]
+    for key, ref in dict(b_lt=0.120, c_lt=0.619, d_lt=0.064, e_lt=0.163,
+                         Cyy=0.973, Cyz=0.657, Czy=0.939, Czz=0.968,
+                         cm_lt=1.039, mu_z=0.958).items():
+        assert a[key] == pytest.approx(ref, abs=1e-3), key
+    assert (r.kyy, r.kyz, r.kzy, r.kzz) == pytest.approx(
+        (1.073, 1.136, 0.554, 1.068), abs=1e-3)
+    assert r.util_6_61 == pytest.approx(0.999, abs=1e-3)
+    assert r.util_6_62 == pytest.approx(0.743, abs=1e-3)
+
+
+def test_annex_a_class_3_hea180():
+    r = mb.eurocode3_member_check(mb.MemberInput(**_CASE_HEA180, method="A"))
+    assert (r.kyy, r.kyz, r.kzy, r.kzz) == pytest.approx(
+        (1.045, 1.063, 1.008, 1.026), abs=1e-3)
+    assert r.util_6_61 == pytest.approx(0.741, abs=1e-3)
+    assert r.util_6_62 == pytest.approx(0.758, abs=1e-3)
+
+
+def test_annex_b_class_3_hea180():
+    r = mb.eurocode3_member_check(mb.MemberInput(
+        **_CASE_HEA180, cmy=1.0, cmz=1.0, cm_lt=1.0, method="B"))
+    assert r.util_6_61 == pytest.approx(0.723, abs=1e-3)
+    assert r.util_6_62 == pytest.approx(0.749, abs=1e-3)
