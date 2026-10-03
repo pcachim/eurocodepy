@@ -65,7 +65,7 @@ def test_trace_invariant_and_structure():
     d = rep.to_dict()
     symbols = [st["symbol"] for s in d["sections"] for st in s["steps"]]
     assert "T_Ed" in symbols and "T_Rd,max" in symbols
-    assert "Asw,tor/s" in symbols and "Asl,tor" in symbols
+    assert "A_sw,tor /s" in symbols and "A_sl,tor" in symbols
 
 
 if __name__ == "__main__":

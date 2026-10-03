@@ -129,7 +129,7 @@ def test_section_report_structure():
     assert any("Combined" in t for t in titles)
     steps = {st.symbol: st for s in rep.sections for st in s.steps}
     assert steps["Utilisation"].ok in (True, False)
-    assert steps["Vpl,Rd,y"].clause and steps["Vpl,Rd,y"].subst
+    assert steps["V_pl,Rd,y"].clause and steps["V_pl,Rd,y"].subst
 
 
 # ── EC2 §6.1 flexure + axial (rectangular RC) ───────────────────────────────
@@ -157,7 +157,7 @@ def test_ec2_flexure_report_structure():
     calc_asl_nm(**RC_CASES[1], trace=rep)
     steps = {st.symbol: st for s in rep.sections for st in s.steps}
     assert steps["μ"].clause and steps["μ"].latex
-    assert "f_cd" in steps and "As1 (tension)" in steps
+    assert "f_cd" in steps and "A_s1 (tension)" in steps
 
 
 # ── EC5 timber cross-section / member ───────────────────────────────────────
@@ -246,7 +246,7 @@ def test_ec2_shear_report_structure():
     assert any("Concrete shear" in t for t in titles)
     assert any("truss" in t.lower() for t in titles)
     steps = {st.symbol: st for s in rep.sections for st in s.steps}
-    assert steps["Asw/s"].clause and steps["V_Rd,max"].clause
+    assert steps["A_sw /s"].clause and steps["V_Rd,max"].clause
 
 
 # ── EC2 §6.4 punching (composite) ───────────────────────────────────────────
