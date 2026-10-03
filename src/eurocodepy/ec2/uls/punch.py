@@ -10,7 +10,7 @@ internal columns, the recommended values 1.4 / 1.5 for edge / corner) and the
 concrete resistance is ``vRd,c = CRd,c·k·(100·ρl·fck)^(1/3) ≥ vmin`` with
 ``CRd,c = 0.18/γc`` (§6.4.4).
 
-The function names match the prEN 1992-1-1:2023 module
+The function names match the EN 1992-1-1:2023 module
 (:mod:`eurocodepy.ec2.uls2023.punch`) so the two editions are drop-in
 swappable, but the signatures differ (2004 uses ``γc``; there is no ``d_dg`` /
 ``γv`` / ``η_sys``).

@@ -1,5 +1,5 @@
 """Column design comes in two EC2 editions with the same function names:
-``ec2.uls`` is EN 1992-1-1:2004 and ``ec2.uls2023`` is prEN 1992-1-1:2023
+``ec2.uls`` is EN 1992-1-1:2004 and ``ec2.uls2023`` is EN 1992-1-1:2023
 (mirrors the pattern already used for punching shear, see
 ``test_ec2_punch_editions.py``).
 

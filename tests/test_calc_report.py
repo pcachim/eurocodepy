@@ -286,7 +286,7 @@ def test_ec2_punching_2023_vrd_max_is_eta_sys_vrdc():
 def test_ec2_punching_report_structure():
     inp = PunchInput(d=0.21, bx=0.20, by=0.20, fck=30.0, fyk=500.0,
                      edition="2023")
-    rep = CalcReport(title="Punching — prEN 2023")
+    rep = CalcReport(title="Punching — EN 2023")
     eurocode2_punching_check(inp, n_ed=700.0, rho_l=0.006, trace=rep)
     titles = [s.title for s in rep.sections]
     assert any("Control perimeters" in t for t in titles)

@@ -1,6 +1,6 @@
 """Phase 4 (dev/GRILLAGE_DESIGN.md sec 6.4): ec2.uls2023.shear_torsion parity.
 
-The prEN 1992-1-1:2023 strut-crushing coefficients for shear+torsion have
+The EN 1992-1-1:2023 strut-crushing coefficients for shear+torsion have
 not been confirmed against the approved text (see the module's own
 docstring), so uls2023.shear_torsion is currently a pure re-export of the
 2004 module -- these tests pin that down explicitly so a future, silent

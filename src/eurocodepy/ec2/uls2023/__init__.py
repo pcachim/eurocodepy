@@ -1,7 +1,7 @@
 # Copyright (c) 2025 Paulo Cachim
 # SPDX-License-Identifier: MIT
 
-"""Eurocode 2 ULS — **prEN 1992-1-1:2023** flavour.
+"""Eurocode 2 ULS — **EN 1992-1-1:2023** flavour.
 
 This package mirrors :mod:`eurocodepy.ec2.uls`, exposing the same names, and
 overrides only the calculations for which the 2023 generation of EC2 is already

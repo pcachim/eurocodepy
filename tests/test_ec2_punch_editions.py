@@ -1,5 +1,5 @@
 """Punching shear comes in two EC2 editions with the same function names:
-``ec2.uls`` is EN 1992-1-1:2004 and ``ec2.uls2023`` is prEN 1992-1-1:2023.
+``ec2.uls`` is EN 1992-1-1:2004 and ``ec2.uls2023`` is EN 1992-1-1:2023.
 ``uls2023`` mirrors ``uls`` and overrides only the punching functions.
 
 Run on Python >= 3.11 with eurocodepy importable.

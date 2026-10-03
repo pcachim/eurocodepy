@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 # Licensed under the MIT License. See the project's LICENSE file for details.
 
-"""Punching shear — **prEN 1992-1-1:2023** (the new EC2 generation).
+"""Punching shear — **EN 1992-1-1:2023** (the new EC2 generation).
 
 Control perimeter at 0.5·d_v, the ``k_pb`` shrinkage/size factor, the aggregate
 parameter ``d_dg`` and the partial factor ``γ_v``. The EC2:2004 counterpart,

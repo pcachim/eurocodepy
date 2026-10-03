@@ -201,7 +201,7 @@ def get_edition_params(eurocode: str, section: str, edition: str | None = None) 
 
     Some edition-specific design parameters are not material properties (so
     they do not belong under ``Materials``) -- e.g. the punching-shear
-    ``dmax``/``eta_sys`` factors of prEN 1992-1-1:2023 SS8.4. These live at
+    ``dmax``/``eta_sys`` factors of EN 1992-1-1:2023 SS8.4. These live at
     ``db["Editions"][eurocode][edition][section]`` (a sibling of
     ``"overrides"``), and this accessor resolves them the same way as
     :func:`get_edition_data`: same default-edition lookup, and an empty dict

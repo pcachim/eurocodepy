@@ -1,7 +1,7 @@
 # Copyright (c) 2026 Paulo Cachim
 # SPDX-License-Identifier: MIT
 
-"""Combined shear + torsion design -- **prEN 1992-1-1:2023** (override of
+"""Combined shear + torsion design -- **EN 1992-1-1:2023** (override of
 :mod:`eurocodepy.ec2.uls.shear_torsion`).
 
 Mirrors :mod:`eurocodepy.ec2.uls.shear_torsion` by ``import *`` and overrides
@@ -16,12 +16,12 @@ Every symbol not listed above -- ``ShearTorsionInput``, ``ShearTorsionResult``,
 propagate here automatically as long as this list stays empty for them.
 
 **Why nothing is overridden yet**: the second-generation Eurocode 2
-(prEN 1992-1-1:2023) is known to revise, for shear and torsion, the strut
+(EN 1992-1-1:2023) is known to revise, for shear and torsion, the strut
 crushing coefficients (a ``nu1``-equivalent reduction factor for cracked
 struts) and possibly the permitted ``cotg_theta`` range -- see
 ``dev/GRILLAGE_DESIGN.md`` §2.6 in the xdfem2d repository for the analysis.
 At the time this module was written the exact coefficients of the approved
-prEN text had not been confirmed against a reliable primary source, so
+EN text had not been confirmed against a reliable primary source, so
 guessing plausible-looking numbers here would be worse than shipping the
 (conservative, EC2:2004) values under the ``2023`` name -- same reliability
 caveat already documented in ``eurocodepy.ec2.uls2023.column`` for the
@@ -31,7 +31,7 @@ structurally between editions (see §2.6), so no override is anticipated
 there even once the strut coefficients are confirmed.
 
 **Do not add an override below without a specific clause reference to the
-confirmed, approved prEN 1992-1-1:2023 text** -- update the list above in
+confirmed, approved EN 1992-1-1:2023 text** -- update the list above in
 the same change, so the next reader knows exactly what changed and why.
 """
 

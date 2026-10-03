@@ -1,7 +1,7 @@
 # Copyright (c) 2026 Paulo Cachim
 # SPDX-License-Identifier: MIT
 
-"""EN 1992-1-1 §6.4 / prEN 1992-1-1:2023 §8.4 punching verification — composite.
+"""EN 1992-1-1 §6.4 / EN 1992-1-1:2023 §8.4 punching verification — composite.
 
 The scalar formulae live in the edition punch modules
 (:mod:`eurocodepy.ec2.uls.punch` for :2004, :mod:`eurocodepy.ec2.uls2023.punch`
@@ -26,7 +26,7 @@ Units: lengths in **m**, strengths in **MPa**, forces in **kN**, moments in
 ``Editions.ec2.2023.punch_params`` in eurocodes.json -- instead of being
 hard-coded on this dataclass. See ``dev/dbase_versioning.md`` phases 3-4 in
 the xdfem2d repository: this replaces the previous approach, where these two
-prEN 1992-1-1:2023 SS8.4 values were baked in as Python literal defaults, with
+EN 1992-1-1:2023 SS8.4 values were baked in as Python literal defaults, with
 a single versioned source of truth that ``get_edition_data``/
 ``EurocodeMaterials`` consumers can also read. The resolved defaults are
 unchanged (20.0 mm / 1.5) -- only where they come from has moved.
@@ -108,7 +108,7 @@ def eurocode2_punching_check(inp: PunchInput, n_ed: float,
                              m_ed_x: float = 0.0, m_ed_y: float = 0.0,
                              rho_l: float = 0.005, beta_min: float = 1.0,
                              trace=None) -> PunchResult:
-    """Punching check of one column (EN 1992-1-1 §6.4 / prEN :2023 §8.4).
+    """Punching check of one column (EN 1992-1-1 §6.4 / EN :2023 §8.4).
 
     Args:
         inp: The column / slab data (and the EC2 edition).
@@ -163,7 +163,7 @@ def eurocode2_punching_check(inp: PunchInput, n_ed: float,
     _t("M_Ed,y", medy, "kNm")
     _t("d", inp.d, "m")
     _t("ρ_l", rho_l, "—")
-    _t("Edition", "prEN 1992-1-1:2023" if is_2023 else "EN 1992-1-1:2004", "—")
+    _t("Edition", "EN 1992-1-1:2023" if is_2023 else "EN 1992-1-1:2004", "—")
     _sec("Control perimeters (§6.4.2)")
     _t("u0", u0 / _MM, "m", clause="EN 1992-1-1 §6.4.2",
        note="at the loaded-area face")
@@ -189,12 +189,12 @@ def eurocode2_punching_check(inp: PunchInput, n_ed: float,
         needs0 = v_ed > max(v_rdc, v_rd_min)
         u_out_eff = (beta_eff * ned * 1e3 / (v_rdc * dv) / _MM
                      if (needs0 and v_rdc > 0) else None)
-        _sec("Resistance (prEN 1992-1-1:2023 §8.4)")
-        _t("v_Rd,c", v_rdc, "MPa", clause="prEN 1992-1-1:2023 §8.4.3",
+        _sec("Resistance (EN 1992-1-1:2023 §8.4)")
+        _t("v_Rd,c", v_rdc, "MPa", clause="EN 1992-1-1:2023 §8.4.3",
            subst=f"d_max={inp.dmax:g}, ρ_l={rho_l:.4g}, f_ck={inp.fck:g}, d={dv:.4g} mm")
-        _t("v_Rd,min", v_rd_min, "MPa", clause="prEN 1992-1-1:2023 §8.4.3",
+        _t("v_Rd,min", v_rd_min, "MPa", clause="EN 1992-1-1:2023 §8.4.3",
            subst=f"f_ck={inp.fck:g}, f_yd={fyd:.4g}, d={dv:.4g} mm, d_max={inp.dmax:g}")
-        _t("v_Rd,max", v_rd_max, "MPa", clause="prEN 1992-1-1:2023 §8.4.4",
+        _t("v_Rd,max", v_rd_max, "MPa", clause="EN 1992-1-1:2023 §8.4.4",
            expr="v_Rd,max = η_sys·v_Rd,c",
            subst=f"{inp.eta_sys:g}·{v_rdc:.4g}", note=f"η_sys = {inp.eta_sys:g}")
     else:
@@ -222,14 +222,14 @@ def eurocode2_punching_check(inp: PunchInput, n_ed: float,
 
     _sec("Verdict")
     _t("Utilisation", util, "—",
-       clause=("prEN 1992-1-1:2023 §8.4" if is_2023 else "EN 1992-1-1 §6.4"),
+       clause=("EN 1992-1-1:2023 §8.4" if is_2023 else "EN 1992-1-1 §6.4"),
        expr="v_Ed / max(v_Rd,c, v_Rd,min)",
        subst=f"{v_ed:.4g}/max({v_rdc:.4g}, {v_rd_min:.4g})", ok=not needs)
     _t("Needs reinforcement", needs, "—", ok=not needs)
     _t("Crushing", crushing, "—", ok=not crushing,
        note="v_Ed(max) > v_Rd,max")
     if u_out_eff is not None:
-        _t("u_out,ef", u_out_eff, "m", clause="prEN 1992-1-1:2023 §8.4.5",
+        _t("u_out,ef", u_out_eff, "m", clause="EN 1992-1-1:2023 §8.4.5",
            expr="u_out,ef = β·V_Ed/(v_Rd,c·d)",
            subst=f"{beta_eff:.3g}·{ned:.4g}·1e3/({v_rdc:.4g}·{dv:.4g})/{_MM:g}",
            note="beyond this perimeter no punching reinforcement is needed")

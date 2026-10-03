@@ -4,7 +4,7 @@
 """Eurocode 2 ULS (Ultimate Limit State) design — **EN 1992-1-1:2004**.
 
 Bending, shear, punching and shell reinforcement design according to the 2004
-generation of EC2. The prEN 1992-1-1:2023 punching model (same function names,
+generation of EC2. The EN 1992-1-1:2023 punching model (same function names,
 different formulas) lives in :mod:`eurocodepy.ec2.uls2023`.
 """
 from eurocodepy import dbase as dbase
