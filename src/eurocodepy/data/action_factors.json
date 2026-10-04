@@ -1,0 +1,20 @@
+{
+  "source": "EN 1990:2002+A1 Tables A1.1 and A1.2(B); EN 1991-1-3 and EN 1991-1-6 for the snow and construction rows. Recommended values; a National Annex may prescribe others.",
+  "units": "dimensionless",
+  "order": ["gamma_fav", "gamma_unf", "psi0", "psi1", "psi2"],
+  "Actions": {
+    "permanent":   {"gamma_fav": 1.00, "gamma_unf": 1.35, "psi0": 1.00, "psi1": 1.00, "psi2": 1.00, "note": "psi is not defined for permanent actions; 1.0 keeps them whole in every combination"},
+    "live":        {"gamma_fav": 0.00, "gamma_unf": 1.50, "psi0": 0.70, "psi1": 0.50, "psi2": 0.30, "note": "category A/B values; per-category values come from Loads/Live/Locale in eurocodes.json"},
+    "wind":        {"gamma_fav": 0.00, "gamma_unf": 1.50, "psi0": 0.60, "psi1": 0.20, "psi2": 0.00},
+    "temperature": {"gamma_fav": 0.00, "gamma_unf": 1.50, "psi0": 0.60, "psi1": 0.50, "psi2": 0.00},
+    "snow": {
+      "<=1000": {"gamma_fav": 0.00, "gamma_unf": 1.50, "psi0": 0.50, "psi1": 0.20, "psi2": 0.00},
+      ">1000":  {"gamma_fav": 0.00, "gamma_unf": 1.50, "psi0": 0.70, "psi1": 0.50, "psi2": 0.20}
+    },
+    "construction": {"gamma_fav": 0.00, "gamma_unf": 1.50, "psi0": 1.00, "psi1": 0.90, "psi2": 0.00, "note": "EN 1991-1-6, transient design situation"},
+    "earthquake":   {"gamma_fav": 0.00, "gamma_unf": 1.00, "psi0": 0.00, "psi1": 0.00, "psi2": 0.00, "note": "accidental design situation: gamma = 1.0, no psi"},
+    "accidental":   {"gamma_fav": 0.00, "gamma_unf": 1.00, "psi0": 0.00, "psi1": 0.00, "psi2": 0.00},
+    "fire":         {"gamma_fav": 0.00, "gamma_unf": 1.00, "psi0": 0.00, "psi1": 0.00, "psi2": 0.00},
+    "other":        {"gamma_fav": 0.00, "gamma_unf": 1.50, "psi0": 0.70, "psi1": 0.50, "psi2": 0.30, "note": "unclassified: treated as a generic variable action"}
+  }
+}

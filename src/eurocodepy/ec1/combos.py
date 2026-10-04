@@ -130,9 +130,9 @@ class Load:
         load_type (LoadType): Type of the load.
         gamma_fav (float): Favorable load factor.
         gamma_unf (float): Unfavorable load factor.
-        psi0 (float): Coefficient for quasi-permanent loads.
-        psi1 (float): Coefficient for frequent loads.
-        psi2 (float): Coefficient for characteristic loads.
+        psi0 (float): Combination value coefficient (EN 1990 psi_0).
+        psi1 (float): Frequent value coefficient (psi_1).
+        psi2 (float): Quasi-permanent value coefficient (psi_2).
         incombo (bool): Indicates if the load is included in combos (default is True).
 
     """

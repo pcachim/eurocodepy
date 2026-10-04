@@ -21,6 +21,12 @@ from .combos import (
     LoadCombination as LoadCombination,
     LoadCombinations as LoadCombinations,
 )
+from .factors import (
+    ActionFactors as ActionFactors,
+    LiveLoadValues as LiveLoadValues,
+    action_factors as action_factors,
+    live_load_values as live_load_values,
+)
 from .forces import BaseForce as BaseForce
 from .forces import FrameForce as FrameForce
 from .forces import PlaneForce as PlaneForce
@@ -28,6 +34,10 @@ from .forces import ShellForce as ShellForce
 from .forces import SlabForce as SlabForce
 
 __all__ = [
+    "ActionFactors",
+    "action_factors",
+    "LiveLoadValues",
+    "live_load_values",
     "utils",
     "combos",
     "forces",
