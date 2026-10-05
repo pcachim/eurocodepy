@@ -78,7 +78,7 @@ class CrossSection:
 
     @property
     def torsional_inertia(self) -> float:
-        """Calculate the polar moment of inertia."""
+        """Calculate the St-Venant torsional constant ``I_t``."""
         msg = "Subclasses must implement this method."
         raise NotImplementedError(msg)
 
@@ -98,6 +98,9 @@ class CrossSection:
 class RectangularCrossSection(CrossSection):
     """Initialize a rectangular cross-section.
 
+    Axes follow EN 1995-1-1: ``y`` is the strong axis (``I_y = b·h³/12``) and
+    ``z`` the weak axis (``I_z = h·b³/12``).
+
     Args:
         width: Width of the rectangle (horizontal dimension)
         height: Height of the rectangle (vertical dimension)
@@ -116,32 +119,32 @@ class RectangularCrossSection(CrossSection):
 
     @property
     def inertia_z(self) -> float:
-        """Calculate the second moment of inertia about the z-axis (horizontal)."""
-        return (self.width * self.height**3) / 12
-
-    @property
-    def inertia_y(self) -> float:
-        """Calculate the second moment of inertia about the y-axis (vertical)."""
+        """Calculate the second moment of inertia about the z-axis (weak axis)."""
         return (self.height * self.width**3) / 12
 
     @property
+    def inertia_y(self) -> float:
+        """Calculate the second moment of inertia about the y-axis (strong axis)."""
+        return (self.width * self.height**3) / 12
+
+    @property
     def bend_mod_y(self) -> float:
-        """Calculate the bending modulus about the z-axis (horizontal)."""
+        """Calculate the bending modulus about the y-axis (strong axis)."""
         return (self.width * self.height**2) / 6
 
     @property
     def bend_mod_z(self) -> float:
-        """Calculate the bending modulus about the y-axis (vertical)."""
+        """Calculate the bending modulus about the z-axis (weak axis)."""
         return (self.height * self.width**2) / 6
 
     @property
     def radius_y(self) -> float:
-        """Calculate the radius of gyration about the y-axis (vertical)."""
+        """Calculate the radius of gyration about the y-axis (strong axis)."""
         return self.height / np.sqrt(12)
 
     @property
     def radius_z(self) -> float:
-        """Calculate the radius of gyration about the z-axis (horizontal)."""
+        """Calculate the radius of gyration about the z-axis (weak axis)."""
         return self.width / np.sqrt(12)
 
     @property
@@ -177,7 +180,7 @@ class RectangularCrossSection(CrossSection):
         return self.inertia_z + self.inertia_y
 
     def __repr__(self) -> str:  # noqa: D105
-        return f"RectangularSection(width={self.width}, height={self.height})"
+        return f"RectangularCrossSection(width={self.width}, height={self.height})"
 
 
 class CircularCrossSection(CrossSection):
@@ -221,12 +224,12 @@ class CircularCrossSection(CrossSection):
     @property
     def radius_z(self) -> float:
         """Calculate the radius of gyration about the z-axis."""
-        return self.radius / np.sqrt(2)
+        return self.radius / 2
 
     @property
     def radius_y(self) -> float:
         """Calculate the radius of gyration about the y-axis."""
-        return self.radius / np.sqrt(2)
+        return self.radius / 2
 
     @property
     def torsional_inertia(self) -> float:
@@ -244,4 +247,4 @@ class CircularCrossSection(CrossSection):
         return (np.pi * (self.radius ** 4)) / 2
 
     def __repr__(self) -> str:  # noqa: D105
-        return f"CircularSection(diameter={self.diameter})"
+        return f"CircularCrossSection(diameter={self.diameter})"

@@ -247,7 +247,7 @@ wheels = [
 
 [[package]]
 name = "eurocodepy"
-version = "2027.0.6"
+version = "2027.0.7"
 source = { editable = "." }
 dependencies = [
     { name = "marimo" },
