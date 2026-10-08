@@ -36,5 +36,28 @@ from eurocodepy.ec5.uls2025.cross_section import (
 from eurocodepy.ec5.uls2025.shear import (
     check_shear_with_torsion as check_shear_with_torsion,
 )
+from eurocodepy.ec5.uls2025 import special_beams as special_beams
+from eurocodepy.ec5.uls2025 import fasteners as fasteners
+from eurocodepy.ec5.uls2025.special_beams import (
+    DowelReinforcement as DowelReinforcement,
+    PlaneReinforcement as PlaneReinforcement,
+    ReinforcementResult as ReinforcementResult,
+    apex_volume as apex_volume,
+    bond_design_strength as bond_design_strength,
+    connection_safety as connection_safety,
+    check_dowel_reinforcement as check_dowel_reinforcement,
+    check_dowel_spacing as check_dowel_spacing,
+    check_plane_reinforcement as check_plane_reinforcement,
+    reinforcement_layout as reinforcement_layout,
+    calc_k_m_alpha as calc_k_m_alpha,
+    calc_k_v as calc_k_v,
+    calc_k_vol as calc_k_vol,
+    check_apex_zone as check_apex_zone,
+    check_tapered_edge as check_tapered_edge,
+)
 
-__all__ = list(_uls_all)
+__all__ = [*_uls_all, "DowelReinforcement", "PlaneReinforcement", "ReinforcementResult",
+           "check_dowel_reinforcement",
+           "bond_design_strength", "calc_k_v", "check_dowel_spacing",
+           "connection_safety", "check_plane_reinforcement",
+           "reinforcement_layout"]

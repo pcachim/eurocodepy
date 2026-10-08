@@ -1,17 +1,44 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
 from enum import Enum
+from functools import lru_cache
 
 from eurocodepy import dbase
 from eurocodepy._compat import StrEnum
 from eurocodepy.ec1 import LoadCombination, LoadCombinations, CombinationType, LoadType
 
 RiskClass = Enum("RiskClasses", dbase.TimberMaterial["RiskClasses"])
-ServiceClass = Enum("ServiceClass", dbase.TimberMaterial["ServiceClasses"])
+
+
+def _all_service_classes() -> list:
+    """Service classes of every edition (the base list plus those that an
+    edition adds, e.g. SC4 in EN 1995-1-1:2025), in order, without repeats."""
+    out = list(dbase.TimberMaterial["ServiceClasses"])
+    for ed in dbase.db.get("Editions", {}).get("ec5", {}).values():
+        for sc in ed.get("overrides", {}).get("Timber.ServiceClasses", []):
+            if sc not in out:
+                out.append(sc)
+    return out
+
+
+ServiceClass = Enum("ServiceClass", _all_service_classes())
 LoadDuration = Enum("LoadDuration", dbase.TimberMaterial["LoadDuration"])
 TimberForcesType = Enum("TimberForcesType",
                 names=("Bending", "Compression", "Tension", "Shear", "Torsion"))
 TimberClasses = Enum("TimberClass", list(dbase.TimberGrades.keys()))
+
+
+@lru_cache(maxsize=None)
+def _edition_timber_db(edition: str) -> dict:
+    """The ``Timber`` section of the database resolved for *edition* (cached;
+    treat as read-only)."""
+    return dbase.get_edition_data("ec5", edition)["Timber"]
+
+
+def _timber_db(edition: str | None) -> dict:
+    """The ``Timber`` database section of *edition*; ``None`` is the module-level
+    default edition (EN 1995-1-1:2004), exactly as before editions existed."""
+    return dbase.TimberMaterial if edition is None else _edition_timber_db(edition)
 
 
 class TimberType(StrEnum):
@@ -62,15 +89,22 @@ class Timber:
     Args:
         type_label (str, optional): Timber grade label (e.g., 'C24').
         Defaults to 'C24'.
+        edition (str, optional): Edition of EN 1995-1-1 whose parameters
+        (``k_mod``, ``k_def``, ``k_h``, ``γ_M``, service classes) are used,
+        e.g. ``"2025"``. ``None`` (default) is the 2004 edition.
 
     Raises:
         ValueError: If the type_label is not found in the database.
 
     """
 
-    def __init__(self, type_label: str = "C24") -> None:  # noqa: D107
+    def __init__(self, type_label: str = "C24",  # noqa: D107
+                 edition: str | None = None) -> None:
+        tdb = _timber_db(edition)
+        self.edition = edition
+        self._params = tdb["Parameters"]
         try:
-            timber = dbase.TimberGrades[type_label]
+            timber = tdb["Grade"][type_label]
         except KeyError:
             msg = (
                 f"Timber type '{type_label}' not found. "
@@ -102,7 +136,7 @@ class Timber:
         self.rhok = timber["rhok"]
         self.rhom = timber["rhom"]
 
-        params = dbase.TimberParams
+        params = self._params
         self.safety = params["safety"][self.type]
         self.kmods = params["kmod"][self.type]
         self.kh = params["kh"][self.type]
@@ -177,12 +211,23 @@ class Timber:
             load_duration = load_duration.value
 
         if (isinstance(service_class, str) and
-            service_class not in {"SC1", "SC2", "SC3"}):
+            service_class not in {"SC1", "SC2", "SC3", "SC4"}):
             service_class = "SC3"
         if isinstance(service_class, ServiceClass):
             service_class = service_class.name
 
-        self.kmod = self.kmods[service_class][load_duration]
+        try:
+            kmod = self.kmods[service_class][load_duration]
+        except KeyError:
+            msg = (f"No k_mod for {self.type_label} ({self.type}) in "
+                   f"{service_class} in EN 1995-1-1"
+                   f"{':' + self.edition if self.edition else ''}.")
+            raise KeyError(msg) from None
+        if kmod is None:
+            msg = (f"No k_mod for {self.type_label} ({self.type}) in "
+                   f"{service_class} for this load duration.")
+            raise KeyError(msg)
+        self.kmod = kmod
 
         return self.kmod
 
@@ -237,6 +282,19 @@ class Timber:
         """
         return self.kdef[service_class.name]
 
+    def fc0k_factor(self, service_class: ServiceClass | str = ServiceClass.SC1,
+                    optional: bool = False) -> float:
+        """Factor on ``f_c,0,k`` for the service class (EN 1995-1-1:2025 5.2.1(3)-(4)):
+        ``0.83`` for LVL in SC2/SC3 and GLVL in SC2 (a requirement), and ``1.2``
+        for ST, FST, GST and GL in SC1 (*optional*, returned only with
+        ``optional=True``). ``1.0`` when none applies or the edition has none.
+        It is **not** applied automatically by :meth:`design_values`."""
+        if isinstance(service_class, ServiceClass):
+            service_class = service_class.name
+        f = (self._params.get("fc0k_sc_factor", {}).get(self.type, {})
+             .get(service_class, 1.0))
+        return f if (f < 1.0 or optional) else 1.0
+
     def k_h(self, size: float,
             forcetype: TimberForcesType = TimberForcesType.Bending) -> float:
         """Return the kh value for serviceability limit state.
@@ -257,10 +315,16 @@ class Timber:
                 kmin = self.kh["khvmin"]
                 kmax = self.kh["khvmax"]
             case TimberForcesType.Tension:
-                aref = self.kh["aref"]
-                sm = self.kh["sm"]
-                kmin = self.kh["khmmin"]
-                kmax = self.kh["khmmax"]
+                if "st" in self.kh:          # EN 1995-1-1:2025 Table 5.6
+                    aref = self.kh["atref"]
+                    sm = self.kh["st"]
+                    kmin = self.kh["khtmin"]
+                    kmax = self.kh["khtmax"]
+                else:
+                    aref = self.kh["aref"]
+                    sm = self.kh["sm"]
+                    kmin = self.kh["khmmin"]
+                    kmax = self.kh["khmmax"]
             case _:
                 return 1.0
 
@@ -301,7 +365,8 @@ class SolidTimber(Timber):
 
     """
 
-    def __init__(self, type_label: str = "C24") -> None:  # noqa: D107
+    def __init__(self, type_label: str = "C24",  # noqa: D107
+                 edition: str | None = None) -> None:
         grades_list = [item for item in dbase.TimberGrades
                     if (item.startswith(("C", "D")))]
         if type_label not in grades_list:
@@ -311,15 +376,15 @@ class SolidTimber(Timber):
             )
             raise ValueError(msg)
 
-        super().__init__(type_label)
+        super().__init__(type_label, edition)
 
         if type_label.startswith("D"):
             self.Gk = 0.83 * self.Gmean
         else:
             self.Gk = 0.67 * self.Gmean
-        self.fvrefk = dbase.TimberParams["fvrefk"][self.type]
-        self.theta_twist = dbase.TimberParams["theta_twist"][self.type]
-        self.kred = dbase.TimberParams["kred"][self.type]
+        self.fvrefk = self._params["fvrefk"][self.type]
+        self.theta_twist = self._params["theta_twist"][self.type]
+        self.kred = self._params["kred"][self.type]
         self.material = TimberType.TIMBER
         self.timber_product = TimberProduct.ST
 
@@ -339,7 +404,8 @@ class Glulam(Timber):
 
     """
 
-    def __init__(self, type_label: str = "GL24h") -> None:  # noqa: D107
+    def __init__(self, type_label: str = "GL24h",  # noqa: D107
+                 edition: str | None = None) -> None:
         grades_list = [item for item in dbase.TimberGrades if item.startswith("GL")]
 
         if not type_label.startswith("GL"):
@@ -355,7 +421,7 @@ class Glulam(Timber):
             )
             raise ValueError(msg)
 
-        super().__init__(type_label)
+        super().__init__(type_label, edition)
 
         timber = dbase.TimberGrades[type_label]
         self.frk = timber["frk"]  # Characteristic rolling shear strength (MPa)
@@ -363,9 +429,9 @@ class Glulam(Timber):
         self.Grk = timber["Grk"]  # Charact. rolling shear modulus in
         self.Grmean = timber["Grmean"]  # Mean rolling shear modulus in MPa
         self.G90k = timber["Gk"]  # Charact. shear modulus perp. to grain (MPa)
-        self.fvrefk = dbase.TimberParams["fvrefk"][self.type]
-        self.theta_twist = dbase.TimberParams["theta_twist"][self.type]
-        self.kred = dbase.TimberParams["kred"][self.type]
+        self.fvrefk = self._params["fvrefk"][self.type]
+        self.theta_twist = self._params["theta_twist"][self.type]
+        self.kred = self._params["kred"][self.type]
         self.material = TimberType.GLULAM
         self.timber_product = TimberProduct.GL
 
@@ -396,7 +462,8 @@ class Glulam(Timber):
 class CLT(Timber):
     """Eurocode 5 Cross-Laminated Timber (CLT) properties. Not implemented."""
 
-    def __init__(self, type_label: str = "CLT30") -> None:  # noqa: D107
+    def __init__(self, type_label: str = "CLT30",  # noqa: D107
+                 edition: str | None = None) -> None:
         grades_list = [item for item in dbase.TimberGrades if item.startswith("GL")]
 
         if not type_label.startswith("CLT"):
@@ -412,7 +479,7 @@ class CLT(Timber):
             )
             raise ValueError(msg)
 
-        super().__init__(type_label)
+        super().__init__(type_label, edition)
         self.material = TimberType.CLT
         self.timber_product = TimberProduct.CLT
 
@@ -420,7 +487,8 @@ class CLT(Timber):
 class LVL(Timber):
     """Eurocode 5 Laminated Veneer Lumber (LVL) properties. Not implemented."""
 
-    def __init__(self, type_label: str = "LVL30P") -> None:  # noqa: D107
+    def __init__(self, type_label: str = "LVL30P",  # noqa: D107
+                 edition: str | None = None) -> None:
         grades_list = [item for item in dbase.TimberGrades if item.startswith("GL")]
 
         if not type_label.startswith("LVL"):
@@ -436,7 +504,7 @@ class LVL(Timber):
             )
             raise ValueError(msg)
 
-        super().__init__(type_label)
+        super().__init__(type_label, edition)
         self.material = TimberType.LVL
         self.timber_product = TimberProduct.LVL_P
 
@@ -458,12 +526,15 @@ TimberGrades = {item: Timber(item)
             for item in dbase.TimberGrades}
 
 
-def TimberClass(timber: str = "C24") -> Timber:  # noqa: N802
+def TimberClass(timber: str = "C24", edition: str | None = None) -> Timber:  # noqa: N802
     """Return a Timber object of the appropriate subclass based on timber grade.
 
     Args:
         timber (str, optional): Timber grade label (e.g., 'C24', 'GL24h').
             Defaults to 'C24'.
+        edition (str, optional): Edition of EN 1995-1-1 for ``k_mod``,
+            ``k_def``, ``k_h``, ``γ_M`` and the service classes (e.g. ``"2025"``);
+            ``None`` is the 2004 edition.
 
     Returns:
         Timber: A SolidTimber instance for C/D grades, Glulam instance for GL grades,
@@ -471,18 +542,18 @@ def TimberClass(timber: str = "C24") -> Timber:  # noqa: N802
 
     """
     if timber.startswith(("C", "D")):
-        return SolidTimber(timber)
+        return SolidTimber(timber, edition)
 
     if timber.startswith("GL"):
-        return Glulam(timber)
+        return Glulam(timber, edition)
 
     if timber.startswith("LVL"):
-        return LVL(timber)
+        return LVL(timber, edition)
 
     if timber.startswith("CLT"):
-        return CLT(timber)
+        return CLT(timber, edition)
 
-    return Timber(timber)
+    return Timber(timber, edition)
 
 
 def GetTimberDesignValues(timber: Timber, combos: LoadCombinations) -> dict:  # noqa: N802

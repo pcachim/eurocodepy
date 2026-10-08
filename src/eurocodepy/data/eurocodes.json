@@ -86,6 +86,820 @@
                         "eta_sys": 1.5
                     }
                 }
+            },
+            "ec5": {
+                "2004": {
+                    "default": true
+                },
+                "2025": {
+                    "default": false,
+                    "source": "EN 1995-1-1:2025 (E), Clauses 4.3.1.4, 4.5, 5.2, 5.3, 5.4, 5.5 (Tables 4.1-4.5, 5.4-5.8)",
+                    "overrides": {
+                        "Timber.ServiceClasses": [
+                            "SC1",
+                            "SC2",
+                            "SC3",
+                            "SC4"
+                        ],
+                        "Timber.Parameters": {
+                            "kmod": {
+                                "_clause": "EN 1995-1-1:2025 Table 5.4 (lists: permanent, long-, medium-, short-term, instantaneous)",
+                                "timber": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC3": [
+                                        0.55,
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        1.0
+                                    ],
+                                    "SC4": [
+                                        0.5,
+                                        0.55,
+                                        0.65,
+                                        0.7,
+                                        0.9
+                                    ]
+                                },
+                                "fst": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ]
+                                },
+                                "glulam": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC3": [
+                                        0.55,
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        1.0
+                                    ]
+                                },
+                                "bgl": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ]
+                                },
+                                "gst": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ]
+                                },
+                                "clt": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ]
+                                },
+                                "lvl": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC3": [
+                                        0.55,
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        1.0
+                                    ]
+                                },
+                                "glvl": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ]
+                                },
+                                "swp_1s": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ]
+                                },
+                                "swp_2s": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ]
+                                },
+                                "plywood_1": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ]
+                                },
+                                "plywood_2": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ]
+                                },
+                                "plywood_3": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC3": [
+                                        0.55,
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        1.0
+                                    ]
+                                },
+                                "osb_2": {
+                                    "SC1": [
+                                        0.3,
+                                        0.45,
+                                        0.65,
+                                        0.85,
+                                        1.1
+                                    ]
+                                },
+                                "osb_3_4": {
+                                    "SC1": [
+                                        0.4,
+                                        0.5,
+                                        0.7,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.3,
+                                        0.4,
+                                        0.55,
+                                        0.7,
+                                        0.9
+                                    ]
+                                },
+                                "hb_la": {
+                                    "SC1": [
+                                        0.3,
+                                        0.45,
+                                        0.65,
+                                        0.85,
+                                        1.1
+                                    ]
+                                },
+                                "hb_hla": {
+                                    "SC1": [
+                                        0.3,
+                                        0.45,
+                                        0.65,
+                                        0.85,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.2,
+                                        0.3,
+                                        0.45,
+                                        0.6,
+                                        0.8
+                                    ]
+                                },
+                                "mb_la": {
+                                    "SC1": [
+                                        0.2,
+                                        0.4,
+                                        0.6,
+                                        0.8,
+                                        1.1
+                                    ]
+                                },
+                                "mb_hls": {
+                                    "SC1": [
+                                        0.2,
+                                        0.4,
+                                        0.6,
+                                        0.8,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        null,
+                                        null,
+                                        null,
+                                        0.45,
+                                        0.8
+                                    ]
+                                },
+                                "mdf_la": {
+                                    "SC1": [
+                                        0.2,
+                                        0.4,
+                                        0.6,
+                                        0.8,
+                                        1.1
+                                    ]
+                                },
+                                "mdf_hls": {
+                                    "SC1": [
+                                        0.2,
+                                        0.4,
+                                        0.6,
+                                        0.8,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        null,
+                                        null,
+                                        null,
+                                        0.45,
+                                        0.8
+                                    ]
+                                },
+                                "sb_ls": {
+                                    "SC1": [
+                                        0.2,
+                                        0.4,
+                                        0.5,
+                                        0.65,
+                                        1.0
+                                    ]
+                                },
+                                "sb_hls": {
+                                    "SC1": [
+                                        0.2,
+                                        0.4,
+                                        0.5,
+                                        0.65,
+                                        1.0
+                                    ],
+                                    "SC2": [
+                                        0.1,
+                                        0.2,
+                                        0.3,
+                                        0.4,
+                                        0.6
+                                    ]
+                                },
+                                "cpb": {
+                                    "SC1": [
+                                        0.3,
+                                        0.45,
+                                        0.65,
+                                        0.85,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.2,
+                                        0.3,
+                                        0.45,
+                                        0.6,
+                                        0.8
+                                    ]
+                                },
+                                "rpb_p4": {
+                                    "SC1": [
+                                        0.3,
+                                        0.45,
+                                        0.65,
+                                        0.85,
+                                        1.1
+                                    ]
+                                },
+                                "rpb_p5": {
+                                    "SC1": [
+                                        0.3,
+                                        0.45,
+                                        0.65,
+                                        0.85,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.2,
+                                        0.3,
+                                        0.45,
+                                        0.6,
+                                        0.8
+                                    ]
+                                },
+                                "rpb_p6": {
+                                    "SC1": [
+                                        0.4,
+                                        0.5,
+                                        0.7,
+                                        0.9,
+                                        1.1
+                                    ]
+                                },
+                                "rpb_p7": {
+                                    "SC1": [
+                                        0.4,
+                                        0.5,
+                                        0.7,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.3,
+                                        0.4,
+                                        0.55,
+                                        0.7,
+                                        0.9
+                                    ]
+                                },
+                                "gypsum": {
+                                    "SC1": [
+                                        0.2,
+                                        0.4,
+                                        0.6,
+                                        0.8,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.15,
+                                        0.3,
+                                        0.45,
+                                        0.6,
+                                        0.8
+                                    ]
+                                },
+                                "bonded_in_rods": {
+                                    "SC1": [
+                                        0.6,
+                                        0.7,
+                                        0.8,
+                                        0.9,
+                                        1.1
+                                    ],
+                                    "SC2": [
+                                        0.5,
+                                        0.55,
+                                        0.65,
+                                        0.7,
+                                        0.9
+                                    ]
+                                }
+                            },
+                            "kdef": {
+                                "_clause": "EN 1995-1-1:2025 Table 5.5",
+                                "timber": {
+                                    "SC1": 0.6,
+                                    "SC2": 0.8,
+                                    "SC3": 2.0,
+                                    "SC4": 2.0
+                                },
+                                "fst": {
+                                    "SC1": 0.6,
+                                    "SC2": 0.8
+                                },
+                                "glulam": {
+                                    "SC1": 0.6,
+                                    "SC2": 0.8,
+                                    "SC3": 2.0
+                                },
+                                "bgl": {
+                                    "SC1": 0.6,
+                                    "SC2": 0.8
+                                },
+                                "gst": {
+                                    "SC1": 0.6,
+                                    "SC2": 0.8
+                                },
+                                "clt": {
+                                    "SC1": 0.8,
+                                    "SC2": 1.0
+                                },
+                                "lvl": {
+                                    "SC1": 0.6,
+                                    "SC2": 0.8,
+                                    "SC3": 2.0
+                                },
+                                "lvl_c": {
+                                    "SC1": 0.6,
+                                    "SC2": 0.8,
+                                    "SC3": 2.0
+                                },
+                                "lvl_c_flatwise": {
+                                    "SC1": 0.8,
+                                    "SC2": 1.0,
+                                    "SC3": 2.5
+                                },
+                                "glvl": {
+                                    "SC1": 0.6,
+                                    "SC2": 0.8
+                                },
+                                "glvl_c": {
+                                    "SC1": 0.6,
+                                    "SC2": 0.8
+                                },
+                                "glvl_c_flatwise": {
+                                    "SC1": 0.8,
+                                    "SC2": 1.0
+                                },
+                                "swp_p_1s": {
+                                    "SC1": 0.6
+                                },
+                                "swp_p_2s": {
+                                    "SC1": 0.6,
+                                    "SC2": 0.8
+                                },
+                                "swp_c_1s": {
+                                    "SC1": 0.8
+                                },
+                                "swp_c_2s": {
+                                    "SC1": 0.8,
+                                    "SC2": 1.0
+                                },
+                                "plywood_1": {
+                                    "SC1": 0.8
+                                },
+                                "plywood_2": {
+                                    "SC1": 0.8,
+                                    "SC2": 1.0
+                                },
+                                "plywood_3": {
+                                    "SC1": 0.8,
+                                    "SC2": 1.0,
+                                    "SC3": 2.5
+                                },
+                                "osb_2": {
+                                    "SC1": 2.25
+                                },
+                                "osb_3_4": {
+                                    "SC1": 1.5,
+                                    "SC2": 2.25
+                                },
+                                "rpb_p4": {
+                                    "SC1": 2.25
+                                },
+                                "rpb_p5": {
+                                    "SC1": 2.25,
+                                    "SC2": 3.0
+                                },
+                                "rpb_p6": {
+                                    "SC1": 1.5
+                                },
+                                "rpb_p7": {
+                                    "SC1": 1.5,
+                                    "SC2": 2.25
+                                },
+                                "hb_la": {
+                                    "SC1": 2.25
+                                },
+                                "hb_hla": {
+                                    "SC1": 2.25,
+                                    "SC2": 3.0
+                                },
+                                "mb_la": {
+                                    "SC1": 3.0
+                                },
+                                "mb_hls": {
+                                    "SC1": 3.0,
+                                    "SC2": 4.0
+                                },
+                                "sb": {
+                                    "SC1": 3.0
+                                },
+                                "mdf_la": {
+                                    "SC1": 2.25
+                                },
+                                "mdf_hls": {
+                                    "SC1": 2.25,
+                                    "SC2": 3.0
+                                },
+                                "cpb": {
+                                    "SC1": 2.25,
+                                    "SC2": 3.0
+                                },
+                                "gypsum": {
+                                    "SC1": 3.0,
+                                    "SC2": 4.0
+                                }
+                            },
+                            "kh": {
+                                "_clause": "EN 1995-1-1:2025 Table 5.6, Eq. (5.3): k_h = (a_ref/a)^s, a in m here; sm/aref bending, sv/hv0 shear, st/atref tension parallel",
+                                "timber": {
+                                    "sm": 0.2,
+                                    "aref": 0.15,
+                                    "khmmin": 1.0,
+                                    "khmmax": 1.3,
+                                    "sv": 0.2,
+                                    "hv0": 0.15,
+                                    "khvmin": 1.0,
+                                    "khvmax": 1.3,
+                                    "st": 0.2,
+                                    "atref": 0.15,
+                                    "khtmin": 1.0,
+                                    "khtmax": 1.3
+                                },
+                                "glulam": {
+                                    "sm": 0.04,
+                                    "aref": 0.6,
+                                    "sv": 0.1,
+                                    "hv0": 0.6,
+                                    "khvmin": 0.9,
+                                    "khvmax": 1.1,
+                                    "st": 0.0,
+                                    "atref": 1.0,
+                                    "khtmin": 1.0,
+                                    "khtmax": 1.0
+                                },
+                                "lvl": {
+                                    "sm": 0.15,
+                                    "aref": 0.3,
+                                    "khmmin": 0.0,
+                                    "khmmax": 1.2,
+                                    "sv": 0.0,
+                                    "hv0": 1.0,
+                                    "khvmin": 1.0,
+                                    "khvmax": 1.0,
+                                    "st": 0.075,
+                                    "atref": 3.0,
+                                    "khtmin": 0.0,
+                                    "khtmax": 1.1
+                                }
+                            },
+                            "safety": {
+                                "_clause": "EN 1995-1-1:2025 Table 4.3 (NDP), same values as 2004; see material_safety for the product list",
+                                "gypsum": 1.3
+                            },
+                            "fc0k_sc_factor": {
+                                "_clause": "EN 1995-1-1:2025 5.2.1(3)-(4): ST, FST, GST, GL in SC1 may use 1.2 (optional); LVL in SC2-SC3 and GLVL in SC2 shall use 0.83",
+                                "timber": {
+                                    "SC1": 1.2
+                                },
+                                "glulam": {
+                                    "SC1": 1.2
+                                },
+                                "lvl": {
+                                    "SC2": 0.83,
+                                    "SC3": 0.83
+                                },
+                                "glvl": {
+                                    "SC2": 0.83
+                                }
+                            },
+                            "G005_over_Gmean": {
+                                "_clause": "EN 1995-1-1:2025 Eq. (5.4), ST and FST",
+                                "softwood": 0.67,
+                                "hardwood": 0.83
+                            },
+                            "clt": {
+                                "_clause": "EN 1995-1-1:2025 5.4.2",
+                                "fv_xy_k_max": 5.5,
+                                "f_tor_node_k": 2.5,
+                                "E_G_005_over_mean": 0.83,
+                                "rho_mean_over_k": 1.1,
+                                "kred_b": "b/1200 + 0.5 for t_CLT <= b <= 600 mm (Eq. 5.5)"
+                            },
+                            "ServiceClassData": {
+                                "_clause": "EN 1995-1-1:2025 Table 4.2: relative humidity at 20 C and representative moisture content of solid wood-based products",
+                                "SC1": {
+                                    "rh_upper": 65,
+                                    "mc_upper": 12,
+                                    "rh_mean": 50,
+                                    "mc_mean": 10
+                                },
+                                "SC2": {
+                                    "rh_upper": 85,
+                                    "mc_upper": 20,
+                                    "rh_mean": 75,
+                                    "mc_mean": 16
+                                },
+                                "SC3": {
+                                    "rh_upper": 95,
+                                    "mc_upper": 24,
+                                    "rh_mean": 85,
+                                    "mc_mean": 20
+                                },
+                                "SC4": {
+                                    "saturated": true
+                                }
+                            },
+                            "LoadDurationInfo": {
+                                "_clause": "EN 1995-1-1:2025 Table 4.1 (NDP): accumulated duration of the characteristic load",
+                                "Permanent": "more than 10 years",
+                                "LongDuration": "6 months - 10 years",
+                                "MediumDuration": "1 week - 6 months",
+                                "ShortDuration": "less than one week",
+                                "Instantaneous": "usually less than one minute"
+                            },
+                            "Shrinkage": {
+                                "_clause": "EN 1995-1-1:2025 Tables 5.7 and 5.8: free shrinkage/swelling in %, per 1 % change of average moisture content below fibre saturation",
+                                "SL_PL_softwood": {
+                                    "perpendicular_to_grain": 0.25,
+                                    "parallel_to_grain": 0.01
+                                },
+                                "SL_PL_hardwood": {
+                                    "perpendicular_to_grain": [
+                                        0.28,
+                                        0.45
+                                    ],
+                                    "parallel_to_grain": 0.01
+                                },
+                                "CLT_SWP_C": {
+                                    "perpendicular_to_plane": 0.24,
+                                    "in_plane": [
+                                        0.02,
+                                        0.04
+                                    ]
+                                },
+                                "LVL_P_GLVL_P": {
+                                    "perpendicular_to_plane": [
+                                        0.32,
+                                        0.45
+                                    ],
+                                    "parallel_to_grain": 0.01,
+                                    "perpendicular_to_grain": [
+                                        0.32,
+                                        0.4
+                                    ],
+                                    "_note": "second values: beech"
+                                },
+                                "LVL_C_GLVL_C": {
+                                    "perpendicular_to_plane": [
+                                        0.32,
+                                        0.45
+                                    ],
+                                    "parallel_to_grain": 0.01,
+                                    "perpendicular_to_grain": 0.03,
+                                    "_note": "second value: beech"
+                                },
+                                "PW": {
+                                    "perpendicular_to_plane": 0.32,
+                                    "in_plane": 0.02
+                                },
+                                "OSB_2_3": {
+                                    "perpendicular_to_plane": 0.7,
+                                    "in_plane": 0.03
+                                },
+                                "OSB_4": {
+                                    "perpendicular_to_plane": 0.5,
+                                    "in_plane": 0.015
+                                },
+                                "RPB_HB_MB": {
+                                    "perpendicular_to_plane": 0.7,
+                                    "in_plane": 0.035
+                                },
+                                "CPB": {
+                                    "perpendicular_to_plane": 0.05,
+                                    "in_plane": 0.03
+                                }
+                            }
+                        }
+                    },
+                    "material_safety": {
+                        "_clause": "EN 1995-1-1:2025 Table 4.3 (NDP): partial factor gamma_M for materials, fundamental design situations",
+                        "ST": 1.3,
+                        "FST": 1.3,
+                        "GST": 1.25,
+                        "GL": 1.25,
+                        "BGL": 1.25,
+                        "SWP-P": 1.25,
+                        "CLT": 1.25,
+                        "SWP-C": 1.25,
+                        "LVL-P": 1.2,
+                        "LVL-C": 1.2,
+                        "GLVL-P": 1.2,
+                        "GLVL-C": 1.2,
+                        "PW": 1.2,
+                        "OSB": 1.2,
+                        "HB": 1.3,
+                        "MB": 1.3,
+                        "SB": 1.3,
+                        "MDF": 1.3,
+                        "RPB": 1.3,
+                        "CPB": 1.3,
+                        "GPB": 1.3,
+                        "GFB": 1.3
+                    },
+                    "connection_safety": {
+                        "_clause": "EN 1995-1-1:2025 Table 4.4 (NDP) fundamental design situations; Table 4.5 (NDP) accidental",
+                        "gamma_R_dowel_type": 1.3,
+                        "gamma_R_carpentry": 1.3,
+                        "gamma_M_bond_line": 1.3,
+                        "gamma_M1_steel_ductile": 1.1,
+                        "gamma_M2_steel_tension_fracture": 1.25,
+                        "accidental": 1.0
+                    }
+                }
             }
         },
         "Materials": {

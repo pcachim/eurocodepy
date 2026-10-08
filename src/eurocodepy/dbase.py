@@ -192,7 +192,9 @@ def get_edition_data(eurocode: str, edition: str | None = None) -> dict:
     if edition is None or edition not in editions:
         return base
     for path, value in editions[edition].get("overrides", {}).items():
-        _set_by_dotpath(base, path, value)
+        # a copy: lists and dicts of the override must not be shared with the
+        # global database, or editing the result would edit it
+        _set_by_dotpath(base, path, copy.deepcopy(value))
     return base
 
 
@@ -216,7 +218,7 @@ def get_edition_params(eurocode: str, section: str, edition: str | None = None) 
         edition = next((e for e, v in editions.items() if v.get("default")), None)
     if edition is None or edition not in editions:
         return {}
-    return dict(editions[edition].get(section, {}))
+    return copy.deepcopy(dict(editions[edition].get(section, {})))
 
 
 class EurocodeMaterials:
