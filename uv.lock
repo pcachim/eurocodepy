@@ -274,6 +274,14 @@ dev = [
     { name = "ruff" },
     { name = "ty" },
 ]
+docs = [
+    { name = "mkdocs" },
+    { name = "mkdocs-gen-files" },
+    { name = "mkdocs-literate-nav" },
+    { name = "mkdocs-material" },
+    { name = "mkdocs-section-index" },
+    { name = "mkdocstrings", extra = ["python"] },
+]
 test = [
     { name = "jsonschema" },
     { name = "pytest" },
@@ -286,11 +294,17 @@ requires-dist = [
     { name = "marimo", specifier = ">=0.20.4" },
     { name = "matplotlib", specifier = ">=3.9.4" },
     { name = "mkdocs", specifier = ">=1.6.1" },
+    { name = "mkdocs", marker = "extra == 'docs'" },
     { name = "mkdocs-gen-files", specifier = ">=0.5.0" },
+    { name = "mkdocs-gen-files", marker = "extra == 'docs'" },
     { name = "mkdocs-literate-nav", specifier = ">=0.6.2" },
+    { name = "mkdocs-literate-nav", marker = "extra == 'docs'" },
     { name = "mkdocs-material", specifier = ">=9.6.14" },
+    { name = "mkdocs-material", marker = "extra == 'docs'" },
     { name = "mkdocs-section-index", specifier = ">=0.3.10" },
+    { name = "mkdocs-section-index", marker = "extra == 'docs'" },
     { name = "mkdocstrings", specifier = ">=0.29.1" },
+    { name = "mkdocstrings", extras = ["python"], marker = "extra == 'docs'" },
     { name = "mkdocstrings-python", specifier = ">=1.16.12" },
     { name = "numpy", specifier = ">=2.0.2" },
     { name = "pandas", specifier = ">=2.2.3" },
@@ -303,7 +317,7 @@ requires-dist = [
     { name = "seaborn", specifier = ">=0.13.2" },
     { name = "ty", marker = "extra == 'dev'", specifier = ">=0.0.1a10" },
 ]
-provides-extras = ["dev", "test"]
+provides-extras = ["dev", "test", "docs"]
 
 [[package]]
 name = "filelock"
@@ -831,6 +845,11 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/41/e8/d22922664a627a0d3d7ff4a6ca95800f5dde54f411982591b4621a76225d/mkdocstrings-0.29.1.tar.gz", hash = "sha256:8722f8f8c5cd75da56671e0a0c1bbed1df9946c0cef74794d6141b34011abd42", size = 1212686, upload-time = "2025-03-31T08:33:11.997Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/98/14/22533a578bf8b187e05d67e2c1721ce10e3f526610eebaf7a149d557ea7a/mkdocstrings-0.29.1-py3-none-any.whl", hash = "sha256:37a9736134934eea89cbd055a513d40a020d87dfcae9e3052c2a6b8cd4af09b6", size = 1631075, upload-time = "2025-03-31T08:33:09.661Z" },
+]
+
+[package.optional-dependencies]
+python = [
+    { name = "mkdocstrings-python" },
 ]
 
 [[package]]

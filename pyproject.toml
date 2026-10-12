@@ -46,6 +46,14 @@ test = [
     "pytest>=8.0",
     "jsonschema>=4.23.0",
 ]
+docs = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "mkdocs-gen-files",
+    "mkdocs-literate-nav",
+    "mkdocs-section-index",
+]
 
 [project.urls]
 "Homepage" = "https://github.com/pcachim/eurocodepy"
