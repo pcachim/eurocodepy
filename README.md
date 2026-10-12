@@ -12,7 +12,7 @@ into scripts, notebooks, or larger analysis tools.
 > **Documentation:** <https://pcachim.github.io/eurocodepy/>  
 > **Source:** <https://github.com/pcachim/eurocodepy>  
 > **PyPI:** <https://pypi.org/project/eurocodepy/>  
-> **Changelog:** <https://github.com/pcachim/eurocodepy/blob/main/CHANGELOG.md>
+> **Changelog:** <https://github.com/pcachim/eurocodepy/blob/master/CHANGELOG.md>
 
 ---
 
