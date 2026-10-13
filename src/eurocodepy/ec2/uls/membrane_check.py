@@ -16,12 +16,20 @@ optional calculation trace, exactly like the §6.2 shear and §6.4 punching chec
 * size the orthogonal reinforcement ``As_x = max(n_sx, 0)/f_yd``,
   ``As_y = max(n_sy, 0)/f_yd`` [m²/m] and split each evenly between a top and a
   bottom layer (the usual orthogonal-mesh detailing);
-* check the concrete stress ``σ_c = n_c / t`` against ``ν·f_cd`` with
-  ``ν = 0.6·(1 − f_ck/250)``, the strength reduction of cracked concrete under
-  transverse tension used for the shear struts (§6.2.3); where no reinforcement is
-  required (biaxial compression) against ``f_cd``. EN 1992-1-1:2004 gives no ``ν``
-  for membranes, so this is the same ``ν`` as the beam-shear crushing check; the
-  2023 equivalent is ``ec2.uls2023.membrane_check`` (Annex G, ``ν = 0,4`` or Eq. G.9).
+* check the concrete stress ``σ_c = n_c / t`` against the strength of the compression field,
+  ``strut_model`` of the input:
+
+  - ``"annex_f"`` (default): EN 1992-1-1:2004 Annex F.1(3)-(4) — ``f_cd`` where no
+    reinforcement is required (both stresses compressive, ``σx·σy > τ²``), otherwise
+    "not generally exceed ``ν·f_cd``", ``ν = 0.6·(1 − f_ck/250)`` (Expression 6.5);
+  - ``"6.109"``: the more detailed EN 1992-2:2005 §6.109(103), to which Annex F refers —
+    ``0.85·f_cd·(1 + 3.8·α)/(1 + α)²`` without reinforcement (Eq. 6.110) and
+    ``ν'·f_cd·(1 − 0.032·|θ − θel|)`` with yielding reinforcement (Eq. 6.112), ``θ`` the strut
+    angle of the design, ``θel`` the elastic principal compression direction, ``|θ − θel|``
+    limited to 15° (beyond it the strength is that of 15° and ``details["strut"]["angle_ok"]``
+    is false; see :func:`.shell.membrane_strut_limit`).
+
+  The 2023 equivalent is ``ec2.uls2023.membrane_check`` (Annex G, ``ν = 0,4`` or Eq. G.9).
 
 Units: forces per unit length in **kN/m**, strengths in **MPa**, thickness in
 **m**, reinforcement areas in **m²/m**.
@@ -32,7 +40,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from eurocodepy.ec2.materials import PartialFactorsMixin
-from eurocodepy.ec2.uls.shell import calc_reinf_plane
+from eurocodepy.ec2.uls.shell import calc_reinf_plane, strut_limit
 
 
 @dataclass
@@ -48,6 +56,7 @@ class MembraneInput(PartialFactorsMixin):
     gamma_c: float = 1.5
     gamma_s: float = 1.15
     alpha_cc: float = 1.0
+    strut_model: str = "annex_f"   # 'annex_f' (EN 1992-1-1:2004 F.1) | '6.109' (EN 1992-2)
 
 
 @dataclass
@@ -104,7 +113,6 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
     t = inp.thickness
 
     nsx, nsy, nc, theta = calc_reinf_plane(inp.n_xx, inp.n_yy, inp.n_xy)
-    nu = 0.6 * (1.0 - inp.fck / 250.0)
     asx = max(nsx, 0.0) / fyd if fyd > 0 else 0.0    # [m²/m]
     asy = max(nsy, 0.0) / fyd if fyd > 0 else 0.0
     sigma_c = nc / t if t > 0 else 0.0                # [kN/m²]
@@ -144,10 +152,12 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
     else:
         branch = "biaxial compression"
 
-    # ν·fcd where the compression field is crossed by tension reinforcement; fcd where
-    # both stresses are compressive and no reinforcement is required (biaxial compression)
-    nu_used = 1.0 if branch == "biaxial compression" else nu
-    crushing = bool(nc > nu_used * fcd * t)
+    # fcd / ν·fcd (EN 1992-1-1 Annex F.1) or Eqs. (6.110)/(6.112) of EN 1992-2 §6.109(103)
+    lim = strut_limit(
+        inp.strut_model, inp.n_xx / t, inp.n_yy / t, inp.n_xy / t, inp.fck, fcd,
+        None if branch == "biaxial compression" else theta) if t > 0 else None
+    nu_used = lim["factor"] if lim else 1.0
+    crushing = bool(lim is not None and sigma_c > lim["limit"])
 
     _sec("Reinforcement (Wood/Baumann)")
     _t("θ", theta, "—", clause="EN 1992-1-1 Annex F",
@@ -194,11 +204,24 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
        subst=f"{nc:.4g}/{t:g}")
     _t("f_cd", fcd / 1e3, "MPa", expr="f_cd = α_cc·f_ck/γ_c",
        subst=f"{inp.alpha_cc:g}·{inp.fck:g}/{inp.gamma_c:g}")
-    _t("ν", nu_used, "—", clause="EN 1992-1-1 §6.2.3(1)",
-       expr="ν = 0.6·(1 − f_ck/250)" if branch != "biaxial compression" else "ν = 1",
-       note=("cracked concrete, as for the shear struts" if branch != "biaxial compression"
-             else "biaxial compression: no reinforcement, σ ≤ f_cd"))
-    _t("σ_c ≤ ν·f_cd", sigma_c / 1e3, "MPa", ok=(not crushing),
+    if lim is not None and inp.strut_model == "annex_f":
+        _t("σ_cd,max / f_cd", nu_used, "—",
+           clause="EN 1992-1-1:2004 Annex F.1(3)" if branch == "biaxial compression"
+           else "EN 1992-1-1:2004 Annex F.1(4), Expression (6.5)",
+           expr="1" if branch == "biaxial compression" else "ν = 0.6·(1 − f_ck/250)",
+           note=("no reinforcement: σ ≤ f_cd" if branch == "biaxial compression"
+                 else "σ_cd should not generally exceed ν·f_cd"))
+    elif branch == "biaxial compression":
+        _t("σ_cd,max / f_cd", nu_used, "—", clause="EN 1992-2:2005 §6.109(103)i, Eq. (6.110)",
+           expr="0.85·(1 + 3.8·α)/(1 + α)²", subst=f"α = {lim['alpha']:.3f}",
+           note="no reinforcement: both principal stresses compressive")
+    elif lim is not None:
+        _t("σ_cd,max / f_cd", nu_used, "—", clause="EN 1992-2:2005 §6.109(103)iii, Eq. (6.112)",
+           expr="ν'·(1 − 0.032·|θ − θel|), ν' = 0.6·(1 − f_ck/250)",
+           subst=(f"θ = {lim['theta']:.1f}°, θel = {lim['theta_el']:.1f}°, "
+                  f"|Δθ| = {lim['delta_theta']:.1f}°"), ok=lim["angle_ok"],
+           note="yielding reinforcement; |θ − θel| ≤ 15°")
+    _t("σ_c ≤ σ_cd,max", sigma_c / 1e3, "MPa", ok=(not crushing),
        subst=f"{sigma_c / 1e3:.3g} ≤ {nu_used * fcd / 1e3:.3g}")
 
     return MembraneResult(
@@ -207,4 +230,5 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
         asy_bot=asy / 2.0, asy_top=asy / 2.0,
         nsx=nsx, nsy=nsy, nc=nc, sigma_c=sigma_c, fcd=fcd,
         theta=theta, crushing=crushing,
-        details={"fyd": fyd, "nu": nu_used, "case": branch})
+        details={"fyd": fyd, "nu": nu_used, "case": branch,
+                 "strut": lim, "strut_model": inp.strut_model})

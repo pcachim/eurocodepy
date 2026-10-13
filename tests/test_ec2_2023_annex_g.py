@@ -319,8 +319,8 @@ def test_slab_design_hogging_and_torsion_limits():
     mn = sd.eurocode2_slab_check(_slab(m_x=-40.0, m_y=-20.0, m_xy=5.0, min_reinf="bottom"))
     assert mn.asx_bot > 0 and mn.asy_bot > 0 and mn.asx_top == r.asx_top
     with pytest.warns(UserWarning, match="0,07"):
-        big = sd.eurocode2_slab_check(_slab(m_xy=60.0))
-    assert not big.details["torsion_simplified_ok"]
+        big = sd.eurocode2_slab_check(_slab(m_xy=60.0, method="optimum"))   # forced: warns
+    assert not big.details["torsion_simplified_ok"] and big.details["method"] == "optimum"
     with pytest.warns(UserWarning, match="exceeds the capacity"):
         over = sd.eurocode2_slab_check(_slab(m_x=300.0, m_y=10.0, m_xy=5.0))
     assert math.isnan(over.asx_bot)
@@ -335,3 +335,100 @@ def test_slab_design_trace_and_isolation_from_2004_names():
     assert {"m_Rdx", "m'_Rdx", "A_sx,bot"} <= symbols
     assert uls2023.SlabInput is uls.SlabInput                 # 2004 names untouched
     assert uls2023.slab_design.__name__ == "eurocodepy.ec2.uls2023.slab_design"
+
+
+# ── sandwich model (G.4(1)-(3)) ─────────────────────────────────────────────
+
+def test_sandwich_with_ned_zero_gives_the_table_capacities():
+    # the sandwich model with nEd = 0 IS Tables G.2/G.3: ftd·t·z = mRd
+    for mx, my, mxy in [(50.0, 30.0, 10.0), (-5.0, 20.0, 12.0), (-40.0, -20.0, 5.0),
+                        (15.0, -30.0, 8.0)]:
+        opt = sd.eurocode2_slab_check(_slab(m_x=mx, m_y=my, m_xy=mxy, method="optimum"))
+        sw = sd.eurocode2_slab_check(_slab(m_x=mx, m_y=my, m_xy=mxy, method="sandwich"))
+        assert sw.details["method"] == "sandwich" and opt.details["method"] == "optimum"
+        for k in ("m_rdx", "m_rdy", "m_rdx_top", "m_rdy_top"):
+            assert sw.details[k] == pytest.approx(opt.details[k]), k
+
+
+def test_sandwich_areas_are_ftd_t_over_fyd():
+    r = sd.eurocode2_slab_check(_slab(method="sandwich"))
+    t = 2 * (0.03 + 0.04 + 0.03 + 0.04) / 4
+    z = 0.2 - t
+    assert (r.details["t_layer"], r.details["z"]) == pytest.approx((t, z))
+    fyd = 500.0 / 1.15
+    assert r.asx_bot == pytest.approx(60.0 / z / (fyd * 1e3))       # (mx + |mxy|)/(z·fyd)
+    assert r.asy_bot == pytest.approx(40.0 / z / (fyd * 1e3))
+    assert r.asx_top == r.asy_top == 0.0
+    assert r.details["layers"]["bottom"]["case"] == "tension"
+    assert r.details["layers"]["top"]["case"] == "no_reinforcement"
+
+
+def test_auto_takes_the_tables_inside_their_range_and_the_sandwich_outside():
+    inside = sd.eurocode2_slab_check(_slab())
+    assert inside.details["method"] == "optimum" and inside.details["torsion_simplified_ok"]
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")       # (the strut may crush: that is reported, not a "tables" warning)
+        out = sd.eurocode2_slab_check(_slab(m_xy=45.0))
+    assert out.details["method"] == "sandwich" and not out.details["torsion_simplified_ok"]
+    assert out.details["crushing"] in (True, False)
+    # in-plane forces always need the sandwich model
+    shell = sd.eurocode2_slab_check(_slab(n_x=100.0))
+    assert shell.details["method"] == "sandwich"
+    with pytest.raises(ValueError, match="nEd = 0"):
+        sd.eurocode2_slab_check(_slab(n_x=100.0, method="optimum"))
+
+
+def test_sandwich_in_plane_forces_enter_both_layers():
+    zero = dict(m_x=0.0, m_y=0.0, m_xy=0.0, method="sandwich")
+    ten = sd.eurocode2_slab_check(_slab(n_x=200.0, **zero))
+    # pure tension in x: n/2 per layer, As = n/(2·fyd) in both
+    assert ten.asx_bot == pytest.approx(100.0 / (500.0 / 1.15 * 1e3))
+    assert ten.asx_top == pytest.approx(100.0 / (500.0 / 1.15 * 1e3))
+    assert ten.asy_bot == ten.asy_top == 0.0
+    base = sd.eurocode2_slab_check(_slab(method="sandwich"))
+    t = base.details["t_layer"]
+    # compression relieves the bottom layer, the top layer is then in compression
+    comp = sd.eurocode2_slab_check(_slab(method="sandwich", n_x=-400.0))
+    assert comp.asx_bot < base.asx_bot
+    assert comp.details["layers"]["top"]["stresses"][0] == pytest.approx(
+        -0.5 * 400.0 / t - 50.0 / (t * base.details["z"]))
+
+
+def test_sandwich_crushing_check_and_nu_modes():
+    big = dict(m_x=60.0, m_y=60.0, m_xy=190.0, thickness=0.2, method="sandwich")
+    with pytest.warns(UserWarning, match="bottom and top layer.*exceeds"):
+        r = sd.eurocode2_slab_check(_slab(**big))
+    assert r.details["crushing"] and all(v["crushing"] for v in r.details["layers"].values())
+    assert r.details["layers"]["bottom"]["nu"] == 0.4
+    # the refined ν is higher than 0,4 and the verdict follows it
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        sr = sd.eurocode2_slab_check(_slab(nu_mode="strain", **big))
+    nu = sr.details["layers"]["bottom"]["nu"]
+    assert nu == pytest.approx(g.estimate_nu(
+        sr.details["layers"]["bottom"]["ftdx"], sr.details["layers"]["bottom"]["ftdy"],
+        sr.details["layers"]["bottom"]["cot"], 500 / 1.15, 200000.0))
+    assert sr.details["layers"]["bottom"]["sigma_cd"] > 0
+    # a section that needs no reinforcement is limited to fcd, not ν·fcd
+    both = sd.eurocode2_slab_check(_slab(m_x=-20.0, m_y=-20.0, m_xy=1.0, method="sandwich"))
+    assert both.details["layers"]["bottom"]["nu"] == 1.0
+
+
+def test_sandwich_minimum_reinforcement_and_errors():
+    kw = dict(m_x=0.0, m_y=0.0, m_xy=0.0, method="sandwich")
+    assert sd.eurocode2_slab_check(_slab(**kw)).asx_bot == 0.0
+    mn = sd.eurocode2_slab_check(_slab(min_reinf="bottom", **kw))
+    assert mn.asx_bot > 0 and mn.asy_bot > 0 and mn.asx_top == 0.0
+    with pytest.raises(ValueError, match="method"):
+        sd.eurocode2_slab_check(_slab(method="x"))
+    with pytest.raises(ValueError, match="nu_mode"):
+        sd.eurocode2_slab_check(_slab(nu_mode="x"))
+    with pytest.raises(ValueError, match="do not fit"):
+        sd.eurocode2_slab_check(_slab(method="sandwich", thickness=0.07))
+
+
+def test_sandwich_trace():
+    rep = CalcReport(title="sandwich")
+    sd.eurocode2_slab_check(_slab(method="sandwich"), trace=rep)
+    symbols = {st.symbol for sec in rep.sections for st in sec.steps}
+    assert {"t", "z", "layer bottom", "σ_cd (top)", "A_sx,bot"} <= symbols

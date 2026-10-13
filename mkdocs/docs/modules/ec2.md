@@ -133,8 +133,26 @@ s.asx_bot, s.details["m_rdx"]               # Tables G.2/G.3 optimum capacities
 ```
 
 Tension and sagging moments are positive. `slab_design` takes the design moments of the element (it
-is not a drop-in for `uls.slab_check`, which takes Wood-Armer moments); for `|mxy| ≥ 0,07·d²·fcd` use the
-sandwich model, `annex_g.shell_design`.
+is not a drop-in for `uls.slab_check`, which takes Wood-Armer moments). `SlabInput.method` is `"auto"`
+(default): Tables G.2/G.3 where `|mxy| < 0,07·d²·fcd` and `nEd = 0`, the **sandwich model** (G.4(1)) otherwise
+— two layers `t = 2·c` apart by `z = h − t`, each designed as a membrane, `σcd ≤ ν·fcd` checked per layer
+(`details["crushing"]`); `"optimum"` and `"sandwich"` force one of them. In-plane forces go in `n_x`, `n_y`, `n_xy`.
+
+### Shell elements (sandwich model)
+
+```python
+from eurocodepy.ec2 import uls, uls2023
+
+inp = dict(n_xx=100, n_yy=50, n_xy=20, m_xx=20, m_yy=10, m_xy=5,      # kN/m and kNm/m
+           fck=30, fyk=500, thickness=0.2, cover=0.04)
+r = uls.eurocode2_shell_check(uls.ShellInput(**inp))                  # 2004: strut ≤ ν·fcd, ν = 0,6(1 − fck/250)
+r23 = uls2023.eurocode2_shell_check(uls2023.ShellInput(**inp))        # 2023: Annex G.4, ν = 0,4 or G.9
+r.asx_bot, r.asy_bot, r.asx_top, r.asy_top, r.crushing               # m²/m
+```
+
+Two layers of thickness `t = 2·cover` at `z = h − t` (EN 1992-2 Annex LL); each layer is a membrane (Table G.1 / Annex F);
+`ftd·t/fyd` gives the area and the strut of each layer is checked against `ν·fcd`. Sagging moments put the
+bottom layer in tension.
 
 ### Detailing, EN 1992-1-1:2023 (Clause 12)
 

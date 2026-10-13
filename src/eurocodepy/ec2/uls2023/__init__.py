@@ -76,6 +76,12 @@ from eurocodepy.ec2.uls2023.column import (
 annex_g = _importlib.import_module("eurocodepy.ec2.uls2023.annex_g")
 membrane_check = _importlib.import_module("eurocodepy.ec2.uls2023.membrane_check")
 slab_design = _importlib.import_module("eurocodepy.ec2.uls2023.slab_design")
+shell_check = _importlib.import_module("eurocodepy.ec2.uls2023.shell_check")
+from eurocodepy.ec2.uls2023.shell_check import (
+    ShellInput as ShellInput,
+    ShellResult as ShellResult,
+    eurocode2_shell_check as eurocode2_shell_check,
+)
 from eurocodepy.ec2.uls2023.membrane_check import (
     MembraneInput as MembraneInput,
     MembraneResult as MembraneResult,

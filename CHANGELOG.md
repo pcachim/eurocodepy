@@ -63,7 +63,21 @@ GNU Lesser General Public License v3.0 or later.
   `cot θ` from the quartic G.27). `uls2023.MembraneInput` / `eurocode2_membrane_check` design the membrane with Table G.1
   and check `σcd ≤ ν·fcd` (`nu_mode="simple"` 0,4 or `"strain"`; `fcd` where no reinforcement is needed);
   `uls2023.slab_design.SlabInput` / `eurocode2_slab_check` size the four layers from `mEdx`, `mEdy`, `mEdxy` with
-  Tables G.2/G.3 and the minimum reinforcement of Eq. (12.1), and warn when `|mEdxy| ≥ 0,07·d²·fcd`.
+  Tables G.2/G.3 and the minimum reinforcement of Eq. (12.1). Where `|mEdxy| ≥ 0,07·d²·fcd` (or with in-plane forces
+  `n_x`, `n_y`, `n_xy`) `method="auto"` (default) uses the **sandwich model** of G.4(1)-(3): two layers of thickness
+  `2·c` at the lever arm `z = h − t`, each designed as a membrane (Table G.1, `As = ftd·t/fyd`) with the strut
+  check `σcd ≤ ν·fcd` per layer (`nu_mode` "simple" 0,4 or "strain", Eq. G.9; `details["crushing"]`, `UserWarning`);
+  `method="optimum"` forces the tables (warning outside their range), `"sandwich"` the layers.
+- **Shell elements by the sandwich model**: `ec2.uls.eurocode2_shell_check` (`ShellInput`, `ShellResult`) designs the four
+  orthogonal reinforcements of a shell element (forces `n` and moments `m`) with two layers of thickness `2·c`
+  (EN 1992-2 Annex LL, Eqs. LL.113/LL.134-LL.142), each as a membrane (Annex F, as LL.112 asks), `As = ftd·t/fyd`, and
+  checks the strut of each layer as the membrane (`strut_model` `"annex_f"` default or `"6.109"`). It first checks whether the
+  element is cracked (Annex LL (107), Eqs. LL.101-LL.112, the Ottosen criterion on the principal stresses through the
+  thickness, with the transverse shears `v_x`, `v_y`: `uls.shell.ottosen_phi`, `shell_stresses_at_level`, `shell_cracking`);
+  an element that is not cracked has zero areas and only `σmin ≤ fcd` is checked (LL (103)); `check_cracking=False` designs it as
+  cracked. Not covered from Annex LL: the inner layer / out-of-plane shear ((109)-(111)) and the eccentric reinforcement of (115)c. `ec2.uls2023.eurocode2_shell_check` is the 2023 one (Annex G.4: Table G.1 per layer,
+  `ν = 0,4` or Eq. G.9, `ηcc·ktc`), built on `slab_design`'s sandwich method. Tension and sagging moments are positive;
+  `calc_reinf_shell` follows Annex LL (its "top" layer, `m` positive for tension on the top face).
 - `ec2.concrete_strength_factors(fck, edition, loading)` returns `(η_cc, k_tc, k_tt)`.
 ### Deprecated
 - `eurocodepy.dbobj` (and `eurocodepy.dbase.dbobj`): it was a snapshot of `db` built at import that did not follow
@@ -71,10 +85,16 @@ GNU Lesser General Public License v3.0 or later.
   `__all__`; use dictionary access on `db` instead. It will be removed in 2028.
 ### Changed
 - **Behaviour change (EN 1992-1-1:2004 membranes and slabs):**
-  - `ec2.uls.eurocode2_membrane_check` verifies the concrete against `ν·fcd`, `ν = 0,6·(1 − fck/250)` (the `ν` of the shear
-    struts; EN 1992-1-1:2004 gives none for membranes), and against `fcd` only where no reinforcement is required (biaxial
-    compression). It compared with `fcd`, which was unsafe. `MembraneResult.details` has `nu` and `case`. Trace clauses now say
-    "Annex F" (there is no §6.109 in EN 1992-1-1:2004).
+  - `ec2.uls.eurocode2_membrane_check` verifies the concrete strut as EN 1992-1-1:2004 Annex F.1(3)-(4) asks: `σ ≤ fcd`
+    where no reinforcement is required and "not generally exceed `ν·fcd`", `ν = 0,6·(1 − fck/250)` (Expression 6.5), with
+    reinforcement. It compared with `fcd`, which was unsafe. `MembraneInput.strut_model="6.109"` uses instead the more detailed
+    **EN 1992-2:2005 §6.109(103)** (to which EN 1992-2 Annex F refers): `0,85·fcd·(1 + 3,8α)/(1 + α)²` without reinforcement
+    (Eq. 6.110) and `ν'·fcd·(1 − 0,032·|θ − θel|)` with yielding reinforcement (Eq. 6.112; `θ` the strut angle of the
+    design, `θel` the elastic principal compression direction, `|θ − θel|` limited to 15°: beyond it
+    `details["strut"]["angle_ok"]` is false and the strength is that of 15°). New `uls.shell.annex_f_strut_limit`,
+    `membrane_strut_limit`, `strut_limit`, `principal_stresses`, `elastic_compression_angle` and
+    `deformation_capacity_ok_2004` (`½·ft* ≤ ft ≤ 2·ft*`, F.1(4)); `MembraneResult.details` has `nu` (= σcd,max/fcd), `case`,
+    `strut` and `strut_model`. Trace clauses cite Annex F.1 and §6.109 (there is no §6.109 in EN 1992-1-1:2004: it is EN 1992-2's).
   - `ec2.uls.calc_reinf_plane` returns `cot θ = inf` for `n_xy = 0` with compression in x (was 0) and `nan` where no
     reinforcement is required (the angle is undefined; it was a meaningless number).
   - `ec2.uls.slab_check` (and `uls2023.slab_design`) have `SlabInput.min_reinf`: `"demand"` (default, as before) gives 0 to

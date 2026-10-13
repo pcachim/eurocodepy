@@ -71,6 +71,11 @@ from eurocodepy.ec2.uls.membrane_check import (
     MembraneResult as MembraneResult,
     eurocode2_membrane_check as eurocode2_membrane_check,
 )
+from eurocodepy.ec2.uls.shell_check import (
+    ShellInput as ShellInput,
+    ShellResult as ShellResult,
+    eurocode2_shell_check as eurocode2_shell_check,
+)
 from eurocodepy.ec2.uls.slab_check import (
     SlabInput as SlabInput,
     SlabResult as SlabResult,
@@ -146,6 +151,7 @@ __all__ = [
     "calc_reinf_plane", "calc_reinf_shell",
     # composite membrane check (§6.109)
     "eurocode2_membrane_check", "MembraneInput", "MembraneResult",
+    "eurocode2_shell_check", "ShellInput", "ShellResult",
     # composite slab flexural check (§6.1 / §9.3.1.1)
     "eurocode2_slab_check", "SlabInput", "SlabResult",
     # composite shear + torsion check (§6.2 + §6.3, Eq. 6.29)
