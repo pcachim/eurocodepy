@@ -47,9 +47,9 @@ def test_ec2_2023_fcd_fctd_scalar_overrides():
     d2023 = dbase.get_edition_data("ec2", "2023")
     params = d2023["Concrete"]["Parameters"]
     assert params["fck_ref"] == 40.0
-    assert params["k_tc"]["short_loading"] == 1.0
+    assert params["k_tc"]["late_loading"] == 1.0
     assert params["k_tc"]["other"] == 0.85
-    assert params["k_tt"]["short_loading"] == 0.8
+    assert params["k_tt"]["late_loading"] == 0.8
     assert params["k_tt"]["other"] == 0.7
     # gamma_cc etc. from the 2004 base are untouched siblings
     assert params["gamma_cc"] == dbase.ConcreteParams["gamma_cc"]

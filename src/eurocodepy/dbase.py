@@ -3,7 +3,10 @@
 
 import copy
 import json
+import warnings
 from pathlib import Path
+
+from eurocodepy import annex as _annex
 
 """eurocodepy.dbase.
 ====================
@@ -19,19 +22,16 @@ Features:
 - Loads steel profile data (I, SHS, RHS, CHS) from separate JSON files and integrates them into the main database.
 - Exposes both dictionary-based and attribute-based (object) access to the database.
 - Offers convenience variables for direct access to common sub-databases (e.g., ConcreteGrades, SteelParams).
-- Includes functions for converting dictionaries to objects for attribute-style access.
 
 Usage Examples:
 ---------------
 - Dictionary access:
     db["Materials"]["Timber"]["Grade"]["C24"]["fcd"]
-- Attribute access:
-    dbobj.Materials.Timber.Grade.C24.fcd
 
 Available Variables:
 --------------------
 - db: Main Eurocodes database as a dictionary.
-- dbobj: Main Eurocodes database as an object (attribute access).
+- dbobj: deprecated, a snapshot of ``db`` with attribute access (built when asked for, not at import).
 - Materials, Concrete, Steel, Timber, Reinforcement, Prestress, Bolts: Material sub-databases.
 - ConcreteGrades, SteelGrades, TimberGrades, ReinforcementGrades, PrestressGrades, BoltGrades: Grade sub-databases.
 - ConcreteParams, SteelParams, TimberParams, ReinforcementParams, PrestressParams: Parameter sub-databases.
@@ -72,7 +72,42 @@ prof_name = base_path / "chs_profiles_euro.json"
 with prof_name.open(encoding="utf-8") as f:
     db["SteelProfiles"]["EuroCHS"] = json.loads(f.read())
 
-dbobj = __dict2obj(db)
+
+# The country data of the actions lives in the national annex files
+# (data/national_annexes/<COUNTRY>.json); it is merged here, next to the EU data,
+# so that ``db["Loads"][...]["Locale"][country]`` keeps working for every reader.
+_LOADS_PATH = {"live": ("Live", "Locale"), "seismic": ("Seismic", "Locale"),
+               "wind": ("Wind", "locale")}
+
+
+def _merge_annex_loads(country: str, loads: dict) -> None:
+    for kind, data in loads.items():
+        parent, key = _LOADS_PATH[kind]
+        db["Loads"][parent][key][country] = copy.deepcopy(data)
+
+
+def _remove_annex_loads(country: str) -> None:
+    for parent, key in _LOADS_PATH.values():
+        db["Loads"][parent][key].pop(country, None)
+
+
+for _country in _annex.available_annexes():
+    _merge_annex_loads(_country, _annex.get_annex(_country).get("loads", {}))
+
+
+def __getattr__(name: str) -> object:
+    """Build the deprecated ``dbobj`` only when it is asked for (PEP 562)."""
+    if name == "dbobj":
+        warnings.warn(
+            "eurocodepy.dbobj is deprecated and will be removed in 2028; "
+            "use dictionary access on eurocodepy.db instead, "
+            'e.g. db["Materials"]["Timber"]["Grade"]["C24"]["fcd"]. '
+            "It is a snapshot of the database at the time it is requested.",
+            DeprecationWarning, stacklevel=2)
+        return __dict2obj(db)
+    msg = f"module {__name__!r} has no attribute {name!r}"
+    raise AttributeError(msg)
+
 
 Materials = db["Materials"]
 
@@ -159,12 +194,51 @@ def _set_by_dotpath(target: dict, path: str, value: object) -> None:
         node[last] = value
 
 
-def get_edition_data(eurocode: str, edition: str | None = None) -> dict:
-    """Return the ``Materials`` dict resolved for the requested edition.
+def resolve_edition(eurocode: str, edition: str | None = None) -> str | None:
+    """Return the edition name that ``edition`` resolves to.
+
+    ``None`` resolves to the edition marked ``"default": true`` for that
+    eurocode, or to ``None`` when ``Editions`` has no entry for it (the base,
+    "2004"-equivalent data). A name that is not registered is returned as
+    given, so callers can tell it apart from the default.
+    """
+    if edition is not None:
+        return edition
+    editions = db.get("Editions", {}).get(eurocode, {})
+    return next((e for e, v in editions.items() if v.get("default")), None)
+
+
+def register_annex(source: object, *, replace: bool = False) -> str:
+    """Register a national annex (a JSON file or a dict, see :mod:`eurocodepy.annex`).
+
+    Its ``loads`` become available next to the EU ones (``wind_get_params``,
+    ``seismic_get_params``, EC1/EC7/EC8) and its ``editions`` patches through the
+    ``annex=`` argument. Returns the country code.
+    """
+    country = _annex.register_annex(source, replace=replace)
+    _remove_annex_loads(country)
+    _merge_annex_loads(country, _annex.get_annex(country).get("loads", {}))
+    return country
+
+
+def unregister_annex(country: str) -> None:
+    """Remove a national annex and its loads from the database."""
+    _annex.unregister_annex(country)
+    _remove_annex_loads(str(country).strip().upper())
+
+
+available_annexes = _annex.available_annexes
+get_annex = _annex.get_annex
+
+
+def get_edition_data(eurocode: str, edition: str | None = None,
+                     annex: str | None = None) -> dict:
+    """Return the ``Materials`` dict resolved for the requested edition and annex.
 
     Applies the deltas in ``Editions.<eurocode>.<edition>.overrides`` on top
-    of a deep copy of ``db["Materials"]``. Never mutates or returns a
-    reference to the shared global ``db`` state.
+    of a deep copy of ``db["Materials"]``, then those of the national annex
+    (``editions.<eurocode>.<edition>.overrides`` of its file). Never mutates or
+    returns a reference to the shared global ``db`` state.
 
     Parameters
     ----------
@@ -178,27 +252,33 @@ def get_edition_data(eurocode: str, edition: str | None = None) -> dict:
         eurocode that has not been given any edition overrides yet), the
         base ``Materials`` dict is returned unchanged — identical to
         today's behaviour before this function existed.
+    annex:
+        Country code of a national annex (``"PT"``); ``None`` is the values
+        recommended by the Eurocode. An unknown code raises ``ValueError``.
 
     Returns
     -------
     dict
         A standalone deep copy of ``Materials`` with the requested
-        edition's overrides applied (if any).
+        edition's overrides (and the annex's) applied (if any).
     """
     base = copy.deepcopy(db["Materials"])
     editions = db.get("Editions", {}).get(eurocode, {})
-    if edition is None:
-        edition = next((e for e, v in editions.items() if v.get("default")), None)
-    if edition is None or edition not in editions:
-        return base
-    for path, value in editions[edition].get("overrides", {}).items():
-        # a copy: lists and dicts of the override must not be shared with the
-        # global database, or editing the result would edit it
-        _set_by_dotpath(base, path, copy.deepcopy(value))
+    edition = resolve_edition(eurocode, edition)
+    if edition is not None and edition in editions:
+        for path, value in editions[edition].get("overrides", {}).items():
+            # a copy: lists and dicts of the override must not be shared with the
+            # global database, or editing the result would edit it
+            _set_by_dotpath(base, path, copy.deepcopy(value))
+    if annex is not None:
+        patch = _annex.get_edition_patch(annex, eurocode, edition)
+        for path, value in patch.get("overrides", {}).items():
+            _set_by_dotpath(base, path, value)
     return base
 
 
-def get_edition_params(eurocode: str, section: str, edition: str | None = None) -> dict:
+def get_edition_params(eurocode: str, section: str, edition: str | None = None,
+                       annex: str | None = None) -> dict:
     """Return a non-material parameter section for one eurocode edition.
 
     Some edition-specific design parameters are not material properties (so
@@ -211,14 +291,22 @@ def get_edition_params(eurocode: str, section: str, edition: str | None = None) 
     e.g. calling this for the "2004" edition, which has no ``punch_params``
     section, simply returns ``{}``.
 
-    Returns a shallow copy, so callers cannot mutate the shared ``db`` state.
+    With ``annex`` the section of the national annex (same name, same edition) is
+    deep-merged over it, so an annex can change one value of a table and leave the
+    rest as recommended; it can also supply a section the edition does not have.
+
+    Returns a deep copy, so callers cannot mutate the shared ``db`` state.
     """
     editions = db.get("Editions", {}).get(eurocode, {})
-    if edition is None:
-        edition = next((e for e, v in editions.items() if v.get("default")), None)
-    if edition is None or edition not in editions:
-        return {}
-    return copy.deepcopy(dict(editions[edition].get(section, {})))
+    edition = resolve_edition(eurocode, edition)
+    out: dict = {}
+    if edition is not None and edition in editions:
+        out = copy.deepcopy(dict(editions[edition].get(section, {})))
+    if annex is not None:
+        patch = _annex.get_edition_patch(annex, eurocode, edition).get(section)
+        if patch:
+            _deep_merge(out, copy.deepcopy(patch))
+    return out
 
 
 class EurocodeMaterials:
@@ -233,10 +321,12 @@ class EurocodeMaterials:
         mats.Concrete["Parameters"]["alpha_cc"]
     """
 
-    def __init__(self, eurocode: str, edition: str | None = None) -> None:
+    def __init__(self, eurocode: str, edition: str | None = None,
+                 annex: str | None = None) -> None:
         self._eurocode = eurocode
         self._edition = edition
-        self._data = get_edition_data(eurocode, edition)
+        self._annex = annex
+        self._data = get_edition_data(eurocode, edition, annex)
 
     def __getattr__(self, name: str) -> object:
         try:
@@ -251,5 +341,5 @@ class EurocodeMaterials:
     def __repr__(self) -> str:
         return (
             f"EurocodeMaterials(eurocode={self._eurocode!r}, "
-            f"edition={self._edition!r})"
+            f"edition={self._edition!r}, annex={self._annex!r})"
         )

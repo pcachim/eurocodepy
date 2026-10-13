@@ -193,3 +193,43 @@ cs = crosssection([(0, 0), (300, 0), (300, 600), (0, 600)])
 print(cs)
 ```
 
+
+---
+
+## How to use a National Annex
+
+The values in `eurocodes.json` are the ones recommended by the Eurocodes. What a National
+Annex changes is a patch kept in its own file, `data/national_annexes/<COUNTRY>.json`
+(Portugal's is built in: its wind, seismic and live-load data). The functions that depend on
+Nationally Determined Parameters take `annex=` with the country code:
+
+```python
+from eurocodepy.ec2 import Concrete, material_partial_factors
+from eurocodepy.ec2.uls2023 import detailing
+
+Concrete("C30/37", edition="2023", annex="PT")        # the annex's values, if it has any
+material_partial_factors("2023", "persistent")         # annex=None: the Eurocode's values
+detailing.beam_max_spacings(0.5, annex="PT")
+```
+
+An unknown code raises `ValueError` and lists the available ones. Add your own annex (a JSON
+file or a dict) with `register_annex`; it has the same shape as the `Editions` entries of
+`eurocodes.json`, so it patches one value of a table and leaves the rest as recommended:
+
+```python
+import eurocodepy as ec
+
+ec.register_annex({
+    "country": "XX",
+    "editions": {"ec2": {"2023": {
+        "partial_factors": {"materials": {"persistent": {"gamma_c": 1.4}}},
+        "detailing": {"beams": {"s_l_max": 0.7}},
+    }}},
+})
+Concrete("C30/37", edition="2023", annex="XX").gamma_c    # 1.4
+ec.available_annexes()                                      # ['PT', 'XX']
+```
+
+`loads` (`wind`, `seismic`, `live`) in the file add the country next to `EU`, so
+`wind_get_params("XX", ...)` and the EC1/EC7/EC8 functions find it. The package only ships the
+values it can source; it never invents an annex.

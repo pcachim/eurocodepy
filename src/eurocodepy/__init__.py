@@ -82,8 +82,11 @@ from eurocodepy.dbase import (  # noqa: E402
     TimberParams as TimberParams,
     TimberServiceClasses as TimberServiceClasses,
     WindLoads as WindLoads,
+    available_annexes as available_annexes,
     db as db,
-    dbobj as dbobj,
+    get_annex as get_annex,
+    register_annex as register_annex,
+    unregister_annex as unregister_annex,
 )
 
 # General function imports
@@ -162,8 +165,11 @@ __all__ = [
     "TimberParams",
     "TimberServiceClasses",
     "WindLoads",
+    "available_annexes",
     "db",
-    "dbobj",
+    "get_annex",
+    "register_annex",
+    "unregister_annex",
     "wind",
     "get_spec_params",
     "spectrum",
@@ -191,3 +197,13 @@ __all__ = [
     "Weld",
     "Timber",
 ]
+
+
+def __getattr__(name: str) -> object:
+    """Forward the deprecated ``eurocodepy.dbobj`` to :mod:`eurocodepy.dbase` (PEP 562)."""
+    if name == "dbobj":
+        from eurocodepy import dbase  # noqa: PLC0415
+
+        return dbase.__getattr__("dbobj")
+    msg = f"module {__name__!r} has no attribute {name!r}"
+    raise AttributeError(msg)

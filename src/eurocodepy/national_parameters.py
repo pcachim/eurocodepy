@@ -1,5 +1,6 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
+import copy
 import csv
 from dataclasses import dataclass
 from enum import Enum
@@ -159,7 +160,19 @@ def wind_get_params(code: str = "PT", zone: str = "ZonaA", terrain: str = "II") 
     terrain = str.upper(terrain)
     code = str.upper(code)
 
-    wind = WindLoads["locale"][code]
+    codes = WindLoads["locale"]
+    if code not in codes:
+        msg = f"Invalid code: {code}. Available codes: {list(codes)}"
+        raise ValueError(msg)
+    wind = codes[code]
+    if zone not in wind["base_velocity"]:
+        msg = (f"Invalid wind zone: {zone}. Available zones for {code}: "
+               f"{list(wind['base_velocity'])}")
+        raise ValueError(msg)
+    if terrain not in wind["terrain"]:
+        msg = (f"Invalid terrain: {terrain}. Available terrains for {code}: "
+               f"{list(wind['terrain'])}")
+        raise ValueError(msg)
     vb0 = wind["base_velocity"][zone]["vb0"]
     z0 = wind["terrain"][terrain]["z0"]
     z0II = wind["terrain"]["II"]["z0"]  # noqa: N806
@@ -203,25 +216,24 @@ def seismic_get_params(code, seismic_type, soil_type, importance_class) -> dict:
     soil_type = str.upper(soil_type)
     importance_class = str.lower(importance_class)
     if code not in SeismicLoads["Locale"]:
-        msg = f"Invalid code: {code}. Available codes: {
-            list(SeismicLoads['Locale'].keys())}"
+        msg = f"Invalid code: {code}. Available codes: {list(SeismicLoads['Locale'])}"
         raise ValueError(msg)
-    if seismic_type not in SeismicLoads["Locale"][code]["Spectrum"]:
-        msg = f"Invalid seismic type: {seismic_type}. Available types: {
-            list(SeismicLoads['Locale'][code]['Spectrum'].keys())}"
+    locale_data = SeismicLoads["Locale"][code]
+    if seismic_type not in locale_data["Spectrum"]:
+        msg = (f"Invalid seismic type: {seismic_type}. Available types: "
+               f"{list(locale_data['Spectrum'])}")
         raise ValueError(msg)
-    if soil_type not in SeismicLoads["Locale"][code]["Spectrum"][seismic_type]:
-        msg = f"Invalid soil type: {soil_type}. Available types: {
-            list(SeismicLoads['Locale'][code]['Spectrum'][seismic_type].keys())}"
+    if soil_type not in locale_data["Spectrum"][seismic_type]:
+        msg = (f"Invalid soil type: {soil_type}. Available types: "
+               f"{list(locale_data['Spectrum'][seismic_type])}")
         raise ValueError(msg)
-    if importance_class not in SeismicLoads["Locale"][code]["ImportanceClass"]:
-        msg = f"Invalid importance class: {importance_class}. Available classes: {
-            list(SeismicLoads['Locale'][code]['ImportanceCoef'].keys())}"
+    if importance_class not in locale_data["ImportanceClass"]:
+        msg = (f"Invalid importance class: {importance_class}. Available classes: "
+               f"{list(locale_data['ImportanceClass'])}")
         raise ValueError(msg)
 
-    # Retrieve the spectrum parameters
-    spectrum = SeismicLoads["Locale"
-            ][code]["Spectrum"][seismic_type][str.upper(soil_type)]
-    spectrum["ImportanceCoef"] = SeismicLoads["Locale"
-            ][code]["ImportanceCoef"][seismic_type][importance_class]
+    # A copy: the database is shared, and ImportanceCoef is specific to this call
+    spectrum = copy.deepcopy(locale_data["Spectrum"][seismic_type][soil_type])
+    spectrum["ImportanceCoef"] = locale_data["ImportanceCoef"][seismic_type][
+        importance_class]
     return spectrum

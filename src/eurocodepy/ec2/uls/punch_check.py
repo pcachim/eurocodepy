@@ -37,12 +37,13 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from eurocodepy import dbase
+from eurocodepy.ec2.materials import PartialFactorsMixin
 
 _MM = 1000.0     # m → mm
 
 
 @dataclass
-class PunchInput:
+class PunchInput(PartialFactorsMixin):
     """Column / slab data for a §6.4 punching check (SI: m, MPa)."""
 
     d: float                  # effective depth [m]
@@ -60,6 +61,7 @@ class PunchInput:
     dmax: float | None = None     # max aggregate size [mm] (:2023); None -> from Editions
     eta_sys: float | None = None  # system factor η_sys (:2023); None -> from Editions
     edition: str = "2004"     # '2004' | '2023'
+    annex: str | None = None  # national annex of the NDPs (dmax, eta_sys); None = EN values
 
     def __post_init__(self) -> None:
         """Resolve ``dmax``/``eta_sys`` from the versioned edition data.
@@ -69,7 +71,7 @@ class PunchInput:
         ``2023`` edition -- the ``2004`` edition never uses these fields.
         """
         if str(self.edition) == "2023":
-            params = dbase.get_edition_params("ec2", "punch_params", "2023")
+            params = dbase.get_edition_params("ec2", "punch_params", "2023", self.annex)
             if self.dmax is None:
                 self.dmax = params.get("dmax", 20.0)
             if self.eta_sys is None:

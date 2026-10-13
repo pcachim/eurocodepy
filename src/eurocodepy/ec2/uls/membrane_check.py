@@ -11,14 +11,17 @@ membrane design has a single source of truth and a uniform result object with an
 optional calculation trace, exactly like the §6.2 shear and §6.4 punching checks.
 
 * resolve the membrane forces ``n_xx, n_yy, n_xy`` [kN/m] into the reinforcement
-  forces ``n_sx, n_sy`` and the concrete compression ``n_c`` (§6.109, via
+  forces ``n_sx, n_sy`` and the concrete compression ``n_c`` (EN 1992-1-1 Annex F, via
   :func:`calc_reinf_plane`);
 * size the orthogonal reinforcement ``As_x = max(n_sx, 0)/f_yd``,
   ``As_y = max(n_sy, 0)/f_yd`` [m²/m] and split each evenly between a top and a
   bottom layer (the usual orthogonal-mesh detailing);
-* check the concrete stress ``σ_c = n_c / t`` against ``f_cd`` — a simplified
-  crushing check (no §6.109 cracked-concrete ν reduction), at the same level of
-  rigour as the beam-shear crushing check.
+* check the concrete stress ``σ_c = n_c / t`` against ``ν·f_cd`` with
+  ``ν = 0.6·(1 − f_ck/250)``, the strength reduction of cracked concrete under
+  transverse tension used for the shear struts (§6.2.3); where no reinforcement is
+  required (biaxial compression) against ``f_cd``. EN 1992-1-1:2004 gives no ``ν``
+  for membranes, so this is the same ``ν`` as the beam-shear crushing check; the
+  2023 equivalent is ``ec2.uls2023.membrane_check`` (Annex G, ``ν = 0,4`` or Eq. G.9).
 
 Units: forces per unit length in **kN/m**, strengths in **MPa**, thickness in
 **m**, reinforcement areas in **m²/m**.
@@ -28,11 +31,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from eurocodepy.ec2.materials import PartialFactorsMixin
 from eurocodepy.ec2.uls.shell import calc_reinf_plane
 
 
 @dataclass
-class MembraneInput:
+class MembraneInput(PartialFactorsMixin):
     """Concrete membrane (plane-stress) element data for the reinforcement design."""
 
     n_xx: float               # membrane force per unit length, x [kN/m]
@@ -100,13 +104,13 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
     t = inp.thickness
 
     nsx, nsy, nc, theta = calc_reinf_plane(inp.n_xx, inp.n_yy, inp.n_xy)
+    nu = 0.6 * (1.0 - inp.fck / 250.0)
     asx = max(nsx, 0.0) / fyd if fyd > 0 else 0.0    # [m²/m]
     asy = max(nsy, 0.0) / fyd if fyd > 0 else 0.0
     sigma_c = nc / t if t > 0 else 0.0                # [kN/m²]
-    crushing = bool(nc > fcd * t)
 
     _sec("Membrane forces (per unit length)")
-    _t("n_xx", inp.n_xx, "kN/m", clause="EN 1992-1-1 §6.109",
+    _t("n_xx", inp.n_xx, "kN/m", clause="EN 1992-1-1 Annex F",
        expr="n_xx = σ_x·t", latex=r"n_{xx}=\sigma_x\,t")
     _t("n_yy", inp.n_yy, "kN/m", expr="n_yy = σ_y·t",
        latex=r"n_{yy}=\sigma_y\,t")
@@ -140,35 +144,40 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
     else:
         branch = "biaxial compression"
 
+    # ν·fcd where the compression field is crossed by tension reinforcement; fcd where
+    # both stresses are compressive and no reinforcement is required (biaxial compression)
+    nu_used = 1.0 if branch == "biaxial compression" else nu
+    crushing = bool(nc > nu_used * fcd * t)
+
     _sec("Reinforcement (Wood/Baumann)")
-    _t("θ", theta, "—", clause="EN 1992-1-1 §6.109",
+    _t("θ", theta, "—", clause="EN 1992-1-1 Annex F",
        note=f"compression-field angle parameter (cot θ), branch: {branch}")
     if branch == "biaxial tension":
-        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 §6.109",
+        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 Annex F",
            expr="n_sx = n_xx + |n_xy|", note="biaxial-tension branch",
            subst=f"{n_xx:.4g} + |{n_xy:.4g}|")
         _t("n_sy", nsy, "kN/m", expr="n_sy = n_yy + |n_xy|",
            note="biaxial-tension branch",
            subst=f"{n_yy:.4g} + |{n_xy:.4g}|")
     elif branch == "x compression":
-        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 §6.109",
+        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 Annex F",
            expr="n_sx = 0", note="x-compression branch (concrete alone carries x)")
         _t("n_sy", nsy, "kN/m", expr="n_sy = n_yy + n_xy²/|n_xx|",
            note="x-compression branch",
            subst=f"{n_yy:.4g} + {n_xy:.4g}²/|{n_xx:.4g}|")
     elif branch == "y compression":
-        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 §6.109",
+        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 Annex F",
            expr="n_sx = n_xx + n_xy²/|n_yy|", note="y-compression branch",
            subst=f"{n_xx:.4g} + {n_xy:.4g}²/|{n_yy:.4g}|")
         _t("n_sy", nsy, "kN/m", expr="n_sy = 0",
            note="y-compression branch (concrete alone carries y)")
     else:
-        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 §6.109",
+        _t("n_sx", nsx, "kN/m", clause="EN 1992-1-1 Annex F",
            expr="n_sx = 0", note="biaxial-compression branch — no reinforcement "
                                   "governs, concrete-only compression field")
         _t("n_sy", nsy, "kN/m", expr="n_sy = 0",
            note="biaxial-compression branch")
-    _t("A_sx", asx * 1e4, "cm²/m", clause="EN 1992-1-1 §6.109",
+    _t("A_sx", asx * 1e4, "cm²/m", clause="EN 1992-1-1 Annex F",
        expr="A_sx = max(n_sx, 0)/f_yd", latex=r"A_{sx}=\max(n_{sx},0)/f_{yd}",
        subst=f"max({nsx:.4g}, 0)/{fyd / 1e3:.4g}")
     _t("A_sy", asy * 1e4, "cm²/m",
@@ -180,14 +189,17 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
     _t("A_sy,top", asy / 2.0 * 1e4, "cm²/m")
 
     _sec("Concrete crushing")
-    _t("σ_c", sigma_c / 1e3, "MPa", clause="EN 1992-1-1 §6.109",
+    _t("σ_c", sigma_c / 1e3, "MPa", clause="EN 1992-1-1 Annex F",
        expr="σ_c = n_c/t", latex=r"\sigma_c=n_c/t",
        subst=f"{nc:.4g}/{t:g}")
     _t("f_cd", fcd / 1e3, "MPa", expr="f_cd = α_cc·f_ck/γ_c",
        subst=f"{inp.alpha_cc:g}·{inp.fck:g}/{inp.gamma_c:g}")
-    _t("σ_c ≤ f_cd", sigma_c / 1e3, "MPa", ok=(not crushing),
-       subst=f"{sigma_c / 1e3:.3g} ≤ {fcd / 1e3:.3g}",
-       note="simplified crushing check (no §6.109 ν reduction)")
+    _t("ν", nu_used, "—", clause="EN 1992-1-1 §6.2.3(1)",
+       expr="ν = 0.6·(1 − f_ck/250)" if branch != "biaxial compression" else "ν = 1",
+       note=("cracked concrete, as for the shear struts" if branch != "biaxial compression"
+             else "biaxial compression: no reinforcement, σ ≤ f_cd"))
+    _t("σ_c ≤ ν·f_cd", sigma_c / 1e3, "MPa", ok=(not crushing),
+       subst=f"{sigma_c / 1e3:.3g} ≤ {nu_used * fcd / 1e3:.3g}")
 
     return MembraneResult(
         asx=asx, asy=asy,
@@ -195,4 +207,4 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
         asy_bot=asy / 2.0, asy_top=asy / 2.0,
         nsx=nsx, nsy=nsy, nc=nc, sigma_c=sigma_c, fcd=fcd,
         theta=theta, crushing=crushing,
-        details={"fyd": fyd})
+        details={"fyd": fyd, "nu": nu_used, "case": branch})

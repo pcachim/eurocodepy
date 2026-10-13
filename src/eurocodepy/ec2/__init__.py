@@ -63,6 +63,8 @@ from eurocodepy.ec2.materials import (
     cemprops as cemprops,
     get_concrete as get_concrete,
     get_reinforcement as get_reinforcement,
+    material_partial_factors as material_partial_factors,
+    prestress_partial_factors as prestress_partial_factors,
 )
 from eurocodepy.ec2 import (
     fire as fire,
@@ -174,6 +176,8 @@ __all__ = [
     "ReinforcementGrades",
     "ShrinkStrainParams",
     "beta_cc",
+    "material_partial_factors",
+    "prestress_partial_factors",
     "beta_ce",
     "calc_creep_coef",
     "calc_shrink_strain",

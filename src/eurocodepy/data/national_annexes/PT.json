@@ -1,0 +1,545 @@
+{
+    "country": "PT",
+    "name": "Portugal",
+    "source": "Portuguese National Annexes (values moved from eurocodes.json; no EN 1992-1-1:2023 patch yet)",
+    "version": "1",
+    "loads": {
+        "live": {
+            "A": {
+                "Description": "Areas for domestic and residential activities",
+                "psi_0": 0.7,
+                "psi_1": 0.5,
+                "psi_2": 0.3,
+                "A1": {
+                    "Description": "Floors",
+                    "q_k_rec": 2.0,
+                    "Q_k_rec": 2.0,
+                    "q_k_min": 2.0,
+                    "q_k_max": 2.0,
+                    "Q_k_min": 2.0,
+                    "Q_k_max": 2.0
+                },
+                "A2": {
+                    "Description": "Stairs",
+                    "q_k_rec": 2.0,
+                    "Q_k_rec": 2.0,
+                    "q_k_min": 2.0,
+                    "q_k_max": 2.0,
+                    "Q_k_min": 2.0,
+                    "Q_k_max": 2.0
+                },
+                "A3": {
+                    "Description": "Balconies",
+                    "q_k_rec": 2.0,
+                    "Q_k_rec": 2.0,
+                    "q_k_min": 2.0,
+                    "q_k_max": 2.0,
+                    "Q_k_min": 2.0,
+                    "Q_k_max": 2.0
+                }
+            },
+            "B": {
+                "Description": "Office areas",
+                "q_k_rec": 3.0,
+                "Q_k_rec": 4.0,
+                "q_k_min": 3.0,
+                "q_k_max": 3.0,
+                "Q_k_min": 4.0,
+                "Q_k_max": 4.0,
+                "psi_0": 0.7,
+                "psi_1": 0.5,
+                "psi_2": 0.3
+            },
+            "C": {
+                "Description": "Areas where people may congregate",
+                "psi_0": 0.7,
+                "psi_1": 0.7,
+                "psi_2": 0.6,
+                "C1": {
+                    "Description": "Areas with tables, etc. (e.g. schools, cafes, restaurants)",
+                    "q_k_rec": 3.0,
+                    "Q_k_rec": 4.0,
+                    "q_k_min": 3.0,
+                    "q_k_max": 3.0,
+                    "Q_k_min": 4.0,
+                    "Q_k_max": 4.0
+                },
+                "C2": {
+                    "Description": "Areas with fixed seating (e.g. churches, theatres, cinemas, classrooms)",
+                    "q_k_rec": 4.0,
+                    "Q_k_rec": 4.0,
+                    "q_k_min": 4.0,
+                    "q_k_max": 4.0,
+                    "Q_k_min": 4.0,
+                    "Q_k_max": 4.0
+                },
+                "C3": {
+                    "Description": "Areas without obstructions to movement (e.g. museums, exhibition halls)",
+                    "q_k_rec": 5.0,
+                    "Q_k_rec": 4.0,
+                    "q_k_min": 5.0,
+                    "q_k_max": 5.0,
+                    "Q_k_min": 4.0,
+                    "Q_k_max": 4.0
+                },
+                "C4": {
+                    "Description": "Areas for physical activities (e.g. dance halls, gymnasiums)",
+                    "q_k_rec": 5.0,
+                    "Q_k_rec": 7.0,
+                    "q_k_min": 5.0,
+                    "q_k_max": 5.0,
+                    "Q_k_min": 7.0,
+                    "Q_k_max": 7.0
+                },
+                "C5": {
+                    "Description": "Areas subject to large crowds (e.g. public buildings, railway stations)",
+                    "q_k_rec": 5.0,
+                    "Q_k_rec": 6.0,
+                    "q_k_min": 5.0,
+                    "q_k_max": 5.0,
+                    "Q_k_min": 6.0,
+                    "Q_k_max": 6.0
+                }
+            },
+            "D": {
+                "Description": "Shopping areas",
+                "psi_0": 0.7,
+                "psi_1": 0.7,
+                "psi_2": 0.6,
+                "D1": {
+                    "Description": "Areas in general retail shops",
+                    "q_k_rec": 4.0,
+                    "Q_k_rec": 4.0,
+                    "q_k_min": 4.0,
+                    "q_k_max": 4.0,
+                    "Q_k_min": 4.0,
+                    "Q_k_max": 4.0
+                },
+                "D2": {
+                    "Description": "Areas in department stores",
+                    "q_k_rec": 5.0,
+                    "Q_k_rec": 6.0,
+                    "q_k_min": 5.0,
+                    "q_k_max": 5.0,
+                    "Q_k_min": 6.0,
+                    "Q_k_max": 6.0
+                }
+            },
+            "E": {
+                "Description": "Areas for storage and industrial activities",
+                "psi_0": 1.0,
+                "psi_1": 0.9,
+                "psi_2": 0.8,
+                "E1": {
+                    "Description": "Areas susceptible to accumulation of goods, including access areas",
+                    "q_k_rec": 7.5,
+                    "Q_k_rec": 7.0,
+                    "q_k_min": 7.5,
+                    "q_k_max": 7.5,
+                    "Q_k_min": 7.0,
+                    "Q_k_max": 7.0
+                },
+                "FL": {
+                    "Description": "Fork lift",
+                    "Dynamic_factor": {
+                        "Pneumatic": 1.4,
+                        "Solid": 2.0
+                    },
+                    "Wheel": 0.2,
+                    "FL1": {
+                        "Net weight [kN]": 21,
+                        "Lifting load [kN]": 10,
+                        "Axle width [m]": 0.85,
+                        "Total width [m]": 1.0,
+                        "Total length [m]": 2.6,
+                        "Axle load Q_k [kN]": 26
+                    },
+                    "FL2": {
+                        "Net weight [kN]": 31,
+                        "Lifting load [kN]": 15,
+                        "Axle width [m]": 0.95,
+                        "Total width [m]": 1.1,
+                        "Total length [m]": 3.0,
+                        "Axle load Q_k [kN]": 40
+                    },
+                    "FL3": {
+                        "Net weight [kN]": 44,
+                        "Lifting load [kN]": 25,
+                        "Axle width [m]": 1.0,
+                        "Total width [m]": 1.2,
+                        "Total length [m]": 3.3,
+                        "Axle load Q_k [kN]": 63
+                    },
+                    "FL4": {
+                        "Net weight [kN]": 60,
+                        "Lifting load [kN]": 40,
+                        "Axle width [m]": 1.2,
+                        "Total width [m]": 1.4,
+                        "Total length [m]": 4.0,
+                        "Axle load Q_k [kN]": 90
+                    },
+                    "FL5": {
+                        "Net weight [kN]": 90,
+                        "Lifting load [kN]": 60,
+                        "Axle width [m]": 1.5,
+                        "Total width [m]": 1.9,
+                        "Total length [m]": 4.6,
+                        "Axle load Q_k [kN]": 140
+                    },
+                    "FL6": {
+                        "Net weight [kN]": 110,
+                        "Lifting load [kN]": 80,
+                        "Axle width [m]": 1.8,
+                        "Total width [m]": 2.3,
+                        "Total length [m]": 5.1,
+                        "Axle load Q_k [kN]": 170
+                    }
+                }
+            },
+            "F": {
+                "Description": "Vehicle traffic areas (gross weight <= 30 kN)",
+                "psi_0": 0.7,
+                "psi_1": 0.7,
+                "psi_2": 0.6,
+                "q_k_rec": 2.5,
+                "Q_k_rec": 15.0,
+                "q_k_min": 2.5,
+                "q_k_max": 2.5,
+                "Q_k_min": 15.0,
+                "Q_k_max": 15.0
+            },
+            "G": {
+                "Description": "Vehicle traffic areas (gross weight 30 to 160 kN)",
+                "psi_0": 0.7,
+                "psi_1": 0.5,
+                "psi_2": 0.3,
+                "q_k_rec": 5.0,
+                "Q_k_rec": 75.0,
+                "q_k_min": 5.0,
+                "q_k_max": 5.0,
+                "Q_k_min": 75.0,
+                "Q_k_max": 75.0
+            },
+            "H": {
+                "Description": "Roofs not accessible except for normal maintenance and repair.",
+                "psi_0": 0.0,
+                "psi_1": 0.0,
+                "psi_2": 0.0,
+                "q_k_rec": 0.4,
+                "Q_k_rec": 1.0,
+                "q_k_min": 0.4,
+                "q_k_max": 0.4,
+                "Q_k_min": 1.0,
+                "Q_k_max": 1.0
+            },
+            "I": {
+                "Description": "Roofs accessible with occupancy according to categories A to G.",
+                "psi_0": 0.0,
+                "psi_1": 0.0,
+                "psi_2": 0.0
+            },
+            "J": {
+                "Description": "Roofs accessible for special services, such as helicopter landing areas",
+                "Dynamic_factor": 1.4,
+                "psi_0": 0.0,
+                "psi_1": 0.0,
+                "psi_2": 0.0,
+                "HC1": {
+                    "Description": "Take-off load Q of helicopter ≤ 20 kN",
+                    "Take_off_load": 20,
+                    "Wheel": 0.2
+                },
+                "HC2": {
+                    "Description": "Take-off load Q of helicopter ≤ 60 kN",
+                    "Take_off_load": 60,
+                    "Wheel": 0.3
+                }
+            }
+        },
+        "seismic": {
+            "SoilType": {
+                "A": {
+                    "desc": "Rocha ou outra formação geológica de tipo rochoso, que inclua, no máximo, 5 m de material mais fraco à superfície.",
+                    "v_s30": ">800",
+                    "N_SPT": "-",
+                    "C_U": "-"
+                },
+                "B": {
+                    "desc": "Depósitos de areia muito compacta, de seixo (cascalho) ou de argila muito rija, com uma espessura de, pelo menos, várias dezenas de metros, caracterizados por um aumento gradual das propriedades mecânicas com a profundidade.",
+                    "v_s30": "360-800",
+                    "N_SPT": ">50",
+                    "C_U": ">250"
+                },
+                "C": {
+                    "desc": "Depósitos profundos de areia compacta ou medianamente compacta, de seixo (cascalho) ou de argila rija com uma espessura entre várias dezenas e muitas centenas de metros.",
+                    "v_s30": "180-360",
+                    "N_SPT": "15-50",
+                    "C_U": "70-250"
+                },
+                "D": {
+                    "desc": "Depósitos de solos não coesivos de compacidade baixa a média (com ou sem alguns estratos de solos coesivos moles), ou de solos predominantemente coesivos de consistência mole a dura.",
+                    "v_s30": "<180",
+                    "N_SPT": "<15",
+                    "C_U": "<70"
+                },
+                "E": {
+                    "desc": "Perfil de solo com um estrato aluvionar superficial com valores de vs do tipo C ou D e uma espessura entre cerca de 5 m e 20 m, situado sobre um estrato mais rígido com vs > 800 m/s.",
+                    "v_s30": "-",
+                    "N_SPT": "-",
+                    "C_U": "-"
+                }
+            },
+            "ImportanceClass": {
+                "i": {
+                    "desc": "Edifícios de importância menor para a segurança pública, como por exemplo edifícios agrícolas, etc."
+                },
+                "ii": {
+                    "desc": "Edifícios correntes, não pertencentes às outras categorias."
+                },
+                "iii": {
+                    "desc": "Edifícios cuja resistência sísmica é importante tendo em vista as consequências associadas ao colapso, como por exemplo escolas, salas de reunião, instituições culturais, etc."
+                },
+                "iv": {
+                    "desc": "Edifícios cuja integridade em caso de sismo é de importância vital para a protecção civil, como por exemplo hospitais, quartéis de bombeiros, centrais eléctricas, etc."
+                }
+            },
+            "Types": [
+                "PT1",
+                "PT2",
+                "PTA"
+            ],
+            "Spectrum": {
+                "PT2": {
+                    "A": {
+                        "S_max": 1.0,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.25,
+                        "T_D": 2.0
+                    },
+                    "B": {
+                        "S_max": 1.35,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.25,
+                        "T_D": 2.0
+                    },
+                    "C": {
+                        "S_max": 1.6,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.25,
+                        "T_D": 2.0
+                    },
+                    "D": {
+                        "S_max": 2.0,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.3,
+                        "T_D": 2.0
+                    },
+                    "E": {
+                        "S_max": 1.8,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.25,
+                        "T_D": 2.0
+                    }
+                },
+                "PT1": {
+                    "A": {
+                        "S_max": 1.0,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.6,
+                        "T_D": 2.0
+                    },
+                    "B": {
+                        "S_max": 1.35,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.6,
+                        "T_D": 2.0
+                    },
+                    "C": {
+                        "S_max": 1.6,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.6,
+                        "T_D": 2.0
+                    },
+                    "D": {
+                        "S_max": 2.0,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.8,
+                        "T_D": 2.0
+                    },
+                    "E": {
+                        "S_max": 1.8,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.6,
+                        "T_D": 2.0
+                    }
+                },
+                "PTA": {
+                    "A": {
+                        "S_max": 1.0,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.25,
+                        "T_D": 2.0
+                    },
+                    "B": {
+                        "S_max": 1.35,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.25,
+                        "T_D": 2.0
+                    },
+                    "C": {
+                        "S_max": 1.6,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.25,
+                        "T_D": 2.0
+                    },
+                    "D": {
+                        "S_max": 2.0,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.3,
+                        "T_D": 2.0
+                    },
+                    "E": {
+                        "S_max": 1.8,
+                        "S_min": 1.0,
+                        "a_g1": 1.0,
+                        "a_g2": 4.0,
+                        "T_B": 0.1,
+                        "T_C": 0.25,
+                        "T_D": 2.0
+                    }
+                }
+            },
+            "ImportanceCoef": {
+                "PT1": {
+                    "i": 0.65,
+                    "ii": 1.0,
+                    "iii": 1.45,
+                    "iv": 1.95
+                },
+                "PT2": {
+                    "i": 0.75,
+                    "ii": 1.0,
+                    "iii": 1.25,
+                    "iv": 1.5
+                },
+                "PTA": {
+                    "i": 0.85,
+                    "ii": 1.0,
+                    "iii": 1.15,
+                    "iv": 1.35
+                }
+            },
+            "a_gR": {
+                "PT1": {
+                    "1_1": 2.5,
+                    "1_2": 2.0,
+                    "1_3": 1.5,
+                    "1_4": 1.0,
+                    "1_5": 0.6,
+                    "1_6": 0.35
+                },
+                "PT2": {
+                    "2_1": 2.5,
+                    "2_2": 2.0,
+                    "2_3": 1.7,
+                    "2_4": 1.1,
+                    "2_5": 0.8
+                },
+                "PTA": {
+                    "2_1": 2.5,
+                    "2_2": 2.0,
+                    "2_3": 1.7,
+                    "2_4": 1.1,
+                    "2_5": 0.8
+                }
+            },
+            "avg_ahg": {
+                "PT1": 0.75,
+                "PT2": 0.95,
+                "PTA": 0.95
+            }
+        },
+        "wind": {
+            "base_velocity": {
+                "ZonaA": {
+                    "vb0": 27.0,
+                    "desc": "A generalidade do território, excepto as regiões pertencentes à zona B"
+                },
+                "ZonaB": {
+                    "vb0": 30.0,
+                    "desc": "Os arquipélagos dos Açores e da Madeira e as regiões do continente situadas numa faixa costeira com 5 km de largura ou a altitudes superiores a 600 m."
+                }
+            },
+            "terrain": {
+                "I": {
+                    "z0": 0.005,
+                    "zmin": 1.0,
+                    "desc": "Zona costeira exposta aos ventos de mar"
+                },
+                "II": {
+                    "z0": 0.05,
+                    "zmin": 2.0,
+                    "desc": "Zona de vegetação rasteira, tal como erva, e obstáculos isolados (árvores, edifícios) com separações entre si de, pelo menos, 20 vezes a sua altura"
+                },
+                "III": {
+                    "z0": 0.3,
+                    "zmin": 8.0,
+                    "desc": "Zona com uma cobertura regular de vegetação ou edifícios, ou com obstáculos isolados com separações entre si de, no máximo, 20 vezes a sua altura (por exemplo: zonas suburbanas, florestas permanentes)"
+                },
+                "IV": {
+                    "z0": 1.0,
+                    "zmin": 15.0,
+                    "desc": "Zona na qual pelo menos 15 % da superfície está coberta por edifícios com uma altura média superior a 15 m"
+                }
+            },
+            "cprob": {
+                "K": 0.11,
+                "n": 1.0
+            },
+            "k_I": 1.0
+        }
+    },
+    "editions": {}
+}

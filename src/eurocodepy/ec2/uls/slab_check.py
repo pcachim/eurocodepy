@@ -22,8 +22,12 @@ reinforcement areas in **m²/m**.
 from __future__ import annotations
 
 import math
+import warnings
 from dataclasses import dataclass, field
 
+import numpy as np
+
+from eurocodepy.ec2.materials import PartialFactorsMixin
 from eurocodepy.ec2.uls.beam import calc_asl
 
 
@@ -34,8 +38,63 @@ def _fctm(fck: float) -> float:
     return 2.12 * math.log(1.0 + (fck + 8.0) / 10.0)
 
 
+MIN_REINF_OPTIONS = ("demand", "bottom", "all")
+
+
+def min_reinf_applies(min_reinf: str, *, bottom: bool) -> bool:
+    """Return whether the minimum reinforcement is provided on a face with no tension.
+
+    ``"demand"`` (default): only where the moment needs reinforcement, a face with no
+    tension gets 0; ``"bottom"``: also on the bottom faces, the tension face of the span
+    (EN 1992-1-1 §9.3.1.1: the minimum applies where tension may occur); ``"all"``: on
+    the four faces.
+    """
+    if min_reinf not in MIN_REINF_OPTIONS:
+        msg = f"min_reinf must be one of {MIN_REINF_OPTIONS}, got '{min_reinf}'"
+        raise ValueError(msg)
+    return min_reinf == "all" or (min_reinf == "bottom" and bottom)
+
+
+def strip_reinforcement(med_knm: float, cover: float, t: float, fcd_mpa: float,
+                        fyd_mpa: float, as_min_coef: float,
+                        xd_limit: float | None = None, *,
+                        force_min: bool = False) -> tuple[float, float]:
+    """Return ``(As [m²/m], d [m])`` for a 1 m strip with design moment ``med_knm`` [kNm/m].
+
+    ``d = t − cover``. For a face not in tension (``med_knm ≤ 0``) zero, or the minimum
+    ``as_min_coef·d`` with ``force_min``; otherwise the greater of the minimum and the
+    area required by :func:`calc_asl`. If the moment is beyond what a singly reinforced
+    strip can carry (``calc_asl`` has no solution) the area is ``nan``; if ``x/d``
+    exceeds ``xd_limit`` (EN 1992-1-1 §5.6.3(2): 0.45 up to C50/60, 0.35 above) the
+    strip is over-reinforced. Both cases issue a ``UserWarning``: compression
+    reinforcement or a deeper slab is needed.
+    """
+    d = t - cover
+    if d <= 0.0:
+        return 0.0, d
+    if med_knm <= 0.0:
+        return (as_min_coef * 1.0 * d if force_min else 0.0), d
+    with np.errstate(invalid="ignore"):               # the warning below says it
+        as_cm2, _epss, _xd = calc_asl(1.0, d, med_knm, fcd_mpa, fyd_mpa)
+    if not math.isfinite(as_cm2):
+        warnings.warn(
+            f"moment {med_knm:.4g} kNm/m exceeds the capacity of a singly reinforced "
+            f"strip of depth {d:.4g} m (f_cd = {fcd_mpa:.4g} MPa): no solution, "
+            "As = nan; increase the depth or provide compression reinforcement",
+            UserWarning, stacklevel=3)
+        return math.nan, d
+    if xd_limit is not None and _xd > xd_limit + 1e-9:
+        warnings.warn(
+            f"moment {med_knm:.4g} kNm/m gives x/d = {_xd:.3f} > {xd_limit:g} in a strip of "
+            f"depth {d:.4g} m: over-reinforced (no ductility); increase the depth or "
+            "provide compression reinforcement",
+            UserWarning, stacklevel=3)
+    as_req = max(as_cm2, 0.0) * 1e-4              # cm²/m → m²/m
+    return max(as_req, as_min_coef * 1.0 * d), d
+
+
 @dataclass
-class SlabInput:
+class SlabInput(PartialFactorsMixin):
     """Concrete slab (plate) element data for the flexural reinforcement design."""
 
     mx_bot: float             # sagging design moment, x [kNm/m]
@@ -52,6 +111,7 @@ class SlabInput:
     gamma_c: float = 1.5
     gamma_s: float = 1.15
     alpha_cc: float = 1.0
+    min_reinf: str = "demand"  # 'demand' | 'bottom' | 'all' (see min_reinf_applies)
 
 
 @dataclass
@@ -98,21 +158,17 @@ def eurocode2_slab_check(inp: SlabInput, trace=None) -> SlabResult:
     # EN 1992-1-1 §9.3.1.1 → §9.2.1.1 minimum: As,min = max(0.26 fctm/fyk, 0.0013)·b·d.
     as_min_coef = max(0.26 * _fctm(inp.fck) / inp.fyk, 0.0013)
 
-    def _as(med_knm, cover):
-        """Reinforcement [m²/m] for a design moment [kNm/m] over a 1 m strip with
-        mechanical cover *cover* [m]. Zero when the face is not in tension;
-        otherwise the greater of the EC2 minimum and the required area."""
-        d = t - cover
-        if d <= 0.0 or med_knm <= 0.0:
-            return 0.0, d
-        as_cm2, _epss, _xd = calc_asl(1.0, d, med_knm, fcd_mpa, fyd_mpa)
-        as_req = max(as_cm2, 0.0) * 1e-4              # cm²/m → m²/m
-        return max(as_req, as_min_coef * 1.0 * d), d
+    xd_limit = 0.45 if inp.fck <= 50.0 else 0.35          # §5.6.3(2)
 
-    asx_bot, dbx = _as(inp.mx_bot, inp.cover_bot_x)
-    asy_bot, dby = _as(inp.my_bot, inp.cover_bot_y)
-    asx_top, dtx = _as(-inp.mx_top, inp.cover_top_x)
-    asy_top, dty = _as(-inp.my_top, inp.cover_top_y)
+    def _as(med_knm, cover, *, bottom):
+        return strip_reinforcement(
+            med_knm, cover, t, fcd_mpa, fyd_mpa, as_min_coef, xd_limit,
+            force_min=min_reinf_applies(inp.min_reinf, bottom=bottom))
+
+    asx_bot, dbx = _as(inp.mx_bot, inp.cover_bot_x, bottom=True)
+    asy_bot, dby = _as(inp.my_bot, inp.cover_bot_y, bottom=True)
+    asx_top, dtx = _as(-inp.mx_top, inp.cover_top_x, bottom=False)
+    asy_top, dty = _as(-inp.my_top, inp.cover_top_y, bottom=False)
 
     _sec("Design moments (Wood-Armer)")
     _t("m_x,bot", inp.mx_bot, "kNm/m", clause="Wood-Armer")

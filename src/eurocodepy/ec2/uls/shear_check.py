@@ -27,11 +27,12 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 
+from eurocodepy.ec2.materials import PartialFactorsMixin
 from eurocodepy.ec2.uls.shear import calc_asws, calc_vrdc
 
 
 @dataclass
-class ShearInput:
+class ShearInput(PartialFactorsMixin):
     """Rectangular RC section data for the §6.2 shear check."""
 
     b: float                  # web width [m]

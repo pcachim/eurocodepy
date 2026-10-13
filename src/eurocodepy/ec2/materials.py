@@ -1,7 +1,7 @@
 # Copyright (c) 2024 Paulo Cachim
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 from enum import Enum
 
 import numpy as np
@@ -36,6 +36,114 @@ ConcreteClass = Enum(
     "ConcreteClass",
     {item: item.replace("_", "/") for item in dbase.ConcreteGrades},
 )
+SITUATIONS = ("persistent", "fatigue", "accidental", "serviceability")
+LOADING_KEYS = {"late": "late_loading", "other": "other"}
+KE_2023 = 9500.0  # EN 1992-1-1:2023 Eq. (5.1), quartzite aggregates
+
+
+def _check_situation(situation: str) -> None:
+    if situation not in SITUATIONS:
+        msg = f"situation must be one of {SITUATIONS}, got '{situation}'"
+        raise ValueError(msg)
+
+
+def material_partial_factors(edition: str | None = None,
+                             situation: str = "persistent",
+                             annex: str | None = None) -> dict:
+    """Return the partial factors for materials of an EN 1992-1-1 edition.
+
+    Parameters
+    ----------
+    edition : str, optional
+        ``"2004"`` or ``"2023"``; ``None`` is the default edition (2004).
+    situation : str
+        ``"persistent"`` (persistent and transient), ``"fatigue"``,
+        ``"accidental"`` or ``"serviceability"``. EN 1992-1-1:2023 Table 4.3.
+        The 2004 edition has only the persistent values in the database.
+    annex : str, optional
+        Country code of a national annex (see :mod:`eurocodepy.annex`); ``None``
+        is the values recommended by the Eurocode.
+
+    Returns
+    -------
+    dict
+        ``gamma_s``, ``gamma_c``, ``gamma_ce``, ``gamma_ce_tested`` and
+        ``gamma_v`` (``None`` when the edition or situation has no value).
+
+    """
+    _check_situation(situation)
+    table = dbase.get_edition_params(
+        "ec2", "partial_factors", edition, annex).get("materials")
+    if table is None:
+        if situation != "persistent":
+            msg = (f"edition {dbase.resolve_edition('ec2', edition) or '2004'!r} "
+                   f"has only the 'persistent' partial factors in the database")
+            raise ValueError(msg)
+        mats = dbase.get_edition_data("ec2", edition, annex)
+        return {"gamma_s": mats["Reinforcement"]["Parameters"]["gamma_s"],
+                "gamma_c": mats["Concrete"]["Parameters"]["gamma_cc"],
+                "gamma_ce": None, "gamma_ce_tested": None, "gamma_v": None}
+    return dict(table[situation])
+
+
+def concrete_strength_factors(fck: float, edition: str | None = None,
+                              loading: str = "late",
+                              annex: str | None = None) -> tuple[float, float, float]:
+    """Return ``(eta_cc, k_tc, k_tt)`` of EN 1992-1-1:2023 5.1.6, Eqs. (5.3)-(5.5).
+
+    ``eta_cc = min((fck_ref/fck)^(1/3), 1)`` and ``k_tc``, ``k_tt`` by ``loading``
+    (``"late"`` or ``"other"``, see :class:`Concrete`). ``(1, 1, 1)`` for
+    editions without these factors (2004).
+    """
+    if loading not in LOADING_KEYS:
+        msg = f"loading must be one of {tuple(LOADING_KEYS)}, got '{loading}'"
+        raise ValueError(msg)
+    params = dbase.get_edition_data("ec2", edition, annex)["Concrete"]["Parameters"]
+    if "k_tc" not in params:
+        return 1.0, 1.0, 1.0
+    key = LOADING_KEYS[loading]
+    eta_cc = min((params["fck_ref"] / fck) ** (1.0 / 3.0), 1.0)
+    return eta_cc, params["k_tc"][key], params["k_tt"][key]
+
+
+class PartialFactorsMixin:
+    """Adds :meth:`from_partial_factors` to a dataclass with ``gamma_*`` fields."""
+
+    @classmethod
+    def from_partial_factors(cls, edition: str | None = None,
+                             situation: str = "persistent",
+                             annex: str | None = None, **kwargs: object):
+        """Build the input with ``gamma_c``, ``gamma_s`` and ``gamma_v`` of a design situation.
+
+        The values come from :func:`material_partial_factors` (EN 1992-1-1:2023
+        Table 4.3), only for the fields the class has; a factor with no value
+        (``gamma_v`` for 2004 or serviceability) keeps the field default. If the
+        class has an ``edition`` or ``annex`` field they are set too. ``kwargs`` are
+        the other fields and take precedence.
+        """
+        factors = material_partial_factors(edition, situation, annex)
+        names = {f.name for f in fields(cls)}
+        values = {k: factors[k] for k in ("gamma_c", "gamma_s", "gamma_v")
+                  if k in names and factors[k] is not None}
+        if "edition" in names:
+            values["edition"] = dbase.resolve_edition("ec2", edition) or "2004"
+        if "annex" in names:
+            values["annex"] = annex
+        return cls(**{**values, **kwargs})
+
+
+def prestress_partial_factors(edition: str | None = None,
+                              annex: str | None = None) -> dict:
+    """Return the partial factors and ``r_sup``/``r_inf`` for prestress.
+
+    EN 1992-1-1:2023 Tables 4.1 (``characteristic``, by type of prestress)
+    and 4.2 (``action``). Empty dict for editions not in the database.
+    """
+    pf = dbase.get_edition_params("ec2", "partial_factors", edition, annex)
+    return {"action": pf.get("prestress_action", {}),
+            "characteristic": pf.get("prestress_characteristic", {})}
+
+
 ReinforcementClass = Enum("ReinforcementClass", list(dbase.ReinforcementGrades.keys()))
 GammaS = dbase.ReinforcementParams["gamma_s"]
 PrestressClass = Enum("PrestressClass", list(dbase.PrestressGrades.keys()))
@@ -305,24 +413,65 @@ class Concrete:
 
     """
 
-    def __init__(self, class_name: str = "C30/37") -> None:  # noqa: D107
+    def __init__(self, class_name: str = "C30/37", edition: str | None = None,
+                 situation: str = "persistent", loading: str = "late",
+                 k_cip: float = 1.0, annex: str | None = None) -> None:
+        """Create a concrete of the given class.
+
+        Parameters
+        ----------
+        class_name : str
+            Strength class, e.g. ``"C30/37"``.
+        edition : str, optional
+            ``"2004"`` or ``"2023"``; ``None`` is the default edition (2004).
+            It selects the grades (EN 1992-1-1:2023 Table 5.1, with C100/115),
+            ``Ecm`` and the design values.
+        situation : str
+            Design situation for the partial factors (EN 1992-1-1:2023
+            Table 4.3): ``"persistent"``, ``"fatigue"``, ``"accidental"`` or
+            ``"serviceability"``. Only ``"persistent"`` for 2004.
+        loading : str
+            2023 only, selects ``k_tc`` and ``k_tt`` (5.1.6): ``"late"`` is
+            ``t_ref`` <= 28 d (CN/CR) or 56 d (CS) with the design loading not
+            expected for 3 months after casting (``k_tc`` = 1,0; ``k_tt`` = 0,8);
+            ``"other"`` is every other case, including ``fck(t)``
+            (``k_tc`` = 0,85; ``k_tt`` = 0,7).
+        k_cip : float
+            Factor on ``gamma_c`` for cast-in-place members cast in the ground
+            without permanent casing (EN 1992-1-1:2023 4.3.3(4): 1,1 in
+            general, 1,0 for EN 1536/1538/14199). Default 1,0.
+        annex : str, optional
+            Country code of a national annex (see :mod:`eurocodepy.annex`) whose
+            values replace the recommended ones; ``None`` is the Eurocode.
+
+        """
+        if loading not in LOADING_KEYS:
+            msg = f"loading must be one of {tuple(LOADING_KEYS)}, got '{loading}'"
+            raise ValueError(msg)
         self.grade = class_name
+        self.edition = dbase.resolve_edition("ec2", edition) or "2004"
+        self.situation = situation
+        self.loading = loading
+        self.k_cip = k_cip
+        self.annex = annex
 
         class_name = class_name.replace("/", "_").upper()
-        if class_name not in dbase.ConcreteGrades:
-            grades_list = [item.replace("_", "/") for item in dbase.ConcreteGrades]
+        mats = dbase.get_edition_data("ec2", edition, annex)["Concrete"]
+        grades = mats["Grade"]
+        if class_name not in grades:
+            grades_list = [item.replace("_", "/") for item in grades]
             msg = (
                 f"Concrete class '{class_name}' not found in database. "
                 f"Concrete type must be one of {grades_list}"
             )
             raise ValueError(msg)
 
-        conc = dbase.ConcreteGrades[class_name]
+        conc = grades[class_name]
         self.name = class_name
         self.fck = conc["fck"]  # MPa
         self.fcm = conc["fcm"]  # Mean compressive strength (MPa)
         self.fctm = conc["fctm"]  # Mean tensile strength (MPa)
-        self.fctk_05 = conc["fctk05"] * self.fctm  # 5% fractile (MPa)
+        self.fctk_05 = conc["fctk05"]  # 5% fractile (MPa)
         self.fctk_95 = round(1.3 * self.fctm, 1)  # 95% fractile (MPa)
         self.Ecm = conc["Ecm"]  # Modulus of elasticity (MPa)
         self.eps_c2 = conc["epsc2"]  # Strain at peak stress
@@ -330,9 +479,33 @@ class Concrete:
         self.n = conc["n"]  # Ultimate compressive strain
         self.weight = Weight  # kN/m³
 
-        self.gamma_c = GammaC
-        self.fcd = round(self.fck / GammaC, 1)  # Design yield strength (MPa)
-        self.fctd = round(self.fctk_05 / GammaCT, 1)  # Design yield strength (MPa)
+        self._set_design_values(mats["Parameters"])
+
+    def _set_design_values(self, params: dict) -> None:
+        """Set the partial factors, ``eta_cc``, ``k_tc``, ``k_tt``, ``fcd``, ``fctd``.
+
+        2004: ``fcd = fck / gamma_c`` (``alpha_cc`` is not applied here; the
+        ULS functions take it as an argument). 2023: Eqs. (5.3)-(5.5),
+        ``fcd = eta_cc * k_tc * fck / gamma_c`` and
+        ``fctd = k_tt * fctk,0.05 / gamma_c``.
+        """
+        factors = material_partial_factors(self.edition, self.situation, self.annex)
+        self.gamma_c = factors["gamma_c"] * self.k_cip
+        self.gamma_ce = factors["gamma_ce"]
+        self.gamma_ce_tested = factors["gamma_ce_tested"]
+        self.gamma_v = factors["gamma_v"]
+        if "k_tc" not in params:  # EN 1992-1-1:2004
+            self.eta_cc = 1.0
+            self.k_tc = 1.0
+            self.k_tt = 1.0
+            self.fcd = round(self.fck / self.gamma_c, 1)  # Design strength (MPa)
+            self.fctd = round(self.fctk_05 / (params["gamma_ct"] * self.k_cip), 1)
+            return
+        self.fck_ref = params["fck_ref"]
+        self.eta_cc, self.k_tc, self.k_tt = concrete_strength_factors(
+            self.fck, self.edition, self.loading, self.annex)  # (5.4)
+        self.fcd = self.eta_cc * self.k_tc * self.fck / self.gamma_c  # (5.3)
+        self.fctd = self.k_tt * self.fctk_05 / self.gamma_c  # (5.5)
 
     def __repr__(self) -> str:
         """Return a string representation of the Concrete object.
@@ -377,25 +550,36 @@ class Concrete:
         )
 
     @classmethod
-    def from_fck(cls, f_ck: int, name: object = None) -> "Concrete":
+    def from_fck(cls, f_ck: int, name: object = None, edition: str | None = None,
+                 situation: str = "persistent", loading: str = "late",
+                 k_cip: float = 1.0, annex: str | None = None) -> "Concrete":
         """Create a Concrete instance from characteristic compressive strength.
 
         Args:
             f_ck (int): Characteristic compressive strength of concrete (MPa)
             name (str, optional): Name for the concrete grade.
+            edition (str, optional): ``"2004"`` (default) or ``"2023"``.
+                For 2023, ``fctm`` follows Table 5.1 and ``Ecm`` Eq. (5.1)
+                (``kE`` = 9500); the strains are those of 2004.
+            situation, loading, k_cip, annex: see :class:`Concrete`.
 
         Returns:
             Concrete: Concrete instance.
 
         """
-        concrete = Concrete("C30/37")  # Dummy initialization
+        concrete = Concrete("C30/37", edition, situation, loading, k_cip, annex)  # Dummy
         fck = float(f_ck)
         concrete.fck = round(fck, 1)  # MPa
         concrete.fcm = round(fck + 8, 1)  # Mean compressive strength (MPa)
-        concrete.fctm = round(0.30 * fck**(2 / 3), 1)  # Mean tensile strength (MPa)
+        if concrete.edition == "2004":
+            concrete.fctm = round(0.30 * fck**(2 / 3), 1)  # Mean tensile strength (MPa)
+            concrete.Ecm = round(22000 * (concrete.fcm / 10)**0.3, 1)  # (MPa)
+        else:
+            concrete.fctm = round(
+                0.30 * fck**(2 / 3) if fck <= REF_FCK else 1.1 * fck**(1 / 3), 1)
+            concrete.Ecm = round(KE_2023 * concrete.fcm ** (1 / 3), 1)
         concrete.fctk_05 = round(0.7 * concrete.fctm, 1)  # 5% fractile
         concrete.fctk_95 = round(1.3 * concrete.fctm, 1)  # 95% fractile
-        concrete.Ecm = round(22000 * (concrete.fcm / 10)**0.3, 1)  # Modulus of elasticity (MPa)
         concrete.eps_c2 = 2.0 if fck <= REF_FCK else 2.0 + 0.085 * (fck - 50) ** 0.53
         # Strain at peak stress
         concrete.eps_cu2 = (
@@ -414,9 +598,8 @@ class Concrete:
             concrete.name = f"C{f_ck}"
             concrete.grade = f"C{f_ck}"
 
-        concrete.gamma_c = GammaC
-        concrete.fcd = round(concrete.fck / GammaC, 1)  # Design yield strength (MPa)
-        concrete.fctd = round(concrete.fctk_05 / GammaCT, 1)  # Design yield strength (MPa)
+        concrete._set_design_values(
+            dbase.get_edition_data("ec2", edition, annex)["Concrete"]["Parameters"])
 
         return concrete
 
@@ -487,7 +670,10 @@ class Reinforcement:
 
     """
 
-    def __init__(self, type_label: str | ReinforcementClass = "B500B") -> None:  # noqa: D107
+    def __init__(self, type_label: str | ReinforcementClass = "B500B",
+                 edition: str | None = None, situation: str = "persistent",
+                 annex: str | None = None) -> None:
+        """Create a reinforcement; ``edition``/``situation``/``annex`` select ``gamma_s``."""
         if isinstance(type_label, ReinforcementClass):
             type_label = type_label.name
         self.grade = type_label
@@ -507,9 +693,9 @@ class Reinforcement:
         self.Es = reinf["Es"]  # Modulus of elasticity (MPa)
         self.ClassType = reinf["T"]  # 'A', 'B', or 'C'
 
-        gamma_s = dbase.ReinforcementParams["gamma_s"]  # Partial safety factor
-        self.gamma_s = GammaS
-        self.fyd = round(self.fyk / gamma_s, 1)  # Design yield strength (MPa)
+        # Partial safety factor (EN 1992-1-1:2023 Table 4.3 by situation)
+        self.gamma_s = material_partial_factors(edition, situation, annex)["gamma_s"]
+        self.fyd = round(self.fyk / self.gamma_s, 1)  # Design yield strength (MPa)
 
     def __repr__(self) -> str:
         """Return a string representation of the Reinforcement object.
@@ -618,7 +804,10 @@ class Prestress:
 
     """
 
-    def __init__(self, type_label: str | PrestressClass = "Y1860S7 12.5") -> None:  # noqa: D107
+    def __init__(self, type_label: str | PrestressClass = "Y1860S7 12.5",
+                 edition: str | None = None, situation: str = "persistent",
+                 annex: str | None = None) -> None:
+        """Create a prestressing steel; ``edition``/``situation``/``annex`` select ``gamma_P``."""
         if isinstance(type_label, PrestressClass):
             class_name = type_label.name
             self.name = class_name.replace("_", " ", 1).replace("_", ".", 1)
@@ -651,7 +840,14 @@ class Prestress:
         self.d = reinf["d"]  # Diameter (mm)
         self.Ap = reinf["Ap"]  # Cross-sectional area (cm²)
 
-        gamma_p = dbase.PrestressParams["gamma_p"]  # Partial safety factor
+        # Partial safety factor (EN 1992-1-1:2023 Table 4.3 gives gamma_S for
+        # reinforcing and prestressing steel alike)
+        if dbase.get_edition_params("ec2", "partial_factors", edition, annex):
+            gamma_p = material_partial_factors(edition, situation, annex)["gamma_s"]
+        else:
+            _check_situation(situation)
+            gamma_p = dbase.get_edition_data(
+                "ec2", edition, annex)["Prestress"]["Parameters"]["gamma_p"]
         self.gamma_P = gamma_p
         self.fpd = round(self.fp0_1k / gamma_p, 0)  # Design yield strength (MPa)
 

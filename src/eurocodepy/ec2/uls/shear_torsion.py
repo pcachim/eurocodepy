@@ -42,6 +42,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from eurocodepy.ec2.materials import PartialFactorsMixin
 from eurocodepy.ec2.uls.shear_check import ShearInput, eurocode2_shear_check
 from eurocodepy.ec2.uls.torsion import calc_torsion
 
@@ -54,7 +55,7 @@ __all__ = [
 
 
 @dataclass
-class ShearTorsionInput:
+class ShearTorsionInput(PartialFactorsMixin):
     """Rectangular RC section data for the combined §6.2/§6.3 check (SI: m, MPa).
 
     Deliberately uses plain ``fck``/``fyk`` scalars (like :class:`.shear_check.

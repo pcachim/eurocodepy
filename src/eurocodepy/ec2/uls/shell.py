@@ -17,7 +17,11 @@ def calc_reinf_plane(n_xx: float, n_yy: float, n_xy: float) -> list:
         n_xy (float): shear force in xy direction
 
     Returns:
-        list: the reinforecment in both diretions and concrete stresses
+        list: ``[asx, asy, asc, cot θ]``, the reinforcement in both directions, the
+            concrete stress and the strut inclination. ``cot θ`` is ``math.inf`` for
+            ``n_xy = 0`` with compression in x (the strut is parallel to x) and
+            ``math.nan`` when no reinforcement is required (both compressive and
+            ``n_xx·n_yy > n_xy²``): the angle is undefined there.
 
     """
     abs_n_xy = abs(n_xy)
@@ -29,7 +33,7 @@ def calc_reinf_plane(n_xx: float, n_yy: float, n_xy: float) -> list:
         asy = n_yy + abs_n_xy
         asc = 2.0 * abs_n_xy
     elif n_xx < -abs_n_xy and n_xx <= n_yy and n_xx_n_yy <= n_xy_2:
-        theta = 0 if abs_n_xy < TOLER else -n_xx / abs_n_xy
+        theta = math.inf if abs_n_xy < TOLER else -n_xx / abs_n_xy
         asx = 0.0
         asy = n_yy + n_xy_2 / abs(n_xx)
         asc = abs(n_xx) * (1.0 + (abs_n_xy / n_xx)**2)
@@ -41,8 +45,7 @@ def calc_reinf_plane(n_xx: float, n_yy: float, n_xy: float) -> list:
     else:
         cen = (n_xx + n_yy) * 0.5
         rad = math.sqrt(n_xy_2 + 0.25 * (n_xx - n_yy)**2)
-        theta = math.atan2(n_xx - n_yy, 2 * n_xy) / 2.0
-        theta = 0 if theta == 0 else 1.0 / math.tan(theta)
+        theta = math.nan                      # no reinforcement: θ undefined
         asx = 0.0
         asy = 0.0
         asc = abs(cen - rad)
@@ -82,14 +85,23 @@ def calc_reinf_shell(n_xx: float, n_yy: float, n_xy: float,
         h (float): height of the shell
 
     Returns:
-        np.array: the reinforecment in both diretions in top
-            and bottom layer and concrete stresses
+        np.ndarray: 8 values, ``[asx, asy, asc, cot θ]`` of the "top" layer followed
+            by the same four of the "bottom" layer (``calc_reinf_plane`` of each
+            layer). They are per unit of layer thickness ``t = 2·rec`` — stresses in
+            the unit of ``n/t`` (kN/m² for n in kN/m) — so multiply ``asx`` and
+            ``asy`` by ``t`` for the force per unit length. All ``nan`` if the two
+            layers overlap (``h < 4·rec``).
+
+    The "top" layer is the one in tension for a positive ``m_xx`` and ``m_yy``; the
+    sandwich model of EN 1992-1-1:2023 Annex G labels the layers the other way and
+    has its own sign of the torsion (see
+    :func:`eurocodepy.ec2.uls2023.annex_g.sandwich_stresses`).
 
     """
     t = 2 * rec
     z = h - t
     if h - 4 * rec < 0:
-        return np.array([math.nan, math.nan, math.nan, math.nan, math.nan, math.nan])
+        return np.full(8, math.nan)
 
     n_t_xx = (0.5 * n_xx + m_xx / z) / t
     n_t_yy = (0.5 * n_yy + m_yy / z) / t
@@ -99,5 +111,4 @@ def calc_reinf_shell(n_xx: float, n_yy: float, n_xy: float,
     n_b_yy = (0.5 * n_yy - m_yy / z) / t
     n_b_xy = (0.5 * n_xy + m_xy / z) / t
 
-    as_vect = np.vectorize(cal_reinf_shell_plan, otypes=[np.ndarray])
-    return as_vect(n_t_xx, n_t_yy, n_t_xy, n_b_xx, n_b_yy, n_b_xy)
+    return cal_reinf_shell_plan((n_t_xx, n_t_yy, n_t_xy), (n_b_xx, n_b_yy, n_b_xy))

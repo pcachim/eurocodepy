@@ -8,7 +8,7 @@
                 },
                 "2023": {
                     "default": false,
-                    "source": "EN 1992-1-1:2023 (E), Clause 5 (Materials)",
+                    "source": "EN 1992-1-1:2023 (E), Clause 4.2-4.3 (Basis of design) and Clause 5 (Materials)",
                     "overrides": {
                         "Concrete.Grade": {
                             "C20_25": {
@@ -62,12 +62,12 @@
                             "fck_ref": 40.0,
                             "k_tc": {
                                 "_clause": "5.1.6(1), Eq. (5.3)-(5.4)",
-                                "short_loading": 1.0,
+                                "late_loading": 1.0,
                                 "other": 0.85
                             },
                             "k_tt": {
                                 "_clause": "5.1.6(2), Eq. (5.5)",
-                                "short_loading": 0.8,
+                                "late_loading": 0.8,
                                 "other": 0.7
                             }
                         },
@@ -84,6 +84,113 @@
                         "_clause": "EN 1992-1-1:2023 \u00a78.4.3/\u00a78.4.4",
                         "dmax": 20.0,
                         "eta_sys": 1.5
+                    },
+                    "detailing": {
+                        "_clause": "EN 1992-1-1:2023 Tables 12.1-12.4 (NDP). Factors of d, h, As,req,span, ...; lengths in m, diameters in mm",
+                        "beams": {
+                            "s_l_max": 0.75,
+                            "s_bu_max": 0.6,
+                            "s_tr_max": 0.75,
+                            "s_tr_max_limit": 0.6,
+                            "rho_w_stir_shear": 0.5,
+                            "rho_w_stir_torsion": 0.2,
+                            "s_stir_max_u_div": 8.0,
+                            "support_bottom": 0.25
+                        },
+                        "slabs": {
+                            "s_slab_max_h": 3.0,
+                            "s_slab_max_limit": 0.4,
+                            "s_l_max": 0.75,
+                            "s_bu_max": 1.0,
+                            "s_tr_max": 1.5,
+                            "secondary": 0.2,
+                            "inner_support": 0.25,
+                            "end_support_bottom": 0.25,
+                            "end_support_top": 0.25
+                        },
+                        "columns": {
+                            "as_min_n": 0.1,
+                            "as_min_ac": 0.002,
+                            "s_phi": 20.0,
+                            "s_limit": 0.3,
+                            "s_limit_unused": 0.4,
+                            "end_region_factor": 0.6,
+                            "lap_factor": 0.6,
+                            "stirrup_phi": 0.25,
+                            "k_confinement": 0.02
+                        },
+                        "walls": {
+                            "as_v_in_plane": 0.25,
+                            "as_v_out_of_plane": 0.001,
+                            "as_h_in_plane": 0.25,
+                            "as_h_out_of_plane": 0.25,
+                            "s_v_h": 3.0,
+                            "s_v_limit": 0.4,
+                            "s_h_limit": 0.4,
+                            "orthogonal_as_ratio": 0.02
+                        }
+                    },
+                    "shear_interface": {
+                        "_clause": "EN 1992-1-1:2023 8.2.6, Table 8.2. c_v1 and c_v2 are 0 when the interface is in tension (σn > 0); keyed values apply per key area",
+                        "very_smooth": {"c_v1": 0.01, "mu_v": 0.5, "c_v2": 0.0, "k_v": 0.0, "k_dowel": 1.5},
+                        "smooth": {"c_v1": 0.08, "mu_v": 0.6, "c_v2": 0.0, "k_v": 0.5, "k_dowel": 1.1},
+                        "rough": {"c_v1": 0.15, "mu_v": 0.7, "c_v2": 0.08, "k_v": 0.5, "k_dowel": 0.9},
+                        "very_rough": {"c_v1": 0.19, "mu_v": 0.9, "c_v2": 0.15, "k_v": 0.5, "k_dowel": 0.9},
+                        "keyed": {"c_v1": 0.37, "mu_v": 0.9, "c_v2": null, "k_v": null, "k_dowel": null}
+                    },
+                    "partial_factors": {
+                        "_clause": "EN 1992-1-1:2023 \u00a74.3, Tables 4.2 and 4.3 (NDP); \u00a74.2.1.5, Table 4.1 (NDP)",
+                        "gamma_SH": 1.0,
+                        "k_cip": {
+                            "_clause": "4.3.3(4)",
+                            "general": 1.1,
+                            "en_1536_1538_14199": 1.0
+                        },
+                        "materials": {
+                            "_clause": "4.3.3, Table 4.3 (NDP). gamma_s: reinforcing and prestressing steel; gamma_c: concrete; gamma_ce: concrete, modulus of elasticity (gamma_ce_tested when Ecm is determined by testing, 5.1.4(1)); gamma_v: shear and punching resistance without shear reinforcement",
+                            "persistent": {
+                                "gamma_s": 1.15,
+                                "gamma_c": 1.5,
+                                "gamma_ce": 1.5,
+                                "gamma_ce_tested": 1.3,
+                                "gamma_v": 1.4
+                            },
+                            "fatigue": {
+                                "gamma_s": 1.15,
+                                "gamma_c": 1.5,
+                                "gamma_ce": 1.5,
+                                "gamma_ce_tested": 1.3,
+                                "gamma_v": 1.4
+                            },
+                            "accidental": {
+                                "gamma_s": 1.0,
+                                "gamma_c": 1.15,
+                                "gamma_ce": 1.15,
+                                "gamma_ce_tested": 1.15,
+                                "gamma_v": 1.15
+                            },
+                            "serviceability": {
+                                "gamma_s": 1.0,
+                                "gamma_c": 1.0,
+                                "gamma_ce": 1.0,
+                                "gamma_ce_tested": 1.0,
+                                "gamma_v": null
+                            }
+                        },
+                        "prestress_action": {
+                            "_clause": "4.3.2, Table 4.2 (NDP)",
+                            "gamma_P_fav": 1.0,
+                            "gamma_P_unfav": 1.2,
+                            "gamma_dP_sup": 0.8,
+                            "gamma_dP_inf": 1.2,
+                            "gamma_dP_linear_uncracked": 1.0
+                        },
+                        "prestress_characteristic": {
+                            "_clause": "4.2.1.5(3), Table 4.1 (NDP), Eqs. (4.1)-(4.2)",
+                            "pre_tensioning": {"r_sup": 1.05, "r_inf": 0.95},
+                            "post_tensioning_unbonded": {"r_sup": 1.05, "r_inf": 0.95},
+                            "post_tensioning_bonded": {"r_sup": 1.10, "r_inf": 0.90}
+                        }
                     }
                 }
             },
@@ -3823,258 +3930,6 @@
                                 "Wheel": 0.3
                             }
                         }
-                    },
-                    "PT": {
-                        "A": {
-                            "Description": "Areas for domestic and residential activities",
-                            "psi_0": 0.7,
-                            "psi_1": 0.5,
-                            "psi_2": 0.3,
-                            "A1": {
-                                "Description": "Floors",
-                                "q_k_rec": 2.0,
-                                "Q_k_rec": 2.0,
-                                "q_k_min": 2.0,
-                                "q_k_max": 2.0,
-                                "Q_k_min": 2.0,
-                                "Q_k_max": 2.0
-                            },
-                            "A2": {
-                                "Description": "Stairs",
-                                "q_k_rec": 2.0,
-                                "Q_k_rec": 2.0,
-                                "q_k_min": 2.0,
-                                "q_k_max": 2.0,
-                                "Q_k_min": 2.0,
-                                "Q_k_max": 2.0
-                            },
-                            "A3": {
-                                "Description": "Balconies",
-                                "q_k_rec": 2.0,
-                                "Q_k_rec": 2.0,
-                                "q_k_min": 2.0,
-                                "q_k_max": 2.0,
-                                "Q_k_min": 2.0,
-                                "Q_k_max": 2.0
-                            }
-                        },
-                        "B": {
-                            "Description": "Office areas",
-                            "q_k_rec": 3.0,
-                            "Q_k_rec": 4.0,
-                            "q_k_min": 3.0,
-                            "q_k_max": 3.0,
-                            "Q_k_min": 4.0,
-                            "Q_k_max": 4.0,
-                            "psi_0": 0.7,
-                            "psi_1": 0.5,
-                            "psi_2": 0.3
-                        },
-                        "C": {
-                            "Description": "Areas where people may congregate",
-                            "psi_0": 0.7,
-                            "psi_1": 0.7,
-                            "psi_2": 0.6,
-                            "C1": {
-                                "Description": "Areas with tables, etc. (e.g. schools, cafes, restaurants)",
-                                "q_k_rec": 3.0,
-                                "Q_k_rec": 4.0,
-                                "q_k_min": 3.0,
-                                "q_k_max": 3.0,
-                                "Q_k_min": 4.0,
-                                "Q_k_max": 4.0
-                            },
-                            "C2": {
-                                "Description": "Areas with fixed seating (e.g. churches, theatres, cinemas, classrooms)",
-                                "q_k_rec": 4.0,
-                                "Q_k_rec": 4.0,
-                                "q_k_min": 4.0,
-                                "q_k_max": 4.0,
-                                "Q_k_min": 4.0,
-                                "Q_k_max": 4.0
-                            },
-                            "C3": {
-                                "Description": "Areas without obstructions to movement (e.g. museums, exhibition halls)",
-                                "q_k_rec": 5.0,
-                                "Q_k_rec": 4.0,
-                                "q_k_min": 5.0,
-                                "q_k_max": 5.0,
-                                "Q_k_min": 4.0,
-                                "Q_k_max": 4.0
-                            },
-                            "C4": {
-                                "Description": "Areas for physical activities (e.g. dance halls, gymnasiums)",
-                                "q_k_rec": 5.0,
-                                "Q_k_rec": 7.0,
-                                "q_k_min": 5.0,
-                                "q_k_max": 5.0,
-                                "Q_k_min": 7.0,
-                                "Q_k_max": 7.0
-                            },
-                            "C5": {
-                                "Description": "Areas subject to large crowds (e.g. public buildings, railway stations)",
-                                "q_k_rec": 5.0,
-                                "Q_k_rec": 6.0,
-                                "q_k_min": 5.0,
-                                "q_k_max": 5.0,
-                                "Q_k_min": 6.0,
-                                "Q_k_max": 6.0
-                            }
-                        },
-                        "D": {
-                            "Description": "Shopping areas",
-                            "psi_0": 0.7,
-                            "psi_1": 0.7,
-                            "psi_2": 0.6,
-                            "D1": {
-                                "Description": "Areas in general retail shops",
-                                "q_k_rec": 4.0,
-                                "Q_k_rec": 4.0,
-                                "q_k_min": 4.0,
-                                "q_k_max": 4.0,
-                                "Q_k_min": 4.0,
-                                "Q_k_max": 4.0
-                            },
-                            "D2": {
-                                "Description": "Areas in department stores",
-                                "q_k_rec": 5.0,
-                                "Q_k_rec": 6.0,
-                                "q_k_min": 5.0,
-                                "q_k_max": 5.0,
-                                "Q_k_min": 6.0,
-                                "Q_k_max": 6.0
-                            }
-                        },
-                        "E": {
-                            "Description": "Areas for storage and industrial activities",
-                            "psi_0": 1.0,
-                            "psi_1": 0.9,
-                            "psi_2": 0.8,
-                            "E1": {
-                                "Description": "Areas susceptible to accumulation of goods, including access areas",
-                                "q_k_rec": 7.5,
-                                "Q_k_rec": 7.0,
-                                "q_k_min": 7.5,
-                                "q_k_max": 7.5,
-                                "Q_k_min": 7.0,
-                                "Q_k_max": 7.0
-                            },
-                            "FL": {
-                                "Description": "Fork lift",
-                                "Dynamic_factor": {
-                                    "Pneumatic": 1.4,
-                                    "Solid": 2.0
-                                },
-                                "Wheel": 0.2,
-                                "FL1": {
-                                    "Net weight [kN]": 21,
-                                    "Lifting load [kN]": 10,
-                                    "Axle width [m]": 0.85,
-                                    "Total width [m]": 1.00,
-                                    "Total length [m]": 2.60,
-                                    "Axle load Q_k [kN]": 26
-                                },
-                                "FL2": {
-                                    "Net weight [kN]": 31,
-                                    "Lifting load [kN]": 15,
-                                    "Axle width [m]": 0.95,
-                                    "Total width [m]": 1.10,
-                                    "Total length [m]": 3.00,
-                                    "Axle load Q_k [kN]": 40
-                                },
-                                "FL3": {
-                                    "Net weight [kN]": 44,
-                                    "Lifting load [kN]": 25,
-                                    "Axle width [m]": 1.00,
-                                    "Total width [m]": 1.20,
-                                    "Total length [m]": 3.30,
-                                    "Axle load Q_k [kN]": 63
-                                },
-                                "FL4": {
-                                    "Net weight [kN]": 60,
-                                    "Lifting load [kN]": 40,
-                                    "Axle width [m]": 1.20,
-                                    "Total width [m]": 1.40,
-                                    "Total length [m]": 4.00,
-                                    "Axle load Q_k [kN]": 90
-                                },
-                                "FL5": {
-                                    "Net weight [kN]": 90,
-                                    "Lifting load [kN]": 60,
-                                    "Axle width [m]": 1.50,
-                                    "Total width [m]": 1.90,
-                                    "Total length [m]": 4.60,
-                                    "Axle load Q_k [kN]": 140
-                                },
-                                "FL6": {
-                                    "Net weight [kN]": 110,
-                                    "Lifting load [kN]": 80,
-                                    "Axle width [m]": 1.80,
-                                    "Total width [m]": 2.30,
-                                    "Total length [m]": 5.10,
-                                    "Axle load Q_k [kN]": 170
-                                }
-                            }
-                        },
-                        "F": {
-                            "Description": "Vehicle traffic areas (gross weight <= 30 kN)",
-                            "psi_0": 0.7,
-                            "psi_1": 0.7,
-                            "psi_2": 0.6,
-                            "q_k_rec": 2.5,
-                            "Q_k_rec": 15.0,
-                            "q_k_min": 2.5,
-                            "q_k_max": 2.5,
-                            "Q_k_min": 15.0,
-                            "Q_k_max": 15.0
-                        },
-                        "G": {
-                            "Description": "Vehicle traffic areas (gross weight 30 to 160 kN)",
-                            "psi_0": 0.7,
-                            "psi_1": 0.5,
-                            "psi_2": 0.3,
-                            "q_k_rec": 5.0,
-                            "Q_k_rec": 75.0,
-                            "q_k_min": 5.0,
-                            "q_k_max": 5.0,
-                            "Q_k_min": 75.0,
-                            "Q_k_max": 75.0
-                        },
-                        "H": {
-                            "Description": "Roofs not accessible except for normal maintenance and repair.",
-                            "psi_0": 0.0,
-                            "psi_1": 0.0,
-                            "psi_2": 0.0,
-                            "q_k_rec": 0.4,
-                            "Q_k_rec": 1.0,
-                            "q_k_min": 0.4,
-                            "q_k_max": 0.4,
-                            "Q_k_min": 1.0,
-                            "Q_k_max": 1.00
-                        },
-                        "I": {
-                            "Description": "Roofs accessible with occupancy according to categories A to G.",
-                            "psi_0": 0.0,
-                            "psi_1": 0.0,
-                            "psi_2": 0.0
-                        },
-                        "J": {
-                            "Description": "Roofs accessible for special services, such as helicopter landing areas",
-                            "Dynamic_factor": 1.4,
-                            "psi_0": 0.0,
-                            "psi_1": 0.0,
-                            "psi_2": 0.0,
-                            "HC1": {
-                                "Description": "Take-off load Q of helicopter ≤ 20 kN",
-                                "Take_off_load": 20,
-                                "Wheel": 0.2
-                            },
-                            "HC2": {
-                                "Description": "Take-off load Q of helicopter ≤ 60 kN",
-                                "Take_off_load": 60,
-                                "Wheel": 0.3
-                            }
-                        }
                     }
                 }
             },
@@ -4272,251 +4127,6 @@
                             "CEN_1": 0.5,
                             "CEN_2": 0.5
                         }
-                    },
-                    "PT": {
-                        "SoilType": {
-                            "A": {
-                                "desc": "Rocha ou outra forma\u00e7\u00e3o geol\u00f3gica de tipo rochoso, que inclua, no m\u00e1ximo, 5 m de material mais fraco \u00e0 superf\u00edcie.",
-                                "v_s30": ">800",
-                                "N_SPT": "-",
-                                "C_U": "-"
-                            },
-                            "B": {
-                                "desc": "Dep\u00f3sitos de areia muito compacta, de seixo (cascalho) ou de argila muito rija, com uma espessura de, pelo menos, v\u00e1rias dezenas de metros, caracterizados por um aumento gradual das propriedades mec\u00e2nicas com a profundidade.",
-                                "v_s30": "360-800",
-                                "N_SPT": ">50",
-                                "C_U": ">250"
-                            },
-                            "C": {
-                                "desc": "Dep\u00f3sitos profundos de areia compacta ou medianamente compacta, de seixo (cascalho) ou de argila rija com uma espessura entre v\u00e1rias dezenas e muitas centenas de metros.",
-                                "v_s30": "180-360",
-                                "N_SPT": "15-50",
-                                "C_U": "70-250"
-                            },
-                            "D": {
-                                "desc": "Dep\u00f3sitos de solos n\u00e3o coesivos de compacidade baixa a m\u00e9dia (com ou sem alguns estratos de solos coesivos moles), ou de solos predominantemente coesivos de consist\u00eancia mole a dura.",
-                                "v_s30": "<180",
-                                "N_SPT": "<15",
-                                "C_U": "<70"
-                            },
-                            "E": {
-                                "desc": "Perfil de solo com um estrato aluvionar superficial com valores de vs do tipo C ou D e uma espessura entre cerca de 5 m e 20 m, situado sobre um estrato mais r\u00edgido com vs > 800 m/s.",
-                                "v_s30": "-",
-                                "N_SPT": "-",
-                                "C_U": "-"
-                            }
-                        },
-                        "ImportanceClass": {
-                            "i": {
-                                "desc": "Edif\u00edcios de import\u00e2ncia menor para a seguran\u00e7a p\u00fablica, como por exemplo edif\u00edcios agr\u00edcolas, etc."
-                            },
-                            "ii": {
-                                "desc": "Edif\u00edcios correntes, n\u00e3o pertencentes \u00e0s outras categorias."
-                            },
-                            "iii": {
-                                "desc": "Edif\u00edcios cuja resist\u00eancia s\u00edsmica \u00e9 importante tendo em vista as consequ\u00eancias associadas ao colapso, como por exemplo escolas, salas de reuni\u00e3o, institui\u00e7\u00f5es culturais, etc."
-                            },
-                            "iv": {
-                                "desc": "Edif\u00edcios cuja integridade em caso de sismo \u00e9 de import\u00e2ncia vital para a protec\u00e7\u00e3o civil, como por exemplo hospitais, quart\u00e9is de bombeiros, centrais el\u00e9ctricas, etc."
-                            }
-                        },
-                        "Types": [
-                            "PT1",
-                            "PT2",
-                            "PTA"
-                        ],
-                        "Spectrum": {
-                            "PT2": {
-                                "A": {
-                                    "S_max": 1.0,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.25,
-                                    "T_D": 2.0
-                                },
-                                "B": {
-                                    "S_max": 1.35,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.25,
-                                    "T_D": 2.0
-                                },
-                                "C": {
-                                    "S_max": 1.6,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.25,
-                                    "T_D": 2.0
-                                },
-                                "D": {
-                                    "S_max": 2.0,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.3,
-                                    "T_D": 2.0
-                                },
-                                "E": {
-                                    "S_max": 1.8,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.25,
-                                    "T_D": 2.0
-                                }
-                            },
-                            "PT1": {
-                                "A": {
-                                    "S_max": 1.0,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.6,
-                                    "T_D": 2.0
-                                },
-                                "B": {
-                                    "S_max": 1.35,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.6,
-                                    "T_D": 2.0
-                                },
-                                "C": {
-                                    "S_max": 1.6,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.6,
-                                    "T_D": 2.0
-                                },
-                                "D": {
-                                    "S_max": 2.0,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.8,
-                                    "T_D": 2.0
-                                },
-                                "E": {
-                                    "S_max": 1.8,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.6,
-                                    "T_D": 2.0
-                                }
-                            },
-                            "PTA": {
-                                "A": {
-                                    "S_max": 1.0,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.25,
-                                    "T_D": 2.0
-                                },
-                                "B": {
-                                    "S_max": 1.35,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.25,
-                                    "T_D": 2.0
-                                },
-                                "C": {
-                                    "S_max": 1.6,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.25,
-                                    "T_D": 2.0
-                                },
-                                "D": {
-                                    "S_max": 2.0,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.3,
-                                    "T_D": 2.0
-                                },
-                                "E": {
-                                    "S_max": 1.8,
-                                    "S_min": 1.0,
-                                    "a_g1": 1.0,
-                                    "a_g2": 4.0,
-                                    "T_B": 0.1,
-                                    "T_C": 0.25,
-                                    "T_D": 2.0
-                                }
-                            }
-                        },
-                        "ImportanceCoef": {
-                            "PT1": {
-                                "i": 0.65,
-                                "ii": 1.0,
-                                "iii": 1.45,
-                                "iv": 1.95
-                            },
-                            "PT2": {
-                                "i": 0.75,
-                                "ii": 1.0,
-                                "iii": 1.25,
-                                "iv": 1.5
-                            },
-                            "PTA": {
-                                "i": 0.85,
-                                "ii": 1.0,
-                                "iii": 1.15,
-                                "iv": 1.35
-                            }
-                        },
-                        "a_gR": {
-                            "PT1": {
-                                "1_1": 2.5,
-                                "1_2": 2.0,
-                                "1_3": 1.5,
-                                "1_4": 1.0,
-                                "1_5": 0.6,
-                                "1_6": 0.35
-                            },
-                            "PT2": {
-                                "2_1": 2.5,
-                                "2_2": 2.0,
-                                "2_3": 1.7,
-                                "2_4": 1.1,
-                                "2_5": 0.8
-                            },
-                            "PTA": {
-                                "2_1": 2.5,
-                                "2_2": 2.0,
-                                "2_3": 1.7,
-                                "2_4": 1.1,
-                                "2_5": 0.8
-                            }
-                        },
-                        "avg_ahg": {
-                            "PT1": 0.75,
-                            "PT2": 0.95,
-                            "PTA": 0.95
-                        }
                     }
                 }
             },
@@ -4524,45 +4134,6 @@
                 "rho": 1.25,
                 "rho_units": "kg/m3",
                 "locale": {
-                    "PT": {
-                        "base_velocity": {
-                            "ZonaA": {
-                                "vb0": 27.0,
-                                "desc": "A generalidade do territ\u00f3rio, excepto as regi\u00f5es pertencentes \u00e0 zona B"
-                            },
-                            "ZonaB": {
-                                "vb0": 30.0,
-                                "desc": "Os arquip\u00e9lagos dos A\u00e7ores e da Madeira e as regi\u00f5es do continente situadas numa faixa costeira com 5 km de largura ou a altitudes superiores a 600 m."
-                            }
-                        },
-                        "terrain": {
-                            "I": {
-                                "z0": 0.005,
-                                "zmin": 1.0,
-                                "desc": "Zona costeira exposta aos ventos de mar"
-                            },
-                            "II": {
-                                "z0": 0.05,
-                                "zmin": 2.0,
-                                "desc": "Zona de vegeta\u00e7\u00e3o rasteira, tal como erva, e obst\u00e1culos isolados (\u00e1rvores, edif\u00edcios) com separa\u00e7\u00f5es entre si de, pelo menos, 20 vezes a sua altura"
-                            },
-                            "III": {
-                                "z0": 0.3,
-                                "zmin": 8.0,
-                                "desc": "Zona com uma cobertura regular de vegeta\u00e7\u00e3o ou edif\u00edcios, ou com obst\u00e1culos isolados com separa\u00e7\u00f5es entre si de, no m\u00e1ximo, 20 vezes a sua altura (por exemplo: zonas suburbanas, florestas permanentes)"
-                            },
-                            "IV": {
-                                "z0": 1.0,
-                                "zmin": 15.0,
-                                "desc": "Zona na qual pelo menos 15 % da superf\u00edcie est\u00e1 coberta por edif\u00edcios com uma altura m\u00e9dia superior a 15 m"
-                            }
-                        },
-                        "cprob": {
-                            "K": 0.11,
-                            "n": 1.0
-                        },
-                        "k_I": 1.0
-                    },
                     "EU": {
                         "base_velocity": {
                             "ad_hoc": {

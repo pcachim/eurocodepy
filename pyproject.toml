@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "eurocodepy"
-version = "2027.0.9"
+version = "2027.0.10"
 authors = [
     { name="Paulo Cachim", email="pcachim@ua.pt" },
 ]
@@ -66,7 +66,7 @@ docs = [
 # name and had already silently dropped eurocode_data_portugal.json from the
 # sdist because nobody remembered to add it. See dev/dbase_versioning.md
 # problem 5 / phase 6 (xdfem2d repository).
-eurocodepy = ["data/*.json", "data/*.csv", "data/*.xlsx"]
+eurocodepy = ["data/*.json", "data/*.csv", "data/*.xlsx", "data/national_annexes/*.json"]
 
 [tool.ruff]
 line-length = 88

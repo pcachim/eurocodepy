@@ -20,10 +20,12 @@ def test_uls_and_uls2023_punch_are_distinct():
 
 
 def test_uls2023_reexports_the_shared_2004_checks():
-    # Non-punching checks have no 2023 version yet → same shared functions.
+    # Checks without a 2023 version (bending, the 2004 shear functions) → same shared functions.
     assert uls2023.calc_vrd is uls.calc_vrd
     assert uls2023.calc_asws is uls.calc_asws
-    assert uls2023.calc_torsion is uls.calc_torsion
+    assert uls2023.calc_asl_nm is uls.calc_asl_nm
+    # torsion has one (EN 1992-1-1:2023 8.3, same name and arguments)
+    assert uls2023.calc_torsion is not uls.calc_torsion
 
 
 # ── EN 1992-1-1:2004 punching (hand-checked) ────────────────────────────────
