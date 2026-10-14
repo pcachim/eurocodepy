@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              EurocodePy
+              eurocodepy
             
           </span>
         </div>
@@ -208,7 +208,7 @@
   
   
   <span class="md-ellipsis">
-    EurocodePy
+    eurocodepy
     
   </span>
   
@@ -221,7 +221,7 @@
   
   
   <span class="md-ellipsis">
-    EurocodePy
+    eurocodepy
     
   </span>
   
@@ -263,9 +263,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#steel-section-profiles" class="md-nav__link">
+  <a href="#steel-profiles" class="md-nav__link">
     <span class="md-ellipsis">
-      Steel section profiles
+      Steel profiles
     </span>
   </a>
   
@@ -281,9 +281,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#editions-and-national-annex-support" class="md-nav__link">
+  <a href="#editions-and-national-annexes" class="md-nav__link">
     <span class="md-ellipsis">
-      Editions and National Annex support
+      Editions and National Annexes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calculation-reports-and-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculation reports and units
     </span>
   </a>
   
@@ -322,9 +331,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#support" class="md-nav__link">
+  <a href="#contributing" class="md-nav__link">
     <span class="md-ellipsis">
-      Support
+      Contributing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      License
     </span>
   </a>
   
@@ -3427,9 +3445,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#steel-section-profiles" class="md-nav__link">
+  <a href="#steel-profiles" class="md-nav__link">
     <span class="md-ellipsis">
-      Steel section profiles
+      Steel profiles
     </span>
   </a>
   
@@ -3445,9 +3463,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#editions-and-national-annex-support" class="md-nav__link">
+  <a href="#editions-and-national-annexes" class="md-nav__link">
     <span class="md-ellipsis">
-      Editions and National Annex support
+      Editions and National Annexes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calculation-reports-and-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculation reports and units
     </span>
   </a>
   
@@ -3486,9 +3513,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#support" class="md-nav__link">
+  <a href="#contributing" class="md-nav__link">
     <span class="md-ellipsis">
-      Support
+      Contributing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      License
     </span>
   </a>
   
@@ -3528,56 +3564,68 @@
 
 
 
-<h1 id="eurocodepy">EurocodePy</h1>
-<p><strong>EurocodePy</strong> is a Python library for structural design calculations according to the
-<a href="https://eurocodes.jrc.ec.europa.eu/">Eurocode standards</a>. It provides composable,
-engineering-focused building blocks — reusable calculations, material databases, load
-combinations, and section utilities — that you can drop into your own scripts and notebooks.</p>
+<h1 id="eurocodepy">eurocodepy</h1>
+<p><a href="https://pypi.org/project/eurocodepy/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/eurocodepy" /></a>
+<a href="https://www.python.org/"><img alt="Python 3.12+" src="https://img.shields.io/badge/python-3.12%2B-blue" /></a>
+<a href="https://github.com/pcachim/eurocodepy/blob/master/LICENSE.md"><img alt="License: LGPL v3" src="https://img.shields.io/badge/License-LGPL%20v3-blue.svg" /></a>
+<a href="https://doi.org/10.5281/zenodo.23371032"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.23371032.svg" /></a></p>
+<p>A Python library for structural design calculations according to the <strong>Eurocode</strong> standards.
+<code>eurocodepy</code> provides composable, engineering-focused building blocks — material databases,
+load combinations, section utilities, and code-compliant design checks — that you can drop
+into scripts, notebooks, or larger analysis tools.</p>
 <blockquote>
-<p>Source code: <a href="https://github.com/pcachim/eurocodepy">https://github.com/pcachim/eurocodepy</a><br />
-<a href="https://pypi.org/project/eurocodepy/"><img alt="PyPI" src="https://img.shields.io/pypi/v/eurocodepy" /></a> — the version is the one of <code>pyproject.toml</code></p>
+<p><strong>Documentation:</strong> <a href="https://pcachim.github.io/eurocodepy/">https://pcachim.github.io/eurocodepy/</a><br />
+<strong>Source:</strong> <a href="https://github.com/pcachim/eurocodepy">https://github.com/pcachim/eurocodepy</a><br />
+<strong>PyPI:</strong> <a href="https://pypi.org/project/eurocodepy/">https://pypi.org/project/eurocodepy/</a><br />
+<strong>Changelog:</strong> <a href="https://github.com/pcachim/eurocodepy/blob/master/CHANGELOG.md">https://github.com/pcachim/eurocodepy/blob/master/CHANGELOG.md</a></p>
 </blockquote>
 <hr />
 <h2 id="whats-included">What's included</h2>
 <h3 id="material-databases">Material databases</h3>
-<p>Material characteristic and design values are stored in a bundled database and exposed
-through typed Python classes. Supported materials:</p>
+<p>Characteristic and design values are stored in a bundled database and surfaced through
+typed Python classes. Variable names follow standard Eurocode notation (<code>fck</code>, <code>fyd</code>,
+<code>E0mean</code>, …) so calculations trace directly back to the clauses that define them.</p>
 <table>
 <thead>
 <tr>
 <th>Material</th>
-<th>Grades / Types</th>
+<th>Available grades</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Concrete</td>
-<td>C12/15 to C100/115 (EN 1992-1-1:2004 and 2023)</td>
+<td>C12/15 to C90/105 (EN 1992-1-1:2004) · C12/15 to C100/115 (EN 1992-1-1:2023, Table 5.1)</td>
 </tr>
 <tr>
 <td>Reinforcement</td>
-<td>B400A/B/C, B500A/B/C, B600–B700, A400NR, A500NR, A500EL</td>
+<td>B400A/B/C · B450A/B/C · B500A/B/C · B550A/B/C · B600A/B/C · B700A/B/C · A400NR · A500NR · A500EL · A400NRSD · A500NRSD</td>
 </tr>
 <tr>
 <td>Prestressing steel</td>
-<td>Y1770, Y1860, and others</td>
+<td>Y1570 to Y2160: wires, strands and bars (class and diameter, e.g. <code>Y1860S7 12.5</code>)</td>
 </tr>
 <tr>
 <td>Structural steel</td>
-<td>S235, S275, S355, S450</td>
+<td>S235 · S275 · S355 · S420 · S450 · S460 and their qualities (JR, N, NL, M, ML, W, Q, QL)</td>
 </tr>
 <tr>
-<td>Timber</td>
-<td>Softwood (C), Hardwood (D), Glulam (GL), CLT, LVL</td>
+<td>Timber (solid)</td>
+<td>C16 · C18 · C24 · C30 · D24 · D30 · D40 · D50 · D60 · D70</td>
+</tr>
+<tr>
+<td>Timber (glulam)</td>
+<td>GL20h to GL32h · GL20c to GL32c</td>
 </tr>
 <tr>
 <td>Bolts</td>
-<td>Grades 4.6 through 10.9</td>
+<td>Grades 4.6 · 5.6 · 6.6 · 6.8 · 8.8 · 9.8 · 10.9 · 12.9</td>
 </tr>
 </tbody>
 </table>
-<h3 id="steel-section-profiles">Steel section profiles</h3>
-<p>European hot-rolled profiles are available as named enumerations and dataclasses:</p>
+<h3 id="steel-profiles">Steel profiles</h3>
+<p>Standard European hot-rolled profiles are available as dictionaries of dataclasses exposing the
+catalogue properties (<code>A</code>, <code>Iy</code>, <code>Iz</code>, <code>Wpl_y</code>, <code>IT</code>, <code>Iw</code>, … in cm):</p>
 <ul>
 <li><strong>I-profiles:</strong> IPE, HEA, HEB, HEM</li>
 <li><strong>Hollow sections:</strong> CHS (circular), RHS (rectangular), SHS (square)</li>
@@ -3588,89 +3636,134 @@ through typed Python classes. Supported materials:</p>
 <tr>
 <th>Module</th>
 <th>Standard</th>
-<th>Coverage</th>
+<th>Key functionality</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>ec1</code></td>
-<td>EN 1991</td>
-<td>Load combinations (ULS, SLS, ALS), wind, snow, load types</td>
+<td>EN 1991 / EN 1990</td>
+<td>Load types, force resultants, ULS / SLS / ALS load combinations, wind (EN 1991-1-4)</td>
 </tr>
 <tr>
 <td><code>ec2</code></td>
-<td>EN 1992</td>
-<td>Concrete materials (2004 and 2023), ULS beam/shear/torsion/shell/slab/punching, detailing, Annex B creep and shrinkage, SLS crack, fire</td>
+<td>EN 1992-1-1 (2004 and 2023), EN 1992-2</td>
+<td>Concrete, reinforcement and prestress; ULS bending, shear, torsion, punching, detailing; membranes, slabs and shells (Annex G, Annex LL, sandwich model); SLS crack width; creep, shrinkage and relaxation (Annex B); fire</td>
 </tr>
 <tr>
 <td><code>ec3</code></td>
-<td>EN 1993</td>
-<td>Steel materials, profiles, bolted and welded connections, ULS checks</td>
+<td>EN 1993-1-1, 1-8</td>
+<td>Steel materials; I, CHS, RHS, SHS profiles; section classification, section and member checks; bolted and pinned connections, weld groups</td>
 </tr>
 <tr>
 <td><code>ec5</code></td>
-<td>EN 1995</td>
-<td>Timber materials, ULS bending/shear, SLS vibration/deformation</td>
+<td>EN 1995-1-1 (2004 and 2025)</td>
+<td>Timber materials (solid, glulam); <code>kmod</code>; ULS bending, shear, tapered and curved beams; SLS floor vibration</td>
 </tr>
 <tr>
 <td><code>ec7</code></td>
-<td>EN 1997</td>
-<td>Bearing resistance, earth pressures, soil materials</td>
+<td>EN 1997-1, EN 1998-5</td>
+<td>Soil materials; shallow foundation bearing resistance; seismic bearing resistance; earth pressure coefficients</td>
 </tr>
 <tr>
 <td><code>ec8</code></td>
-<td>EN 1998</td>
-<td>Design response spectra, national annex parameters</td>
+<td>EN 1998-1</td>
+<td>Elastic and design response spectra; Portuguese and standard CEN national annexes; spectrum plotting and export</td>
 </tr>
 <tr>
 <td><code>utils</code></td>
 <td>—</td>
-<td>Section properties, principal stresses, stress invariants</td>
+<td>Cross sections, section properties of reinforced sections, principal stresses, stress invariants</td>
 </tr>
 </tbody>
 </table>
-<h3 id="editions-and-national-annex-support">Editions and National Annex support</h3>
-<p>Functions take <code>edition=</code> (2004 or 2023) and <code>annex=</code> (country code). Portuguese data (seismic and wind zones,
-live loads) is bundled and further annexes are registered with <code>register_annex</code>; see
-<a href="modules/editions/">Editions and National Annexes</a>.</p>
+<h3 id="editions-and-national-annexes">Editions and National Annexes</h3>
+<p>Functions take <code>edition=</code> (the 2004 default, or <code>"2023"</code> for the second-generation Eurocode 2) and
+<code>annex=</code> (a country code). A National Annex is one JSON file of patches over the recommended values, and
+<code>register_annex</code> adds your own. Portuguese data (seismic and wind zones, live loads) is bundled; the Portuguese
+parameters of EN 1992-1-1:2023 are <strong>not</strong> there yet, so <code>annex="PT"</code> gives the recommended values for concrete.
+Seismic and wind data of Portuguese municipalities are available through <code>NationalParams</code>, <code>seismic_get_params</code>
+and <code>wind_get_params</code>.</p>
+<h3 id="calculation-reports-and-units">Calculation reports and units</h3>
+<p>Most checks take <code>trace=</code> with a <code>CalcReport</code> that records every step with its clause and formula, and exports
+it as a dictionary or Markdown. <code>eurocodepy.units</code> has unit systems (<code>SI</code>, <code>kN_m</code>, <code>kN_mm</code>, <code>N_mm</code>) used by the
+force and stress containers of <code>ec1</code>; the calculation functions work in the fixed units given in their documentation.</p>
 <hr />
 <h2 id="quick-start">Quick start</h2>
 <pre><code class="language-python">import eurocodepy as ec
 
-# --- Concrete material (EN 1992) ---
-concrete = ec.Concrete('C30/37')
-print(concrete.fck)   # characteristic compressive strength [MPa]
-print(concrete.fcd)   # design compressive strength [MPa]
+# ── Concrete and reinforcement (EN 1992) ───────────────────────────────────
+c = ec.Concrete('C30/37')
+r = ec.Reinforcement('B500B')
+print(c.fck, c.fcd, c.Ecm)           # 30 MPa, 20 MPa, 33 000 MPa
+print(r.fyk, r.fyd)                  # 500 MPa, ~434.8 MPa
 
-# --- Steel material (EN 1993) ---
+# The same concrete with the second-generation code: fcd = ηcc·ktc·fck/γc
+c23 = ec.ec2.get_concrete('C50/60', edition='2023', loading='other')
+print(c23.eta_cc, c23.k_tc, c23.fcd)
+
+# ── Bending and shear of a rectangular beam (EN 1992-1-1:2004) ─────────────
+# m, cm², kNm, MPa (see the documentation of each function for its units)
+MRd, eps_s, x = ec.ec2.calc_mrd(b=0.30, d=0.46, ast=8.04, fcd=c.fcd, fyd=r.fyd)
+from eurocodepy.ec2.uls.shear import calc_vrdc
+vrd_min, vrd_c, vrd = calc_vrdc(bw=0.30, d=0.46, fck=30, g_c=1.5, rho_l=0.0117)
+print(f&quot;MRd = {MRd:.1f} kNm, VRd,c = {vrd:.1f} kN&quot;)
+
+# ── Shear check of EN 1992-1-1:2023, clause 8.2 ─────────────────────────────
+from eurocodepy.ec2 import uls2023
+shear = uls2023.eurocode2_shear_check(
+    uls2023.ShearInput(b=0.3, d=0.5, fck=30, fyk=500, as_long=0.0015), v_ed=150.0)
+print(shear.mode, shear.asw_s)       # 'stirrups', Asw/s [m²/m]
+
+# ── Structural steel (EN 1993) ─────────────────────────────────────────────
 steel = ec.Steel('S355')
-print(steel.fyk)   # yield strength [MPa]
+profile = ec.ec3.ProfilesI['IPE300']
+print(steel.fyk, profile.A, profile.Iy)      # 355 MPa, cm², cm⁴
+check = ec.ec3.section_check_profile(
+    profile, steel.fyk, ec.ec3.SectionForces(my_ed=100.0, vz_ed=80.0))
+print(f&quot;utilization = {check.utilization:.2f}&quot;)
 
-# --- Timber material (EN 1995) ---
-timber = ec.Timber('C24')
-print(timber.fmk)  # characteristic bending strength [MPa]
+# ── Timber (EN 1995) ───────────────────────────────────────────────────────
+from eurocodepy.ec5.materials import SolidTimber, ServiceClass, LoadDuration
+timber = SolidTimber('C24')
+kmod = timber.k_mod(ServiceClass.SC1, LoadDuration.MediumDuration)
+print(timber.fmk, kmod, timber.design_values(ServiceClass.SC1, LoadDuration.MediumDuration)['fmd'])
 
-# --- Design response spectrum (EN 1998, Portuguese NA) ---
+# ── Load combinations (EN 1990) ────────────────────────────────────────────
+from eurocodepy.ec1 import Load, LoadType, Loads
+loads = Loads()                      # γ favourable, γ unfavourable, ψ0, ψ1, ψ2
+loads.add(Load('G', LoadType.PERMANENT, 1.0, 1.35, 0.0, 0.0, 0.0))
+loads.add(Load('Q', LoadType.LIVE,      0.0, 1.50, 0.7, 0.5, 0.3))
+loads.add(Load('W', LoadType.WIND,      0.0, 1.50, 0.6, 0.2, 0.0))
+for name in loads.get_ULS_combos():
+    print(name)
+
+# ── Seismic spectrum (EN 1998, Portuguese NA) ──────────────────────────────
 spec = ec.spectrum.get_spectrum_ec8(
     locale='PT', code='PT1', imp_class='II',
-    soil='C', zone='1_2', behaviour=3.0
+    soil='C', zone='1_2', behaviour=3.0,
 )
-ec.spectrum.draw_spectrum_ec8(spec, show=False)   # show=True opens the window
+ec.spectrum.draw_spectrum_ec8(spec, show=False)       # show=True opens the window
+ec.spectrum.write_spectrum_ec8(spec, filename='spectrum.csv')
 
-# --- Load combinations (EN 1990) ---
-from eurocodepy.ec1 import Load, LoadType, Loads
-loads = Loads()
-loads.add(Load('G1', LoadType.PERMANENT, 1.0, 1.35, 0.0, 0.0, 0.0))   # γ fav, γ unf, ψ0, ψ1, ψ2
-loads.add(Load('Q1', LoadType.LIVE, 0.0, 1.5, 0.7, 0.5, 0.3))
-loads.add(Load('W1', LoadType.WIND, 0.0, 1.5, 0.6, 0.2, 0.0))
-uls = loads.get_ULS_combos()
+# ── Shallow foundation bearing resistance (EN 1997): angles in radians ─────
+import numpy as np
+from eurocodepy.ec7 import bearing_resistance
+Rd = bearing_resistance(Bx=1.5, By=2.0, Hx=20, Hy=0, N=200,
+                        phi=np.radians(30.0), gamma=18.0, q=0.0, c=0.0)
+print(f&quot;Rd = {Rd:.1f} kPa&quot;)                            # bearing stress
+
+# ── Creep coefficient (EN 1992-1-1:2023, Annex B) ──────────────────────────
+from eurocodepy.ec2.sls.creep import creep_coef
+phi_t = creep_coef(t=18278, t0=28, fcm28=38.0, RH=60, hn=200, t0_T=28, concrete_class='CN')
+print(f&quot;φ(50 y, 28 d) = {phi_t:.2f}&quot;)
 </code></pre>
 <hr />
 <h2 id="installation">Installation</h2>
-<pre><code class="language-bash"># From PyPI
+<pre><code class="language-shell"># Stable release from PyPI
 pip install eurocodepy
 
-# With uv
+# With uv (recommended)
 uv add eurocodepy
 
 # Latest development version from GitHub
@@ -3678,19 +3771,34 @@ pip install git+https://github.com/pcachim/eurocodepy.git
 </code></pre>
 <p>Requires <strong>Python ≥ 3.12</strong>.</p>
 <hr />
+<hr />
 <h2 id="navigation">Navigation</h2>
 <ul>
 <li><a href="tutorials/">Tutorials</a> — step-by-step worked examples</li>
 <li><a href="how-to-guides/">How-to guides</a> — recipes for common tasks</li>
-<li><a href="modules/ec1/">Modules</a> — module-by-module feature reference</li>
-<li><a href="reference/">Code Reference</a> — auto-generated API documentation</li>
+<li><a href="modules/ec2/">Modules</a> — one page per Eurocode (<a href="modules/ec1/">EC1</a>, <a href="modules/ec2/">EC2</a>,
+  <a href="modules/ec3/">EC3</a>, <a href="modules/ec5/">EC5</a>, <a href="modules/ec7/">EC7</a>, <a href="modules/ec8/">EC8</a>, <a href="modules/utils/">utils</a>),
+  and <a href="modules/editions/">editions and National Annexes</a></li>
+<li><a href="reference/">Code reference</a> — generated API documentation</li>
 <li><a href="explanation/">Background</a> — design decisions and architecture</li>
-<li><a href="copyright/">License &amp; Contributing</a></li>
+<li><a href="copyright/">License &amp; contributing</a></li>
 </ul>
 <hr />
-<h2 id="support">Support</h2>
-<p>Open an issue or start a discussion on GitHub:
-<a href="https://github.com/pcachim/eurocodepy/issues">https://github.com/pcachim/eurocodepy/issues</a></p>
+<h2 id="contributing">Contributing</h2>
+<p>Contributions are welcome. For significant changes please open an issue first to
+discuss the approach.</p>
+<ol>
+<li>Fork the repository</li>
+<li>Create a feature branch: <code>git checkout -b feature/my-feature</code></li>
+<li>Commit your changes: <code>git commit -m 'feat: add my feature'</code></li>
+<li>Push and open a Pull Request</li>
+</ol>
+<p>Please follow the existing code style (enforced by <code>ruff</code>) and include tests where
+applicable. See <a href="https://github.com/pcachim/eurocodepy/blob/master/CONTRIBUTING_GUIDELINES.md">CONTRIBUTING_GUIDELINES.md</a> for more detail.</p>
+<hr />
+<h2 id="license">License</h2>
+<p>GNU Lesser General Public License v3.0 (LGPLv3) — see <a href="https://github.com/pcachim/eurocodepy/blob/master/LICENSE.md">LICENSE.md</a> and <a href="https://github.com/pcachim/eurocodepy/blob/master/COPYING">COPYING</a> for the full text.</p>
+<hr />
 <h2 id="disclaimer">Disclaimer</h2>
 <p>This software is intended for <strong>educational and research</strong> purposes only. It is not a
 certified engineering tool and must not be used for final structural designs. Always
@@ -3698,10 +3806,12 @@ verify calculations against the official Eurocode standards and applicable natio
 annexes, and have final designs reviewed and approved by a qualified structural
 engineer. The authors assume no liability for design decisions made using this library.</p>
 <p>This disclaimer is in addition to, and does not limit, the warranty disclaimer in the
-LGPLv3 license (see <a href="copyright/">License &amp; Contributing</a>).</p>
+LGPLv3 license (see <a href="https://github.com/pcachim/eurocodepy/blob/master/LICENSE.md">LICENSE.md</a>).</p>
+<hr />
 <h2 id="acknowledgements">Acknowledgements</h2>
-<p>Eurocodes and National Annexes are published by their respective standards bodies (CEN and
-national SDOs). This project is not affiliated with CEN or any national standards organization.</p>
+<p>Eurocodes and National Annexes are published by CEN and the respective national
+standards bodies. This project is not affiliated with CEN or any national standards
+organization.</p>
 
 
 
