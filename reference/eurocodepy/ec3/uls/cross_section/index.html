@@ -1,0 +1,5264 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../checks/">
+      
+      
+        <link rel="next" href="../member_buckling/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>cross_section - Documentation for EurocodePy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eurocodepy.ec3.uls.cross_section" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Documentation for EurocodePy" class="md-header__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation for EurocodePy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              cross_section
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Documentation for EurocodePy" class="md-nav__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation for EurocodePy
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EurocodePy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../how-to-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How-to Guides
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../explanation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Background &amp; Design Philosophy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../modules/ec2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    EC2
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            EC2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/edition-2004/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2004
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/edition-2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2023
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/shells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Membranes, slabs and shells
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/clauses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2023 clause map
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/editions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Editions and National Annexes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC5
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC7
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC8
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utils
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Code Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Code Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    eurocodepy
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            eurocodepy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../_compat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    _compat
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../annex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    annex
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calc_report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    calc_report
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dbase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbase
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec1
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_5" id="__nav_6_1_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            ec1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/combos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    combos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/factors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    factors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/forces%20copy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    forces copy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/forces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    forces
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/snow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    snow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/stresses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stresses
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_5_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec1/wind/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    wind
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_5_7" id="__nav_6_1_5_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            wind
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/wind/pressure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    pressure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec2
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6" id="__nav_6_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            ec2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/fire/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    fire
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_1" id="__nav_6_1_6_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            fire
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/fire/fire_base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fire_base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_3" id="__nav_6_1_6_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/sls/crack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/sls/creep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    creep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/sls/shrinkage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shrinkage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/time_dependent2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    time_dependent2023
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_5" id="__nav_6_1_6_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/anchorage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    anchorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/beam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    beam
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/bend_axial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bend_axial
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/bend_circ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bend_circ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    column
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/membrane_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    membrane_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/punch_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shear_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shear_torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shell_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/slab_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    slab_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/uls2023/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls2023
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_6" id="__nav_6_1_6_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            uls2023
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/annex_g/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    annex_g
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    column
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/detailing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    detailing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/membrane_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    membrane_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/shear_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/shear_torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/shell_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/slab_design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    slab_design
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_7" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec3
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_7" id="__nav_6_1_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            ec3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_7_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_7_3" id="__nav_6_1_7_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_7_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../checks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    checks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section" class="md-nav__link">
+    <span class="md-ellipsis">
+      cross_section
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.SectionForces" class="md-nav__link">
+    <span class="md-ellipsis">
+      SectionForces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.SectionResistanceInput" class="md-nav__link">
+    <span class="md-ellipsis">
+      SectionResistanceInput
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.SectionResistanceResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      SectionResistanceResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SectionResistanceResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.SectionResistanceResult.__str__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __str__
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.eurocode3_section_check" class="md-nav__link">
+    <span class="md-ellipsis">
+      eurocode3_section_check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.reduced_shear_resistance_torsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      reduced_shear_resistance_torsion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.section_check_profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      section_check_profile
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.shear_buckling_susceptible" class="md-nav__link">
+    <span class="md-ellipsis">
+      shear_buckling_susceptible
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.shear_resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      shear_resistance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.torsion_resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      torsion_resistance
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../member_buckling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    member_buckling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec5
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8" id="__nav_6_1_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            ec5
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_2" id="__nav_6_1_8_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/sls/deformation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    deformation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/sls/vibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    vibration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_3" id="__nav_6_1_8_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/special_beams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    special_beams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/uls2025/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls2025
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_4" id="__nav_6_1_8_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            uls2025
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls2025/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls2025/cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls2025/fasteners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fasteners
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls2025/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls2025/special_beams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    special_beams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec7/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec7
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_9" id="__nav_6_1_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_9">
+            <span class="md-nav__icon md-icon"></span>
+            ec7
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/bearing_capacity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bearing_capacity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/earth_pressures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    earth_pressures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec8
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_10" id="__nav_6_1_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_10">
+            <span class="md-nav__icon md-icon"></span>
+            ec8
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec8/spectrum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    spectrum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../national_parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    national_parameters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    units
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../utils/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    utils
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_13" id="__nav_6_1_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_13">
+            <span class="md-nav__icon md-icon"></span>
+            utils
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/crosssection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crosssection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/section_properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    section_properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/stress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stress
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../copyright/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Copyright & contributing
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Copyright & contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../STYLE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python Style Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../CODE_OF_CONDUCT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code of Conduct
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section" class="md-nav__link">
+    <span class="md-ellipsis">
+      cross_section
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.SectionForces" class="md-nav__link">
+    <span class="md-ellipsis">
+      SectionForces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.SectionResistanceInput" class="md-nav__link">
+    <span class="md-ellipsis">
+      SectionResistanceInput
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.SectionResistanceResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      SectionResistanceResult
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SectionResistanceResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.SectionResistanceResult.__str__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __str__
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.eurocode3_section_check" class="md-nav__link">
+    <span class="md-ellipsis">
+      eurocode3_section_check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.reduced_shear_resistance_torsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      reduced_shear_resistance_torsion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.section_check_profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      section_check_profile
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.shear_buckling_susceptible" class="md-nav__link">
+    <span class="md-ellipsis">
+      shear_buckling_susceptible
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.shear_resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      shear_resistance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec3.uls.cross_section.torsion_resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      torsion_resistance
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>cross_section</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="eurocodepy.ec3.uls.cross_section"></a>
+    <div class="doc doc-contents first">
+
+        <p>EN 1993-1-1 §6.2 cross-section resistance under N, My, Mz, Vy, Vz and T.</p>
+<p>This module verifies the <em>cross-section</em> (no member buckling — that is
+§6.3.3, :mod:<code>eurocodepy.ec3.uls.member_buckling</code>) against:</p>
+<ul>
+<li>shear resistance about both axes — <code>Vpl,Rd</code> (§6.2.6), with a slender-web
+  shear-buckling flag;</li>
+<li>torsion — the plastic torsion resistance <code>T_Rd</code> and the torsion-reduced
+  shear resistance <code>Vpl,T,Rd</code> (§6.2.7);</li>
+<li>bending and axial force — the reduced plastic moment <code>MN,Rd</code> and the
+  biaxial interaction (§6.2.9) for Class 1–2, the elastic stress check for
+  Class 3 and the effective-section check for Class 4;</li>
+<li>bending and shear — the <code>(1 − ρ)</code> yield reduction on the shear area when
+  <code>V_Ed &gt; 0.5·Vpl,Rd</code> (§6.2.8);</li>
+<li>their combination (§6.2.10), returned as a single governing utilisation.</li>
+</ul>
+<p>Consistent units: forces in <strong>kN</strong>, moments in <strong>kNm</strong>, torsion in <strong>kNm</strong>,
+lengths / dimensions in <strong>mm</strong>, stresses in <strong>N/mm²</strong>.</p>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="eurocodepy.ec3.uls.cross_section.SectionForces" class="doc doc-heading">
+            <code>SectionForces</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Design forces on the cross-section (compression N positive).</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>eurocodepy/ec3/uls/cross_section.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SectionForces</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Design forces on the cross-section (compression N positive).&quot;&quot;&quot;</span>
+
+    <span class="n">n_ed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>     <span class="c1"># axial [kN]</span>
+    <span class="n">my_ed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># major-axis bending [kNm]</span>
+    <span class="n">mz_ed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># minor-axis bending [kNm]</span>
+    <span class="n">vy_ed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># shear parallel to y (in the flanges) [kN]</span>
+    <span class="n">vz_ed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>    <span class="c1"># shear parallel to z (in the web) [kN]</span>
+    <span class="n">t_ed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>     <span class="c1"># torsion [kNm]</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="eurocodepy.ec3.uls.cross_section.SectionResistanceInput" class="doc doc-heading">
+            <code>SectionResistanceInput</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Cross-section data for the §6.2 check (mm / N units).</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>eurocodepy/ec3/uls/cross_section.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SectionResistanceInput</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cross-section data for the §6.2 check (mm / N units).&quot;&quot;&quot;</span>
+
+    <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;I&quot;</span>                   <span class="c1"># &#39;I&#39; | &#39;RHS&#39; | &#39;SHS&#39; | &#39;CHS&#39;</span>
+    <span class="n">section_class</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">fy</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">355.0</span>                 <span class="c1"># [N/mm²]</span>
+    <span class="n">gamma_M0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="c1"># geometry [mm]</span>
+    <span class="n">area</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">area_eff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">h</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">tw</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">tf</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">hw</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>                   <span class="c1"># clear web depth (I) [mm]</span>
+    <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>                  <span class="c1"># material factor √(235/fy)</span>
+    <span class="c1"># resistance moduli [mm³]</span>
+    <span class="n">wpl_y</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">wpl_z</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">wel_y</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">wel_z</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">weff_y</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">weff_z</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">wt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>                   <span class="c1"># torsional modulus [mm³]</span>
+    <span class="n">av_y</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>                 <span class="c1"># shear area (flanges) [mm²]</span>
+    <span class="n">av_z</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>                 <span class="c1"># shear area (web) [mm²]</span>
+    <span class="c1"># Class-4 centroid shift additional moments [kNm]</span>
+    <span class="n">d_my</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">d_mz</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="eurocodepy.ec3.uls.cross_section.SectionResistanceResult" class="doc doc-heading">
+            <code>SectionResistanceResult</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Result of the §6.2 cross-section verification.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>eurocodepy/ec3/uls/cross_section.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SectionResistanceResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result of the §6.2 cross-section verification.&quot;&quot;&quot;</span>
+
+    <span class="n">util_shear_y</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">util_shear_z</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">util_torsion</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">util_bending_axial</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">utilization</span><span class="p">:</span> <span class="nb">float</span>                <span class="c1"># governing</span>
+    <span class="n">passed</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">vpl_rd_y</span><span class="p">:</span> <span class="nb">float</span>                   <span class="c1"># [kN]</span>
+    <span class="n">vpl_rd_z</span><span class="p">:</span> <span class="nb">float</span>                   <span class="c1"># [kN]</span>
+    <span class="n">t_rd</span><span class="p">:</span> <span class="nb">float</span>                       <span class="c1"># [kNm]</span>
+    <span class="n">npl_rd</span><span class="p">:</span> <span class="nb">float</span>                     <span class="c1"># [kN]</span>
+    <span class="n">shear_reduces_moment</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">web_shear_buckling</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">details</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Readable summary of the section check.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;EC3 §6.2 section check — </span><span class="si">{</span><span class="s1">&#39;PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">passed</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;FAIL&#39;</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  shear:   Vy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">util_shear_y</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> | Vz </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">util_shear_z</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  torsion: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">util_torsion</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  N+My+Mz: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">util_bending_axial</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;  → utilization </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">utilization</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="eurocodepy.ec3.uls.cross_section.SectionResistanceResult.__str__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__str__</span><span class="p">()</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Readable summary of the section check.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/cross_section.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Readable summary of the section check.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;EC3 §6.2 section check — </span><span class="si">{</span><span class="s1">&#39;PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">passed</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;FAIL&#39;</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;  shear:   Vy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">util_shear_y</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> | Vz </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">util_shear_z</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;  torsion: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">util_torsion</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;  N+My+Mz: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">util_bending_axial</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;  → utilization </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">utilization</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.cross_section.eurocode3_section_check" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">eurocode3_section_check</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Verify a cross-section under N + My + Mz + Vy + Vz + T (EN 1993-1-1 §6.2).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>inp</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="SectionResistanceInput
+
+
+  
+      dataclass
+   (eurocodepy.ec3.uls.cross_section.SectionResistanceInput)" href="#eurocodepy.ec3.uls.cross_section.SectionResistanceInput">SectionResistanceInput</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The cross-section data.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>f</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="SectionForces
+
+
+  
+      dataclass
+   (eurocodepy.ec3.uls.cross_section.SectionForces)" href="#eurocodepy.ec3.uls.cross_section.SectionForces">SectionForces</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The design forces.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>trace</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional :class:<code>eurocodepy.calc_report.CalcReport</code>. When given,
+the check records its steps (clause, expression, substitution,
+value) into it. <code>None</code> (default) is a no-op and leaves the result
+identical — the trace only <em>records</em> what was computed.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>A</code></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="SectionResistanceResult
+
+
+  
+      dataclass
+   (eurocodepy.ec3.uls.cross_section.SectionResistanceResult)" href="#eurocodepy.ec3.uls.cross_section.SectionResistanceResult">SectionResistanceResult</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>class:<code>SectionResistanceResult</code> with the shear, torsion and</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+<td></td>            <td>
+                  <code><a class="autorefs autorefs-internal" title="SectionResistanceResult
+
+
+  
+      dataclass
+   (eurocodepy.ec3.uls.cross_section.SectionResistanceResult)" href="#eurocodepy.ec3.uls.cross_section.SectionResistanceResult">SectionResistanceResult</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>bending+axial utilisations, the governing value and pass/fail.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/cross_section.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">eurocode3_section_check</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">SectionResistanceInput</span><span class="p">,</span>
+                            <span class="n">f</span><span class="p">:</span> <span class="n">SectionForces</span><span class="p">,</span>
+                            <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SectionResistanceResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Verify a cross-section under N + My + Mz + Vy + Vz + T (EN 1993-1-1 §6.2).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        inp: The cross-section data.</span>
+<span class="sd">        f: The design forces.</span>
+<span class="sd">        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When given,</span>
+<span class="sd">            the check records its steps (clause, expression, substitution,</span>
+<span class="sd">            value) into it. ``None`` (default) is a no-op and leaves the result</span>
+<span class="sd">            identical — the trace only *records* what was computed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A :class:`SectionResistanceResult` with the shear, torsion and</span>
+<span class="sd">        bending+axial utilisations, the governing value and pass/fail.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rep</span> <span class="o">=</span> <span class="n">trace</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_t</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">rep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rep</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sec</span><span class="p">(</span><span class="n">title</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">rep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rep</span><span class="o">.</span><span class="n">section</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+    <span class="n">fy</span><span class="p">,</span> <span class="n">gm0</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">fy</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">gamma_M0</span>
+    <span class="n">hollow</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;RHS&quot;</span><span class="p">,</span> <span class="s2">&quot;SHS&quot;</span><span class="p">,</span> <span class="s2">&quot;CHS&quot;</span><span class="p">)</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">area</span>
+    <span class="n">area_eff</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">area_eff</span> <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">area_eff</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">area</span>
+
+    <span class="n">_sec</span><span class="p">(</span><span class="s2">&quot;Inputs&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;N_Ed&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">n_ed</span><span class="p">,</span>
+       <span class="s2">&quot;kN (compression)&quot;</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">n_ed</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;kN (tension)&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;My_Ed&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">my_ed</span><span class="p">,</span> <span class="s2">&quot;kNm&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;Mz_Ed&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">mz_ed</span><span class="p">,</span> <span class="s2">&quot;kNm&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;Vy_Ed&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">vy_ed</span><span class="p">,</span> <span class="s2">&quot;kN&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;Vz_Ed&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">vz_ed</span><span class="p">,</span> <span class="s2">&quot;kN&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;T_Ed&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">t_ed</span><span class="p">,</span> <span class="s2">&quot;kNm&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;f_y&quot;</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="s2">&quot;N/mm²&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;γ_M0&quot;</span><span class="p">,</span> <span class="n">gm0</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.1&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;Section class&quot;</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">section_class</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §5.5&quot;</span><span class="p">,</span>
+       <span class="n">note</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">inp</span><span class="o">.</span><span class="n">kind</span><span class="si">}</span><span class="s2"> section&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ── shear resistances (with torsion reduction) ──</span>
+    <span class="n">vpl_y</span> <span class="o">=</span> <span class="n">shear_resistance</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">av_y</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">gm0</span><span class="p">)</span>
+    <span class="n">vpl_z</span> <span class="o">=</span> <span class="n">shear_resistance</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">av_z</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">gm0</span><span class="p">)</span>
+    <span class="n">t_rd</span> <span class="o">=</span> <span class="n">torsion_resistance</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">wt</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">gm0</span><span class="p">)</span>
+    <span class="n">tau_t</span> <span class="o">=</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">t_ed</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e6</span> <span class="o">/</span> <span class="n">inp</span><span class="o">.</span><span class="n">wt</span><span class="p">)</span> <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">wt</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">t_ed</span> <span class="o">!=</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">inp</span><span class="o">.</span><span class="n">wt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vpl_ty</span> <span class="o">=</span> <span class="n">reduced_shear_resistance_torsion</span><span class="p">(</span><span class="n">vpl_y</span><span class="p">,</span> <span class="n">tau_t</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">gm0</span><span class="p">,</span> <span class="n">hollow</span><span class="o">=</span><span class="n">hollow</span><span class="p">)</span>
+        <span class="n">vpl_tz</span> <span class="o">=</span> <span class="n">reduced_shear_resistance_torsion</span><span class="p">(</span><span class="n">vpl_z</span><span class="p">,</span> <span class="n">tau_t</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">gm0</span><span class="p">,</span> <span class="n">hollow</span><span class="o">=</span><span class="n">hollow</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vpl_ty</span><span class="p">,</span> <span class="n">vpl_tz</span> <span class="o">=</span> <span class="n">vpl_y</span><span class="p">,</span> <span class="n">vpl_z</span>
+
+    <span class="n">u_vy</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">vy_ed</span><span class="p">)</span> <span class="o">/</span> <span class="n">vpl_ty</span> <span class="k">if</span> <span class="n">vpl_ty</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="n">u_vz</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">vz_ed</span><span class="p">)</span> <span class="o">/</span> <span class="n">vpl_tz</span> <span class="k">if</span> <span class="n">vpl_tz</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="n">u_t</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">t_ed</span><span class="p">)</span> <span class="o">/</span> <span class="n">t_rd</span> <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">t_rd</span><span class="p">)</span> <span class="ow">and</span> <span class="n">t_rd</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+
+    <span class="n">web_sb</span> <span class="o">=</span> <span class="n">shear_buckling_susceptible</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">hw</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">tw</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">eps</span><span class="p">)</span>
+
+    <span class="n">_sec</span><span class="p">(</span><span class="s2">&quot;Shear resistance (§6.2.6)&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;V_pl,Rd,y&quot;</span><span class="p">,</span> <span class="n">vpl_y</span><span class="p">,</span> <span class="s2">&quot;kN&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.6(2)&quot;</span><span class="p">,</span>
+       <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;V_pl,Rd = A_v·(f_y/√3)/γ_M0&quot;</span><span class="p">,</span>
+       <span class="n">latex</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;V_{pl,Rd}=\frac{A_v (f_y/\sqrt</span><span class="si">{3}</span><span class="s2">)}{\gamma_</span><span class="si">{M0}</span><span class="s2">}&quot;</span><span class="p">,</span>
+       <span class="n">subst</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">inp</span><span class="o">.</span><span class="n">av_y</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">·(</span><span class="si">{</span><span class="n">fy</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">/√3)/</span><span class="si">{</span><span class="n">gm0</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">/1e3&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;V_pl,Rd,z&quot;</span><span class="p">,</span> <span class="n">vpl_z</span><span class="p">,</span> <span class="s2">&quot;kN&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.6(2)&quot;</span><span class="p">,</span>
+       <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;V_pl,Rd = A_v·(f_y/√3)/γ_M0&quot;</span><span class="p">,</span>
+       <span class="n">subst</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">inp</span><span class="o">.</span><span class="n">av_z</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">·(</span><span class="si">{</span><span class="n">fy</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">/√3)/</span><span class="si">{</span><span class="n">gm0</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">/1e3&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">web_sb</span><span class="p">:</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;Web shear buckling&quot;</span><span class="p">,</span> <span class="s2">&quot;check&quot;</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.6(6)&quot;</span><span class="p">,</span>
+           <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;h_w/t_w &gt; 72·ε/η&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="s2">&quot;slender web — verify per EN 1993-1-5&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">t_ed</span> <span class="o">!=</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">inp</span><span class="o">.</span><span class="n">wt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">_sec</span><span class="p">(</span><span class="s2">&quot;Torsion (§6.2.7)&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;τ_t,Ed&quot;</span><span class="p">,</span> <span class="n">tau_t</span><span class="p">,</span> <span class="s2">&quot;N/mm²&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;τ_t = T_Ed/W_t&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;T_Rd&quot;</span><span class="p">,</span> <span class="n">t_rd</span><span class="p">,</span> <span class="s2">&quot;kNm&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.7&quot;</span><span class="p">,</span>
+           <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;T_Rd = W_t·(f_y/√3)/γ_M0&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;V_pl,T,Rd,y&quot;</span><span class="p">,</span> <span class="n">vpl_ty</span><span class="p">,</span> <span class="s2">&quot;kN&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.7(9)&quot;</span><span class="p">,</span>
+           <span class="n">note</span><span class="o">=</span><span class="s2">&quot;torsion-reduced shear resistance&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;V_pl,T,Rd,z&quot;</span><span class="p">,</span> <span class="n">vpl_tz</span><span class="p">,</span> <span class="s2">&quot;kN&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.7(9)&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;U_T = T_Ed/T_Rd&quot;</span><span class="p">,</span> <span class="n">u_t</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">ok</span><span class="o">=</span><span class="n">u_t</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;U_Vy = V_y,Ed/V_pl,Rd,y&quot;</span><span class="p">,</span> <span class="n">u_vy</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.6&quot;</span><span class="p">,</span>
+       <span class="n">ok</span><span class="o">=</span><span class="n">u_vy</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;U_Vz = V_z,Ed/V_pl,Rd,z&quot;</span><span class="p">,</span> <span class="n">u_vz</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.6&quot;</span><span class="p">,</span>
+       <span class="n">ok</span><span class="o">=</span><span class="n">u_vz</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="c1"># ── shear → moment reduction (§6.2.8): ρ when V &gt; 0.5·Vpl ──</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_rho</span><span class="p">(</span><span class="n">v_ed</span><span class="p">,</span> <span class="n">vpl</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">vpl</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">v_ed</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">vpl</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">v_ed</span><span class="p">)</span> <span class="o">/</span> <span class="n">vpl</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="n">rho_z</span> <span class="o">=</span> <span class="n">_rho</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">vz_ed</span><span class="p">,</span> <span class="n">vpl_tz</span><span class="p">)</span>     <span class="c1"># affects My (web shear)</span>
+    <span class="n">rho_y</span> <span class="o">=</span> <span class="n">_rho</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">vy_ed</span><span class="p">,</span> <span class="n">vpl_ty</span><span class="p">)</span>     <span class="c1"># affects Mz (flange shear)</span>
+    <span class="n">shear_reduces</span> <span class="o">=</span> <span class="n">rho_z</span> <span class="o">&gt;</span> <span class="mf">0.0</span> <span class="ow">or</span> <span class="n">rho_y</span> <span class="o">&gt;</span> <span class="mf">0.0</span>
+
+    <span class="k">if</span> <span class="n">shear_reduces</span><span class="p">:</span>
+        <span class="n">_sec</span><span class="p">(</span><span class="s2">&quot;Shear–moment reduction (§6.2.8)&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;ρ_z&quot;</span><span class="p">,</span> <span class="n">rho_z</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.8&quot;</span><span class="p">,</span>
+           <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;ρ = (2·V_Ed/V_pl,Rd − 1)²  for V_Ed &gt; 0.5·V_pl,Rd&quot;</span><span class="p">,</span>
+           <span class="n">latex</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\rho=\left(\frac{2V_</span><span class="si">{Ed}</span><span class="s2">}{V_{pl,Rd}}-1\right)^2&quot;</span><span class="p">,</span>
+           <span class="n">note</span><span class="o">=</span><span class="s2">&quot;reduces My&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;ρ_y&quot;</span><span class="p">,</span> <span class="n">rho_y</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.8&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="s2">&quot;reduces Mz&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ── bending + axial ──</span>
+    <span class="n">npl_rd</span> <span class="o">=</span> <span class="n">area_eff</span> <span class="o">*</span> <span class="n">fy</span> <span class="o">/</span> <span class="n">gm0</span> <span class="o">/</span> <span class="mf">1e3</span>
+    <span class="n">my</span><span class="p">,</span> <span class="n">mz</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">my_ed</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">mz_ed</span>
+
+    <span class="n">_sec</span><span class="p">(</span><span class="s2">&quot;Bending + axial (§6.2.9)&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;N_pl,Rd&quot;</span><span class="p">,</span> <span class="n">npl_rd</span><span class="p">,</span> <span class="s2">&quot;kN&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.4&quot;</span><span class="p">,</span>
+       <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;N_pl,Rd = A·f_y/γ_M0&quot;</span><span class="p">,</span>
+       <span class="n">subst</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">area_eff</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">·</span><span class="si">{</span><span class="n">fy</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">gm0</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">/1e3&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">section_class</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># Plastic. Reduce Wpl for high coincident shear (§6.2.8): the web area</span>
+        <span class="c1"># loses (1 − (1 − ρ)) of its contribution to Wpl,y (and flanges to Wpl,z).</span>
+        <span class="n">wpl_y</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">wpl_y</span>
+        <span class="n">wpl_z</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">wpl_z</span>
+        <span class="c1"># §6.2.8: web shear reduces Wpl,y by ρ·Aw²/(4·tw); flange shear reduces</span>
+        <span class="c1"># Wpl,z (no closed form → the conservative (1 − ρ) factor is used).</span>
+        <span class="k">if</span> <span class="n">rho_z</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">inp</span><span class="o">.</span><span class="n">tw</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">aw</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">hw</span> <span class="o">*</span> <span class="n">inp</span><span class="o">.</span><span class="n">tw</span> <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">hw</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">inp</span><span class="o">.</span><span class="n">av_z</span>
+            <span class="n">wpl_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">wpl_y</span> <span class="o">-</span> <span class="n">rho_z</span> <span class="o">*</span> <span class="n">aw</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">inp</span><span class="o">.</span><span class="n">tw</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rho_y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">wpl_z</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">wpl_z</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">rho_y</span><span class="p">)</span>
+        <span class="n">mpl_y</span> <span class="o">=</span> <span class="n">wpl_y</span> <span class="o">*</span> <span class="n">fy</span> <span class="o">/</span> <span class="n">gm0</span> <span class="o">/</span> <span class="mf">1e6</span>
+        <span class="n">mpl_z</span> <span class="o">=</span> <span class="n">wpl_z</span> <span class="o">*</span> <span class="n">fy</span> <span class="o">/</span> <span class="n">gm0</span> <span class="o">/</span> <span class="mf">1e6</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">n_ed</span><span class="p">)</span> <span class="o">/</span> <span class="n">npl_rd</span> <span class="k">if</span> <span class="n">npl_rd</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">geom</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;area&quot;</span><span class="p">:</span> <span class="n">area</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="n">inp</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">:</span> <span class="n">inp</span><span class="o">.</span><span class="n">h</span><span class="p">,</span>
+                <span class="s2">&quot;tf&quot;</span><span class="p">:</span> <span class="n">inp</span><span class="o">.</span><span class="n">tf</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">inp</span><span class="o">.</span><span class="n">tw</span><span class="p">}</span>
+        <span class="n">rny</span><span class="p">,</span> <span class="n">rnz</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="n">_mn_reduction</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">kind</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">geom</span><span class="p">)</span>
+        <span class="n">mn_y</span> <span class="o">=</span> <span class="n">rny</span> <span class="o">*</span> <span class="n">mpl_y</span>
+        <span class="n">mn_z</span> <span class="o">=</span> <span class="n">rnz</span> <span class="o">*</span> <span class="n">mpl_z</span>
+        <span class="n">ratio_y</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">my</span><span class="p">)</span> <span class="o">/</span> <span class="n">mn_y</span> <span class="k">if</span> <span class="n">mn_y</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span> <span class="k">if</span> <span class="n">my</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">ratio_z</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">mz</span><span class="p">)</span> <span class="o">/</span> <span class="n">mn_z</span> <span class="k">if</span> <span class="n">mn_z</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span> <span class="k">if</span> <span class="n">mz</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">interaction</span> <span class="o">=</span> <span class="n">ratio_y</span> <span class="o">**</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">ratio_z</span> <span class="o">**</span> <span class="n">beta</span>
+        <span class="c1"># Report the governing utilisation: the biaxial interaction unity check</span>
+        <span class="c1"># plus the individual limits (so a uniaxial case reads as the linear</span>
+        <span class="c1"># ratio, and pure axial as N/Npl,Rd — §6.2.4/§6.2.9).</span>
+        <span class="n">u_nm</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">interaction</span><span class="p">,</span> <span class="n">ratio_y</span><span class="p">,</span> <span class="n">ratio_z</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;n = N_Ed/N_pl,Rd&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;M_pl,Rd,y&quot;</span><span class="p">,</span> <span class="n">mpl_y</span><span class="p">,</span> <span class="s2">&quot;kNm&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;M_pl,Rd = W_pl,y·f_y/γ_M0&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;M_pl,Rd,z&quot;</span><span class="p">,</span> <span class="n">mpl_z</span><span class="p">,</span> <span class="s2">&quot;kNm&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;M_pl,Rd = W_pl,z·f_y/γ_M0&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;M_N,Rd,y&quot;</span><span class="p">,</span> <span class="n">mn_y</span><span class="p">,</span> <span class="s2">&quot;kNm&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.9.1&quot;</span><span class="p">,</span>
+           <span class="n">note</span><span class="o">=</span><span class="s2">&quot;axial-reduced plastic moment&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;M_N,Rd,z&quot;</span><span class="p">,</span> <span class="n">mn_z</span><span class="p">,</span> <span class="s2">&quot;kNm&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.9.1&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;Interaction&quot;</span><span class="p">,</span> <span class="n">interaction</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.9.1(6)&quot;</span><span class="p">,</span>
+           <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;(M_y/M_N,y)^α + (M_z/M_N,z)^β ≤ 1&quot;</span><span class="p">,</span>
+           <span class="n">latex</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\left(\frac</span><span class="si">{M_y}</span><span class="s2">{M_{N,y}}\right)^{\alpha}&quot;</span>
+                 <span class="sa">r</span><span class="s2">&quot;+\left(\frac</span><span class="si">{M_z}</span><span class="s2">{M_{N,z}}\right)^{\beta}\leq1&quot;</span><span class="p">,</span>
+           <span class="n">subst</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">my</span><span class="p">)</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">mn_y</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">)^</span><span class="si">{</span><span class="n">alpha</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">&quot;</span>
+                 <span class="sa">f</span><span class="s2">&quot;+(</span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">mz</span><span class="p">)</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">mn_z</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">)^</span><span class="si">{</span><span class="n">beta</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Elastic (Class 3) / effective (Class 4): σx,Ed ≤ fy/γM0.</span>
+        <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">section_class</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">weff_y</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">inp</span><span class="o">.</span><span class="n">weff_z</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">a_use</span><span class="p">,</span> <span class="n">wy</span><span class="p">,</span> <span class="n">wz</span> <span class="o">=</span> <span class="n">area</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">wel_y</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">wel_z</span>
+            <span class="n">dmy</span> <span class="o">=</span> <span class="n">dmz</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">a_use</span><span class="p">,</span> <span class="n">wy</span><span class="p">,</span> <span class="n">wz</span> <span class="o">=</span> <span class="n">area_eff</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">weff_y</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">weff_z</span>
+            <span class="n">dmy</span><span class="p">,</span> <span class="n">dmz</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">d_my</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">d_mz</span>
+        <span class="n">sig</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">n_ed</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e3</span> <span class="o">/</span> <span class="n">a_use</span> <span class="k">if</span> <span class="n">a_use</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">sig</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">my</span> <span class="o">+</span> <span class="n">dmy</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e6</span> <span class="o">/</span> <span class="n">wy</span> <span class="k">if</span> <span class="n">wy</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">sig</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">mz</span> <span class="o">+</span> <span class="n">dmz</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e6</span> <span class="o">/</span> <span class="n">wz</span> <span class="k">if</span> <span class="n">wz</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="c1"># Reduce the yield on the shear-affected fibre when V is high (§6.2.10).</span>
+        <span class="n">fyd</span> <span class="o">=</span> <span class="n">fy</span> <span class="o">/</span> <span class="n">gm0</span>
+        <span class="n">u_nm</span> <span class="o">=</span> <span class="n">sig</span> <span class="o">/</span> <span class="n">fyd</span> <span class="k">if</span> <span class="n">fyd</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="n">rho_z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">u_nm</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">u_nm</span><span class="p">,</span> <span class="n">sig</span> <span class="o">/</span> <span class="p">(</span><span class="n">fyd</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">rho_z</span><span class="p">,</span> <span class="mf">1e-9</span><span class="p">))))</span>
+        <span class="n">cls_note</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;elastic (Class 3)&quot;</span> <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">section_class</span> <span class="o">==</span> <span class="mi">3</span>
+                    <span class="k">else</span> <span class="s2">&quot;effective (Class 4)&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;σ_x,Ed&quot;</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="s2">&quot;N/mm²&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.9.2/§6.2.9.3&quot;</span><span class="p">,</span>
+           <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;σ_x = N/A + My/W_y + Mz/W_z&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="n">cls_note</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;f_yd&quot;</span><span class="p">,</span> <span class="n">fyd</span><span class="p">,</span> <span class="s2">&quot;N/mm²&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;f_yd = f_y/γ_M0&quot;</span><span class="p">)</span>
+        <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;U = σ_x,Ed/f_yd&quot;</span><span class="p">,</span> <span class="n">u_nm</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">ok</span><span class="o">=</span><span class="n">u_nm</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="n">utilization</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">u_vy</span><span class="p">,</span> <span class="n">u_vz</span><span class="p">,</span> <span class="n">u_t</span><span class="p">,</span> <span class="n">u_nm</span><span class="p">)</span>
+    <span class="n">_sec</span><span class="p">(</span><span class="s2">&quot;Combined utilisation (§6.2.10)&quot;</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;U_{N+M}&quot;</span><span class="p">,</span> <span class="n">u_nm</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">ok</span><span class="o">=</span><span class="n">u_nm</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">_t</span><span class="p">(</span><span class="s2">&quot;Utilisation&quot;</span><span class="p">,</span> <span class="n">utilization</span><span class="p">,</span> <span class="s2">&quot;—&quot;</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="s2">&quot;EN 1993-1-1 §6.2.1(7)&quot;</span><span class="p">,</span>
+       <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;max(U_Vy, U_Vz, U_T, U_N+M) ≤ 1&quot;</span><span class="p">,</span> <span class="n">ok</span><span class="o">=</span><span class="n">utilization</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">,</span>
+       <span class="n">note</span><span class="o">=</span><span class="s2">&quot;governing cross-section check&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">SectionResistanceResult</span><span class="p">(</span>
+        <span class="n">util_shear_y</span><span class="o">=</span><span class="n">u_vy</span><span class="p">,</span> <span class="n">util_shear_z</span><span class="o">=</span><span class="n">u_vz</span><span class="p">,</span> <span class="n">util_torsion</span><span class="o">=</span><span class="n">u_t</span><span class="p">,</span>
+        <span class="n">util_bending_axial</span><span class="o">=</span><span class="n">u_nm</span><span class="p">,</span> <span class="n">utilization</span><span class="o">=</span><span class="n">utilization</span><span class="p">,</span>
+        <span class="n">passed</span><span class="o">=</span><span class="n">utilization</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">vpl_rd_y</span><span class="o">=</span><span class="n">vpl_ty</span><span class="p">,</span> <span class="n">vpl_rd_z</span><span class="o">=</span><span class="n">vpl_tz</span><span class="p">,</span> <span class="n">t_rd</span><span class="o">=</span><span class="n">t_rd</span><span class="p">,</span> <span class="n">npl_rd</span><span class="o">=</span><span class="n">npl_rd</span><span class="p">,</span>
+        <span class="n">shear_reduces_moment</span><span class="o">=</span><span class="n">shear_reduces</span><span class="p">,</span> <span class="n">web_shear_buckling</span><span class="o">=</span><span class="n">web_sb</span><span class="p">,</span>
+        <span class="n">details</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rho_z&quot;</span><span class="p">:</span> <span class="n">rho_z</span><span class="p">,</span> <span class="s2">&quot;rho_y&quot;</span><span class="p">:</span> <span class="n">rho_y</span><span class="p">,</span> <span class="s2">&quot;tau_t&quot;</span><span class="p">:</span> <span class="n">tau_t</span><span class="p">,</span>
+                 <span class="s2">&quot;vpl_rd_y_no_T&quot;</span><span class="p">:</span> <span class="n">vpl_y</span><span class="p">,</span> <span class="s2">&quot;vpl_rd_z_no_T&quot;</span><span class="p">:</span> <span class="n">vpl_z</span><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.cross_section.reduced_shear_resistance_torsion" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">reduced_shear_resistance_torsion</span><span class="p">(</span><span class="n">vpl_rd</span><span class="p">,</span> <span class="n">tau_t</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">gamma_M0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">hollow</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Torsion-reduced plastic shear resistance <code>Vpl,T,Rd</code> (§6.2.7(9)).</p>
+<p>For hollow sections <code>Vpl,T,Rd = [1 − τt/(fyd/√3)]·Vpl,Rd</code>; for I/H
+sections the <code>√</code> form with the 1.25 factor is used.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>vpl_rd</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Plastic shear resistance without torsion [kN].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>tau_t</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>St-Venant torsional shear stress τt,Ed [N/mm²].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>fy</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Yield strength [N/mm²].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>gamma_M0</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Partial factor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>hollow</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True for RHS/SHS/CHS, False for open (I/H) sections.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Vpl,T,Rd [kN].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/cross_section.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span>
+<span class="normal">97</span>
+<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reduced_shear_resistance_torsion</span><span class="p">(</span><span class="n">vpl_rd</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">tau_t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                                     <span class="n">gamma_M0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">hollow</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Torsion-reduced plastic shear resistance ``Vpl,T,Rd`` (§6.2.7(9)).</span>
+
+<span class="sd">    For hollow sections ``Vpl,T,Rd = [1 − τt/(fyd/√3)]·Vpl,Rd``; for I/H</span>
+<span class="sd">    sections the ``√`` form with the 1.25 factor is used.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vpl_rd: Plastic shear resistance without torsion [kN].</span>
+<span class="sd">        tau_t: St-Venant torsional shear stress τt,Ed [N/mm²].</span>
+<span class="sd">        fy: Yield strength [N/mm²].</span>
+<span class="sd">        gamma_M0: Partial factor.</span>
+<span class="sd">        hollow: True for RHS/SHS/CHS, False for open (I/H) sections.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Vpl,T,Rd [kN].</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fyd_shear</span> <span class="o">=</span> <span class="p">(</span><span class="n">fy</span> <span class="o">/</span> <span class="n">_SQRT3</span><span class="p">)</span> <span class="o">/</span> <span class="n">gamma_M0</span>
+    <span class="k">if</span> <span class="n">fyd_shear</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">vpl_rd</span>
+    <span class="k">if</span> <span class="n">hollow</span><span class="p">:</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">tau_t</span> <span class="o">/</span> <span class="n">fyd_shear</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">tau_t</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.25</span> <span class="o">*</span> <span class="n">fyd_shear</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">vpl_rd</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">hollow</span> \
+        <span class="k">else</span> <span class="n">vpl_rd</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.cross_section.section_check_profile" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">section_check_profile</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">gamma_M0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Run the §6.2 check for a eurocodepy profile under the given forces.</p>
+<p>The section is classified under N + My; the resistance moduli, shear areas,
+torsional modulus and (for Class 4) effective properties are taken from the
+profile / classification. Geometry is read from the profile (cm → mm).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>profile</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A eurocodepy profile object.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>fy</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Yield strength [N/mm²].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>forces</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="SectionForces
+
+
+  
+      dataclass
+   (eurocodepy.ec3.uls.cross_section.SectionForces)" href="#eurocodepy.ec3.uls.cross_section.SectionForces">SectionForces</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The design forces.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>gamma_M0</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Partial factor γ_M0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>trace</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional :class:<code>eurocodepy.calc_report.CalcReport</code>. When
+given, both the §5.5 classification derivation and the §6.2
+resistance steps are recorded into it. <code>None</code> (default) is a
+no-op.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/cross_section.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">section_check_profile</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">fy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">forces</span><span class="p">:</span> <span class="n">SectionForces</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>  <span class="c1"># ruff: ignore[missing-type-function-argument]</span>
+                          <span class="n">gamma_M0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+                          <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SectionResistanceResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the §6.2 check for a eurocodepy profile under the given forces.</span>
+
+<span class="sd">    The section is classified under N + My; the resistance moduli, shear areas,</span>
+<span class="sd">    torsional modulus and (for Class 4) effective properties are taken from the</span>
+<span class="sd">    profile / classification. Geometry is read from the profile (cm → mm).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        profile: A eurocodepy profile object.</span>
+<span class="sd">        fy: Yield strength [N/mm²].</span>
+<span class="sd">        forces: The design forces.</span>
+<span class="sd">        gamma_M0: Partial factor γ_M0.</span>
+<span class="sd">        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When</span>
+<span class="sd">            given, both the §5.5 classification derivation and the §6.2</span>
+<span class="sd">            resistance steps are recorded into it. ``None`` (default) is a</span>
+<span class="sd">            no-op.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">eurocodepy.ec3</span><span class="w"> </span><span class="kn">import</span> <span class="n">classification</span> <span class="k">as</span> <span class="n">_cl</span>
+
+    <span class="n">cm2</span><span class="p">,</span> <span class="n">cm3</span><span class="p">,</span> <span class="n">cm4</span> <span class="o">=</span> <span class="mf">1e2</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">,</span> <span class="mf">1e4</span>
+    <span class="n">kind</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">A</span><span class="p">)</span> <span class="o">*</span> <span class="n">cm2</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="mf">10.0</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">h</span><span class="p">)</span> <span class="o">*</span> <span class="mf">10.0</span>
+    <span class="n">tw</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">tw</span><span class="p">)</span> <span class="o">*</span> <span class="mf">10.0</span>
+    <span class="n">tf</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">tf</span><span class="p">)</span> <span class="o">*</span> <span class="mf">10.0</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">10.0</span>
+    <span class="n">hw</span> <span class="o">=</span> <span class="n">h</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">tf</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">r</span> <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span> <span class="k">else</span> <span class="n">h</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">tw</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="n">_cl</span><span class="o">.</span><span class="n">classify_section</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">n_ed</span><span class="o">=</span><span class="n">forces</span><span class="o">.</span><span class="n">n_ed</span><span class="p">,</span> <span class="n">m_ed</span><span class="o">=</span><span class="n">forces</span><span class="o">.</span><span class="n">my_ed</span><span class="p">,</span>
+                               <span class="n">trace</span><span class="o">=</span><span class="n">trace</span><span class="p">)</span>
+    <span class="bp">cls</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">section_class</span><span class="p">)</span>
+    <span class="n">d_my</span> <span class="o">=</span> <span class="n">d_mz</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">weff_y</span> <span class="o">=</span> <span class="n">weff_z</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">area_eff</span> <span class="o">=</span> <span class="n">area</span>
+    <span class="k">if</span> <span class="bp">cls</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">eff</span> <span class="o">=</span> <span class="n">_cl</span><span class="o">.</span><span class="n">effective_properties</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">fy</span><span class="p">)</span>
+        <span class="n">area_eff</span> <span class="o">=</span> <span class="n">eff</span><span class="o">.</span><span class="n">A_eff</span>
+        <span class="n">weff_y</span> <span class="o">=</span> <span class="n">eff</span><span class="o">.</span><span class="n">W_eff_y</span>
+        <span class="n">weff_z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">Wel_z</span><span class="p">)</span> <span class="o">*</span> <span class="n">cm3</span>
+        <span class="n">d_my</span> <span class="o">=</span> <span class="n">forces</span><span class="o">.</span><span class="n">n_ed</span> <span class="o">*</span> <span class="n">eff</span><span class="o">.</span><span class="n">e_Ny</span> <span class="o">/</span> <span class="mf">1e3</span>
+
+    <span class="n">inp</span> <span class="o">=</span> <span class="n">SectionResistanceInput</span><span class="p">(</span>
+        <span class="n">kind</span><span class="o">=</span><span class="n">kind</span><span class="p">,</span> <span class="n">section_class</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fy</span><span class="o">=</span><span class="n">fy</span><span class="p">,</span> <span class="n">gamma_M0</span><span class="o">=</span><span class="n">gamma_M0</span><span class="p">,</span>
+        <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">area_eff</span><span class="o">=</span><span class="n">area_eff</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">,</span> <span class="n">tw</span><span class="o">=</span><span class="n">tw</span><span class="p">,</span> <span class="n">tf</span><span class="o">=</span><span class="n">tf</span><span class="p">,</span> <span class="n">hw</span><span class="o">=</span><span class="n">hw</span><span class="p">,</span>
+        <span class="n">eps</span><span class="o">=</span><span class="n">_cl</span><span class="o">.</span><span class="n">epsilon</span><span class="p">(</span><span class="n">fy</span><span class="p">),</span>
+        <span class="n">wpl_y</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">Wpl_y</span><span class="p">)</span> <span class="o">*</span> <span class="n">cm3</span><span class="p">,</span> <span class="n">wpl_z</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">Wpl_z</span><span class="p">)</span> <span class="o">*</span> <span class="n">cm3</span><span class="p">,</span>
+        <span class="n">wel_y</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">Wel_y</span><span class="p">)</span> <span class="o">*</span> <span class="n">cm3</span><span class="p">,</span> <span class="n">wel_z</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">Wel_z</span><span class="p">)</span> <span class="o">*</span> <span class="n">cm3</span><span class="p">,</span>
+        <span class="n">weff_y</span><span class="o">=</span><span class="n">weff_y</span><span class="p">,</span> <span class="n">weff_z</span><span class="o">=</span><span class="n">weff_z</span><span class="p">,</span>
+        <span class="n">wt</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="s2">&quot;WT&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">cm3</span><span class="p">,</span>
+        <span class="n">av_y</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">Av_y</span><span class="p">)</span> <span class="o">*</span> <span class="n">cm2</span><span class="p">,</span> <span class="n">av_z</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">Av_z</span><span class="p">)</span> <span class="o">*</span> <span class="n">cm2</span><span class="p">,</span>
+        <span class="n">d_my</span><span class="o">=</span><span class="n">d_my</span><span class="p">,</span> <span class="n">d_mz</span><span class="o">=</span><span class="n">d_mz</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">eurocode3_section_check</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="n">trace</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.cross_section.shear_buckling_susceptible" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">shear_buckling_susceptible</span><span class="p">(</span><span class="n">hw</span><span class="p">,</span> <span class="n">tw</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>True when an unstiffened web must be checked for shear buckling —
+<code>hw/tw &gt; 72·ε/η</code> (§6.2.6(6)).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/cross_section.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shear_buckling_susceptible</span><span class="p">(</span><span class="n">hw</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">tw</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                               <span class="n">eta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;True when an unstiffened web must be checked for shear buckling —</span>
+<span class="sd">    ``hw/tw &gt; 72·ε/η`` (§6.2.6(6)).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">tw</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">hw</span> <span class="o">/</span> <span class="n">tw</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">72.0</span> <span class="o">*</span> <span class="n">eps</span> <span class="o">/</span> <span class="n">eta</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.cross_section.shear_resistance" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">shear_resistance</span><span class="p">(</span><span class="n">av</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">gamma_M0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Plastic shear resistance <code>Vpl,Rd = Av·(fy/√3)/γM0</code> [kN] (§6.2.6(2)).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>av</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Shear area [mm²].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>fy</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Yield strength [N/mm²].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>gamma_M0</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Partial factor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1.0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Vpl,Rd [kN].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/cross_section.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shear_resistance</span><span class="p">(</span><span class="n">av</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma_M0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plastic shear resistance ``Vpl,Rd = Av·(fy/√3)/γM0`` [kN] (§6.2.6(2)).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        av: Shear area [mm²].</span>
+<span class="sd">        fy: Yield strength [N/mm²].</span>
+<span class="sd">        gamma_M0: Partial factor.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Vpl,Rd [kN].</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">av</span> <span class="o">*</span> <span class="p">(</span><span class="n">fy</span> <span class="o">/</span> <span class="n">_SQRT3</span><span class="p">)</span> <span class="o">/</span> <span class="n">gamma_M0</span> <span class="o">/</span> <span class="mf">1e3</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec3.uls.cross_section.torsion_resistance" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">torsion_resistance</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span> <span class="n">fy</span><span class="p">,</span> <span class="n">gamma_M0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Plastic (St-Venant) torsion resistance <code>T_Rd = Wt·(fy/√3)/γM0</code> [kNm].</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>wt</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Torsional section modulus [mm³].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>fy</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Yield strength [N/mm²].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>gamma_M0</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Partial factor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1.0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>T_Rd [kNm].</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec3/uls/cross_section.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">torsion_resistance</span><span class="p">(</span><span class="n">wt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma_M0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plastic (St-Venant) torsion resistance ``T_Rd = Wt·(fy/√3)/γM0`` [kNm].</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        wt: Torsional section modulus [mm³].</span>
+<span class="sd">        fy: Yield strength [N/mm²].</span>
+<span class="sd">        gamma_M0: Partial factor.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        T_Rd [kNm].</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">wt</span> <span class="o">*</span> <span class="p">(</span><span class="n">fy</span> <span class="o">/</span> <span class="n">_SQRT3</span><span class="p">)</span> <span class="o">/</span> <span class="n">gamma_M0</span> <span class="o">/</span> <span class="mf">1e6</span> <span class="k">if</span> <span class="n">wt</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../../..", "features": [], "search": "../../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

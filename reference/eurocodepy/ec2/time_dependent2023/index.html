@@ -1,0 +1,5089 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../sls/shrinkage/">
+      
+      
+        <link rel="next" href="../uls/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>time_dependent2023 - Documentation for EurocodePy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eurocodepy.ec2.time_dependent2023" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Documentation for EurocodePy" class="md-header__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation for EurocodePy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              time_dependent2023
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Documentation for EurocodePy" class="md-nav__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation for EurocodePy
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EurocodePy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../how-to-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How-to Guides
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../explanation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Background &amp; Design Philosophy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../modules/ec2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    EC2
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            EC2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec2/edition-2004/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2004
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec2/edition-2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2023
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec2/shells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Membranes, slabs and shells
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec2/clauses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2023 clause map
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/editions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Editions and National Annexes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC5
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC7
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/ec8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC8
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../modules/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utils
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Code Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Code Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    eurocodepy
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            eurocodepy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_compat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    _compat
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../annex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    annex
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../calc_report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    calc_report
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dbase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbase
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec1
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_5" id="__nav_6_1_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            ec1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec1/combos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    combos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec1/factors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    factors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec1/forces%20copy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    forces copy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec1/forces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    forces
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec1/snow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    snow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec1/stresses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stresses
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_5_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec1/wind/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    wind
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_5_7" id="__nav_6_1_5_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            wind
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec1/wind/pressure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    pressure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec2
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6" id="__nav_6_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            ec2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../fire/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    fire
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_1" id="__nav_6_1_6_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            fire
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fire/fire_base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fire_base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_3" id="__nav_6_1_6_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sls/crack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sls/creep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    creep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sls/shrinkage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shrinkage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    time_dependent2023
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    time_dependent2023
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      time_dependent2023
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.adjusted_loading_age" class="md-nav__link">
+    <span class="md-ellipsis">
+      adjusted_loading_age
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.calc_alpha_c" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_alpha_c
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.calc_beta_cc" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_beta_cc
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.calc_beta_rh" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_beta_rh
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.calc_s_c" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_s_c
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.characteristic_value" class="md-nav__link">
+    <span class="md-ellipsis">
+      characteristic_value
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_basic" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_basic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_coefficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_coefficient
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_coefficient_50y" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_coefficient_50y
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_compliance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_drying" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_drying
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_nonlinear" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_nonlinear
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_strain" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_strain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.ecm_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      ecm_t
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.fcm_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      fcm_t
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.fctm_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      fctm_t
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.relaxation_loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      relaxation_loss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.relaxation_loss_fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      relaxation_loss_fit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.relaxation_rho1000" class="md-nav__link">
+    <span class="md-ellipsis">
+      relaxation_rho1000
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.rh_eq" class="md-nav__link">
+    <span class="md-ellipsis">
+      rh_eq
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.shrinkage_50y" class="md-nav__link">
+    <span class="md-ellipsis">
+      shrinkage_50y
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.shrinkage_basic" class="md-nav__link">
+    <span class="md-ellipsis">
+      shrinkage_basic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.shrinkage_drying" class="md-nav__link">
+    <span class="md-ellipsis">
+      shrinkage_drying
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.shrinkage_total" class="md-nav__link">
+    <span class="md-ellipsis">
+      shrinkage_total
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.strain_history" class="md-nav__link">
+    <span class="md-ellipsis">
+      strain_history
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.temperature_adjusted_age" class="md-nav__link">
+    <span class="md-ellipsis">
+      temperature_adjusted_age
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_5" id="__nav_6_1_6_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/anchorage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    anchorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/beam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    beam
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/bend_axial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bend_axial
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/bend_circ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bend_circ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    column
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/membrane_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    membrane_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/punch_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/shear_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/shear_torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/shell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/shell_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/slab_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    slab_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls/torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../uls2023/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls2023
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_6" id="__nav_6_1_6_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            uls2023
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/annex_g/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    annex_g
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    column
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/detailing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    detailing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/membrane_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    membrane_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/shear_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/shear_torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/shell_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/slab_design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    slab_design
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uls2023/torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec3
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_7" id="__nav_6_1_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            ec3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec3/classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec3/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_7_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec3/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_7_3" id="__nav_6_1_7_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec3/uls/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec3/uls/checks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    checks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec3/uls/cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec3/uls/member_buckling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    member_buckling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec5
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8" id="__nav_6_1_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            ec5
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec5/sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_2" id="__nav_6_1_8_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/sls/deformation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    deformation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/sls/vibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    vibration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec5/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_3" id="__nav_6_1_8_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls/cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls/special_beams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    special_beams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec5/uls2025/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls2025
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_4" id="__nav_6_1_8_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            uls2025
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls2025/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls2025/cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls2025/fasteners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fasteners
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls2025/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec5/uls2025/special_beams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    special_beams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec7/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec7
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_9" id="__nav_6_1_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_9">
+            <span class="md-nav__icon md-icon"></span>
+            ec7
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec7/bearing_capacity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bearing_capacity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec7/earth_pressures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    earth_pressures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec7/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ec8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec8
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_10" id="__nav_6_1_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_10">
+            <span class="md-nav__icon md-icon"></span>
+            ec8
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ec8/spectrum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    spectrum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../national_parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    national_parameters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    units
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../utils/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    utils
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_13" id="__nav_6_1_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_13">
+            <span class="md-nav__icon md-icon"></span>
+            utils
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/crosssection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crosssection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/section_properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    section_properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../utils/stress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stress
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../copyright/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Copyright & contributing
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Copyright & contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../STYLE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python Style Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../CODE_OF_CONDUCT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code of Conduct
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      time_dependent2023
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.adjusted_loading_age" class="md-nav__link">
+    <span class="md-ellipsis">
+      adjusted_loading_age
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.calc_alpha_c" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_alpha_c
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.calc_beta_cc" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_beta_cc
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.calc_beta_rh" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_beta_rh
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.calc_s_c" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_s_c
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.characteristic_value" class="md-nav__link">
+    <span class="md-ellipsis">
+      characteristic_value
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_basic" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_basic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_coefficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_coefficient
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_coefficient_50y" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_coefficient_50y
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_compliance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_drying" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_drying
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_nonlinear" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_nonlinear
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.creep_strain" class="md-nav__link">
+    <span class="md-ellipsis">
+      creep_strain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.ecm_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      ecm_t
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.fcm_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      fcm_t
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.fctm_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      fctm_t
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.relaxation_loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      relaxation_loss
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.relaxation_loss_fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      relaxation_loss_fit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.relaxation_rho1000" class="md-nav__link">
+    <span class="md-ellipsis">
+      relaxation_rho1000
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.rh_eq" class="md-nav__link">
+    <span class="md-ellipsis">
+      rh_eq
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.shrinkage_50y" class="md-nav__link">
+    <span class="md-ellipsis">
+      shrinkage_50y
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.shrinkage_basic" class="md-nav__link">
+    <span class="md-ellipsis">
+      shrinkage_basic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.shrinkage_drying" class="md-nav__link">
+    <span class="md-ellipsis">
+      shrinkage_drying
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.shrinkage_total" class="md-nav__link">
+    <span class="md-ellipsis">
+      shrinkage_total
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.strain_history" class="md-nav__link">
+    <span class="md-ellipsis">
+      strain_history
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.time_dependent2023.temperature_adjusted_age" class="md-nav__link">
+    <span class="md-ellipsis">
+      temperature_adjusted_age
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>time_dependent2023</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="eurocodepy.ec2.time_dependent2023"></a>
+    <div class="doc doc-contents first">
+
+        <p>Time-dependent behaviour of concrete and prestressing steel — <strong>EN 1992-1-1:2023 Annex B</strong>.</p>
+<p>Strength and stiffness development (B.4), creep (B.5, B.8), shrinkage (B.6), the
+calibration with tests (B.7) and the relaxation of prestressing steel (B.9), plus the
+simplified values after 50 years of Tables 5.2 and 5.3 (<code>Editions.ec2["2023"].creep_shrinkage</code>;
+Table 5.3 is an NDP, <code>annex=</code> applies a national annex).</p>
+<p>The 2004 counterparts (EN 1992-1-1:2004 3.1.4, 3.1.2 and Annex B) are
+:func:<code>eurocodepy.ec2.materials.calc_creep_coef</code> and <code>calc_shrink_strain</code>; the models are
+different (this one has basic and drying components, the strength classes CS/CN/CR and
+<code>fcm,28</code>). <code>eurocodepy.ec2.sls.creep_coef</code> and <code>shrink_strain</code> are the same Annex B model
+in a bare, array-friendly form (no validation, no class check); they give the same numbers
+as :func:<code>creep_coefficient</code> and :func:<code>shrinkage_total</code> where both apply. These functions are
+scalar and validated (RH, <code>fcm,28</code>, ages, strength class) and add the strength and stiffness
+development, the non-linear creep, the creep function, the test calibration, the tables of
+50 years and the relaxation of prestressing steel.</p>
+<p>Units: ages and durations in <strong>days</strong>, strengths and moduli in <strong>MPa</strong>, the notional
+size <code>hn = 2·Ac/u</code> in <strong>mm</strong>, relative humidity <code>RH</code> in <strong>%</strong>, temperatures in <strong>°C</strong>,
+shrinkage strains dimensionless (not per mille). The functions of ages, durations,
+humidity and strength accept numpy arrays (broadcasting) as well as scalars, e.g. a whole
+time history; the tables and the relaxation classes are scalar. <code>fcm28</code> is the mean compressive
+strength at 28 days, <code>fck + 8</code> for a class of Table 5.1. The relations are valid for
+12 ≤ fck ≤ 100 MPa, <code>σc ≤ 0,40·fcm(t0)</code>, 20 % ≤ RH ≤ 100 %, 5 °C ≤ T ≤ 30 °C and a loading age of
+at least 1 day (B.3(3)).</p>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.adjusted_loading_age" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">adjusted_loading_age</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>t0,adj = t0,T·[9/(2 + t0,T^1,2) + 1]^αSC ≥ 0,5</code> [days], Eq. (B.17).</p>
+<p><code>t0</code> is the age at loading adjusted for temperature (Eq. B.18); <code>αSC</code> is −1, 0 and 1
+for the classes CS, CN and CR.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">adjusted_loading_age</span><span class="p">(</span><span class="n">t0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``t0,adj = t0,T·[9/(2 + t0,T^1,2) + 1]^αSC ≥ 0,5`` [days], Eq. (B.17).</span>
+
+<span class="sd">    ``t0`` is the age at loading adjusted for temperature (Eq. B.18); ``αSC`` is −1, 0 and 1</span>
+<span class="sd">    for the classes CS, CN and CR.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">_ALPHA_SC</span><span class="p">[</span><span class="n">_check_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">)]</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">t0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">9.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">+</span> <span class="n">t0</span><span class="o">**</span><span class="mf">1.2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">**</span> <span class="n">a</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)[()]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.calc_alpha_c" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_alpha_c</span><span class="p">(</span><span class="n">fcm28</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>αc = 1/(0,8 + 0,2·fcm,28/88) ≥ 1,0</code>, Eq. (B.22) (<code>Ec = αc·Ecm,28</code>, B.21).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_alpha_c</span><span class="p">(</span><span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``αc = 1/(0,8 + 0,2·fcm,28/88) ≥ 1,0``, Eq. (B.22) (``Ec = αc·Ecm,28``, B.21).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.8</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fcm28</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">/</span> <span class="mf">88.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)[()]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.calc_beta_cc" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_beta_cc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fck</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">t_ref</span><span class="o">=</span><span class="mf">28.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>βcc(t) = exp[sC·(1 − √(tref/t))·√(28/tref)]</code> for <code>t ≤ tref</code>, Eq. (B.2); 1 after.</p>
+<p><code>t</code> in days (temperature-adjusted age where relevant), <code>t_ref</code> 28 days in general
+(28 to 91 days when specified, 5.1.3(2)).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_beta_cc</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fck</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span> <span class="n">t_ref</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">28.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``βcc(t) = exp[sC·(1 − √(tref/t))·√(28/tref)]`` for ``t ≤ tref``, Eq. (B.2); 1 after.</span>
+
+<span class="sd">    ``t`` in days (temperature-adjusted age where relevant), ``t_ref`` 28 days in general</span>
+<span class="sd">    (28 to 91 days when specified, 5.1.3(2)).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;the age t must be positive&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">early</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">calc_s_c</span><span class="p">(</span><span class="n">fck</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">t_ref</span> <span class="o">/</span> <span class="n">t</span><span class="p">))</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">28.0</span> <span class="o">/</span> <span class="n">t_ref</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="n">t_ref</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">early</span><span class="p">)[()]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.calc_beta_rh" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_beta_rh</span><span class="p">(</span><span class="n">rh</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>βRH</code> of Eqs. (B.29)-(B.31): 1,55·[1 − (RH/RHeq)³] up to <code>RHeq</code>, 1,55·[1 − (RH/RHeq)²] above,
+and −0,25 more at RH = 100 % (water available).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_beta_rh</span><span class="p">(</span><span class="n">rh</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``βRH`` of Eqs. (B.29)-(B.31): 1,55·[1 − (RH/RHeq)³] up to ``RHeq``, 1,55·[1 − (RH/RHeq)²] above,</span>
+<span class="sd">    and −0,25 more at RH = 100 % (water available).&quot;&quot;&quot;</span>
+    <span class="n">_check_rh</span><span class="p">(</span><span class="n">rh</span><span class="p">)</span>
+    <span class="n">rh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">rh</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">eq</span> <span class="o">=</span> <span class="n">rh_eq</span><span class="p">(</span><span class="n">fcm28</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">rh</span> <span class="o">/</span> <span class="n">eq</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">rh</span> <span class="o">&lt;=</span> <span class="n">eq</span><span class="p">,</span> <span class="mf">1.55</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="p">),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">rh</span> <span class="o">&lt;</span> <span class="mf">100.0</span><span class="p">,</span> <span class="mf">1.55</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="mf">1.55</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.25</span><span class="p">))[()]</span>  <span class="c1"># noqa: PLR2004</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.calc_s_c" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_s_c</span><span class="p">(</span><span class="n">fck</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the coefficient <code>sC</code> of Table B.2 (<code>fck</code> ≤ 35, 35-60, ≥ 60 MPa).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_s_c</span><span class="p">(</span><span class="n">fck</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the coefficient ``sC`` of Table B.2 (``fck`` ≤ 35, 35-60, ≥ 60 MPa).&quot;&quot;&quot;</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">_S_C</span><span class="p">[</span><span class="n">_check_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">fck</span> <span class="o">&lt;=</span> <span class="mf">35.0</span><span class="p">:</span>  <span class="c1"># noqa: PLR2004</span>
+        <span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">fck</span> <span class="o">&lt;</span> <span class="mf">60.0</span> <span class="k">else</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># noqa: PLR2004</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.characteristic_value" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">characteristic_value</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">fractile</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return a characteristic value of the creep coefficient or the shrinkage strain, B.5(8), B.6(4).</p>
+<p><code>fractile</code>: <code>"0.05"</code> (0,5·), <code>"0.10"</code> (0,6·), <code>"0.90"</code> (1,4·) or <code>"0.95"</code> (1,5·).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">characteristic_value</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fractile</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a characteristic value of the creep coefficient or the shrinkage strain, B.5(8), B.6(4).</span>
+
+<span class="sd">    ``fractile``: ``&quot;0.05&quot;`` (0,5·), ``&quot;0.10&quot;`` (0,6·), ``&quot;0.90&quot;`` (1,4·) or ``&quot;0.95&quot;`` (1,5·).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">fractile</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_FRACTILES</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;fractile must be one of </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">_FRACTILES</span><span class="p">)</span><span class="si">}</span><span class="s2">, got &#39;</span><span class="si">{</span><span class="n">fractile</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_FRACTILES</span><span class="p">[</span><span class="n">fractile</span><span class="p">]</span> <span class="o">*</span> <span class="n">value</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.creep_basic" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">creep_basic</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">xi_bc1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_bc2</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">t0_T</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the basic creep coefficient <code>φbc(t,t0) = βbc,fcm·βbc,t−t0</code>, Eqs. (B.6)-(B.8).</p>
+<p><code>βbc,fcm = 1,8/fcm,28^0,7</code>; <code>βbc,t−t0 = ln[(30/t0,adj + 0,035)²·(t − t0)/ξbc2 + 1]</code>. <code>xi_bc1</code>
+and <code>xi_bc2</code> are the factors calibrated with tests (B.7, Eqs. B.34-B.35). <code>t0</code> is the real
+age at loading (the duration is <code>t − t0</code>); <code>t0_T</code> its temperature-adjusted value of Eq. (B.18)
+that goes into <code>t0,adj</code> (B.17): <code>None</code> for 20 °C.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">creep_basic</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span>
+                <span class="n">xi_bc1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_bc2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">t0_T</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the basic creep coefficient ``φbc(t,t0) = βbc,fcm·βbc,t−t0``, Eqs. (B.6)-(B.8).</span>
+
+<span class="sd">    ``βbc,fcm = 1,8/fcm,28^0,7``; ``βbc,t−t0 = ln[(30/t0,adj + 0,035)²·(t − t0)/ξbc2 + 1]``. ``xi_bc1``</span>
+<span class="sd">    and ``xi_bc2`` are the factors calibrated with tests (B.7, Eqs. B.34-B.35). ``t0`` is the real</span>
+<span class="sd">    age at loading (the duration is ``t − t0``); ``t0_T`` its temperature-adjusted value of Eq. (B.18)</span>
+<span class="sd">    that goes into ``t0,adj`` (B.17): ``None`` for 20 °C.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_check_times</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t0</span><span class="p">)</span>
+    <span class="n">_check_fcm</span><span class="p">(</span><span class="n">fcm28</span><span class="p">)</span>
+    <span class="n">t0a</span> <span class="o">=</span> <span class="n">adjusted_loading_age</span><span class="p">(</span><span class="n">t0</span> <span class="k">if</span> <span class="n">t0_T</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">t0_T</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
+    <span class="n">fcm28</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fcm28</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">b_fcm</span> <span class="o">=</span> <span class="mf">1.8</span> <span class="o">/</span> <span class="n">fcm28</span><span class="o">**</span><span class="mf">0.7</span>
+    <span class="n">b_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mf">30.0</span> <span class="o">/</span> <span class="n">t0a</span> <span class="o">+</span> <span class="mf">0.035</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">xi_bc2</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">xi_bc1</span> <span class="o">*</span> <span class="n">b_fcm</span> <span class="o">*</span> <span class="n">b_t</span><span class="p">)[()]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.creep_coefficient" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">creep_coefficient</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">t0_T</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">xi</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the total mean creep coefficient <code>φ(t,t0) = φbc + φdc</code>, Eq. (B.5).</p>
+<p><code>t0_T</code>: temperature-adjusted age at loading (B.18, <code>None</code> for 20 °C). <code>**xi</code> passes <code>xi_bc1</code>,
+<code>xi_bc2</code>, <code>xi_dc1</code>, <code>xi_dc2</code> (B.7). Example: C30/37,
+CN cement, RH = 50 %, <code>hn</code> = 200 mm, loaded at 28 days, after 50 years: about 2,2.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">creep_coefficient</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rh</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                      <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span> <span class="n">t0_T</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">xi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the total mean creep coefficient ``φ(t,t0) = φbc + φdc``, Eq. (B.5).</span>
+
+<span class="sd">    ``t0_T``: temperature-adjusted age at loading (B.18, ``None`` for 20 °C). ``**xi`` passes ``xi_bc1``,</span>
+<span class="sd">    ``xi_bc2``, ``xi_dc1``, ``xi_dc2`` (B.7). Example: C30/37,</span>
+<span class="sd">    CN cement, RH = 50 %, ``hn`` = 200 mm, loaded at 28 days, after 50 years: about 2,2.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bc</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">xi</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;xi_bc&quot;</span><span class="p">)}</span>
+    <span class="n">dc</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">xi</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;xi_dc&quot;</span><span class="p">)}</span>
+    <span class="n">unknown</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">bc</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">dc</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unknown</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;unknown factors </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">unknown</span><span class="p">)</span><span class="si">}</span><span class="s2">; use xi_bc1, xi_bc2, xi_dc1, xi_dc2&quot;</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">creep_basic</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">t0_T</span><span class="o">=</span><span class="n">t0_T</span><span class="p">,</span> <span class="o">**</span><span class="n">bc</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">creep_drying</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">t0_T</span><span class="o">=</span><span class="n">t0_T</span><span class="p">,</span> <span class="o">**</span><span class="n">dc</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.creep_coefficient_50y" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">creep_coefficient_50y</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="n">fck</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>φ(50y, t0)</code> of Table 5.2, interpolated (<code>t0</code> logarithmically, <code>hn</code> linearly).</p>
+<p><code>rh</code> is 50 or 80; the table is for <code>fck,28 = 35</code> MPa and 12 ≤ fck ≤ 100 MPa is handled with the
+factor <code>(35/fck)^A</code> (<code>A</code> of the table, interpolated in <code>hn</code>). Used where
+<code>σc ≤ 0,40·fcm(t0)</code> and great accuracy is not required (5.1.5(2)).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">creep_coefficient_50y</span><span class="p">(</span><span class="n">t0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rh</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fck</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                          <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``φ(50y, t0)`` of Table 5.2, interpolated (``t0`` logarithmically, ``hn`` linearly).</span>
+
+<span class="sd">    ``rh`` is 50 or 80; the table is for ``fck,28 = 35`` MPa and 12 ≤ fck ≤ 100 MPa is handled with the</span>
+<span class="sd">    factor ``(35/fck)^A`` (``A`` of the table, interpolated in ``hn``). Used where</span>
+<span class="sd">    ``σc ≤ 0,40·fcm(t0)`` and great accuracy is not required (5.1.5(2)).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">cls</span> <span class="o">=</span> <span class="n">_check_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_FCK_MIN</span> <span class="o">&lt;=</span> <span class="n">fck</span> <span class="o">&lt;=</span> <span class="n">_FCK_MAX</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;12 MPa ≤ fck ≤ 100 MPa (Table 5.2)&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">tab</span> <span class="o">=</span> <span class="n">dbase</span><span class="o">.</span><span class="n">get_edition_params</span><span class="p">(</span><span class="s2">&quot;ec2&quot;</span><span class="p">,</span> <span class="s2">&quot;creep_shrinkage&quot;</span><span class="p">,</span> <span class="s2">&quot;2023&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">_column</span><span class="p">(</span><span class="n">rh</span><span class="p">)</span>
+    <span class="n">hns</span> <span class="o">=</span> <span class="n">tab</span><span class="p">[</span><span class="s2">&quot;hn&quot;</span><span class="p">]</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">tab</span><span class="p">[</span><span class="s2">&quot;creep_50y&quot;</span><span class="p">]</span>
+    <span class="n">per_age</span> <span class="o">=</span> <span class="p">[</span><span class="n">_interp</span><span class="p">(</span><span class="n">hn</span><span class="p">,</span> <span class="n">hns</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="s2">&quot;hn&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">c</span><span class="p">[</span><span class="n">col</span><span class="p">]]</span>
+    <span class="n">phi35</span> <span class="o">=</span> <span class="n">_interp</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="s2">&quot;t0&quot;</span><span class="p">][</span><span class="bp">cls</span><span class="p">],</span> <span class="n">per_age</span><span class="p">,</span> <span class="s2">&quot;t0&quot;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">_interp</span><span class="p">(</span><span class="n">hn</span><span class="p">,</span> <span class="n">hns</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="s2">&quot;A_&quot;</span> <span class="o">+</span> <span class="n">col</span><span class="p">],</span> <span class="s2">&quot;hn&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">phi35</span> <span class="o">*</span> <span class="p">(</span><span class="mf">35.0</span> <span class="o">/</span> <span class="n">fck</span><span class="p">)</span> <span class="o">**</span> <span class="n">a</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.creep_compliance" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">creep_compliance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="n">ecm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">fck</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t_ref</span><span class="o">=</span><span class="mf">28.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the creep function <code>J(t,t0) = 1/Ec(t0) + φ(t,t0)/Ec(28)</code> [1/MPa], Eq. (B.40).</p>
+<p><code>Ec = αc·Ecm</code> (Eqs. B.21-B.22); <code>Ec(t0)</code> uses <code>Ecm(t0)</code> of Eq. (B.4) (<code>fck</code> defaults to
+<code>fcm28 − 8</code>). <code>ecm28</code> is the secant modulus at 28 days.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">creep_compliance</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ecm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rh</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                     <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span> <span class="n">fck</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">t_ref</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">28.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the creep function ``J(t,t0) = 1/Ec(t0) + φ(t,t0)/Ec(28)`` [1/MPa], Eq. (B.40).</span>
+
+<span class="sd">    ``Ec = αc·Ecm`` (Eqs. B.21-B.22); ``Ec(t0)`` uses ``Ecm(t0)`` of Eq. (B.4) (``fck`` defaults to</span>
+<span class="sd">    ``fcm28 − 8``). ``ecm28`` is the secant modulus at 28 days.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ck</span> <span class="o">=</span> <span class="n">fcm28</span> <span class="o">-</span> <span class="n">_FCM_OFFSET</span> <span class="k">if</span> <span class="n">fck</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">fck</span>
+    <span class="n">ac</span> <span class="o">=</span> <span class="n">calc_alpha_c</span><span class="p">(</span><span class="n">fcm28</span><span class="p">)</span>
+    <span class="n">ec_t0</span> <span class="o">=</span> <span class="n">ac</span> <span class="o">*</span> <span class="n">ecm_t</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">ecm28</span><span class="p">,</span> <span class="n">ck</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">t_ref</span><span class="p">)</span>
+    <span class="n">ec28</span> <span class="o">=</span> <span class="n">ac</span> <span class="o">*</span> <span class="n">ecm28</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">ec_t0</span> <span class="o">+</span> <span class="n">creep_coefficient</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span> <span class="o">/</span> <span class="n">ec28</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.creep_drying" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">creep_drying</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">xi_dc1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_dc2</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">t0_T</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the drying creep coefficient <code>φdc = βdc,fcm·βdc,RH·βdc,t0·βdc,t−t0</code>, Eqs. (B.9)-(B.16).</p>
+<p><code>βdc,fcm = 412/fcm,28^1,4</code>; <code>βdc,RH = (1 − RH/100)/(0,1·hn/100)^(1/3)</code>;
+<code>βdc,t0 = 1/(0,1 + t0,adj^0,2)</code>; <code>βdc,t−t0 = [(t − t0)/(βh·ξdc2 + (t − t0))]^γ</code> with
+<code>γ = 1/(2,3 + 3,5/√t0,adj)</code>, <code>βh = min(1,5·hn + 250·αfcm, 1500·αfcm)</code> and
+<code>αfcm = (35/fcm,28)^0,5</code>. <code>hn</code> in mm; <code>xi_dc1</code>, <code>xi_dc2</code> as B.7 (Eq. B.36); <code>t0_T</code> as in :func:<code>creep_basic</code>.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">creep_drying</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rh</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span>
+                 <span class="n">xi_dc1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_dc2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">t0_T</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the drying creep coefficient ``φdc = βdc,fcm·βdc,RH·βdc,t0·βdc,t−t0``, Eqs. (B.9)-(B.16).</span>
+
+<span class="sd">    ``βdc,fcm = 412/fcm,28^1,4``; ``βdc,RH = (1 − RH/100)/(0,1·hn/100)^(1/3)``;</span>
+<span class="sd">    ``βdc,t0 = 1/(0,1 + t0,adj^0,2)``; ``βdc,t−t0 = [(t − t0)/(βh·ξdc2 + (t − t0))]^γ`` with</span>
+<span class="sd">    ``γ = 1/(2,3 + 3,5/√t0,adj)``, ``βh = min(1,5·hn + 250·αfcm, 1500·αfcm)`` and</span>
+<span class="sd">    ``αfcm = (35/fcm,28)^0,5``. ``hn`` in mm; ``xi_dc1``, ``xi_dc2`` as B.7 (Eq. B.36); ``t0_T`` as in :func:`creep_basic`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_check_times</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t0</span><span class="p">)</span>
+    <span class="n">_check_fcm</span><span class="p">(</span><span class="n">fcm28</span><span class="p">)</span>
+    <span class="n">_check_rh</span><span class="p">(</span><span class="n">rh</span><span class="p">)</span>
+    <span class="n">t0a</span> <span class="o">=</span> <span class="n">adjusted_loading_age</span><span class="p">(</span><span class="n">t0</span> <span class="k">if</span> <span class="n">t0_T</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">t0_T</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
+    <span class="n">fcm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span><span class="n">fcm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">))</span>
+    <span class="n">b_fcm</span> <span class="o">=</span> <span class="mf">412.0</span> <span class="o">/</span> <span class="n">fcm28</span><span class="o">**</span><span class="mf">1.4</span>
+    <span class="n">b_rh</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">rh</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">hn</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+    <span class="n">b_t0</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.1</span> <span class="o">+</span> <span class="n">t0a</span><span class="o">**</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.3</span> <span class="o">+</span> <span class="mf">3.5</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">t0a</span><span class="p">))</span>
+    <span class="n">alpha_fcm</span> <span class="o">=</span> <span class="p">(</span><span class="mf">35.0</span> <span class="o">/</span> <span class="n">fcm28</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="n">beta_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">hn</span> <span class="o">+</span> <span class="mf">250.0</span> <span class="o">*</span> <span class="n">alpha_fcm</span><span class="p">,</span> <span class="mf">1500.0</span> <span class="o">*</span> <span class="n">alpha_fcm</span><span class="p">)</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">-</span> <span class="n">t0</span>
+    <span class="n">b_t</span> <span class="o">=</span> <span class="p">(</span><span class="n">dt</span> <span class="o">/</span> <span class="p">(</span><span class="n">beta_h</span> <span class="o">*</span> <span class="n">xi_dc2</span> <span class="o">+</span> <span class="n">dt</span><span class="p">))</span> <span class="o">**</span> <span class="n">gamma</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">xi_dc1</span> <span class="o">*</span> <span class="n">b_fcm</span> <span class="o">*</span> <span class="n">b_rh</span> <span class="o">*</span> <span class="n">b_t0</span> <span class="o">*</span> <span class="n">b_t</span><span class="p">)[()]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.creep_nonlinear" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">creep_nonlinear</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">k_sigma</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>φσ = φ·exp[1,5·(kσ − 0,4)]</code> for <code>0,4 &lt; kσ ≤ 0,6</code> (<code>kσ = σc/fcm(t0)</code>), Eq. (B.19).</p>
+<p>Below 0,4 the creep is linear and <code>φ</code> is returned; above 0,6 is outside the model.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">creep_nonlinear</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k_sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``φσ = φ·exp[1,5·(kσ − 0,4)]`` for ``0,4 &lt; kσ ≤ 0,6`` (``kσ = σc/fcm(t0)``), Eq. (B.19).</span>
+
+<span class="sd">    Below 0,4 the creep is linear and ``φ`` is returned; above 0,6 is outside the model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">k_sigma</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="mf">0.6</span><span class="p">):</span>  <span class="c1"># noqa: PLR2004</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;kσ &gt; 0,6: outside the creep model (B.5(6))&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">k</span> <span class="o">&lt;=</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mf">0.4</span><span class="p">)))[()]</span>  <span class="c1"># noqa: PLR2004</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.creep_strain" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">creep_strain</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">sigma_c</span><span class="p">,</span> <span class="n">e_c28</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the creep strain <code>εcc = φ·σc/Ec,28</code>, Eq. (B.20); <code>σc</code> [MPa] compression positive.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">creep_strain</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma_c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">e_c28</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the creep strain ``εcc = φ·σc/Ec,28``, Eq. (B.20); ``σc`` [MPa] compression positive.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">sigma_c</span> <span class="o">/</span> <span class="n">e_c28</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.ecm_t" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">ecm_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ecm</span><span class="p">,</span> <span class="n">fck</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">t_ref</span><span class="o">=</span><span class="mf">28.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>Ecm(t) = βcc(t)^(1/3)·Ecm</code> [MPa], Eq. (B.4).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ecm_t</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ecm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fck</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span> <span class="n">t_ref</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">28.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``Ecm(t) = βcc(t)^(1/3)·Ecm`` [MPa], Eq. (B.4).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">calc_beta_cc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fck</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">t_ref</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">ecm</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.fcm_t" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">fcm_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fcm</span><span class="p">,</span> <span class="n">fck</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">t_ref</span><span class="o">=</span><span class="mf">28.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>fcm(t) = βcc(t)·fcm</code> [MPa], Eq. (B.1).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">95</span>
+<span class="normal">96</span>
+<span class="normal">97</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fcm_t</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fcm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fck</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span> <span class="n">t_ref</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">28.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``fcm(t) = βcc(t)·fcm`` [MPa], Eq. (B.1).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">calc_beta_cc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fck</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">t_ref</span><span class="p">)</span> <span class="o">*</span> <span class="n">fcm</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.fctm_t" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">fctm_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fctm</span><span class="p">,</span> <span class="n">fck</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">t_ref</span><span class="o">=</span><span class="mf">28.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>fctm(t) = βcc(t)^0,6·fctm</code> [MPa], Eq. (B.3).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fctm_t</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fctm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fck</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span> <span class="n">t_ref</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">28.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``fctm(t) = βcc(t)^0,6·fctm`` [MPa], Eq. (B.3).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">calc_beta_cc</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fck</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">t_ref</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="n">fctm</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.relaxation_loss" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">relaxation_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">sigma_pi</span><span class="p">,</span> <span class="n">rho_1000</span><span class="p">,</span> <span class="n">k_rho</span><span class="o">=</span><span class="mf">0.16</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the relaxation loss <code>Δσpr = σpi·ρ1000/100·(24·t/1000)^kρ</code>, Eq. (B.43).</p>
+<p><code>t</code> in days (24·t hours), <code>rho_1000</code> in %, <code>kρ</code> = 0,16 unless there is more accurate data;
+in the unit of <code>sigma_pi</code>.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">relaxation_loss</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma_pi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rho_1000</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k_rho</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.16</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the relaxation loss ``Δσpr = σpi·ρ1000/100·(24·t/1000)^kρ``, Eq. (B.43).</span>
+
+<span class="sd">    ``t`` in days (24·t hours), ``rho_1000`` in %, ``kρ`` = 0,16 unless there is more accurate data;</span>
+<span class="sd">    in the unit of ``sigma_pi``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">sigma_pi</span> <span class="o">*</span> <span class="n">rho_1000</span> <span class="o">/</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">24.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span> <span class="o">**</span> <span class="n">k_rho</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.relaxation_loss_fit" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">relaxation_loss_fit</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">sigma_pi</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>Δσpr = σpi·b·t^a</code> of the best-fit curve of relaxation tests, Eq. (B.44).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">relaxation_loss_fit</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma_pi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``Δσpr = σpi·b·t^a`` of the best-fit curve of relaxation tests, Eq. (B.44).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">sigma_pi</span> <span class="o">*</span> <span class="n">b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">**</span> <span class="n">a</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.relaxation_rho1000" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">relaxation_rho1000</span><span class="p">(</span><span class="n">sigma_pi_over_fp</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;wire&#39;</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>ρ1000</code> [%], the relaxation loss at 1 000 h, Table B.4 (linear interpolation, Note 2).</p>
+<p><code>kind</code>: <code>"wire"</code> (wires and strands) or <code>"bar"</code> (then <code>phi</code> [mm] ≤ 15 or &gt; 15). Initial stress
+between 50 % and 80 % of <code>fp</code> for wires and strands, 50 % to 70 % for bars.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">relaxation_rho1000</span><span class="p">(</span><span class="n">sigma_pi_over_fp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;wire&quot;</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``ρ1000`` [%], the relaxation loss at 1 000 h, Table B.4 (linear interpolation, Note 2).</span>
+
+<span class="sd">    ``kind``: ``&quot;wire&quot;`` (wires and strands) or ``&quot;bar&quot;`` (then ``phi`` [mm] ≤ 15 or &gt; 15). Initial stress</span>
+<span class="sd">    between 50 % and 80 % of ``fp`` for wires and strands, 50 % to 70 % for bars.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_REL_KINDS</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;kind must be one of </span><span class="si">{</span><span class="n">_REL_KINDS</span><span class="si">}</span><span class="s2">, got &#39;</span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;wire&quot;</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">phi</span> <span class="o">&lt;=</span> <span class="mf">15.0</span> <span class="k">else</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># noqa: PLR2004</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_RHO_1000</span><span class="o">.</span><span class="n">items</span><span class="p">())</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">pts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1e-9</span> <span class="o">&lt;=</span> <span class="n">sigma_pi_over_fp</span> <span class="o">&lt;=</span> <span class="n">pts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-9</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;σpi/fp = </span><span class="si">{</span><span class="n">sigma_pi_over_fp</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> is outside </span><span class="si">{</span><span class="n">pts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">pts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> &quot;</span>
+               <span class="s2">&quot;for this prestressing steel (Table B.4): use test results&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_interp</span><span class="p">(</span><span class="n">sigma_pi_over_fp</span><span class="p">,</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pts</span><span class="p">],</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pts</span><span class="p">],</span> <span class="s2">&quot;σpi/fp&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.rh_eq" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">rh_eq</span><span class="p">(</span><span class="n">fcm28</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>RHeq = 99·(35/fcm,28)^0,1 ≤ 99</code> [%], Eq. (B.32).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rh_eq</span><span class="p">(</span><span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``RHeq = 99·(35/fcm,28)^0,1 ≤ 99`` [%], Eq. (B.32).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="mf">99.0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">35.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fcm28</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span> <span class="o">**</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">99.0</span><span class="p">)[()]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.shrinkage_50y" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">shrinkage_50y</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="n">fck</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the nominal total shrinkage <code>εcs</code> after 50 years of drying of Table 5.3 (NDP), dimensionless.</p>
+<p>Interpolated linearly in <code>hn</code> and <code>fck</code>; <code>rh</code> is 50 or 80. The classes have different ranges
+of <code>fck</code> (CS 20-50, CN 20-80, CR 35-80 MPa).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shrinkage_50y</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rh</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fck</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the nominal total shrinkage ``εcs`` after 50 years of drying of Table 5.3 (NDP), dimensionless.</span>
+
+<span class="sd">    Interpolated linearly in ``hn`` and ``fck``; ``rh`` is 50 or 80. The classes have different ranges</span>
+<span class="sd">    of ``fck`` (CS 20-50, CN 20-80, CR 35-80 MPa).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">cls</span> <span class="o">=</span> <span class="n">_check_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+    <span class="n">tab</span> <span class="o">=</span> <span class="n">dbase</span><span class="o">.</span><span class="n">get_edition_params</span><span class="p">(</span><span class="s2">&quot;ec2&quot;</span><span class="p">,</span> <span class="s2">&quot;creep_shrinkage&quot;</span><span class="p">,</span> <span class="s2">&quot;2023&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">_column</span><span class="p">(</span><span class="n">rh</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">tab</span><span class="p">[</span><span class="s2">&quot;shrinkage_50y&quot;</span><span class="p">][</span><span class="bp">cls</span><span class="p">]</span>
+    <span class="n">per_fck</span> <span class="o">=</span> <span class="p">[</span><span class="n">_interp</span><span class="p">(</span><span class="n">hn</span><span class="p">,</span> <span class="n">tab</span><span class="p">[</span><span class="s2">&quot;hn&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">,</span> <span class="s2">&quot;hn&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">s</span><span class="p">[</span><span class="n">col</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">_interp</span><span class="p">(</span><span class="n">fck</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="s2">&quot;fck&quot;</span><span class="p">],</span> <span class="n">per_fck</span><span class="p">,</span> <span class="s2">&quot;fck&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.0e-3</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.shrinkage_basic" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">shrinkage_basic</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">alpha_ndp_b</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_bs1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_bs2</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the basic shrinkage strain <code>εcbs(t) = εcbs,fcm·βbs,t·αNDP,b</code>, Eqs. (B.24), (B.26), (B.27).</p>
+<p><code>εcbs,fcm = αbs·(fcm,28/(60 + fcm,28))^2,5·10⁻⁶</code> (Table B.3), <code>βbs,t = 1 − exp(−0,2·ξbs2·√t)</code>;
+<code>t</code> is the concrete age [days]. <code>xi_bs1</code> and <code>xi_bs2</code>: B.7 (Eqs. B.37-B.38).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shrinkage_basic</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span> <span class="n">alpha_ndp_b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+                    <span class="n">xi_bs1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_bs2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the basic shrinkage strain ``εcbs(t) = εcbs,fcm·βbs,t·αNDP,b``, Eqs. (B.24), (B.26), (B.27).</span>
+
+<span class="sd">    ``εcbs,fcm = αbs·(fcm,28/(60 + fcm,28))^2,5·10⁻⁶`` (Table B.3), ``βbs,t = 1 − exp(−0,2·ξbs2·√t)``;</span>
+<span class="sd">    ``t`` is the concrete age [days]. ``xi_bs1`` and ``xi_bs2``: B.7 (Eqs. B.37-B.38).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_check_fcm</span><span class="p">(</span><span class="n">fcm28</span><span class="p">)</span>
+    <span class="n">alpha_bs</span> <span class="o">=</span> <span class="n">_ALPHA_BS_DS</span><span class="p">[</span><span class="n">_check_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">fcm28</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fcm28</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">e_fcm</span> <span class="o">=</span> <span class="n">alpha_bs</span> <span class="o">*</span> <span class="p">(</span><span class="n">fcm28</span> <span class="o">/</span> <span class="p">(</span><span class="mf">60.0</span> <span class="o">+</span> <span class="n">fcm28</span><span class="p">))</span> <span class="o">**</span> <span class="mf">2.5</span> <span class="o">*</span> <span class="mf">1.0e-6</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">xi_bs1</span> <span class="o">*</span> <span class="n">e_fcm</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span> <span class="o">*</span> <span class="n">xi_bs2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))))</span>
+            <span class="o">*</span> <span class="n">alpha_ndp_b</span><span class="p">)[()]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.shrinkage_drying" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">shrinkage_drying</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">alpha_ndp_d</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_ds1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_ds2</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the drying shrinkage strain <code>εcds(t − ts) = εcds,fcm·βRH·βds,t−ts·αNDP,d</code>, Eqs. (B.25), (B.28)-(B.33).</p>
+<p><code>εcds,fcm = (220 + 110·αds)·exp(−0,012·fcm,28)·10⁻⁶</code> (Table B.3);
+<code>βds,t−ts = √[(t − ts)/(0,035·ξds2·hn² + (t − ts))]</code>. <code>ts</code> is the age at the start of drying [days],
+<code>hn</code> in mm; <code>xi_ds1</code>, <code>xi_ds2</code>: B.7 (Eqs. B.37, B.39).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shrinkage_drying</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ts</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rh</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span>
+                     <span class="n">alpha_ndp_d</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_ds1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">xi_ds2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the drying shrinkage strain ``εcds(t − ts) = εcds,fcm·βRH·βds,t−ts·αNDP,d``, Eqs. (B.25), (B.28)-(B.33).</span>
+
+<span class="sd">    ``εcds,fcm = (220 + 110·αds)·exp(−0,012·fcm,28)·10⁻⁶`` (Table B.3);</span>
+<span class="sd">    ``βds,t−ts = √[(t − ts)/(0,035·ξds2·hn² + (t − ts))]``. ``ts`` is the age at the start of drying [days],</span>
+<span class="sd">    ``hn`` in mm; ``xi_ds1``, ``xi_ds2``: B.7 (Eqs. B.37, B.39).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;t must not be less than ts&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">_check_fcm</span><span class="p">(</span><span class="n">fcm28</span><span class="p">)</span>
+    <span class="n">alpha_ds</span> <span class="o">=</span> <span class="n">_ALPHA_BS_DS</span><span class="p">[</span><span class="n">_check_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">)][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">fcm28</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fcm28</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">e_fcm</span> <span class="o">=</span> <span class="p">(</span><span class="mf">220.0</span> <span class="o">+</span> <span class="mf">110.0</span> <span class="o">*</span> <span class="n">alpha_ds</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.012</span> <span class="o">*</span> <span class="n">fcm28</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.0e-6</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">-</span> <span class="n">ts</span>
+    <span class="n">hn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">hn</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">b_ds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.035</span> <span class="o">*</span> <span class="n">xi_ds2</span> <span class="o">*</span> <span class="n">hn</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">d</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">xi_ds1</span> <span class="o">*</span> <span class="n">e_fcm</span> <span class="o">*</span> <span class="n">calc_beta_rh</span><span class="p">(</span><span class="n">rh</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">)</span> <span class="o">*</span> <span class="n">b_ds</span> <span class="o">*</span> <span class="n">alpha_ndp_d</span><span class="p">)[()]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.shrinkage_total" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">shrinkage_total</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">alpha_ndp_b</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">alpha_ndp_d</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">**</span><span class="n">xi</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the total shrinkage strain <code>εcs(t,ts) = εcbs(t) + εcds(t − ts)</code>, Eq. (B.23).</p>
+<p><code>t</code> is the concrete age [days], <code>ts</code> the age at the start of drying; <code>αNDP</code> are 1,0 unless the
+National Annex says otherwise; <code>**xi</code>: <code>xi_bs1</code>, <code>xi_bs2</code>, <code>xi_ds1</code>, <code>xi_ds2</code> (B.7).
+Shrinkage is positive (shortening).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">shrinkage_total</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ts</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rh</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span>
+                    <span class="n">alpha_ndp_b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">alpha_ndp_d</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="o">**</span><span class="n">xi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the total shrinkage strain ``εcs(t,ts) = εcbs(t) + εcds(t − ts)``, Eq. (B.23).</span>
+
+<span class="sd">    ``t`` is the concrete age [days], ``ts`` the age at the start of drying; ``αNDP`` are 1,0 unless the</span>
+<span class="sd">    National Annex says otherwise; ``**xi``: ``xi_bs1``, ``xi_bs2``, ``xi_ds1``, ``xi_ds2`` (B.7).</span>
+<span class="sd">    Shrinkage is positive (shortening).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">xi</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;xi_bs&quot;</span><span class="p">)}</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">xi</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;xi_ds&quot;</span><span class="p">)}</span>
+    <span class="n">unknown</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unknown</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;unknown factors </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">unknown</span><span class="p">)</span><span class="si">}</span><span class="s2">; use xi_bs1, xi_bs2, xi_ds1, xi_ds2&quot;</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">shrinkage_basic</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">alpha_ndp_b</span><span class="p">,</span> <span class="o">**</span><span class="n">bs</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">shrinkage_drying</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">alpha_ndp_d</span><span class="p">,</span> <span class="o">**</span><span class="n">ds</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.strain_history" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">strain_history</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">increments</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="n">ecm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="s1">&#39;CN&#39;</span><span class="p">,</span> <span class="n">fck</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the stress-dependent strain <code>εcσ(t) = Σ Δσc(τi)·J(t,τi)</code> by superposition, Eq. (B.41).</p>
+<p><code>increments</code> is <code>[(τ0, σc(t0)), (τ1, Δσc1), ...]</code> (age [days], stress [MPa]; the first is the
+stress at first loading). Linear creep only (<code>σc ≤ 0,40·fcm</code>).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">strain_history</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">increments</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">fcm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ecm28</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                   <span class="n">rh</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">hn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CN&quot;</span><span class="p">,</span> <span class="n">fck</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the stress-dependent strain ``εcσ(t) = Σ Δσc(τi)·J(t,τi)`` by superposition, Eq. (B.41).</span>
+
+<span class="sd">    ``increments`` is ``[(τ0, σc(t0)), (τ1, Δσc1), ...]`` (age [days], stress [MPa]; the first is the</span>
+<span class="sd">    stress at first loading). Linear creep only (``σc ≤ 0,40·fcm``).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ds</span> <span class="o">*</span> <span class="n">creep_compliance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">fcm28</span><span class="p">,</span> <span class="n">ecm28</span><span class="p">,</span> <span class="n">rh</span><span class="p">,</span> <span class="n">hn</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">fck</span><span class="p">)</span> <span class="k">for</span> <span class="n">tau</span><span class="p">,</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">increments</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.time_dependent2023.temperature_adjusted_age" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">temperature_adjusted_age</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">temperatures</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the temperature-adjusted age <code>tT = Σ Δti·exp(13,65 − 4000/(273 + T(Δti)))</code> [days], Eq. (B.18).</p>
+<p>Valid for 0 °C ≤ T ≤ 80 °C; 20 °C gives the age itself.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/time_dependent2023.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">temperature_adjusted_age</span><span class="p">(</span><span class="n">durations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">temperatures</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the temperature-adjusted age ``tT = Σ Δti·exp(13,65 − 4000/(273 + T(Δti)))`` [days], Eq. (B.18).</span>
+
+<span class="sd">    Valid for 0 °C ≤ T ≤ 80 °C; 20 °C gives the age itself.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">temperatures</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;durations and temperatures must have the same length&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">temperatures</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mf">80.0</span><span class="p">:</span>  <span class="c1"># noqa: PLR2004</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;T = </span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> °C is outside 0 °C ≤ T ≤ 80 °C (B.5(5))&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">13.65</span> <span class="o">-</span> <span class="mf">4000.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">273.0</span> <span class="o">+</span> <span class="n">temp</span><span class="p">))</span>
+                     <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">temp</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">temperatures</span><span class="p">)))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../..", "features": [], "search": "../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,4609 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../shear/">
+      
+      
+        <link rel="next" href="../../uls2025/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>special_beams - Documentation for EurocodePy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eurocodepy.ec5.uls.special_beams" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Documentation for EurocodePy" class="md-header__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation for EurocodePy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              special_beams
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Documentation for EurocodePy" class="md-nav__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation for EurocodePy
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EurocodePy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../how-to-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How-to Guides
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../explanation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Background &amp; Design Philosophy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../modules/ec2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    EC2
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            EC2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/edition-2004/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2004
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/edition-2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2023
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/shells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Membranes, slabs and shells
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/clauses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2023 clause map
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/editions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Editions and National Annexes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC5
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC7
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC8
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utils
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Code Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Code Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    eurocodepy
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            eurocodepy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../_compat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    _compat
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../annex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    annex
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calc_report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    calc_report
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dbase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbase
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec1
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_5" id="__nav_6_1_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            ec1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/combos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    combos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/factors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    factors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/forces%20copy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    forces copy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/forces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    forces
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/snow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    snow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/stresses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stresses
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_5_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec1/wind/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    wind
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_5_7" id="__nav_6_1_5_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            wind
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/wind/pressure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    pressure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec2
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6" id="__nav_6_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            ec2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/fire/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    fire
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_1" id="__nav_6_1_6_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            fire
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/fire/fire_base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fire_base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_3" id="__nav_6_1_6_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/sls/crack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/sls/creep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    creep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/sls/shrinkage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shrinkage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/time_dependent2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    time_dependent2023
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_5" id="__nav_6_1_6_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/anchorage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    anchorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/beam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    beam
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/bend_axial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bend_axial
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/bend_circ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bend_circ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    column
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/membrane_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    membrane_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/punch_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shear_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shear_torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/shell_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/slab_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    slab_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls/torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec2/uls2023/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls2023
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_6" id="__nav_6_1_6_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            uls2023
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/annex_g/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    annex_g
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    column
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/detailing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    detailing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/membrane_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    membrane_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/shear_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/shear_torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/shell_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/slab_design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    slab_design
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec2/uls2023/torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec3
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_7" id="__nav_6_1_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            ec3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_7_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec3/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_7_3" id="__nav_6_1_7_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/uls/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/uls/checks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    checks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/uls/cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/uls/member_buckling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    member_buckling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec5
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8" id="__nav_6_1_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            ec5
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_2" id="__nav_6_1_8_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sls/deformation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    deformation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sls/vibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    vibration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_3" id="__nav_6_1_8_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    special_beams
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    special_beams
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams" class="md-nav__link">
+    <span class="md-ellipsis">
+      special_beams
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.ApexInput" class="md-nav__link">
+    <span class="md-ellipsis">
+      ApexInput
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.ApexResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      ApexResult
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.TaperedEdgeResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      TaperedEdgeResult
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.apex_volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      apex_volume
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.calc_k_l" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_l
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.calc_k_m_alpha" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_m_alpha
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.calc_k_p" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_p
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.calc_k_r" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_r
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.calc_k_vol" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_vol
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.check_apex_zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      check_apex_zone
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.check_tapered_edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      check_tapered_edge
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../uls2025/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls2025
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_4" id="__nav_6_1_8_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            uls2025
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls2025/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls2025/cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls2025/fasteners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fasteners
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls2025/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls2025/special_beams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    special_beams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec7/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec7
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_9" id="__nav_6_1_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_9">
+            <span class="md-nav__icon md-icon"></span>
+            ec7
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/bearing_capacity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bearing_capacity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/earth_pressures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    earth_pressures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec8
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_10" id="__nav_6_1_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_10">
+            <span class="md-nav__icon md-icon"></span>
+            ec8
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec8/spectrum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    spectrum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../national_parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    national_parameters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    units
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../utils/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    utils
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_13" id="__nav_6_1_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_13">
+            <span class="md-nav__icon md-icon"></span>
+            utils
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/crosssection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crosssection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/section_properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    section_properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/stress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stress
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../copyright/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Copyright & contributing
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Copyright & contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../STYLE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python Style Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../CODE_OF_CONDUCT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code of Conduct
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams" class="md-nav__link">
+    <span class="md-ellipsis">
+      special_beams
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.ApexInput" class="md-nav__link">
+    <span class="md-ellipsis">
+      ApexInput
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.ApexResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      ApexResult
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.TaperedEdgeResult" class="md-nav__link">
+    <span class="md-ellipsis">
+      TaperedEdgeResult
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.apex_volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      apex_volume
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.calc_k_l" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_l
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.calc_k_m_alpha" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_m_alpha
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.calc_k_p" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_p
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.calc_k_r" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_r
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.calc_k_vol" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_vol
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.check_apex_zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      check_apex_zone
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec5.uls.special_beams.check_tapered_edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      check_tapered_edge
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>special_beams</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="eurocodepy.ec5.uls.special_beams"></a>
+    <div class="doc doc-contents first">
+
+        <p>Beams of varying cross-section or curved — <strong>EN 1995-1-1:2004 §6.4</strong>.</p>
+<ul>
+<li>§6.4.2 single tapered beams: bending stress at the tapered (inclined) edge,
+  <code>σ_m,α,d ≤ k_m,α·f_m,d</code>;</li>
+<li>§6.4.3 double tapered, curved and pitched cambered beams: the apex zone —
+  bending (<code>k_l</code>, <code>k_r</code>), tension perpendicular to the grain (<code>k_p</code>,
+  <code>k_dis</code>, <code>k_vol</code>) and its interaction with shear.</li>
+</ul>
+<p>Only the formulas live here. The geometry (angle <code>α</code>, apex height, radius) is
+supplied by the caller. Units follow the other <code>ec5.uls</code> modules: forces in
+kN, moments in kNm, section dimensions and radii in m, stresses in MPa, the
+lamination thickness in mm, angles in radians.</p>
+<p>Scope (§6.4.3(1)): the apex-zone clause applies only to glued laminated
+timber and LVL; the caller is responsible for that (see <code>check_apex_zone</code>).
+§6.4.2 applies to the parts with a <em>single</em> taper (§6.4.3(2)), i.e. outside the
+apex zone -- again the caller's choice of where to call it.</p>
+<p>Verified against the text of EN 1995-1-1:2004 §6.4: Eqs. 6.37-6.59 (<code>k_m,α</code>,
+<code>k_l</code> with <code>k_1…k_4</code>, <code>r</code>, <code>k_r</code>, <code>k_vol</code>, <code>k_dis</code>, <code>k_p</code> with
+<code>k_5…k_7</code>, the interaction 6.53). The apex-zone volume <code>V</code> depends on
+Figure 6.9, which is not in the text: for a double tapered beam
+<code>V = b·h_ap²·(1 − 0.25·tan α_ap)</code> is the area of the zone of width <code>h_ap</code>;
+for curved and pitched cambered beams the zone is the curved part, whose volume
+the caller passes in <code>ApexInput.zone_volume</code>.</p>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.ApexInput" class="doc doc-heading">
+            <code>ApexInput</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Geometry and actions of an apex zone (double tapered, curved or pitched
+cambered beam).</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ApexInput</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Geometry and actions of an apex zone (double tapered, curved or pitched</span>
+<span class="sd">    cambered beam).&quot;&quot;&quot;</span>
+
+    <span class="n">m_ap</span><span class="p">:</span> <span class="nb">float</span>                     <span class="c1"># design moment at the apex [kNm]</span>
+    <span class="n">v_ap</span><span class="p">:</span> <span class="nb">float</span>                     <span class="c1"># design shear at the apex [kN]</span>
+    <span class="n">b</span><span class="p">:</span> <span class="nb">float</span>                        <span class="c1"># width [m]</span>
+    <span class="n">h_ap</span><span class="p">:</span> <span class="nb">float</span>                     <span class="c1"># depth at the apex [m]</span>
+    <span class="n">alpha_ap</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>           <span class="c1"># upper edge to grain at the apex [rad]</span>
+    <span class="n">r_in</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>       <span class="c1"># inner radius [m]; None = straight lower edge</span>
+    <span class="n">t_lam</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">33.0</span>             <span class="c1"># lamination thickness [mm]</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;double_tapered&quot;</span>    <span class="c1"># one of APEX_KINDS (selects k_dis)</span>
+    <span class="n">straightening</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>      <span class="c1"># M tends to straighten the beam → t_90 &gt; 0</span>
+    <span class="n">beam_volume</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># V_b [m³], to cap V at 2/3·V_b</span>
+    <span class="n">zone_volume</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># volume of the curved part [m³]; None =</span>
+    <span class="c1">#                                   the double tapered zone of width h_ap</span>
+    <span class="n">reinforced</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>        <span class="c1"># EN 1995-1-1:2025 only (ignored by 2004)</span>
+    <span class="n">a1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>         <span class="c1"># reinforcement spacing along the grain [m]</span>
+    <span class="n">zone_length</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># length of the apex zone [m] (curved part</span>
+    <span class="c1">#                                   of curved / pitched cambered beams)</span>
+    <span class="n">reinforcement</span><span class="p">:</span> <span class="nb">object</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># a PlaneReinforcement (2025 only)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.ApexResult" class="doc doc-heading">
+            <code>ApexResult</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Result of :func:<code>check_apex_zone</code>.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ApexResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result of :func:`check_apex_zone`.&quot;&quot;&quot;</span>
+
+    <span class="n">util_bending</span><span class="p">:</span> <span class="nb">float</span>             <span class="c1"># k_l·σ / (k_r·f_m,d)</span>
+    <span class="n">util_tension90</span><span class="p">:</span> <span class="nb">float</span>           <span class="c1"># σ_t,90 / (k_dis·k_vol·f_t,90,d)</span>
+    <span class="n">util_interaction</span><span class="p">:</span> <span class="nb">float</span>         <span class="c1"># τ/f_v,d + util_tension90</span>
+    <span class="n">util</span><span class="p">:</span> <span class="nb">float</span>                     <span class="c1"># governing</span>
+    <span class="n">k_l</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">k_p</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">k_r</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">k_dis</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">k_vol</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">volume</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>            <span class="c1"># r = r_in + 0.5·h_ap</span>
+    <span class="n">sigma_m</span><span class="p">:</span> <span class="nb">float</span>                  <span class="c1"># [MPa]</span>
+    <span class="n">sigma_t90</span><span class="p">:</span> <span class="nb">float</span>                <span class="c1"># [MPa]</span>
+    <span class="n">tau</span><span class="p">:</span> <span class="nb">float</span>                      <span class="c1"># [MPa]</span>
+    <span class="n">details</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.TaperedEdgeResult" class="doc doc-heading">
+            <code>TaperedEdgeResult</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Result of :func:<code>check_tapered_edge</code>.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TaperedEdgeResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result of :func:`check_tapered_edge`.&quot;&quot;&quot;</span>
+
+    <span class="n">sigma_m</span><span class="p">:</span> <span class="nb">float</span>          <span class="c1"># σ_m,α,d = σ_m,0,d  [MPa]</span>
+    <span class="n">k_m_alpha</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">f_md</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">util_cut</span><span class="p">:</span> <span class="nb">float</span>         <span class="c1"># tapered edge:   σ / (k_m,α·f_m,d)</span>
+    <span class="n">util_grain</span><span class="p">:</span> <span class="nb">float</span>       <span class="c1"># straight edge:  σ / f_m,d</span>
+    <span class="n">util</span><span class="p">:</span> <span class="nb">float</span>             <span class="c1"># governing</span>
+    <span class="n">details</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.apex_volume" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">apex_volume</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">h_ap</span><span class="p">,</span> <span class="n">alpha_ap</span><span class="p">,</span> <span class="n">beam_volume</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zone_volume</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Stressed volume of the apex zone [m³] (§6.4.3(6), Figure 6.9), taken not
+greater than <code>2/3</code> of the beam volume when that is given.</p>
+<p>Double tapered beam: the zone is <code>h_ap</code> wide, <code>V = b·h_ap²·(1 − 0.25·
+tan α_ap)</code>. Curved and pitched cambered beams: the zone is the curved
+part, whose volume is passed as <em>zone_volume</em>.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">apex_volume</span><span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">h_ap</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha_ap</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                <span class="n">beam_volume</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">zone_volume</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stressed volume of the apex zone [m³] (§6.4.3(6), Figure 6.9), taken not</span>
+<span class="sd">    greater than ``2/3`` of the beam volume when that is given.</span>
+
+<span class="sd">    Double tapered beam: the zone is ``h_ap`` wide, ``V = b·h_ap²·(1 − 0.25·</span>
+<span class="sd">    tan α_ap)``. Curved and pitched cambered beams: the zone is the curved</span>
+<span class="sd">    part, whose volume is passed as *zone_volume*.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">zone_volume</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">zone_volume</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">zone_volume</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">h_ap</span> <span class="o">*</span> <span class="n">h_ap</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">alpha_ap</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">beam_volume</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">beam_volume</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">beam_volume</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">v</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.calc_k_l" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_k_l</span><span class="p">(</span><span class="n">h_ap</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">alpha_ap</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p><code>k_l</code> of the apex bending stress (Eqs. 6.43-6.47), <code>r = r_in + 0.5·h_ap</code>;
+<code>r = None</code> (straight) leaves <code>k_1</code>.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_k_l</span><span class="p">(</span><span class="n">h_ap</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">alpha_ap</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;``k_l`` of the apex bending stress (Eqs. 6.43-6.47), ``r = r_in + 0.5·h_ap``;</span>
+<span class="sd">    ``r = None`` (straight) leaves ``k_1``.&quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">alpha_ap</span><span class="p">))</span>
+    <span class="n">k1</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">1.4</span> <span class="o">*</span> <span class="n">t</span> <span class="o">+</span> <span class="mf">5.4</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="ow">or</span> <span class="n">r</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">k1</span>
+    <span class="n">k2</span> <span class="o">=</span> <span class="mf">0.35</span> <span class="o">-</span> <span class="mf">8.0</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="n">k3</span> <span class="o">=</span> <span class="mf">0.6</span> <span class="o">+</span> <span class="mf">8.3</span> <span class="o">*</span> <span class="n">t</span> <span class="o">-</span> <span class="mf">7.8</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="n">k4</span> <span class="o">=</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">h_ap</span> <span class="o">/</span> <span class="n">r</span>
+    <span class="k">return</span> <span class="n">k1</span> <span class="o">+</span> <span class="n">k2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">k3</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">k4</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.calc_k_m_alpha" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_k_m_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">f_md</span><span class="p">,</span> <span class="n">f_vd</span><span class="p">,</span> <span class="n">f_t90d</span><span class="p">,</span> <span class="n">f_c90d</span><span class="p">,</span> <span class="n">tension</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p><code>k_m,α</code> (EN 1995-1-1:2004 Eqs. 6.39/6.40).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>alpha</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>angle between the tapered edge and the grain [rad].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>tension</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True when the tapered edge is in tension (Eq. 6.39), False when
+it is in compression (Eq. 6.40).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_k_m_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_md</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_vd</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_t90d</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                   <span class="n">f_c90d</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">tension</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;``k_m,α`` (EN 1995-1-1:2004 Eqs. 6.39/6.40).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        alpha: angle between the tapered edge and the grain [rad].</span>
+<span class="sd">        tension: True when the tapered edge is in tension (Eq. 6.39), False when</span>
+<span class="sd">            it is in compression (Eq. 6.40).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">tension</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">f_md</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.75</span> <span class="o">*</span> <span class="n">f_vd</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">f_md</span> <span class="o">/</span> <span class="n">f_t90d</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">f_md</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">f_vd</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">f_md</span> <span class="o">/</span> <span class="n">f_c90d</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.calc_k_p" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_k_p</span><span class="p">(</span><span class="n">h_ap</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">alpha_ap</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p><code>k_p</code> of the apex tension perpendicular to the grain (Eqs. 6.56-6.59),
+<code>r = r_in + 0.5·h_ap</code>; <code>r = None</code> (straight) leaves <code>k_5</code>.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_k_p</span><span class="p">(</span><span class="n">h_ap</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">alpha_ap</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;``k_p`` of the apex tension perpendicular to the grain (Eqs. 6.56-6.59),</span>
+<span class="sd">    ``r = r_in + 0.5·h_ap``; ``r = None`` (straight) leaves ``k_5``.&quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">alpha_ap</span><span class="p">))</span>
+    <span class="n">k5</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="ow">or</span> <span class="n">r</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">k5</span>
+    <span class="n">k6</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">t</span> <span class="o">+</span> <span class="mf">2.6</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="n">k7</span> <span class="o">=</span> <span class="mf">2.1</span> <span class="o">*</span> <span class="n">t</span> <span class="o">-</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">h_ap</span> <span class="o">/</span> <span class="n">r</span>
+    <span class="k">return</span> <span class="n">k5</span> <span class="o">+</span> <span class="n">k6</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">k7</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.calc_k_r" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_k_r</span><span class="p">(</span><span class="n">r_in</span><span class="p">,</span> <span class="n">t_lam</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Bending-strength reduction of curved laminations (Eq. 6.49):
+<code>k_r = 1</code> for <code>r_in/t ≥ 240</code>, else <code>0.76 + 0.001·r_in/t</code>.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>r_in</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>inner radius [m]; <code>None</code> (straight lower edge) gives 1.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>t_lam</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>thickness of the laminations [mm].</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_k_r</span><span class="p">(</span><span class="n">r_in</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">t_lam</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bending-strength reduction of curved laminations (Eq. 6.49):</span>
+<span class="sd">    ``k_r = 1`` for ``r_in/t ≥ 240``, else ``0.76 + 0.001·r_in/t``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        r_in: inner radius [m]; ``None`` (straight lower edge) gives 1.</span>
+<span class="sd">        t_lam: thickness of the laminations [mm].</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">r_in</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">r_in</span><span class="p">)</span> <span class="ow">or</span> <span class="n">t_lam</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">1.0</span>
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">r_in</span> <span class="o">*</span> <span class="mf">1e3</span> <span class="o">/</span> <span class="n">t_lam</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;=</span> <span class="n">R_IN_OVER_T_LIMIT</span> <span class="k">else</span> <span class="mf">0.76</span> <span class="o">+</span> <span class="mf">0.001</span> <span class="o">*</span> <span class="n">ratio</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.calc_k_vol" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_k_vol</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="n">timber</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Volume factor <code>(V0/V)^0.2</code> for glulam and LVL, 1 for solid timber.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_k_vol</span><span class="p">(</span><span class="n">volume</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">timber</span><span class="p">:</span> <span class="n">Timber</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Volume factor ``(V0/V)^0.2`` for glulam and LVL, 1 for solid timber.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">timber</span><span class="p">,</span> <span class="s2">&quot;material&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="n">TimberType</span><span class="o">.</span><span class="n">GLULAM</span><span class="p">,</span> <span class="n">TimberType</span><span class="o">.</span><span class="n">LVL</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">V0_APEX</span> <span class="o">/</span> <span class="n">volume</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.2</span> <span class="k">if</span> <span class="n">volume</span> <span class="o">&gt;</span> <span class="mf">0.0</span> <span class="k">else</span> <span class="mf">1.0</span>
+    <span class="k">return</span> <span class="mf">1.0</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.check_apex_zone" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">check_apex_zone</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">timber</span><span class="p">,</span> <span class="n">service_class</span><span class="o">=</span><span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">,</span> <span class="n">load_duration</span><span class="o">=</span><span class="n">LoadDuration</span><span class="o">.</span><span class="n">MediumDuration</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Apex zone of a double tapered, curved or pitched cambered beam
+(EN 1995-1-1:2004 §6.4.3).</p>
+<ul>
+<li>bending <code>σ_m,d = k_l·6·M_ap/(b·h_ap²) ≤ k_r·f_m,d</code> (Eqs. 6.41-6.43);</li>
+<li>tension perpendicular <code>σ_t,90,d = k_p·6·M_ap/(b·h_ap²) ≤
+  k_dis·k_vol·f_t,90,d</code> (Eqs. 6.50-6.54) -- only when <code>M_ap</code> tensions
+  the inner curved edge, i.e. tends to straighten the beam (§6.4.3(8));</li>
+<li>valid for glued laminated timber and LVL only (§6.4.3(1)); the caller
+  decides what to do for other products;</li>
+<li>interaction with shear <code>τ_d/f_v,d + σ_t,90,d/(k_dis·k_vol·f_t,90,d) ≤ 1</code>
+  (Eq. 6.53), <code>τ_d = 1.5·V/(k_cr·b·h_ap)</code>.</li>
+</ul>
+<p><code>f_m,d</code> includes the size factor <code>k_h</code> of <code>h_ap</code>. <em>trace</em> is an
+optional :class:<code>eurocodepy.calc_report.CalcReport</code>.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_apex_zone</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">ApexInput</span><span class="p">,</span> <span class="n">timber</span><span class="p">:</span> <span class="n">Timber</span><span class="p">,</span>
+                    <span class="n">service_class</span><span class="p">:</span> <span class="n">ServiceClass</span> <span class="o">=</span> <span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">,</span>
+                    <span class="n">load_duration</span><span class="p">:</span> <span class="n">LoadDuration</span> <span class="o">=</span> <span class="n">LoadDuration</span><span class="o">.</span><span class="n">MediumDuration</span><span class="p">,</span>
+                    <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ApexResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apex zone of a double tapered, curved or pitched cambered beam</span>
+<span class="sd">    (EN 1995-1-1:2004 §6.4.3).</span>
+
+<span class="sd">    * bending ``σ_m,d = k_l·6·M_ap/(b·h_ap²) ≤ k_r·f_m,d`` (Eqs. 6.41-6.43);</span>
+<span class="sd">    * tension perpendicular ``σ_t,90,d = k_p·6·M_ap/(b·h_ap²) ≤</span>
+<span class="sd">      k_dis·k_vol·f_t,90,d`` (Eqs. 6.50-6.54) -- only when ``M_ap`` tensions</span>
+<span class="sd">      the inner curved edge, i.e. tends to straighten the beam (§6.4.3(8));</span>
+<span class="sd">    * valid for glued laminated timber and LVL only (§6.4.3(1)); the caller</span>
+<span class="sd">      decides what to do for other products;</span>
+<span class="sd">    * interaction with shear ``τ_d/f_v,d + σ_t,90,d/(k_dis·k_vol·f_t,90,d) ≤ 1``</span>
+<span class="sd">      (Eq. 6.53), ``τ_d = 1.5·V/(k_cr·b·h_ap)``.</span>
+
+<span class="sd">    ``f_m,d`` includes the size factor ``k_h`` of ``h_ap``. *trace* is an</span>
+<span class="sd">    optional :class:`eurocodepy.calc_report.CalcReport`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">K_DIS</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;kind must be one of </span><span class="si">{</span><span class="n">APEX_KINDS</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">inp</span><span class="o">.</span><span class="n">kind</span><span class="si">!r}</span><span class="s2">&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">timber</span><span class="o">.</span><span class="n">design_values</span><span class="p">(</span><span class="n">service_class</span><span class="p">,</span> <span class="n">load_duration</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">r_in</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">inp</span><span class="o">.</span><span class="n">r_in</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">inp</span><span class="o">.</span><span class="n">h_ap</span>
+    <span class="n">k_l</span> <span class="o">=</span> <span class="n">calc_k_l</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">h_ap</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">alpha_ap</span><span class="p">)</span>
+    <span class="n">k_p</span> <span class="o">=</span> <span class="n">calc_k_p</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">h_ap</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">alpha_ap</span><span class="p">)</span>
+    <span class="n">k_r</span> <span class="o">=</span> <span class="n">calc_k_r</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">r_in</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">t_lam</span><span class="p">)</span>
+    <span class="n">k_dis</span> <span class="o">=</span> <span class="n">K_DIS</span><span class="p">[</span><span class="n">inp</span><span class="o">.</span><span class="n">kind</span><span class="p">]</span>
+    <span class="n">vol</span> <span class="o">=</span> <span class="n">apex_volume</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">h_ap</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">alpha_ap</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">beam_volume</span><span class="p">,</span>
+                      <span class="n">inp</span><span class="o">.</span><span class="n">zone_volume</span><span class="p">)</span>
+    <span class="n">k_vol</span> <span class="o">=</span> <span class="n">calc_k_vol</span><span class="p">(</span><span class="n">vol</span><span class="p">,</span> <span class="n">timber</span><span class="p">)</span>
+
+    <span class="n">s0</span> <span class="o">=</span> <span class="n">_stress</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">m_ap</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">h_ap</span><span class="p">)</span>
+    <span class="n">sigma_m</span> <span class="o">=</span> <span class="n">k_l</span> <span class="o">*</span> <span class="n">s0</span>
+    <span class="n">sigma_t</span> <span class="o">=</span> <span class="n">k_p</span> <span class="o">*</span> <span class="n">s0</span> <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">straightening</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="n">kcr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">timber</span><span class="p">,</span> <span class="s2">&quot;kcr&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span> <span class="ow">or</span> <span class="mf">1.0</span>
+    <span class="n">tau</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.5</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">v_ap</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">kcr</span> <span class="o">*</span> <span class="n">inp</span><span class="o">.</span><span class="n">b</span> <span class="o">*</span> <span class="n">inp</span><span class="o">.</span><span class="n">h_ap</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1e3</span>
+           <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">inp</span><span class="o">.</span><span class="n">h_ap</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="n">k_h</span> <span class="o">=</span> <span class="n">timber</span><span class="o">.</span><span class="n">k_h</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">h_ap</span><span class="p">,</span> <span class="n">TimberForcesType</span><span class="o">.</span><span class="n">Bending</span><span class="p">)</span>
+    <span class="n">f_md</span> <span class="o">=</span> <span class="n">timber</span><span class="o">.</span><span class="n">fmd</span> <span class="o">*</span> <span class="n">k_h</span>
+    <span class="n">u_m</span> <span class="o">=</span> <span class="n">sigma_m</span> <span class="o">/</span> <span class="p">(</span><span class="n">k_r</span> <span class="o">*</span> <span class="n">f_md</span><span class="p">)</span> <span class="k">if</span> <span class="n">f_md</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="n">cap_t</span> <span class="o">=</span> <span class="n">k_dis</span> <span class="o">*</span> <span class="n">k_vol</span> <span class="o">*</span> <span class="n">timber</span><span class="o">.</span><span class="n">ft90d</span>
+    <span class="n">u_t</span> <span class="o">=</span> <span class="n">sigma_t</span> <span class="o">/</span> <span class="n">cap_t</span> <span class="k">if</span> <span class="n">cap_t</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="n">u_i</span> <span class="o">=</span> <span class="p">(</span><span class="n">tau</span> <span class="o">/</span> <span class="n">timber</span><span class="o">.</span><span class="n">fvd</span> <span class="k">if</span> <span class="n">timber</span><span class="o">.</span><span class="n">fvd</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">+</span> <span class="n">u_t</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">ApexResult</span><span class="p">(</span>
+        <span class="n">util_bending</span><span class="o">=</span><span class="n">u_m</span><span class="p">,</span> <span class="n">util_tension90</span><span class="o">=</span><span class="n">u_t</span><span class="p">,</span> <span class="n">util_interaction</span><span class="o">=</span><span class="n">u_i</span><span class="p">,</span>
+        <span class="n">util</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">u_m</span><span class="p">,</span> <span class="n">u_t</span><span class="p">,</span> <span class="n">u_i</span><span class="p">),</span> <span class="n">k_l</span><span class="o">=</span><span class="n">k_l</span><span class="p">,</span> <span class="n">k_p</span><span class="o">=</span><span class="n">k_p</span><span class="p">,</span> <span class="n">k_r</span><span class="o">=</span><span class="n">k_r</span><span class="p">,</span> <span class="n">k_dis</span><span class="o">=</span><span class="n">k_dis</span><span class="p">,</span>
+        <span class="n">k_vol</span><span class="o">=</span><span class="n">k_vol</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">sigma_m</span><span class="o">=</span><span class="n">sigma_m</span><span class="p">,</span> <span class="n">sigma_t90</span><span class="o">=</span><span class="n">sigma_t</span><span class="p">,</span>
+        <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span>
+        <span class="n">details</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;f_md&quot;</span><span class="p">:</span> <span class="n">f_md</span><span class="p">,</span> <span class="s2">&quot;k_h&quot;</span><span class="p">:</span> <span class="n">k_h</span><span class="p">,</span> <span class="s2">&quot;f_vd&quot;</span><span class="p">:</span> <span class="n">timber</span><span class="o">.</span><span class="n">fvd</span><span class="p">,</span>
+                 <span class="s2">&quot;f_t90d&quot;</span><span class="p">:</span> <span class="n">timber</span><span class="o">.</span><span class="n">ft90d</span><span class="p">,</span> <span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="n">inp</span><span class="o">.</span><span class="n">kind</span><span class="p">,</span>
+                 <span class="s2">&quot;straightening&quot;</span><span class="p">:</span> <span class="n">inp</span><span class="o">.</span><span class="n">straightening</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">trace</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_trace_apex</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">timber</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">s0</span><span class="p">,</span> <span class="n">kcr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec5.uls.special_beams.check_tapered_edge" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">check_tapered_edge</span><span class="p">(</span><span class="n">m_ed</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">tension_on_cut_edge</span><span class="p">,</span> <span class="n">timber</span><span class="p">,</span> <span class="n">service_class</span><span class="o">=</span><span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">,</span> <span class="n">load_duration</span><span class="o">=</span><span class="n">LoadDuration</span><span class="o">.</span><span class="n">MediumDuration</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Bending of a single tapered beam (EN 1995-1-1:2004 §6.4.2).</p>
+<p><code>σ_m,α,d = σ_m,0,d = 6·M_d/(b·h²)</code> with <em>h</em> the depth <strong>at the section</strong>;
+the tapered edge is checked against <code>k_m,α·f_m,d</code> (Eqs. 6.37-6.40) and the
+straight edge against <code>f_m,d</code>. <code>f_m,d</code> includes the size factor <code>k_h</code>
+of the depth, as in the cross-section check.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>trace</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>optional :class:<code>eurocodepy.calc_report.CalcReport</code> recording the
+steps; the result is identical with or without it.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec5/uls/special_beams.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_tapered_edge</span><span class="p">(</span><span class="n">m_ed</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                       <span class="n">tension_on_cut_edge</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">timber</span><span class="p">:</span> <span class="n">Timber</span><span class="p">,</span>
+                       <span class="n">service_class</span><span class="p">:</span> <span class="n">ServiceClass</span> <span class="o">=</span> <span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">,</span>
+                       <span class="n">load_duration</span><span class="p">:</span> <span class="n">LoadDuration</span> <span class="o">=</span> <span class="n">LoadDuration</span><span class="o">.</span><span class="n">MediumDuration</span><span class="p">,</span>
+                       <span class="n">trace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TaperedEdgeResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bending of a single tapered beam (EN 1995-1-1:2004 §6.4.2).</span>
+
+<span class="sd">    ``σ_m,α,d = σ_m,0,d = 6·M_d/(b·h²)`` with *h* the depth **at the section**;</span>
+<span class="sd">    the tapered edge is checked against ``k_m,α·f_m,d`` (Eqs. 6.37-6.40) and the</span>
+<span class="sd">    straight edge against ``f_m,d``. ``f_m,d`` includes the size factor ``k_h``</span>
+<span class="sd">    of the depth, as in the cross-section check.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        trace: optional :class:`eurocodepy.calc_report.CalcReport` recording the</span>
+<span class="sd">            steps; the result is identical with or without it.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">timber</span><span class="o">.</span><span class="n">design_values</span><span class="p">(</span><span class="n">service_class</span><span class="p">,</span> <span class="n">load_duration</span><span class="p">)</span>
+    <span class="n">k_h</span> <span class="o">=</span> <span class="n">timber</span><span class="o">.</span><span class="n">k_h</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">TimberForcesType</span><span class="o">.</span><span class="n">Bending</span><span class="p">)</span>
+    <span class="n">f_md</span> <span class="o">=</span> <span class="n">timber</span><span class="o">.</span><span class="n">fmd</span> <span class="o">*</span> <span class="n">k_h</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">_stress</span><span class="p">(</span><span class="n">m_ed</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+    <span class="n">k_ma</span> <span class="o">=</span> <span class="n">calc_k_m_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">f_md</span><span class="p">,</span> <span class="n">timber</span><span class="o">.</span><span class="n">fvd</span><span class="p">,</span> <span class="n">timber</span><span class="o">.</span><span class="n">ft90d</span><span class="p">,</span>
+                          <span class="n">timber</span><span class="o">.</span><span class="n">fc90d</span><span class="p">,</span> <span class="n">tension_on_cut_edge</span><span class="p">)</span>
+    <span class="n">u_cut</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">/</span> <span class="p">(</span><span class="n">k_ma</span> <span class="o">*</span> <span class="n">f_md</span><span class="p">)</span> <span class="k">if</span> <span class="n">f_md</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="n">u_grain</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">/</span> <span class="n">f_md</span> <span class="k">if</span> <span class="n">f_md</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">TaperedEdgeResult</span><span class="p">(</span>
+        <span class="n">sigma_m</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">k_m_alpha</span><span class="o">=</span><span class="n">k_ma</span><span class="p">,</span> <span class="n">f_md</span><span class="o">=</span><span class="n">f_md</span><span class="p">,</span>
+        <span class="n">util_cut</span><span class="o">=</span><span class="n">u_cut</span><span class="p">,</span> <span class="n">util_grain</span><span class="o">=</span><span class="n">u_grain</span><span class="p">,</span> <span class="n">util</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">u_cut</span><span class="p">,</span> <span class="n">u_grain</span><span class="p">),</span>
+        <span class="n">details</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">:</span> <span class="n">h</span><span class="p">,</span> <span class="s2">&quot;k_h&quot;</span><span class="p">:</span> <span class="n">k_h</span><span class="p">,</span>
+                 <span class="s2">&quot;tension_on_cut_edge&quot;</span><span class="p">:</span> <span class="n">tension_on_cut_edge</span><span class="p">,</span>
+                 <span class="s2">&quot;f_vd&quot;</span><span class="p">:</span> <span class="n">timber</span><span class="o">.</span><span class="n">fvd</span><span class="p">,</span> <span class="s2">&quot;f_t90d&quot;</span><span class="p">:</span> <span class="n">timber</span><span class="o">.</span><span class="n">ft90d</span><span class="p">,</span>
+                 <span class="s2">&quot;f_c90d&quot;</span><span class="p">:</span> <span class="n">timber</span><span class="o">.</span><span class="n">fc90d</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">trace</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_trace_tapered</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">m_ed</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">tension_on_cut_edge</span><span class="p">,</span> <span class="n">timber</span><span class="p">,</span>
+                       <span class="n">k_h</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../../..", "features": [], "search": "../../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

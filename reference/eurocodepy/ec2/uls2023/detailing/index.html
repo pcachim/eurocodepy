@@ -1,0 +1,5353 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../column/">
+      
+      
+        <link rel="next" href="../membrane_check/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>detailing - Documentation for EurocodePy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eurocodepy.ec2.uls2023.detailing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Documentation for EurocodePy" class="md-header__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation for EurocodePy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              detailing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Documentation for EurocodePy" class="md-nav__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation for EurocodePy
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EurocodePy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../how-to-guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How-to Guides
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../explanation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Background &amp; Design Philosophy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Modules
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../modules/ec2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    EC2
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            EC2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/edition-2004/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2004
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/edition-2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2023
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/shells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Membranes, slabs and shells
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec2/clauses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EN 1992-1-1:2023 clause map
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/editions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Editions and National Annexes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC5
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC7
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/ec8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EC8
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../modules/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utils
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Code Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Code Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    eurocodepy
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            eurocodepy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../_compat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    _compat
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../annex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    annex
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calc_report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    calc_report
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../dbase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    dbase
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec1
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_5" id="__nav_6_1_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            ec1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/combos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    combos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/factors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    factors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/forces%20copy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    forces copy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/forces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    forces
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/snow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    snow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/stresses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stresses
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_5_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec1/wind/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    wind
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_5_7" id="__nav_6_1_5_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            wind
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec1/wind/pressure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    pressure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec2
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6" id="__nav_6_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            ec2
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../fire/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    fire
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_1" id="__nav_6_1_6_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            fire
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fire/fire_base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fire_base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_3" id="__nav_6_1_6_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sls/crack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sls/creep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    creep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sls/shrinkage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shrinkage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../time_dependent2023/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    time_dependent2023
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_5" id="__nav_6_1_6_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/anchorage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    anchorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/beam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    beam
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/bend_axial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bend_axial
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/bend_circ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bend_circ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    column
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/membrane_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    membrane_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/punch_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/shear_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/shear_torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/shell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/shell_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/slab_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    slab_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uls/torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_6_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls2023
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_6_6" id="__nav_6_1_6_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_6_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            uls2023
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../annex_g/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    annex_g
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    column
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    detailing
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    detailing
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing" class="md-nav__link">
+    <span class="md-ellipsis">
+      detailing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.beam_max_spacings" class="md-nav__link">
+    <span class="md-ellipsis">
+      beam_max_spacings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.beam_min_stirrups" class="md-nav__link">
+    <span class="md-ellipsis">
+      beam_min_stirrups
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.beam_min_support_reinforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      beam_min_support_reinforcement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_as_min_tension" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_as_min_tension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_asw_min_s" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_asw_min_s
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_bent_up_anchorage" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_bent_up_anchorage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_k_dc" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_dc
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_m_cr_rect" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_m_cr_rect
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_m_rd_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_m_rd_min
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_phi_w_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_phi_w_max
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_rho_w_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_rho_w_min
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_shift_length" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_shift_length
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_sigma_sd_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_sigma_sd_min
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_vrd_hog" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_vrd_hog
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_vrd_int" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_vrd_int
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_vrd_w_int" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_vrd_w_int
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_max_stirrup_spacing" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_max_stirrup_spacing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_min_bars" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_min_bars
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_min_confinement_stress" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_min_confinement_stress
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_min_longitudinal" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_min_longitudinal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_min_stirrup_diameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_min_stirrup_diameter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_restraint_distance_ok" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_restraint_distance_ok
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.cracking_check_needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      cracking_check_needed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.punching_reinforcement_spacing" class="md-nav__link">
+    <span class="md-ellipsis">
+      punching_reinforcement_spacing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.slab_edge_reinforcement_length" class="md-nav__link">
+    <span class="md-ellipsis">
+      slab_edge_reinforcement_length
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.slab_max_spacings" class="md-nav__link">
+    <span class="md-ellipsis">
+      slab_max_spacings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.slab_min_depth_for_shear_reinforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      slab_min_depth_for_shear_reinforcement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.slab_min_reinforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      slab_min_reinforcement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.slab_shear_reinforcement_only_bent_up_ok" class="md-nav__link">
+    <span class="md-ellipsis">
+      slab_shear_reinforcement_only_bent_up_ok
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.torsion_stirrup_max_spacing" class="md-nav__link">
+    <span class="md-ellipsis">
+      torsion_stirrup_max_spacing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.wall_max_spacings" class="md-nav__link">
+    <span class="md-ellipsis">
+      wall_max_spacings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.wall_min_horizontal" class="md-nav__link">
+    <span class="md-ellipsis">
+      wall_min_horizontal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.wall_min_vertical" class="md-nav__link">
+    <span class="md-ellipsis">
+      wall_min_vertical
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.wall_orthogonal_links_required" class="md-nav__link">
+    <span class="md-ellipsis">
+      wall_orthogonal_links_required
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../membrane_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    membrane_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../punch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    punch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shear_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shear_torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear_torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shell_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shell_check
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../slab_design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    slab_design
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../torsion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    torsion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec3
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_7" id="__nav_6_1_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            ec3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_7_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec3/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_7_3" id="__nav_6_1_7_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/uls/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/uls/checks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    checks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/uls/cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec3/uls/member_buckling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    member_buckling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec5
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8" id="__nav_6_1_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            ec5
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/sls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    sls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_2" id="__nav_6_1_8_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            sls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/sls/deformation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    deformation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/sls/vibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    vibration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/uls/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_3" id="__nav_6_1_8_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            uls
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls/special_beams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    special_beams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_8_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec5/uls2025/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    uls2025
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_8_4" id="__nav_6_1_8_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_1_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            uls2025
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls2025/bending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bending
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls2025/cross_section/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cross_section
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls2025/fasteners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    fasteners
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls2025/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    shear
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec5/uls2025/special_beams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    special_beams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec7/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec7
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_9" id="__nav_6_1_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_9">
+            <span class="md-nav__icon md-icon"></span>
+            ec7
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/bearing_capacity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bearing_capacity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/earth_pressures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    earth_pressures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec7/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    materials
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ec8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    ec8
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_10" id="__nav_6_1_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_10">
+            <span class="md-nav__icon md-icon"></span>
+            ec8
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ec8/spectrum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    spectrum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../national_parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    national_parameters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    units
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../utils/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    utils
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_1_13" id="__nav_6_1_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_13">
+            <span class="md-nav__icon md-icon"></span>
+            utils
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/crosssection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    crosssection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/section_properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    section_properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/stress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    stress
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../copyright/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Copyright & contributing
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Copyright & contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../STYLE_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python Style Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../CODE_OF_CONDUCT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code of Conduct
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing" class="md-nav__link">
+    <span class="md-ellipsis">
+      detailing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.beam_max_spacings" class="md-nav__link">
+    <span class="md-ellipsis">
+      beam_max_spacings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.beam_min_stirrups" class="md-nav__link">
+    <span class="md-ellipsis">
+      beam_min_stirrups
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.beam_min_support_reinforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      beam_min_support_reinforcement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_as_min_tension" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_as_min_tension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_asw_min_s" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_asw_min_s
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_bent_up_anchorage" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_bent_up_anchorage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_k_dc" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_k_dc
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_m_cr_rect" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_m_cr_rect
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_m_rd_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_m_rd_min
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_phi_w_max" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_phi_w_max
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_rho_w_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_rho_w_min
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_shift_length" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_shift_length
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_sigma_sd_min" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_sigma_sd_min
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_vrd_hog" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_vrd_hog
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_vrd_int" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_vrd_int
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.calc_vrd_w_int" class="md-nav__link">
+    <span class="md-ellipsis">
+      calc_vrd_w_int
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_max_stirrup_spacing" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_max_stirrup_spacing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_min_bars" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_min_bars
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_min_confinement_stress" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_min_confinement_stress
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_min_longitudinal" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_min_longitudinal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_min_stirrup_diameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_min_stirrup_diameter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.column_restraint_distance_ok" class="md-nav__link">
+    <span class="md-ellipsis">
+      column_restraint_distance_ok
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.cracking_check_needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      cracking_check_needed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.punching_reinforcement_spacing" class="md-nav__link">
+    <span class="md-ellipsis">
+      punching_reinforcement_spacing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.slab_edge_reinforcement_length" class="md-nav__link">
+    <span class="md-ellipsis">
+      slab_edge_reinforcement_length
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.slab_max_spacings" class="md-nav__link">
+    <span class="md-ellipsis">
+      slab_max_spacings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.slab_min_depth_for_shear_reinforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      slab_min_depth_for_shear_reinforcement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.slab_min_reinforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      slab_min_reinforcement
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.slab_shear_reinforcement_only_bent_up_ok" class="md-nav__link">
+    <span class="md-ellipsis">
+      slab_shear_reinforcement_only_bent_up_ok
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.torsion_stirrup_max_spacing" class="md-nav__link">
+    <span class="md-ellipsis">
+      torsion_stirrup_max_spacing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.wall_max_spacings" class="md-nav__link">
+    <span class="md-ellipsis">
+      wall_max_spacings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.wall_min_horizontal" class="md-nav__link">
+    <span class="md-ellipsis">
+      wall_min_horizontal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.wall_min_vertical" class="md-nav__link">
+    <span class="md-ellipsis">
+      wall_min_vertical
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eurocodepy.ec2.uls2023.detailing.wall_orthogonal_links_required" class="md-nav__link">
+    <span class="md-ellipsis">
+      wall_orthogonal_links_required
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>detailing</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="eurocodepy.ec2.uls2023.detailing"></a>
+    <div class="doc doc-contents first">
+
+        <p>Detailing of members — <strong>EN 1992-1-1:2023</strong> Clause 12.</p>
+<p>Minimum reinforcement (12.2), beams (12.3, Table 12.1), slabs (12.4, Table 12.2),
+punching shear and integrity reinforcement (12.5), columns (12.6, Table 12.3)
+and walls/deep beams (12.7, Table 12.4). The tables are NDPs: the values are
+those of the Eurocode (<code>Editions.ec2["2023"].detailing</code> in the database); the
+functions that use them take <code>annex=</code> (a country code, see
+:mod:<code>eurocodepy.annex</code>) to apply the values of a National Annex.</p>
+<p>Units: lengths and areas in <strong>m</strong> / <strong>m²</strong> (bar diameters, <code>d_lower</code> and the
+<code>d</code> of <code>φw,max</code> in <strong>mm</strong> where stated), strengths in <strong>MPa</strong>, forces in
+<strong>kN</strong>, moments in <strong>kNm</strong>, <code>cot</code> of angles dimensionless, angles in degrees.</p>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.beam_max_spacings" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">beam_max_spacings</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">alpha_w</span><span class="o">=</span><span class="mf">90.0</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the maximum spacings of Table 12.1 [m] (rows 5-7).</p>
+<p><code>s_l_max = 0,75·d·(1 + cot α)</code> (stirrups), <code>s_bu_max = 0,6·d·(1 + cot α)</code>
+(bent-up bars) and <code>s_tr_max = min(0,75·d, 0,6 m)</code> (legs across the section).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">beam_max_spacings</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha_w</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">90.0</span><span class="p">,</span> <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the maximum spacings of Table 12.1 [m] (rows 5-7).</span>
+
+<span class="sd">    ``s_l_max = 0,75·d·(1 + cot α)`` (stirrups), ``s_bu_max = 0,6·d·(1 + cot α)``</span>
+<span class="sd">    (bent-up bars) and ``s_tr_max = min(0,75·d, 0,6 m)`` (legs across the section).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;beams&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="n">cot_a</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">alpha_w</span> <span class="o">==</span> <span class="mf">90.0</span> <span class="k">else</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">alpha_w</span><span class="p">))</span>  <span class="c1"># noqa: PLR2004</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;s_l_max&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_l_max&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">cot_a</span><span class="p">),</span>
+            <span class="s2">&quot;s_bu_max&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_bu_max&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">cot_a</span><span class="p">),</span>
+            <span class="s2">&quot;s_tr_max&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_tr_max&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_tr_max_limit&quot;</span><span class="p">])}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.beam_min_stirrups" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">beam_min_stirrups</span><span class="p">(</span><span class="n">rho_w_req</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">torsion</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the minimum ratio of stirrups <code>ρw,stir</code> (Table 12.1, rows 8-9).</p>
+<p><code>0,5·ρw,req</code> for shear (unforeseen effects, e.g. compatibility torsion);
+<code>0,2·ρw,req</code> for torsion in the form of closed stirrups.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">beam_min_stirrups</span><span class="p">(</span><span class="n">rho_w_req</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">torsion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                      <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum ratio of stirrups ``ρw,stir`` (Table 12.1, rows 8-9).</span>
+
+<span class="sd">    ``0,5·ρw,req`` for shear (unforeseen effects, e.g. compatibility torsion);</span>
+<span class="sd">    ``0,2·ρw,req`` for torsion in the form of closed stirrups.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;beams&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;rho_w_stir_torsion&quot;</span> <span class="k">if</span> <span class="n">torsion</span> <span class="k">else</span> <span class="s2">&quot;rho_w_stir_shear&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">rho_w_req</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.beam_min_support_reinforcement" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">beam_min_support_reinforcement</span><span class="p">(</span><span class="n">a_s_req_span</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the minimum bottom reinforcement at supports <code>0,25·As,req,span</code> (Table 12.1, rows 3-4).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">beam_min_support_reinforcement</span><span class="p">(</span><span class="n">a_s_req_span</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum bottom reinforcement at supports ``0,25·As,req,span`` (Table 12.1, rows 3-4).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;beams&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)[</span><span class="s2">&quot;support_bottom&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">a_s_req_span</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_as_min_tension" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_as_min_tension</span><span class="p">(</span><span class="n">a_c</span><span class="p">,</span> <span class="n">f_ctm</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>As,min = Ac·fctm/fyk</code> of a member in pure tension [m²], Eq. (12.2).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_as_min_tension</span><span class="p">(</span><span class="n">a_c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_ctm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``As,min = Ac·fctm/fyk`` of a member in pure tension [m²], Eq. (12.2).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a_c</span> <span class="o">*</span> <span class="n">f_ctm</span> <span class="o">/</span> <span class="n">f_yk</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_asw_min_s" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_asw_min_s</span><span class="p">(</span><span class="n">f_ck</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">,</span> <span class="n">b_w</span><span class="p">,</span> <span class="n">alpha_w</span><span class="o">=</span><span class="mf">90.0</span><span class="p">,</span> <span class="n">ductility</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the minimum shear reinforcement <code>Asw,min/s</code> [m²/m], Eq. (12.4).</p>
+<p><code>ρw,min·bw·sin α</code> with <code>bw</code> [m] and <code>alpha_w</code> the angle of the shear
+reinforcement [°].</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_asw_min_s</span><span class="p">(</span><span class="n">f_ck</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b_w</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha_w</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">90.0</span><span class="p">,</span>
+                   <span class="n">ductility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum shear reinforcement ``Asw,min/s`` [m²/m], Eq. (12.4).</span>
+
+<span class="sd">    ``ρw,min·bw·sin α`` with ``bw`` [m] and ``alpha_w`` the angle of the shear</span>
+<span class="sd">    reinforcement [°].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">calc_rho_w_min</span><span class="p">(</span><span class="n">f_ck</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">,</span> <span class="n">ductility</span><span class="p">)</span> <span class="o">*</span> <span class="n">b_w</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">alpha_w</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_bent_up_anchorage" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_bent_up_anchorage</span><span class="p">(</span><span class="n">l_bd</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tension_zone</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the anchorage length of a bent-up bar [m], 12.3.2(4): 1,3·lbd (tension) / 0,7·lbd.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_bent_up_anchorage</span><span class="p">(</span><span class="n">l_bd</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tension_zone</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the anchorage length of a bent-up bar [m], 12.3.2(4): 1,3·lbd (tension) / 0,7·lbd.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mf">1.3</span> <span class="k">if</span> <span class="n">tension_zone</span> <span class="k">else</span> <span class="mf">0.7</span><span class="p">)</span> <span class="o">*</span> <span class="n">l_bd</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_k_dc" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_k_dc</span><span class="p">(</span><span class="n">ductility</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>kdc</code> of Eq. (12.3): 1,3 (class A), 1,1 (B), 1,0 (C).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_k_dc</span><span class="p">(</span><span class="n">ductility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``kdc`` of Eq. (12.3): 1,3 (class A), 1,1 (B), 1,0 (C).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_K_DC</span><span class="p">[</span><span class="n">_ductility</span><span class="p">(</span><span class="n">ductility</span><span class="p">)]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_m_cr_rect" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_m_cr_rect</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">f_ctm</span><span class="p">,</span> <span class="n">n_ed</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the cracking moment <code>Mcr(NEd)</code> of a rectangular section [kNm], 12.2(2)a).</p>
+<p>Linear stresses, <code>fctm</code> at the extreme fibre, steel neglected:
+<code>(fctm − NEd/A)·b·h²/6</code> (<code>n_ed</code> [kN] positive in tension).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_m_cr_rect</span><span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_ctm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n_ed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the cracking moment ``Mcr(NEd)`` of a rectangular section [kNm], 12.2(2)a).</span>
+
+<span class="sd">    Linear stresses, ``fctm`` at the extreme fibre, steel neglected:</span>
+<span class="sd">    ``(fctm − NEd/A)·b·h²/6`` (``n_ed`` [kN] positive in tension).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">f_ctm</span> <span class="o">-</span> <span class="n">n_ed</span> <span class="o">/</span> <span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span> <span class="o">*</span> <span class="n">h</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="mf">1000.0</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_m_rd_min" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_m_rd_min</span><span class="p">(</span><span class="n">m_ed</span><span class="p">,</span> <span class="n">ductility</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the resistance <code>MRd,min = kdc·MEd</code> [kNm] that avoids sudden collapse, Eq. (12.3).</p>
+<p>For <code>MEd &lt; Mcr(NEd)</code> in statically determinate members; the area need not
+exceed that of Eq. (12.1).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_m_rd_min</span><span class="p">(</span><span class="n">m_ed</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ductility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the resistance ``MRd,min = kdc·MEd`` [kNm] that avoids sudden collapse, Eq. (12.3).</span>
+
+<span class="sd">    For ``MEd &lt; Mcr(NEd)`` in statically determinate members; the area need not</span>
+<span class="sd">    exceed that of Eq. (12.1).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">calc_k_dc</span><span class="p">(</span><span class="n">ductility</span><span class="p">)</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">m_ed</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_phi_w_max" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_phi_w_max</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;closed&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the maximum bar diameter of a punching-shear leg [mm], Eqs. (12.7)-(12.9).</p>
+<p><code>d</code> in mm. <code>kind</code>: <code>"single_leg"</code> (single-leg links, open stirrups, 10),
+<code>"closed"</code> (closed stirrups or similar anchorage, 11) or <code>"bent_up"</code>
+(bent-up bars and headed bars, 16): <code>k·√(d/200)</code>.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_phi_w_max</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;closed&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the maximum bar diameter of a punching-shear leg [mm], Eqs. (12.7)-(12.9).</span>
+
+<span class="sd">    ``d`` in mm. ``kind``: ``&quot;single_leg&quot;`` (single-leg links, open stirrups, 10),</span>
+<span class="sd">    ``&quot;closed&quot;`` (closed stirrups or similar anchorage, 11) or ``&quot;bent_up&quot;``</span>
+<span class="sd">    (bent-up bars and headed bars, 16): ``k·√(d/200)``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_PHI_W_MAX</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;kind must be one of </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">_PHI_W_MAX</span><span class="p">)</span><span class="si">}</span><span class="s2">, got &#39;</span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_PHI_W_MAX</span><span class="p">[</span><span class="n">kind</span><span class="p">]</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d</span> <span class="o">/</span> <span class="mf">200.0</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_rho_w_min" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_rho_w_min</span><span class="p">(</span><span class="n">f_ck</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">,</span> <span class="n">ductility</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>ρw,min</code> of Eq. (12.4): <code>0,08·√fck/fyk</code>, −10 % for class B, −20 % for C.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_rho_w_min</span><span class="p">(</span><span class="n">f_ck</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ductility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``ρw,min`` of Eq. (12.4): ``0,08·√fck/fyk``, −10 % for class B, −20 % for C.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">0.08</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">f_ck</span><span class="p">)</span> <span class="o">/</span> <span class="n">f_yk</span> <span class="o">*</span> <span class="n">_DUCTILITY_RHO_W</span><span class="p">[</span><span class="n">_ductility</span><span class="p">(</span><span class="n">ductility</span><span class="p">)]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_shift_length" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_shift_length</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">cot</span><span class="p">,</span> <span class="n">alpha_w</span><span class="o">=</span><span class="mf">90.0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">shear_reinforcement</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the shift <code>al</code> of the moment curve [m], Eqs. (12.5)/(12.6).</p>
+<p><code>z·(cot θ − cot α)/2</code> with shear reinforcement; <code>d</code> (<code>d</code> must be given)
+without it.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_shift_length</span><span class="p">(</span><span class="n">z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cot</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha_w</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">90.0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+                      <span class="n">shear_reinforcement</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the shift ``al`` of the moment curve [m], Eqs. (12.5)/(12.6).</span>
+
+<span class="sd">    ``z·(cot θ − cot α)/2`` with shear reinforcement; ``d`` (``d`` must be given)</span>
+<span class="sd">    without it.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">shear_reinforcement</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;d is needed without shear reinforcement (Eq. 12.6)&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span>
+    <span class="n">cot_a</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">alpha_w</span> <span class="o">==</span> <span class="mf">90.0</span> <span class="k">else</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">alpha_w</span><span class="p">))</span>  <span class="c1"># noqa: PLR2004</span>
+    <span class="k">return</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="n">cot</span> <span class="o">-</span> <span class="n">cot_a</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_sigma_sd_min" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_sigma_sd_min</span><span class="p">(</span><span class="n">f_yd</span><span class="p">,</span> <span class="n">a_s_min</span><span class="p">,</span> <span class="n">a_s</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the design stress <code>σsd = fyd·As,min/As</code> [MPa] for anchoring the minimum reinforcement, 12.2(6).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">94</span>
+<span class="normal">95</span>
+<span class="normal">96</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_sigma_sd_min</span><span class="p">(</span><span class="n">f_yd</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a_s_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a_s</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the design stress ``σsd = fyd·As,min/As`` [MPa] for anchoring the minimum reinforcement, 12.2(6).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">f_yd</span> <span class="o">*</span> <span class="n">a_s_min</span> <span class="o">/</span> <span class="n">a_s</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_vrd_hog" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_vrd_hog</span><span class="p">(</span><span class="n">n_hog</span><span class="p">,</span> <span class="n">f_ck</span><span class="p">,</span> <span class="n">gamma_c</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the hogging-bar contribution <code>VRd,hog</code> [kN], Eq. (12.12).</p>
+<p><code>nhog·√fck/γC·φ·bef,hog</code>, <code>bef,hog = min(s − φ, 6φ, 4c)</code>; <code>γC</code> of the
+accidental situation; <code>phi</code>, <code>s</code> and <code>c</code> in m.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_vrd_hog</span><span class="p">(</span><span class="n">n_hog</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">f_ck</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma_c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                 <span class="n">c</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the hogging-bar contribution ``VRd,hog`` [kN], Eq. (12.12).</span>
+
+<span class="sd">    ``nhog·√fck/γC·φ·bef,hog``, ``bef,hog = min(s − φ, 6φ, 4c)``; ``γC`` of the</span>
+<span class="sd">    accidental situation; ``phi``, ``s`` and ``c`` in m.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b_ef</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">phi</span><span class="p">,</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">phi</span><span class="p">,</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">n_hog</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">f_ck</span><span class="p">)</span> <span class="o">/</span> <span class="n">gamma_c</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">b_ef</span> <span class="o">*</span> <span class="mf">1000.0</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_vrd_int" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_vrd_int</span><span class="p">(</span><span class="n">a_s_int</span><span class="p">,</span> <span class="n">f_yd</span><span class="p">,</span> <span class="n">ductility</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the integrity-reinforcement resistance <code>VRd,int</code> [kN], Eq. (12.10).</p>
+<p><code>ΣAs,int·fyd·kint</code> with <code>kint</code> 0,37 (class B) or 0,49 (class C); <code>a_s_int</code> in m².</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_vrd_int</span><span class="p">(</span><span class="n">a_s_int</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_yd</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ductility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the integrity-reinforcement resistance ``VRd,int`` [kN], Eq. (12.10).</span>
+
+<span class="sd">    ``ΣAs,int·fyd·kint`` with ``kint`` 0,37 (class B) or 0,49 (class C); ``a_s_int`` in m².</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">_ductility</span><span class="p">(</span><span class="n">ductility</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;integrity bars must be of ductility class B or C (12.5.2(1))&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a_s_int</span> <span class="o">*</span> <span class="n">f_yd</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.37</span> <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span> <span class="k">else</span> <span class="mf">0.49</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.calc_vrd_w_int" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">calc_vrd_w_int</span><span class="p">(</span><span class="n">rho_w</span><span class="p">,</span> <span class="n">f_ywd</span><span class="p">,</span> <span class="n">b_05</span><span class="p">,</span> <span class="n">d_v</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>VRd,w,int = ρw·fywd·b0,5·dv</code> [kN], Eq. (12.11).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">calc_vrd_w_int</span><span class="p">(</span><span class="n">rho_w</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_ywd</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b_05</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">d_v</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``VRd,w,int = ρw·fywd·b0,5·dv`` [kN], Eq. (12.11).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">rho_w</span> <span class="o">*</span> <span class="n">f_ywd</span> <span class="o">*</span> <span class="n">b_05</span> <span class="o">*</span> <span class="n">d_v</span> <span class="o">*</span> <span class="mf">1000.0</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.column_max_stirrup_spacing" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">column_max_stirrup_spacing</span><span class="p">(</span><span class="n">phi_l_max</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">bars_in_resistance</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">prestressed_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the maximum spacing of transverse reinforcement [m], Table 12.3 row 3.</p>
+<p><code>phi_l_max</code> [mm] is the largest longitudinal bar diameter. <code>intermediate</code>:
+<code>min(20·φl,max, h, b, 0,3 m)</code>, or <code>min(h, b, 0,4 m)</code> when the bars are not
+accounted for in the resistance; <code>end_regions</code> and <code>laps</code> <code>0,6·s_max,col</code>
+(end regions over a length <code>max(h, b)</code>; laps where φl ≥ 14 mm). With all
+bars prestressed <code>0,3 m</code> becomes <code>min(h, b, 0,3 m)</code> only.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">column_max_stirrup_spacing</span><span class="p">(</span><span class="n">phi_l_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+                               <span class="n">bars_in_resistance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                               <span class="n">prestressed_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                               <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the maximum spacing of transverse reinforcement [m], Table 12.3 row 3.</span>
+
+<span class="sd">    ``phi_l_max`` [mm] is the largest longitudinal bar diameter. ``intermediate``:</span>
+<span class="sd">    ``min(20·φl,max, h, b, 0,3 m)``, or ``min(h, b, 0,4 m)`` when the bars are not</span>
+<span class="sd">    accounted for in the resistance; ``end_regions`` and ``laps`` ``0,6·s_max,col``</span>
+<span class="sd">    (end regions over a length ``max(h, b)``; laps where φl ≥ 14 mm). With all</span>
+<span class="sd">    bars prestressed ``0,3 m`` becomes ``min(h, b, 0,3 m)`` only.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">bars_in_resistance</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_phi&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">phi_l_max</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_limit&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">prestressed_only</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_limit&quot;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_limit_unused&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;intermediate&quot;</span><span class="p">:</span> <span class="n">s</span><span class="p">,</span> <span class="s2">&quot;end_regions&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;end_region_factor&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span>
+            <span class="s2">&quot;end_region_length&quot;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="s2">&quot;laps&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;lap_factor&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.column_min_bars" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">column_min_bars</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="s1">&#39;polygonal&#39;</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the minimum number of longitudinal bars (Table 12.3 row 2).</p>
+<p><code>polygonal</code>: one at each corner, spacing ≤ 0,4 m; <code>circular</code>: 6, evenly
+distributed, spacing ≤ 0,4 m.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">column_min_bars</span><span class="p">(</span><span class="n">shape</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;polygonal&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum number of longitudinal bars (Table 12.3 row 2).</span>
+
+<span class="sd">    ``polygonal``: one at each corner, spacing ≤ 0,4 m; ``circular``: 6, evenly</span>
+<span class="sd">    distributed, spacing ≤ 0,4 m.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">shape</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;polygonal&quot;</span><span class="p">,</span> <span class="s2">&quot;circular&quot;</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;shape must be &#39;polygonal&#39; or &#39;circular&#39;&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;min_bars&quot;</span><span class="p">:</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">shape</span> <span class="o">==</span> <span class="s2">&quot;polygonal&quot;</span> <span class="k">else</span> <span class="n">_EVEN_BARS_CIRCULAR</span><span class="p">,</span>
+            <span class="s2">&quot;one_per_corner&quot;</span><span class="p">:</span> <span class="n">shape</span> <span class="o">==</span> <span class="s2">&quot;polygonal&quot;</span><span class="p">,</span> <span class="s2">&quot;max_spacing&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.column_min_confinement_stress" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">column_min_confinement_stress</span><span class="p">(</span><span class="n">f_cd</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the minimum confinement <code>σc2d ≥ k·fcd</code> [MPa] of columns with fck &gt; 50 MPa, Table 12.3 note d.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">column_min_confinement_stress</span><span class="p">(</span><span class="n">f_cd</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                  <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum confinement ``σc2d ≥ k·fcd`` [MPa] of columns with fck &gt; 50 MPa, Table 12.3 note d.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)[</span><span class="s2">&quot;k_confinement&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">f_cd</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.column_min_longitudinal" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">column_min_longitudinal</span><span class="p">(</span><span class="n">n_ed</span><span class="p">,</span> <span class="n">f_yd</span><span class="p">,</span> <span class="n">a_c</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">all_prestressed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>As,min = max(0,1·NEd/fyd, 0,002·Ac)</code> [m²], Table 12.3 row 1.</p>
+<p><code>n_ed</code> [kN] compression positive here. The <code>0,1·NEd/fyd</code> limit is ignored
+when all the longitudinal reinforcement is prestressed.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">column_min_longitudinal</span><span class="p">(</span><span class="n">n_ed</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_yd</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a_c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+                            <span class="n">all_prestressed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                            <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``As,min = max(0,1·NEd/fyd, 0,002·Ac)`` [m²], Table 12.3 row 1.</span>
+
+<span class="sd">    ``n_ed`` [kN] compression positive here. The ``0,1·NEd/fyd`` limit is ignored</span>
+<span class="sd">    when all the longitudinal reinforcement is prestressed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="n">a_n</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">all_prestressed</span> <span class="k">else</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;as_min_n&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_ed</span> <span class="o">/</span> <span class="n">f_yd</span> <span class="o">/</span> <span class="mf">1000.0</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">a_n</span><span class="p">,</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;as_min_ac&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">a_c</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.column_min_stirrup_diameter" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">column_min_stirrup_diameter</span><span class="p">(</span><span class="n">phi_l_max</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the minimum diameter of transverse reinforcement <code>0,25·φl,max</code> [mm], Table 12.3 row 4.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">column_min_stirrup_diameter</span><span class="p">(</span><span class="n">phi_l_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum diameter of transverse reinforcement ``0,25·φl,max`` [mm], Table 12.3 row 4.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)[</span><span class="s2">&quot;stirrup_phi&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">phi_l_max</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.column_restraint_distance_ok" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">column_restraint_distance_ok</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">strain_permille</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>True</code> if a bar in the compression zone is within 150 mm of a restrained bar (12.6(3)).</p>
+<p>Bars with compressive strain ≤ 2 ‰ need no check; <code>distance</code> in m.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">column_restraint_distance_ok</span><span class="p">(</span><span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">strain_permille</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``True`` if a bar in the compression zone is within 150 mm of a restrained bar (12.6(3)).</span>
+
+<span class="sd">    Bars with compressive strain ≤ 2 ‰ need no check; ``distance`` in m.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">strain_permille</span> <span class="o">&lt;=</span> <span class="mf">2.0</span> <span class="ow">or</span> <span class="n">distance</span> <span class="o">&lt;=</span> <span class="mf">0.15</span>  <span class="c1"># noqa: PLR2004</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.cracking_check_needed" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">cracking_check_needed</span><span class="p">(</span><span class="n">n_ed_min</span><span class="p">,</span> <span class="n">a_c</span><span class="p">,</span> <span class="n">f_cd</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>True</code> if Eq. (12.1) applies: compression <code>|NEd,min| &lt; 0,5·Ac·fcd</code>.</p>
+<p><code>n_ed_min</code> [kN] is positive in tension; compression is negative.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cracking_check_needed</span><span class="p">(</span><span class="n">n_ed_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a_c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_cd</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``True`` if Eq. (12.1) applies: compression ``|NEd,min| &lt; 0,5·Ac·fcd``.</span>
+
+<span class="sd">    ``n_ed_min`` [kN] is positive in tension; compression is negative.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">n_ed_min</span> <span class="o">&lt;</span> <span class="n">_AXIAL_LIMIT</span> <span class="o">*</span> <span class="n">a_c</span> <span class="o">*</span> <span class="n">f_cd</span> <span class="o">*</span> <span class="mf">1000.0</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.punching_reinforcement_spacing" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">punching_reinforcement_spacing</span><span class="p">(</span><span class="n">d_v</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">column_base</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the spacing limits of punching shear reinforcement [m], 12.5.1(2) and Figure 12.7.</p>
+<p><code>tangential_max</code> <code>1,5·dv</code>; <code>tangential_first_perimeter_max</code> (within
+<code>2·dv</code> of the column edge) <code>0,75·dv</code> for flat slabs or <code>0,5·dv</code> for
+column bases; <code>radial_max</code> the same as that first value; first
+perimeter at <code>0,3-0,5·dv</code> (flat slabs) or <code>0,2-0,3·dv</code> (column bases)
+from the column face (Figure 12.7 a, b, stirrups/studs).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">punching_reinforcement_spacing</span><span class="p">(</span><span class="n">d_v</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">column_base</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the spacing limits of punching shear reinforcement [m], 12.5.1(2) and Figure 12.7.</span>
+
+<span class="sd">    ``tangential_max`` ``1,5·dv``; ``tangential_first_perimeter_max`` (within</span>
+<span class="sd">    ``2·dv`` of the column edge) ``0,75·dv`` for flat slabs or ``0,5·dv`` for</span>
+<span class="sd">    column bases; ``radial_max`` the same as that first value; first</span>
+<span class="sd">    perimeter at ``0,3-0,5·dv`` (flat slabs) or ``0,2-0,3·dv`` (column bases)</span>
+<span class="sd">    from the column face (Figure 12.7 a, b, stirrups/studs).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="k">if</span> <span class="n">column_base</span> <span class="k">else</span> <span class="mf">0.75</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span> <span class="k">if</span> <span class="n">column_base</span> <span class="k">else</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;tangential_max&quot;</span><span class="p">:</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">d_v</span><span class="p">,</span> <span class="s2">&quot;tangential_first_perimeter_max&quot;</span><span class="p">:</span> <span class="n">f</span> <span class="o">*</span> <span class="n">d_v</span><span class="p">,</span>
+            <span class="s2">&quot;radial_max&quot;</span><span class="p">:</span> <span class="n">f</span> <span class="o">*</span> <span class="n">d_v</span><span class="p">,</span>
+            <span class="s2">&quot;first_perimeter_min&quot;</span><span class="p">:</span> <span class="n">first</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">d_v</span><span class="p">,</span> <span class="s2">&quot;first_perimeter_max&quot;</span><span class="p">:</span> <span class="n">first</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">d_v</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.slab_edge_reinforcement_length" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">slab_edge_reinforcement_length</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">l_bd</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the length of the edge reinforcement <code>≥ max(2·h, lbd)</code> [m], Figure 12.4.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">slab_edge_reinforcement_length</span><span class="p">(</span><span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">l_bd</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the length of the edge reinforcement ``≥ max(2·h, lbd)`` [m], Figure 12.4.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">h</span><span class="p">,</span> <span class="n">l_bd</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.slab_max_spacings" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">slab_max_spacings</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">alpha_w</span><span class="o">=</span><span class="mf">90.0</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the maximum spacings of Table 12.2 [m].</p>
+<p><code>s_slab_max = min(3·h, 0,4 m)</code> (bars in tension), <code>s_l_max = 0,75·d·(1 + cot α)</code>
+(stirrups), <code>s_bu_max = d</code> (bent-up bars), <code>s_tr_max = 1,5·d</code> (shear legs).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">slab_max_spacings</span><span class="p">(</span><span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">alpha_w</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">90.0</span><span class="p">,</span>
+                      <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the maximum spacings of Table 12.2 [m].</span>
+
+<span class="sd">    ``s_slab_max = min(3·h, 0,4 m)`` (bars in tension), ``s_l_max = 0,75·d·(1 + cot α)``</span>
+<span class="sd">    (stirrups), ``s_bu_max = d`` (bent-up bars), ``s_tr_max = 1,5·d`` (shear legs).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;slabs&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="n">cot_a</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">alpha_w</span> <span class="o">==</span> <span class="mf">90.0</span> <span class="k">else</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">alpha_w</span><span class="p">))</span>  <span class="c1"># noqa: PLR2004</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;s_slab_max&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_slab_max_h&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">,</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_slab_max_limit&quot;</span><span class="p">]),</span>
+            <span class="s2">&quot;s_l_max&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_l_max&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">cot_a</span><span class="p">),</span>
+            <span class="s2">&quot;s_bu_max&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_bu_max&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;s_tr_max&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_tr_max&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.slab_min_depth_for_shear_reinforcement" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">slab_min_depth_for_shear_reinforcement</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">bent_up</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the minimum slab depth with shear reinforcement [m], 12.4.2(2): 0,2 (stirrups, headed bars) or 0,16 (bent-up).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">slab_min_depth_for_shear_reinforcement</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">bent_up</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum slab depth with shear reinforcement [m], 12.4.2(2): 0,2 (stirrups, headed bars) or 0,16 (bent-up).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">0.16</span> <span class="k">if</span> <span class="n">bent_up</span> <span class="k">else</span> <span class="mf">0.2</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.slab_min_reinforcement" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">slab_min_reinforcement</span><span class="p">(</span><span class="n">a_s_req_span</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the minimum areas relative to <code>As,req,span</code> (Table 12.2, rows 3-6).</p>
+<p><code>secondary</code> 0,2·As,req,span, <code>inner_support</code>/<code>end_support_bottom</code>/
+<code>end_support_top</code> 0,25·As,req,span (the top one not less than <code>As,min</code> of 12.2(2)).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">slab_min_reinforcement</span><span class="p">(</span><span class="n">a_s_req_span</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the minimum areas relative to ``As,req,span`` (Table 12.2, rows 3-6).</span>
+
+<span class="sd">    ``secondary`` 0,2·As,req,span, ``inner_support``/``end_support_bottom``/</span>
+<span class="sd">    ``end_support_top`` 0,25·As,req,span (the top one not less than ``As,min`` of 12.2(2)).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;slabs&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">a_s_req_span</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span>
+            <span class="p">(</span><span class="s2">&quot;secondary&quot;</span><span class="p">,</span> <span class="s2">&quot;inner_support&quot;</span><span class="p">,</span> <span class="s2">&quot;end_support_bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;end_support_top&quot;</span><span class="p">)}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.slab_shear_reinforcement_only_bent_up_ok" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">slab_shear_reinforcement_only_bent_up_ok</span><span class="p">(</span><span class="n">tau_ed</span><span class="p">,</span> <span class="n">f_cd</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">90.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>True</code> if the shear reinforcement may be only bent-up bars or assemblies, 12.4.2(5).</p>
+<p><code>τEd ≤ 0,08·fcd</code> (vertical) and <code>≤ 0,16·fcd</code> (45°), linear in between.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">slab_shear_reinforcement_only_bent_up_ok</span><span class="p">(</span><span class="n">tau_ed</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_cd</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                                             <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">90.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``True`` if the shear reinforcement may be only bent-up bars or assemblies, 12.4.2(5).</span>
+
+<span class="sd">    ``τEd ≤ 0,08·fcd`` (vertical) and ``≤ 0,16·fcd`` (45°), linear in between.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="mf">45.0</span><span class="p">),</span> <span class="mf">90.0</span><span class="p">)</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="mf">0.16</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.08</span> <span class="o">-</span> <span class="mf">0.16</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="mf">45.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">45.0</span>
+    <span class="k">return</span> <span class="n">tau_ed</span> <span class="o">&lt;=</span> <span class="n">limit</span> <span class="o">*</span> <span class="n">f_cd</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.torsion_stirrup_max_spacing" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">torsion_stirrup_max_spacing</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>s_stir,max = u/8 ≤ min(b, h)</code> [m] of torsion stirrups (Table 12.1, row 10).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">torsion_stirrup_max_spacing</span><span class="p">(</span><span class="n">u</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                                <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``s_stir,max = u/8 ≤ min(b, h)`` [m] of torsion stirrups (Table 12.1, row 10).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">u</span> <span class="o">/</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;beams&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)[</span><span class="s2">&quot;s_stir_max_u_div&quot;</span><span class="p">],</span> <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.wall_max_spacings" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">wall_max_spacings</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return the maximum spacings [m] of Table 12.4: vertical <code>min(3·h, 0,4 m)</code>, horizontal <code>0,4 m</code>.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">wall_max_spacings</span><span class="p">(</span><span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the maximum spacings [m] of Table 12.4: vertical ``min(3·h, 0,4 m)``, horizontal ``0,4 m``.&quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;walls&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;vertical&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_v_h&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">,</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_v_limit&quot;</span><span class="p">]),</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">:</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;s_h_limit&quot;</span><span class="p">]}</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.wall_min_horizontal" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">wall_min_horizontal</span><span class="p">(</span><span class="n">a_c</span><span class="p">,</span> <span class="n">f_ctm</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">,</span> <span class="n">a_s_v</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">in_plane_loaded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>As,min,h</code> of each face [m²], Table 12.4 row 2: <code>0,25·Ac·fctm/fyk</code> or <code>0,25·As,v</code>.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">wall_min_horizontal</span><span class="p">(</span><span class="n">a_c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_ctm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a_s_v</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+                        <span class="n">in_plane_loaded</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``As,min,h`` of each face [m²], Table 12.4 row 2: ``0,25·Ac·fctm/fyk`` or ``0,25·As,v``.&quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;walls&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="s2">&quot;as_h_in_plane&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">a_c</span> <span class="o">*</span> <span class="n">f_ctm</span> <span class="o">/</span> <span class="n">f_yk</span> <span class="k">if</span> <span class="n">in_plane_loaded</span>
+            <span class="k">else</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;as_h_out_of_plane&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">a_s_v</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.wall_min_vertical" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">wall_min_vertical</span><span class="p">(</span><span class="n">a_c</span><span class="p">,</span> <span class="n">f_ctm</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">in_plane_loaded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>As,min,v</code> of each surface [m²], Table 12.4 row 1.</p>
+<p><code>0,25·Ac·fctm/fyk</code> where the member carries in-plane normal and shear
+stresses (designed by 8.5 or Annex G); <code>0,001·Ac</code> when loaded only by
+vertical in-plane compression and out-of-plane bending.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">wall_min_vertical</span><span class="p">(</span><span class="n">a_c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_ctm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">f_yk</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+                      <span class="n">in_plane_loaded</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``As,min,v`` of each surface [m²], Table 12.4 row 1.</span>
+
+<span class="sd">    ``0,25·Ac·fctm/fyk`` where the member carries in-plane normal and shear</span>
+<span class="sd">    stresses (designed by 8.5 or Annex G); ``0,001·Ac`` when loaded only by</span>
+<span class="sd">    vertical in-plane compression and out-of-plane bending.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;walls&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="s2">&quot;as_v_in_plane&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">a_c</span> <span class="o">*</span> <span class="n">f_ctm</span> <span class="o">/</span> <span class="n">f_yk</span> <span class="k">if</span> <span class="n">in_plane_loaded</span>
+            <span class="k">else</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;as_v_out_of_plane&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">a_c</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="eurocodepy.ec2.uls2023.detailing.wall_orthogonal_links_required" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">wall_orthogonal_links_required</span><span class="p">(</span><span class="n">a_s_v</span><span class="p">,</span> <span class="n">a_c</span><span class="p">,</span> <span class="n">annex</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>True</code> when 12.7(3) / Table 12.4 row 5 asks for orthogonal links (<code>As,v &gt; 0,02·Ac</code>, in compression).</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>eurocodepy/ec2/uls2023/detailing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">wall_orthogonal_links_required</span><span class="p">(</span><span class="n">a_s_v</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a_c</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                                   <span class="n">annex</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``True`` when 12.7(3) / Table 12.4 row 5 asks for orthogonal links (``As,v &gt; 0,02·Ac``, in compression).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a_s_v</span> <span class="o">&gt;</span> <span class="n">_ndp</span><span class="p">(</span><span class="s2">&quot;walls&quot;</span><span class="p">,</span> <span class="n">annex</span><span class="p">)[</span><span class="s2">&quot;orthogonal_as_ratio&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">a_c</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../../..", "features": [], "search": "../../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
