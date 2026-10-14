@@ -2,6 +2,8 @@ site_name: Documentation for EurocodePy
 
 theme:
   name: "material"
+  logo: assets/logo-mark.svg
+  favicon: assets/logo-mark.svg
 
 plugins:
   - search  

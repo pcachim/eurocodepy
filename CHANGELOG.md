@@ -3,6 +3,11 @@
 Versions up to 2026.7.28 are MIT-licensed; from 2027.0.0 on the package is licensed under the
 GNU Lesser General Public License v3.0 or later.
 
+## Unreleased
+### Added
+- Logo (`mkdocs/docs/assets/logo-mark.svg`, `logo.svg`): the symbol is the logo and favicon of the documentation site, and the logo with
+  the name is at the top of the README (not on the site home page, which already has it in the header).
+
 ## 2027.0.11 — 2026-10-14
 ### Added
 - `UnitSystem.density` and `UnitSystem.power`; `convert_to` / `convert_from` support `TEMPERATURE` (differences), `DENSITY`, `WORK`,

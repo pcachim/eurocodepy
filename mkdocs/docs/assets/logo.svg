@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 128" role="img">
+  <title>eurocodepy</title>
+  <desc>A steel I-section and a reinforced concrete section in front of a design response spectrum, with the name eurocodepy.</desc>
+  <rect x="4" y="4" width="120" height="120" rx="26" fill="#1b4f72"/>
+  <path d="M12 72 L32 26 H54 C60 62 80 88 112 96" fill="none" stroke="#f4b942" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M22 37 H60 V45 H46 V83 H60 V91 H22 V83 H36 V45 H22 Z" fill="#ffffff" stroke="#1b4f72" stroke-width="2" stroke-linejoin="round"/>
+  <rect x="68" y="37" width="38" height="54" rx="2" fill="#cfe2f3" stroke="#1b4f72" stroke-width="2"/>
+  <circle cx="77" cy="83" r="4" fill="#1b4f72"/>
+  <circle cx="87" cy="83" r="4" fill="#1b4f72"/>
+  <circle cx="97" cy="83" r="4" fill="#1b4f72"/>
+  <text x="146" y="82" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="56" font-weight="600" fill="#2e86c1">eurocode<tspan fill="#d68910">py</tspan></text>
+</svg>

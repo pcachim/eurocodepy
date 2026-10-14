@@ -1,3 +1,9 @@
+<!-- docs:skip-start -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/pcachim/eurocodepy/master/mkdocs/docs/assets/logo.svg" alt="eurocodepy" width="360">
+</p>
+
+<!-- docs:skip-end -->
 # eurocodepy
 
 [![PyPI version](https://img.shields.io/pypi/v/eurocodepy)](https://pypi.org/project/eurocodepy/)
