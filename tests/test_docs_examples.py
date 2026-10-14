@@ -121,6 +121,10 @@ def test_home_page_is_built_from_the_readme():
     assert "](https://python.org)" in page
     assert page.index("## Navigation") < page.index("## Contributing")
     assert "(tutorials.md)" in page
+    assert page.startswith("# Title")
+    # a README without a heading (its logo carries the name) gets one on the site
+    assert module.build_index("Text\n\n## Contributing\n").startswith("# eurocodepy\n")
+    assert module.build_index("# Own title\n\n## Contributing\n").startswith("# Own title")
     with pytest.raises(ValueError, match="Contributing"):
         module.build_index("# no contributing section")
     assert "docs:skip-start" in README.read_text(encoding="utf-8")    # the markers the script relies on exist

@@ -1,7 +1,7 @@
 """Generate the home page of the documentation from the README of the repository.
 
 The README is the single source: this takes it, drops what only makes sense on GitHub (the part between
-``<!-- docs:skip-start -->`` and ``<!-- docs:skip-end -->``), turns the links to files of the repository into
+``<!-- docs:skip-start -->`` and ``<!-- docs:skip-end -->``), adds the title heading the README leaves to its logo, turns the links to files of the repository into
 links to GitHub and adds the navigation of the site.
 """
 
@@ -10,6 +10,7 @@ from pathlib import Path
 
 REPO = "https://github.com/pcachim/eurocodepy/blob/master"
 SKIP = re.compile(r"<!-- docs:skip-start -->.*?<!-- docs:skip-end -->\n?", re.S)
+TITLE = "eurocodepy"
 LOCAL_LINK = re.compile(r"\]\((?!https?://|#|mailto:)([^)\s]+)\)")
 
 NAVIGATION = """## Navigation
@@ -31,6 +32,9 @@ NAVIGATION = """## Navigation
 def build_index(readme: str) -> str:
     """Return the markdown of the home page built from the text of the README."""
     text = SKIP.sub("", readme)
+    if not text.lstrip().startswith("# "):
+        # on GitHub the logo carries the name; the site needs a first heading for the title of the page
+        text = f"# {TITLE}\n\n{text.lstrip()}"
     text = LOCAL_LINK.sub(lambda m: f"]({REPO}/{m.group(1)})", text)
     marker = "## Contributing"
     if marker not in text:

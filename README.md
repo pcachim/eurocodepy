@@ -4,8 +4,6 @@
 </p>
 
 <!-- docs:skip-end -->
-# eurocodepy
-
 [![PyPI version](https://img.shields.io/pypi/v/eurocodepy)](https://pypi.org/project/eurocodepy/)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/)
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](LICENSE.md)
