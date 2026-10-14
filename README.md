@@ -1,6 +1,6 @@
 <!-- docs:skip-start -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pcachim/eurocodepy/master/mkdocs/docs/assets/logo.svg" alt="eurocodepy" width="360">
+  <img src="https://raw.githubusercontent.com/pcachim/eurocodepy/master/mkdocs/docs/assets/logo.svg?v=2" alt="eurocodepy" width="360">
 </p>
 
 <!-- docs:skip-end -->
