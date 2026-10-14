@@ -694,7 +694,7 @@ class BoltedConnection:
             inner_plate is not None) else outer_plate
         self._bolt = bolt
         self._e1 = REC_E1 * self.bolt.d0
-        self._p1 = REC_P2 * self.bolt.d0
+        self._p1 = REC_P1 * self.bolt.d0
         self._e2 = REC_E2 * self.bolt.d0
         self._p2 = REC_P2 * self.bolt.d0
         self._result = None
@@ -895,7 +895,9 @@ class BoltedConnection:
 
         """
         if threaded:
-            alpha_v = 0.5 if self.bolt.steel in {"4.6", "5.6", "6.4"} else 0.6
+            # Table 3.4: threaded shear plane, αv = 0.6 for 4.6, 5.6 and 8.8; 0.5 for 4.8, 5.8, 6.8 and 10.9
+            # (the other grades are outside the table: the lower value is used)
+            alpha_v = 0.6 if self.bolt.steel in {"4.6", "5.6", "8.8"} else 0.5
             area = self.bolt.Athread
         else:
             alpha_v = 0.6
@@ -903,20 +905,23 @@ class BoltedConnection:
         return np.round(alpha_v * self.bolt.fub * area / self.bolt.gamma_M2 / 10.0, 2)
 
     def Fb_Rd(self) -> float | tuple:  # noqa: N802
-        """Return bearing strength.
+        """Return bearing strength (EN 1993-1-8, Table 3.4): the smaller of the two plates.
+
+        ``Fb,Rd = k1·αb·fu·d·t/γM2`` for each plate with its own ``fu`` and ``t``; ``αd`` and ``k1`` are
+        those of an end and edge bolt (the lower values, so they are safe for inner bolts).
 
         Returns:
-            float: bearing strength
+            float: bearing strength [kN]
 
         """
-        t = min(self.outer_steel_plate.thickness, self.inner_steel_plate.thickness)
-        fu = self.outer_steel_plate.steel.fuk
-
         ad = min(self.e1 / (3 * self.d0), self.p1 / (3 * self.d0) - 1.0 / 4.0)
         k1 = min(2.8 * self.e2 / self.d0 - 1.7, 1.4 * self.p2 / self.d0 - 1.7, 2.5)
-        ab = min(ad, self.bolt.fub / fu, 1.0)
-
-        return np.round(k1 * ab * fu * self.bolt.d * t / self.bolt.gamma_M2 / 1000.0, 2)
+        resistances = []
+        for plate in (self.outer_steel_plate, self.inner_steel_plate):
+            fu = plate.steel.fuk
+            ab = min(ad, self.bolt.fub / fu, 1.0)
+            resistances.append(k1 * ab * fu * self.bolt.d * plate.thickness / self.bolt.gamma_M2 / 1000.0)
+        return np.round(min(resistances), 2)
 
     def Ft_Rd(self, countersunk: bool = False) -> float:  # noqa: N802
         """Return tensile strength.
@@ -928,7 +933,7 @@ class BoltedConnection:
             float: tensile strength
 
         """
-        k2 = 0.6 if countersunk else 0.9
+        k2 = 0.63 if countersunk else 0.9               # Table 3.4
         return np.round(k2 * self.bolt.fub * self.bolt.Athread /
                         self.bolt.gamma_M2 / 10.0, 2)
 
@@ -966,7 +971,7 @@ class BoltedConnection:
         """
         self.Fv_Ed = Fv_Ed
         self.Fb_Ed = Fv_Ed
-        self.Ft_Ed = Ft_Ed
+        self.Ft_Ed = np.zeros_like(np.asarray(Fv_Ed, dtype=float)) if Ft_Ed is None else Ft_Ed
         shear_ratio = np.round(self.Fv_Ed / self.Fv_Rd(), 2)
         shear_check = np.all(shear_ratio <= 1)
         bearing_ratio = np.round(self.Fv_Ed / self.Fb_Rd(), 2)
@@ -995,7 +1000,7 @@ class BoltedConnection:
             "CombinedRatios": combined_ratio,
             "CombinedRatio": np.max(combined_ratio),
             "CombinedCheck": combined_check,
-            "Check": shear_check & bearing_check & tensile_check & combined_check,
+            "Check": shear_check & bearing_check & tensile_check & punching_check & combined_check,
         }
 
         return self._result

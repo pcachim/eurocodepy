@@ -140,6 +140,11 @@ GNU Lesser General Public License v3.0 or later.
   numerical constant instead of `cu`; the cases outside the domain of the criterion (uplift, `N ≥ Nmax`) counted as verified and now do not.
 - `ec3.Bolt(d, grade)` with a numeric diameter used the gross area as the thread area, overestimating the tension resistance and the shear
   in the thread by about 28 % (M20: 120,6 kN instead of 94,1 kN). It takes the area of the standard size, else `0,78·A`.
+- `ec3.BoltedConnection` against EN 1993-1-8, Table 3.4: `Fv_Rd` had `αv` reversed (0,5 for 4.6 and 5.6 and a non-existent 6.4, 0,6 for
+  everything else): it is 0,6 for 4.6, 5.6 and 8.8 and 0,5 for 4.8, 5.8, 6.8 and 10.9 in the threaded plane, so grades 6.8 and 10.9 were 20 %
+  unsafe. `Ft_Rd` with countersunk bolts used `k2 = 0,6` (it is 0,63). `Fb_Rd` used the `fu` of the outer plate with the thickness of the thinner one;
+  it is now the smaller of the two plates, each with its own. `check()["Check"]` left out the punching check, and `Ft_Ed=None` (allowed by the
+  signature) raised. The default `p1` was `REC_P2·d0` (3,0 d0) instead of `REC_P1·d0` (3,75 d0), which lowered `αd` and `Fb_Rd` by 25 %.
 - `ec3.WeldConnection` added the inertia of each weld without the parallel-axis term and not about the centroid of the group (two welds
   100 mm apart gave `Iyy` 2083 instead of 2,5·10⁶ mm⁴), the elastic moduli divided by the wrong coordinate, and ignored the welds passed to
   the constructor. It now has `xg`, `yg` and centroidal `inertia_*` and `w_el_*`.

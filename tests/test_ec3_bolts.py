@@ -45,3 +45,37 @@ def test_weld_group_centroid_and_constructor_list():
     assert g.area == pytest.approx(800.0) and g.yg == pytest.approx(30.0)
     assert g.inertia_xx == pytest.approx(2 * (4.0**3 * 100.0 / 12.0 + 400.0 * 30.0**2))
     assert WeldConnection().inertia_xx == 0.0
+
+
+# --- EN 1993-1-8, Table 3.4 -------------------------------------------------------------------------------------
+
+@pytest.mark.parametrize(("grade", "alpha_v"), [("4.6", 0.6), ("5.6", 0.6), ("8.8", 0.6),
+                                                ("6.8", 0.5), ("10.9", 0.5)])
+def test_shear_alpha_v_of_the_threaded_plane(grade, alpha_v):
+    bolt = Bolt("M20", grade)
+    expected = alpha_v * bolt.fub * bolt.Athread * 100.0 / 1.25 / 1000.0                 # kN
+    assert _conn(bolt).Fv_Rd(threaded=True) == pytest.approx(expected, abs=0.01)
+    assert _conn(bolt).Fv_Rd(threaded=False) == pytest.approx(0.6 * bolt.fub * bolt.A * 100.0 / 1.25 / 1000.0, abs=0.01)
+
+
+def test_tension_countersunk_uses_k2_063():
+    bolt = Bolt("M20", "8.8")
+    assert _conn(bolt).Ft_Rd() == pytest.approx(0.9 * 800.0 * 245.0 / 1.25 / 1000.0, abs=0.01)
+    assert _conn(bolt).Ft_Rd(countersunk=True) == pytest.approx(0.63 * 800.0 * 245.0 / 1.25 / 1000.0, abs=0.01)
+
+
+def test_bearing_takes_the_weaker_plate():
+    bolt = Bolt("M20", "10.9")
+    strong, weak = SteelPlate(10.0, Steel("S355"), 200.0), SteelPlate(10.0, Steel("S235"), 200.0)
+    both = BoltedConnection(bolt, strong, weak).Fb_Rd()
+    assert both == BoltedConnection(bolt, weak, weak).Fb_Rd() < BoltedConnection(bolt, strong, strong).Fb_Rd()
+
+
+def test_check_includes_punching_and_accepts_no_tension():
+    import numpy as np
+
+    conn = _conn(Bolt("M20", "8.8"))
+    r = conn.check(np.array([20.0]), None)
+    assert bool(r["Check"]) and r["TensileRatio"] == 0.0
+    punching_governs = conn.check(np.array([0.0]), np.array([conn.Bp_Rd() * 1.2]))
+    assert not bool(punching_governs["PunchingCheck"]) and not bool(punching_governs["Check"])
