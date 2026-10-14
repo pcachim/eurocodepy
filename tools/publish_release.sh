@@ -69,7 +69,8 @@ fi
 
 # Build from a scratch dir so stale artifacts in dist/ are never uploaded.
 BUILD_DIR="$(mktemp -d)"
-trap 'rm -rf "$BUILD_DIR"' EXIT
+DOCS_DIR="$(mktemp -d)"      # the site is kept apart: everything in BUILD_DIR is uploaded to the release
+trap 'rm -rf "$BUILD_DIR" "$DOCS_DIR"' EXIT
 
 echo "Building ${VERSION}…"
 uv build --out-dir "$BUILD_DIR" >/dev/null
@@ -79,8 +80,12 @@ ls "$BUILD_DIR"
 # link, a missing page or a malformed docstring stops the release). The site goes to a scratch dir
 # (the real one is made by gh-deploy at the end).
 echo "Building the documentation…"
-uv run mkdocs build --strict -f mkdocs/mkdocs.yml -d "$BUILD_DIR/site" \
+uv run mkdocs build --strict -f mkdocs/mkdocs.yml -d "$DOCS_DIR" \
   || die "the documentation does not build cleanly (run: cd mkdocs && uv run mkdocs build --strict)"
+
+# Only the distribution files are uploaded to the release and to PyPI: a directory here breaks both
+[[ -z "$(find "$BUILD_DIR" -mindepth 1 -type d)" ]] || die "$BUILD_DIR has directories; only the build artifacts may be there"
+ls "$BUILD_DIR"/* >/dev/null || die "the build produced no artifacts"
 
 if [[ $DRY_RUN -eq 1 ]]; then
   echo "Dry run: package and documentation build OK, nothing pushed, uploaded or deployed."
