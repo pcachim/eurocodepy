@@ -9,6 +9,7 @@ plugins:
       scripts:
       - scripts/gen_ref_pages.py
       - scripts/gen_clause_map.py
+      - scripts/gen_index.py
   - literate-nav:
       nav_file: SUMMARY.md
   - section-index:

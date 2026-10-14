@@ -3,18 +3,46 @@
 Versions up to 2026.7.28 are MIT-licensed; from 2027.0.0 on the package is licensed under the
 GNU Lesser General Public License v3.0 or later.
 
+## 2027.0.11 — 2026-10-14
+### Added
+- `UnitSystem.density` and `UnitSystem.power`; `convert_to` / `convert_from` support `TEMPERATURE` (differences), `DENSITY`, `WORK`,
+  `ENERGY` and `POWER`.
+- Documentation:
+  - The home page is generated from `README.md` (`mkdocs/scripts/gen_index.py`: what is marked `docs:skip` goes, links to repository
+    files become GitHub links, the navigation is added), so there is one text instead of two. The README is rewritten to the current API
+    (grades, 2023 edition, annexes, units, reports; its examples ran against signatures that no longer exist).
+  - The clause map and the EC2 pages link to the code reference.
+  - `tests/test_docs_examples.py` also runs the code of the README and checks the code fences of every page.
+- `tools/publish_release.sh` builds the documentation with `--strict` before tagging and deploys it (`mkdocs gh-deploy`) after the release.
+
+### Changed
+- `ec2/uls2023/__init__.py` lists the 2004 names it re-exports explicitly instead of `from eurocodepy.ec2.uls import *` (same result at
+  run time). The code reference documented the 2004 functions under `ec2.uls2023.shear`, `torsion`, `punch`, `column` and
+  `shear_torsion`, because `griffe` resolved those names through the star import.
+- The code reference has no pages for private modules or for files that are not importable names (a stray `forces copy.py` had one).
+- The 131 docstring warnings of the API reference are fixed (parameters documented with their types and the names of the signature,
+  return annotations added where only the docstring had the type); `mkdocs build --strict` passes.
+- `.gitignore`: `mkdocs/scripts/` is no longer ignored (the pattern `[Ss]cripts` hid `gen_ref_pages.py` and the other generators, which the
+  documentation build needs).
+
+### Fixed
+- Unit systems (`units`, `ec1.forces`, `ec1.stresses`):
+  - `SlabForce` and `ShellForce` converted `m_xx`, `m_yy`, `m_xy` as moments, but they are moments per unit width (kNm/m), which
+    have the dimension of a force: `kN_m → N_mm` gave a factor 1·10⁶ instead of 1·10³ and `kN_m → kN_mm` 1·10³ instead of 1.
+  - `TemperatureUnit.C` and `.K` had the same value, so `Enum` made `C` an alias of `K` (no Celsius at all); each member now carries
+    `(scale, name)`. `UnitSystem.convert_temperature` compared a number with an enum member and used wrong formulas for every
+    scale; it is rewritten through kelvin.
+  - `convert_to` and `convert_from` returned 0.0 silently for `TEMPERATURE`, `DENSITY`, `WORK`, `ENERGY` and `POWER`; an unsupported
+    type now raises `ValueError`.
+  - `BaseStress.convert_to` did not convert and `Stresses3d.convert_to` / `Stresses2d.convert_to` raised `AttributeError`
+    (they scaled fields that do not exist); adding stresses of different systems ignored the conversion. Stresses convert
+    as pressures, return a copy, and `+` and `-` convert the second operand.
+
 ## 2027.0.10 — 2026-10-13
 ### Added
 - Documentation: `modules/ec2` split into an index with the unit and sign conventions, EN 1992-1-1:2004, EN 1992-1-1:2023 and membranes/slabs/shells
   pages; a generated clause map of `uls2023` (`mkdocs/scripts/gen_clause_map.py`); a page on editions, national annexes and the `dbobj`
   migration; EC2 examples corrected. `tests/test_docs_examples.py` runs the code blocks of every page.
-  The 131 docstring warnings of the API reference are fixed (parameters documented with their types and the names of the signature,
-  return annotations added where only the docstring had the type), so `mkdocs build --strict` passes. `tools/publish_release.sh` builds the
-  documentation with `--strict` before tagging and deploys it (`mkdocs gh-deploy`) after the release.
-  The code reference no longer has pages for private modules or files that are not importable names (a stray `forces copy.py` had one);
-  the module pages of `ec2.uls2023` documented the 2004 functions (`griffe` resolved `shear`, `torsion`, `punch`, `column` and
-  `shear_torsion` through the `import *` of `ec2.uls`): `uls2023/__init__.py` now lists the 2004 names explicitly, with the same
-  runtime result. The clause map and the EC2 pages link to the code reference.
 - **EN 1992-1-1:2023 Clause 4 (basis of design) in the database** (`Editions.ec2["2023"].partial_factors`):
   Table 4.3 (`γs`, `γc`, `γce` incl. the tested-`Ecm` value 1,3, `γv` for persistent/transient, fatigue,
   accidental and serviceability), `γSH` (4.3.1), `k_cip` (4.3.3(4)), Table 4.2 (`γP,fav/unfav`,
@@ -155,17 +183,6 @@ GNU Lesser General Public License v3.0 or later.
 - `ec3.WeldConnection` added the inertia of each weld without the parallel-axis term and not about the centroid of the group (two welds
   100 mm apart gave `Iyy` 2083 instead of 2,5·10⁶ mm⁴), the elastic moduli divided by the wrong coordinate, and ignored the welds passed to
   the constructor. It now has `xg`, `yg` and centroidal `inertia_*` and `w_el_*`.
-- Unit systems (`units`, `ec1.forces`, `ec1.stresses`):
-  - `SlabForce` and `ShellForce` converted `m_xx`, `m_yy`, `m_xy` as moments, but they are moments per unit width (kNm/m), which
-    have the dimension of a force: `kN_m → N_mm` gave a factor 1·10⁶ instead of 1·10³ and `kN_m → kN_mm` 1·10³ instead of 1.
-  - `TemperatureUnit.C` and `.K` had the same value, so `Enum` made `C` an alias of `K` (no Celsius at all); each member now carries
-    `(scale, name)`. `UnitSystem.convert_temperature` compared a number with an enum member and used wrong formulas for every
-    scale; it is rewritten through kelvin.
-  - `convert_to` and `convert_from` returned 0.0 silently for `TEMPERATURE`, `DENSITY`, `WORK`, `ENERGY` and `POWER`; these are
-    now implemented (`UnitSystem.density`, `.power` are new) and an unsupported type raises `ValueError`.
-  - `BaseStress.convert_to` did not convert and `Stresses3d.convert_to` / `Stresses2d.convert_to` raised `AttributeError`
-    (they scaled fields that do not exist); adding stresses of different systems ignored the conversion. Stresses convert
-    as pressures, return a copy, and `+` and `-` convert the second operand.
 - `ec1.LoadCombinations.evaluate_all` and `worst_case` called a `LoadCombination.evaluate` that did not exist; it now does.
 - Documentation: every example of every page now runs (module pages for EC1, EC3, EC5, EC7, EC8 and utils rewritten to the current API,
   tutorials and how-to guides fixed); `tests/test_docs_examples.py` keeps it so.

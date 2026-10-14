@@ -27,18 +27,18 @@ typed Python classes. Variable names follow standard Eurocode notation (`fck`, `
 
 | Material | Available grades |
 |----------|-----------------|
-| Concrete | C20/25 · C25/30 · C30/37 · C35/45 · C40/50 · C45/55 · C50/60 · C55/67 · C60/75 · C70/85 · C80/95 · C90/105 |
-| Reinforcement | B400A/B/C · B500A/B/C · B600A/B/C · B700A/B/C · A400NR · A500NR · A500EL · A400NRSD · A500NRSD |
-| Prestressing steel | Y1770 · Y1860 and others |
-| Structural steel | S235 · S275 · S355 · S450 |
-| Timber (solid) | Softwood C14–C50 · Hardwood D18–D70 |
-| Timber (engineered) | Glulam GL24h–GL32h/c · CLT · LVL |
-| Bolts | Grades 4.6 · 5.6 · 6.8 · 8.8 · 10.9 |
+| Concrete | C12/15 to C90/105 (EN 1992-1-1:2004) · C12/15 to C100/115 (EN 1992-1-1:2023, Table 5.1) |
+| Reinforcement | B400A/B/C · B450A/B/C · B500A/B/C · B550A/B/C · B600A/B/C · B700A/B/C · A400NR · A500NR · A500EL · A400NRSD · A500NRSD |
+| Prestressing steel | Y1570 to Y2160: wires, strands and bars (class and diameter, e.g. `Y1860S7 12.5`) |
+| Structural steel | S235 · S275 · S355 · S420 · S450 · S460 and their qualities (JR, N, NL, M, ML, W, Q, QL) |
+| Timber (solid) | C16 · C18 · C24 · C30 · D24 · D30 · D40 · D50 · D60 · D70 |
+| Timber (glulam) | GL20h to GL32h · GL20c to GL32c |
+| Bolts | Grades 4.6 · 5.6 · 6.6 · 6.8 · 8.8 · 9.8 · 10.9 · 12.9 |
 
 ### Steel profiles
 
-Standard European hot-rolled profiles are available as named dataclasses exposing all
-geometric properties (`A`, `Iy`, `Iz`, `Wpl_y`, `it`, `Iw`, …):
+Standard European hot-rolled profiles are available as dictionaries of dataclasses exposing the
+catalogue properties (`A`, `Iy`, `Iz`, `Wpl_y`, `IT`, `Iw`, … in cm):
 
 - **I-profiles:** IPE, HEA, HEB, HEM
 - **Hollow sections:** CHS (circular), RHS (rectangular), SHS (square)
@@ -47,18 +47,28 @@ geometric properties (`A`, `Iy`, `Iz`, `Wpl_y`, `it`, `Iw`, …):
 
 | Module | Standard | Key functionality |
 |--------|----------|------------------|
-| `ec1` | EN 1991 / EN 1990 | Load types, force resultants, ULS / SLS / ALS load combinations |
-| `ec2` | EN 1992-1-1 | Concrete & reinforcement materials; ULS beam bending, shear, shell/membrane reinforcement, punching; SLS crack width, creep, shrinkage; fire |
-| `ec3` | EN 1993-1-1 | Steel materials; I, CHS, RHS, SHS profiles; bolted and welded connections |
-| `ec5` | EN 1995-1-1 | Timber materials (solid, glulam, CLT, LVL); `kmod`; ULS bending & shear; SLS floor vibration |
-| `ec7` | EN 1997-1 | Soil materials; shallow foundation bearing resistance; seismic bearing resistance; active/passive earth pressure coefficients |
-| `ec8` | EN 1998-1 | Elastic and design response spectra; Portuguese and standard CEN national annexes; spectrum plotting and CSV export |
-| `utils` | — | Section properties, principal stresses, stress invariants |
+| `ec1` | EN 1991 / EN 1990 | Load types, force resultants, ULS / SLS / ALS load combinations, wind (EN 1991-1-4) |
+| `ec2` | EN 1992-1-1 (2004 and 2023), EN 1992-2 | Concrete, reinforcement and prestress; ULS bending, shear, torsion, punching, detailing; membranes, slabs and shells (Annex G, Annex LL, sandwich model); SLS crack width; creep, shrinkage and relaxation (Annex B); fire |
+| `ec3` | EN 1993-1-1, 1-8 | Steel materials; I, CHS, RHS, SHS profiles; section classification, section and member checks; bolted and pinned connections, weld groups |
+| `ec5` | EN 1995-1-1 (2004 and 2025) | Timber materials (solid, glulam); `kmod`; ULS bending, shear, tapered and curved beams; SLS floor vibration |
+| `ec7` | EN 1997-1, EN 1998-5 | Soil materials; shallow foundation bearing resistance; seismic bearing resistance; earth pressure coefficients |
+| `ec8` | EN 1998-1 | Elastic and design response spectra; Portuguese and standard CEN national annexes; spectrum plotting and export |
+| `utils` | — | Cross sections, section properties of reinforced sections, principal stresses, stress invariants |
 
-### National Annex support
+### Editions and National Annexes
 
-Portuguese municipal seismic and wind data is bundled and accessible through
-`NationalParams`, `seismic_get_params`, and `wind_get_params`.
+Functions take `edition=` (the 2004 default, or `"2023"` for the second-generation Eurocode 2) and
+`annex=` (a country code). A National Annex is one JSON file of patches over the recommended values, and
+`register_annex` adds your own. Portuguese data (seismic and wind zones, live loads) is bundled; the Portuguese
+parameters of EN 1992-1-1:2023 are **not** there yet, so `annex="PT"` gives the recommended values for concrete.
+Seismic and wind data of Portuguese municipalities are available through `NationalParams`, `seismic_get_params`
+and `wind_get_params`.
+
+### Calculation reports and units
+
+Most checks take `trace=` with a `CalcReport` that records every step with its clause and formula, and exports
+it as a dictionary or Markdown. `eurocodepy.units` has unit systems (`SI`, `kN_m`, `kN_mm`, `N_mm`) used by the
+force and stress containers of `ec1`; the calculation functions work in the fixed units given in their documentation.
 
 ---
 
@@ -67,58 +77,71 @@ Portuguese municipal seismic and wind data is bundled and accessible through
 ```python
 import eurocodepy as ec
 
-# ── Concrete (EN 1992) ─────────────────────────────────────────────────────
+# ── Concrete and reinforcement (EN 1992) ───────────────────────────────────
 c = ec.Concrete('C30/37')
-print(c.fck, c.fcd, c.Ecm)          # 30 MPa, ~20 MPa, ~32 800 MPa
-
-# ── Reinforcement ──────────────────────────────────────────────────────────
 r = ec.Reinforcement('B500B')
+print(c.fck, c.fcd, c.Ecm)           # 30 MPa, 20 MPa, 33 000 MPa
 print(r.fyk, r.fyd)                  # 500 MPa, ~434.8 MPa
 
+# The same concrete with the second-generation code: fcd = ηcc·ktc·fck/γc
+c23 = ec.ec2.get_concrete('C50/60', edition='2023', loading='other')
+print(c23.eta_cc, c23.k_tc, c23.fcd)
+
+# ── Bending and shear of a rectangular beam (EN 1992-1-1:2004) ─────────────
+# m, cm², kNm, MPa (see the documentation of each function for its units)
+MRd, eps_s, x = ec.ec2.calc_mrd(b=0.30, d=0.46, ast=8.04, fcd=c.fcd, fyd=r.fyd)
+from eurocodepy.ec2.uls.shear import calc_vrdc
+vrd_min, vrd_c, vrd = calc_vrdc(bw=0.30, d=0.46, fck=30, g_c=1.5, rho_l=0.0117)
+print(f"MRd = {MRd:.1f} kNm, VRd,c = {vrd:.1f} kN")
+
+# ── Shear check of EN 1992-1-1:2023, clause 8.2 ─────────────────────────────
+from eurocodepy.ec2 import uls2023
+shear = uls2023.eurocode2_shear_check(
+    uls2023.ShearInput(b=0.3, d=0.5, fck=30, fyk=500, as_long=0.0015), v_ed=150.0)
+print(shear.mode, shear.asw_s)       # 'stirrups', Asw/s [m²/m]
+
 # ── Structural steel (EN 1993) ─────────────────────────────────────────────
-steel   = ec.Steel('S355')
-profile = ec.ec3.materials.ProfileI('IPE300')
-print(steel.fy, profile.A, profile.Iy)
+steel = ec.Steel('S355')
+profile = ec.ec3.ProfilesI['IPE300']
+print(steel.fyk, profile.A, profile.Iy)      # 355 MPa, cm², cm⁴
+check = ec.ec3.section_check_profile(
+    profile, steel.fyk, ec.ec3.SectionForces(my_ed=100.0, vz_ed=80.0))
+print(f"utilization = {check.utilization:.2f}")
 
 # ── Timber (EN 1995) ───────────────────────────────────────────────────────
-from eurocodepy.ec5 import SolidTimber, ServiceClass, LoadDuration
+from eurocodepy.ec5.materials import SolidTimber, ServiceClass, LoadDuration
 timber = SolidTimber('C24')
-kmod   = timber.k_mod(ServiceClass.SC1, LoadDuration.Medium)
-print(timber.fmk, kmod)              # 24 MPa, 0.8
+kmod = timber.k_mod(ServiceClass.SC1, LoadDuration.MediumDuration)
+print(timber.fmk, kmod, timber.design_values(ServiceClass.SC1, LoadDuration.MediumDuration)['fmd'])
 
 # ── Load combinations (EN 1990) ────────────────────────────────────────────
-from eurocodepy.ec1 import Load, LoadType, LoadCombinations, CombinationType
-combos = LoadCombinations([
-    Load('G', LoadType.PERMANENT, gk=10.0),
-    Load('Q', LoadType.LIVE,      qk=5.0),
-    Load('W', LoadType.WIND,      qk=3.0),
-])
-for c in combos.get(CombinationType.ULS):
-    print(c)
+from eurocodepy.ec1 import Load, LoadType, Loads
+loads = Loads()                      # γ favourable, γ unfavourable, ψ0, ψ1, ψ2
+loads.add(Load('G', LoadType.PERMANENT, 1.0, 1.35, 0.0, 0.0, 0.0))
+loads.add(Load('Q', LoadType.LIVE,      0.0, 1.50, 0.7, 0.5, 0.3))
+loads.add(Load('W', LoadType.WIND,      0.0, 1.50, 0.6, 0.2, 0.0))
+for name in loads.get_ULS_combos():
+    print(name)
 
 # ── Seismic spectrum (EN 1998, Portuguese NA) ──────────────────────────────
 spec = ec.spectrum.get_spectrum_ec8(
-    locale='PT', code='PT-1', imp_class='II',
+    locale='PT', code='PT1', imp_class='II',
     soil='C', zone='1_2', behaviour=3.0,
 )
-ec.spectrum.draw_spectrum_ec8(spec, show=True)
+ec.spectrum.draw_spectrum_ec8(spec, show=False)       # show=True opens the window
 ec.spectrum.write_spectrum_ec8(spec, filename='spectrum.csv')
 
-# ── Concrete shear check (EN 1992) ─────────────────────────────────────────
-from eurocodepy.ec2.uls.shear import calc_vrdc
-VRd_c = calc_vrdc(b_w=300, d=460, As=1608, fck=30)
-print(f"VRd,c = {VRd_c/1e3:.1f} kN")
-
-# ── Shallow foundation bearing resistance (EN 1997) ────────────────────────
+# ── Shallow foundation bearing resistance (EN 1997): angles in radians ─────
+import numpy as np
 from eurocodepy.ec7 import bearing_resistance
 Rd = bearing_resistance(Bx=1.5, By=2.0, Hx=20, Hy=0, N=200,
-                        phi=30.0, gamma=18.0, q=0.0, c=0.0)
-print(f"Rd = {Rd:.1f} kN")
+                        phi=np.radians(30.0), gamma=18.0, q=0.0, c=0.0)
+print(f"Rd = {Rd:.1f} kPa")                            # bearing stress
 
-# ── Creep coefficient (EN 1992-1-1:2025) ──────────────────────────────────
+# ── Creep coefficient (EN 1992-1-1:2023, Annex B) ──────────────────────────
 from eurocodepy.ec2.sls.creep import creep_coef
-phi = creep_coef(fck=30, RH=60, h0=200, t0=28, t=18250)
-print(f"φ(∞,28) = {phi:.2f}")
+phi_t = creep_coef(t=18278, t0=28, fcm28=38.0, RH=60, hn=200, t0_T=28, concrete_class='CN')
+print(f"φ(50 y, 28 d) = {phi_t:.2f}")
 ```
 
 ---
@@ -140,11 +163,13 @@ Requires **Python ≥ 3.12**.
 
 ---
 
+<!-- docs:skip-start -->
 ## Documentation
 
-Full documentation — API reference, worked tutorials, and how-to guides — is at:
+Full documentation — worked tutorials, how-to guides, a page per module and the API reference — is at:
 
 **<https://pcachim.github.io/eurocodepy/>**
+<!-- docs:skip-end -->
 
 ---
 
@@ -159,7 +184,7 @@ discuss the approach.
 4. Push and open a Pull Request
 
 Please follow the existing code style (enforced by `ruff`) and include tests where
-applicable. See `CONTRIBUTING_GUIDELINES.md` for more detail.
+applicable. See [CONTRIBUTING_GUIDELINES.md](CONTRIBUTING_GUIDELINES.md) for more detail.
 
 ---
 
