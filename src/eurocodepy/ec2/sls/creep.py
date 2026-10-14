@@ -1,3 +1,8 @@
+"""Creep coefficient of EN 1992-1-1:2023 Annex B.
+
+``creep_coef`` delegates to :mod:`eurocodepy.ec2.time_dependent2023`; the helper functions below (the
+individual ``beta`` and ``varphi`` terms) are kept as they were, array-friendly, for compatibility.
+"""
 import numpy as np
 
 def beta_bc_fcm(fcm28):
@@ -57,23 +62,25 @@ def creep_coef(t, t0, fcm28, RH, hn, t0_T, concrete_class):
     It combines the effects of basic creep and drying creep, adjusted for the initial time and temperature.
     The function uses the concrete class to determine the adjustment factor for the initial time.
     The function returns the total creep coefficient as a float value.
-    Uses EN1992-1:2025.
+    Uses EN 1992-1-1:2023 Annex B (Eqs. B.5-B.18): it is
+    :func:`eurocodepy.ec2.time_dependent2023.creep_coefficient` (which also has the rest of
+    Annex B), so the arguments are validated (RH 20-100 %, 12 <= fck <= 100 MPa, t0 >= 1 day,
+    t >= t0, class CS, CN or CR) and ``t``, ``t0``, ``fcm28``, ``RH`` and ``hn`` may be arrays.
 
     Args:
-        t (_type_): _description_
-        t0 (_type_): _description_
-        fcm28 (_type_): _description_
-        RH (_type_): _description_
-        hn (_type_): _description_
-        t0_T (_type_): _description_
-        concrete_class (_type_): _description_
+        t: age of the concrete [days].
+        t0: age at loading [days] (the duration of loading is ``t - t0``).
+        fcm28: mean compressive strength at 28 days [MPa].
+        RH: relative humidity [%].
+        hn: notional size 2*Ac/u [mm].
+        t0_T: age at loading adjusted for temperature (Eq. B.18), ``t0`` at 20 degrees C.
+        concrete_class: strength development class, "CS", "CN" or "CR" (anything else is an error).
 
     Returns:
-        _type_: _description_
+        The total creep coefficient phi(t, t0) = phi_bc + phi_dc.
     """
-    alpha_sc_val = alpha_sc(concrete_class)
-    t0_adj_val = t0_adj(t0_T, alpha_sc_val)
-    return varphi_bc(t, t0, fcm28, t0_adj_val) + varphi_dc(t, t0, fcm28, RH, hn, t0_adj_val)
+    from eurocodepy.ec2.time_dependent2023 import creep_coefficient
+    return creep_coefficient(t, t0, fcm28, RH, hn, concrete_class, t0_T=t0_T)
 
 
 if __name__ == "__main__":

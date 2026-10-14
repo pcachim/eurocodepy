@@ -123,6 +123,7 @@ class SlabResult:
     asx_top: float            # top x reinforcement [m²/m]
     asy_top: float            # top y reinforcement [m²/m]
     details: dict = field(default_factory=dict)
+    asw_s: float = 0.0        # shear reinforcement [m²/m per m of width] (2023 composites)
 
     def __str__(self) -> str:
         return (f"EC2 slab — As(x/y bot)={self.asx_bot:.3e}/{self.asy_bot:.3e}, "

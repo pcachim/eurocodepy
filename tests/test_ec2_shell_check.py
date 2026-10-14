@@ -200,3 +200,80 @@ def test_cracking_check_membrane_shear_and_default():
     rep = CalcReport(title="c")
     uls.eurocode2_shell_check(_inp(m_xx=20.0, check_cracking=True), trace=rep)
     assert "Φ" in {st.symbol for sec in rep.sections for st in sec.steps}
+
+
+# ── out-of-plane shear, EN 1992-2 Annex LL (106), (109)-(111), (114)b ────────
+
+def _shear_ref(v, rho_l, d=0.16, fck=30.0, fyk=500.0):
+    from eurocodepy.ec2.uls import ShearInput, eurocode2_shear_check
+    return eurocode2_shear_check(ShearInput(b=1.0, d=d, fck=fck, fyk=fyk, as_long=rho_l * d,
+                                            min_shear=False), v)
+
+
+def test_shear_without_reinforcement_leaves_the_layers_alone():
+    kw = {"n_xx": 0.0, "n_yy": 0.0, "n_xy": 0.0, "m_xx": 30.0, "m_yy": 10.0, "m_xy": 0.0}
+    base = uls.eurocode2_shell_check(_inp(**kw))
+    r = uls.eurocode2_shell_check(_inp(v_x=40.0, v_y=0.0, **kw))
+    s = r.details["shear"]
+    assert s["mode"] == "no_shear_reinf" and s["phi0_deg"] == 0.0 and s["v_ed0"] == 40.0
+    assert s["n_c"] == (0.0, 0.0, 0.0) and r.asw_s == 0.0
+    assert (r.asx_bot, r.asy_bot, r.asx_top, r.asy_top) == (base.asx_bot, base.asy_bot, base.asx_top, base.asy_top)
+    assert base.details["shear"] is None and base.asw_s == 0.0                    # no shear force, no check
+    # ρl of LL.123 along x: only the x bars count; VRd,c as the beam of unit width, d = h − cover
+    rho_x = base.asx_bot / 0.16
+    assert s["rho_l"] == pytest.approx(rho_x) and s["vrd_c"] == pytest.approx(_shear_ref(40.0, rho_x).vrd_c)
+
+
+def test_shear_reinforcement_and_the_truss_force_in_the_outer_layers():
+    # pure shear along x, no bending: the stirrups and the truss force vx·cotθ in both layers
+    kw = {"n_xx": 0.0, "n_yy": 0.0, "n_xy": 0.0, "m_xx": 0.0, "m_yy": 0.0, "m_xy": 0.0, "v_x": 300.0, "v_y": 0.0}
+    r = uls.eurocode2_shell_check(_inp(**kw))
+    s = r.details["shear"]
+    ref = _shear_ref(300.0, 0.0)
+    assert s["mode"] == "stirrups" and r.asw_s == pytest.approx(ref.asw_s) and s["cot"] == ref.cot
+    assert s["n_c"] == pytest.approx((300.0 * ref.cot, 0.0, 0.0))                    # vx²/v0·cotθ (LL.126)
+    assert r.asx_bot == r.asx_top == pytest.approx(0.5 * 300.0 * ref.cot / (FYD * 1e3))   # n/2 per layer (LL.143/144)
+    assert r.asy_bot == r.asy_top == 0.0
+    # along y: the truss force goes to the y bars
+    y = uls.eurocode2_shell_check(_inp(**{**kw, "v_x": 0.0, "v_y": 300.0}))
+    assert y.details["shear"]["phi0_deg"] == pytest.approx(90.0) and y.asy_bot == pytest.approx(r.asx_bot)
+    assert y.asx_bot == 0.0 and y.asw_s == pytest.approx(r.asw_s)
+    # oblique: vx = vy: principal shear √2·v, both directions and the xy component (LL.124-LL.127)
+    o = uls.eurocode2_shell_check(_inp(**{**kw, "v_x": 200.0, "v_y": 200.0}))
+    so = o.details["shear"]
+    v0 = math.hypot(200.0, 200.0)
+    assert so["phi0_deg"] == pytest.approx(45.0) and so["v_ed0"] == pytest.approx(v0)
+    assert so["n_c"] == pytest.approx((200.0**2 / v0 * so["cot"],) * 3)
+    assert o.asx_bot == pytest.approx(o.asy_bot) and o.asx_bot > 0
+    # a negative vy changes the sign of the xy force only
+    neg = uls.eurocode2_shell_check(_inp(**{**kw, "v_x": 200.0, "v_y": -200.0}))
+    assert neg.details["shear"]["n_c"][2] == pytest.approx(-so["n_c"][2])
+    assert neg.details["shear"]["n_c"][:2] == pytest.approx(so["n_c"][:2])
+
+
+def test_shear_adds_to_the_bending_steel_and_ignores_when_asked():
+    kw = {"n_xx": 0.0, "n_yy": 0.0, "n_xy": 0.0, "m_xx": 30.0, "m_yy": 0.0, "m_xy": 0.0}
+    base = uls.eurocode2_shell_check(_inp(**kw))
+    loaded = uls.eurocode2_shell_check(_inp(v_x=200.0, v_y=0.0, **kw))
+    assert loaded.details["shear"]["mode"] == "stirrups" and loaded.asw_s > 0
+    assert loaded.asx_bot > base.asx_bot and loaded.asx_top > base.asx_top      # n_c/2 in both layers
+    cot = loaded.details["shear"]["cot"]
+    d_bot = loaded.asx_bot - base.asx_bot
+    assert d_bot < 0.5 * 200.0 * cot / (FYD * 1e3) + 1e-12                       # (tension layer: ≤ n_c/2/fyd)
+    off = uls.eurocode2_shell_check(_inp(v_x=200.0, v_y=0.0, check_shear=False, **kw))
+    assert off.details["shear"] is None and off.asw_s == 0.0
+    assert (off.asx_bot, off.asx_top) == (base.asx_bot, base.asx_top)
+
+
+def test_shear_strut_crushing_and_trace_and_uncracked():
+    kw = {"n_xx": 0.0, "n_yy": 0.0, "n_xy": 0.0, "m_xx": 0.0, "m_yy": 0.0, "m_xy": 0.0}
+    with pytest.warns(UserWarning):
+        crush = uls.eurocode2_shell_check(_inp(v_x=900.0, v_y=0.0, **kw))
+    assert crush.crushing and crush.details["shear"]["crushing"] and crush.details["shear"]["mode"] == "strut_crushing"
+    rep = CalcReport(title="shear")
+    uls.eurocode2_shell_check(_inp(v_x=300.0, v_y=0.0, **kw), trace=rep)
+    syms = {st.symbol for sec in rep.sections for st in sec.steps}
+    assert {"v_Ed0", "φ0", "ρ_l", "shear", "A_sw/s", "n_c"} <= syms
+    # an uncracked element (cracking check on, small shear) is not designed, shear included
+    quiet = uls.eurocode2_shell_check(_inp(v_x=20.0, v_y=0.0, check_cracking=True, **kw))
+    assert quiet.details["cracked"] is False and quiet.asw_s == 0.0 and quiet.details.get("shear") is None

@@ -35,8 +35,17 @@ enter this check). An element that is **not cracked** needs no reinforcement fro
 minimum principal stress is checked, ``σmin ≤ fcd`` (LL (103)): the result has zero areas and
 ``details["cracked"] = False``. ``check_cracking=False`` designs it as cracked.
 
-Not covered (Annex LL): the out-of-plane shear of the inner layer ((109)-(111), (114)b: the truss force
-``VEd·cot θ`` adds to the outer layers) and the eccentric reinforcement of (115)c.
+Out-of-plane shear (LL (106), (109)-(111), (114)b; ``check_shear``, default): the transverse shears
+``v_x``, ``v_y`` give the principal shear ``vEd0 = √(vx² + vy²)`` in the direction ``tan φ0 = vy/vx``
+(Eqs. LL.121, LL.122); the inner layer is designed as a beam of unit width in that direction (6.2.2, 6.2.3:
+:func:`eurocodepy.ec2.uls.shear_check.eurocode2_shear_check`) with
+``ρl = ρx·cos²φ0 + ρy·sin²φ0`` (LL.123, the larger of the bottom and top bars of each direction, ``ρ ≤ 0,02``). Where
+shear reinforcement is needed (``asw_s``, area per unit plan area) the force of the truss, ``vEd0·cot θ``,
+adds the membrane forces ``vx²/vEd0·cot θ``, ``vy²/vEd0·cot θ``, ``vx·vy/vEd0·cot θ`` (LL.124-LL.127) to the
+outer layers and the layers are designed again (LL.143-LL.148). The minimum shear reinforcement of 9.2.2 is not
+required in slabs and shells (9.3.2).
+
+Not covered (Annex LL): the eccentric reinforcement of (115)c and the general ``zn ≠ zt`` of (108).
 
 Units: forces in **kN/m**, moments in **kNm/m**, strengths in **MPa**, lengths in **m**,
 reinforcement areas in **m²/m**.
@@ -44,10 +53,12 @@ reinforcement areas in **m²/m**.
 
 from __future__ import annotations
 
+import math
 import warnings
 from dataclasses import dataclass, field
 
 from eurocodepy.ec2.materials import PartialFactorsMixin
+from eurocodepy.ec2.uls.shear_check import ShearInput, eurocode2_shear_check
 from eurocodepy.ec2.uls.shell import calc_reinf_plane, shell_cracking, strut_limit
 
 __all__ = ["ShellInput", "ShellResult", "eurocode2_shell_check", "layer_stresses"]
@@ -75,6 +86,7 @@ class ShellInput(PartialFactorsMixin):
     v_y: float = 0.0
     check_cracking: bool = True    # LL (107): an uncracked element is not designed
     fctm: float | None = None      # mean tensile strength [MPa] of the cracking check (None: Table 3.1)
+    check_shear: bool = True       # LL (109)-(111): design the inner layer for v_x, v_y
 
 
 @dataclass
@@ -85,8 +97,9 @@ class ShellResult:
     asy_bot: float
     asx_top: float
     asy_top: float
-    crushing: bool                  # the strut of a layer exceeds ν·fcd
+    crushing: bool                  # the strut of a layer, or of the shear, exceeds its limit
     details: dict = field(default_factory=dict)
+    asw_s: float = 0.0              # shear reinforcement [m²/m per m of width, i.e. m²/m²]
 
     def __str__(self) -> str:
         return (f"EC2 shell (sandwich) — As(x/y bot)={self.asx_bot:.3e}/{self.asy_bot:.3e}, "
@@ -159,27 +172,53 @@ def eurocode2_shell_check(inp: ShellInput, trace=None) -> ShellResult:
                 asx_bot=0.0, asy_bot=0.0, asx_top=0.0, asy_top=0.0, crushing=over,
                 details={"cracked": False, "cracking": cracking, "layers": {}, "t_layer": t,
                          "z": z, "f_cd": fcd, "f_yd": fyd})
-    stresses = layer_stresses((inp.n_xx, inp.n_yy, inp.n_xy),
-                              (inp.m_xx, inp.m_yy, inp.m_xy), t, z)
-    layers = {}
-    crushing = False
-    for name, (sx, sy, txy) in stresses.items():
-        ftdx, ftdy, scd, cot = calc_reinf_plane(sx, sy, txy)
-        reinforced = _needs_reinforcement(sx, sy, txy)
-        lim = strut_limit(inp.strut_model, sx, sy, txy, inp.fck, fcd * 1e3,
-                          cot if reinforced else None)
-        nu = lim["factor"]
-        crush = bool(scd > lim["limit"])
-        crushing = crushing or crush
-        layers[name] = {"stresses": (sx, sy, txy), "ftdx": ftdx, "ftdy": ftdy,
-                        "sigma_cd": scd, "cot": (cot if reinforced else None),
-                        "nu": nu, "crushing": crush, "strut": lim}
+    def _design(n_xx, n_yy, n_xy):
+        stresses = layer_stresses((n_xx, n_yy, n_xy), (inp.m_xx, inp.m_yy, inp.m_xy), t, z)
+        out, crush_any = {}, False
+        for name, (sx, sy, txy) in stresses.items():
+            ftdx, ftdy, scd, cot = calc_reinf_plane(sx, sy, txy)
+            reinforced = _needs_reinforcement(sx, sy, txy)
+            lim = strut_limit(inp.strut_model, sx, sy, txy, inp.fck, fcd * 1e3,
+                              cot if reinforced else None)
+            crush = bool(scd > lim["limit"])
+            crush_any = crush_any or crush
+            out[name] = {"stresses": (sx, sy, txy), "ftdx": ftdx, "ftdy": ftdy,
+                         "sigma_cd": scd, "cot": (cot if reinforced else None),
+                         "nu": lim["factor"], "crushing": crush, "strut": lim}
+        return out, crush_any
 
-    def _area(name, key):
-        return layers[name][key] * t / (fyd * 1e3)          # ftd·t/fyd [m²/m]
+    def _areas(lays):
+        def a(name, key):
+            return lays[name][key] * t / (fyd * 1e3)             # ftd·t/fyd [m²/m]
+        return a("bottom", "ftdx"), a("bottom", "ftdy"), a("top", "ftdx"), a("top", "ftdy")
 
-    asx_bot, asy_bot = _area("bottom", "ftdx"), _area("bottom", "ftdy")
-    asx_top, asy_top = _area("top", "ftdx"), _area("top", "ftdy")
+    layers, crushing = _design(inp.n_xx, inp.n_yy, inp.n_xy)
+    asx_bot, asy_bot, asx_top, asy_top = _areas(layers)
+
+    # inner layer: out-of-plane shear (LL (106), (109)-(111), (114)b)
+    shear, asw_s = None, 0.0
+    v0 = math.hypot(inp.v_x, inp.v_y)
+    if inp.check_shear and v0 > 0.0:
+        d = inp.thickness - inp.cover
+        phi0 = math.atan2(inp.v_y, inp.v_x)                                   # (LL.122)
+        rho_x = min(max(asx_bot, asx_top) / d, 0.02)
+        rho_y = min(max(asy_bot, asy_top) / d, 0.02)
+        rho_l = rho_x * math.cos(phi0) ** 2 + rho_y * math.sin(phi0) ** 2     # (LL.123)
+        sr = eurocode2_shear_check(ShearInput(
+            b=1.0, d=d, fck=inp.fck, fyk=inp.fyk, gamma_c=inp.gamma_c, gamma_s=inp.gamma_s,
+            as_long=rho_l * d, min_shear=False), v0)
+        shear = {"v_ed0": v0, "phi0_deg": math.degrees(phi0), "rho_l": rho_l, "mode": sr.mode,
+                 "vrd_c": sr.vrd_c, "vrd_max": sr.vrd_max, "cot": None, "asw_s": 0.0,
+                 "crushing": bool(sr.crushing), "n_c": (0.0, 0.0, 0.0)}
+        if sr.mode in ("stirrups", "strut_crushing"):
+            cot_v = sr.cot
+            n_c = (inp.v_x**2 / v0 * cot_v, inp.v_y**2 / v0 * cot_v,
+                   inp.v_x * inp.v_y / v0 * cot_v)                           # (LL.124)-(LL.127)
+            asw_s = float(sr.asw_s)
+            shear.update({"cot": cot_v, "asw_s": asw_s, "n_c": n_c})
+            layers, crushing = _design(inp.n_xx + n_c[0], inp.n_yy + n_c[1], inp.n_xy + n_c[2])
+            asx_bot, asy_bot, asx_top, asy_top = _areas(layers)              # (LL.143)-(LL.148)
+        crushing = crushing or shear["crushing"]
 
     if crushing:
         names = " and ".join(k for k, v in layers.items() if v["crushing"])
@@ -205,6 +244,19 @@ def eurocode2_shell_check(inp: ShellInput, trace=None) -> ShellResult:
                note=f"σx={sx:.4g}, σy={sy:.4g}, τ={txy:.4g} kN/m²")
             _t(f"σ_cd ({name})", lay["sigma_cd"] / 1e3, "MPa", ok=(not lay["crushing"]),
                subst=f"≤ ν·f_cd = {lay['nu']:.3g}·{fcd:.4g}")
+        if shear is not None:
+            trace.section("Inner layer: out-of-plane shear (EN 1992-2 Annex LL (109)-(111))")
+            _t("v_Ed0", shear["v_ed0"], "kN/m", clause="EN 1992-2:2005 Eq. (LL.121)",
+               expr="√(vx² + vy²)")
+            _t("φ0", shear["phi0_deg"], "°", clause="EN 1992-2:2005 Eq. (LL.122)", expr="tan φ0 = vy/vx")
+            _t("ρ_l", shear["rho_l"], "—", clause="EN 1992-2:2005 Eq. (LL.123)",
+               expr="ρx·cos²φ0 + ρy·sin²φ0")
+            _t("shear", shear["mode"], "—", clause="EN 1992-1-1 §6.2.2/6.2.3",
+               ok=(not shear["crushing"]), note=f"V_Rd,c = {shear['vrd_c']:.4g} kN/m")
+            if shear["asw_s"]:
+                _t("A_sw/s", shear["asw_s"] * 1e4, "cm²/m²", note=f"cot θ = {shear['cot']:g}")
+                _t("n_c", shear["n_c"][0], "kN/m", clause="EN 1992-2:2005 Eqs. (LL.124)-(LL.127)",
+                   note="truss force added to the outer layers")
         trace.section("Flexural reinforcement")
         _t("A_sx,bot", asx_bot * 1e4, "cm²/m", expr="f_tdx·t/f_yd")
         _t("A_sy,bot", asy_bot * 1e4, "cm²/m")
@@ -214,7 +266,9 @@ def eurocode2_shell_check(inp: ShellInput, trace=None) -> ShellResult:
     return ShellResult(
         asx_bot=asx_bot, asy_bot=asy_bot, asx_top=asx_top, asy_top=asy_top,
         crushing=crushing,
+        asw_s=asw_s,
         details={"layers": layers, "t_layer": t, "z": z, "f_cd": fcd, "f_yd": fyd,
-                 "cracked": True if cracking is not None else None, "cracking": cracking})
+                 "cracked": True if cracking is not None else None, "cracking": cracking,
+                 "shear": shear})
 
 

@@ -68,6 +68,7 @@ from eurocodepy.ec2.materials import (
 )
 from eurocodepy.ec2 import (
     fire as fire,
+    time_dependent2023 as time_dependent2023,
     sls as sls,
     uls as uls,
     uls2023 as uls2023,

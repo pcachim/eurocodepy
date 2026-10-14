@@ -472,7 +472,7 @@ class Concrete:
         self.fcm = conc["fcm"]  # Mean compressive strength (MPa)
         self.fctm = conc["fctm"]  # Mean tensile strength (MPa)
         self.fctk_05 = conc["fctk05"]  # 5% fractile (MPa)
-        self.fctk_95 = round(1.3 * self.fctm, 1)  # 95% fractile (MPa)
+        self.fctk_95 = conc.get("fctk95", round(1.3 * self.fctm, 1))  # 95% fractile (MPa)
         self.Ecm = conc["Ecm"]  # Modulus of elasticity (MPa)
         self.eps_c2 = conc["epsc2"]  # Strain at peak stress
         self.eps_cu2 = conc["epscu2"]  # Ultimate compressive strain
@@ -560,7 +560,8 @@ class Concrete:
             name (str, optional): Name for the concrete grade.
             edition (str, optional): ``"2004"`` (default) or ``"2023"``.
                 For 2023, ``fctm`` follows Table 5.1 and ``Ecm`` Eq. (5.1)
-                (``kE`` = 9500); the strains are those of 2004.
+                (``kE`` = 9500) and the parabola-rectangle diagram has ``εc2`` = 2,0 ‰,
+                ``εcu`` = 3,5 ‰ and ``n`` = 2 for every class (8.1.2(1)).
             situation, loading, k_cip, annex: see :class:`Concrete`.
 
         Returns:
@@ -580,17 +581,20 @@ class Concrete:
             concrete.Ecm = round(KE_2023 * concrete.fcm ** (1 / 3), 1)
         concrete.fctk_05 = round(0.7 * concrete.fctm, 1)  # 5% fractile
         concrete.fctk_95 = round(1.3 * concrete.fctm, 1)  # 95% fractile
-        concrete.eps_c2 = 2.0 if fck <= REF_FCK else 2.0 + 0.085 * (fck - 50) ** 0.53
-        # Strain at peak stress
-        concrete.eps_cu2 = (
-            3.5 if fck <= REF_FCK
-            else round(2.6 + 35 * ((90.0 - fck) / 100.0) ** 4, 1)
-        )
-        concrete.n = (
-            2.0
-            if fck <= REF_FCK
-            else round(1.4 + 23.4 * ((90.0 - fck) / 100.0) ** 4, 1)
-        )
+        if concrete.edition == "2004":
+            concrete.eps_c2 = 2.0 if fck <= REF_FCK else 2.0 + 0.085 * (fck - 50) ** 0.53
+            # Strain at peak stress
+            concrete.eps_cu2 = (
+                3.5 if fck <= REF_FCK
+                else round(2.6 + 35 * ((90.0 - fck) / 100.0) ** 4, 1)
+            )
+            concrete.n = (
+                2.0
+                if fck <= REF_FCK
+                else round(1.4 + 23.4 * ((90.0 - fck) / 100.0) ** 4, 1)
+            )
+        else:                       # EN 1992-1-1:2023 8.1.2(1), Eq. (8.4)
+            concrete.eps_c2, concrete.eps_cu2, concrete.n = 2.0, 3.5, 2.0
         if name is not None:
             concrete.name = name
             concrete.grade = name
@@ -608,14 +612,21 @@ ConcreteGrades = {item.replace("_", "/"): Concrete(item.replace("_", "/"))
             for item in dbase.ConcreteGrades}
 
 
-def get_concrete(concrete: str | Concrete) -> Concrete:
-    """Return a Concrete instance from a string, Concrete, or ConcreteGrade input.
+def get_concrete(concrete: "str | Concrete | ConcreteClass", edition: str | None = None,
+                 situation: str = "persistent", loading: str = "late",
+                 k_cip: float = 1.0, annex: str | None = None) -> Concrete:
+    """Return a Concrete instance from a string, Concrete, or ConcreteClass input.
 
     Parameters
     ----------
-    concrete : str, Concrete, or ConcreteGrade
+    concrete : str, Concrete, or ConcreteClass
         The concrete specification as a string (e.g., 'C30/37'), a Concrete object,
-        or a ConcreteGrade enum.
+        or a ConcreteClass enum.
+    edition, situation, loading, k_cip, annex :
+        As in :class:`Concrete` (``edition=None`` is the default edition, 2004). They
+        build the object from a string or an enum. A ``Concrete`` is returned as it is,
+        and an explicit ``edition`` that is not its own is refused, so that a 2004
+        object is not silently used where 2023 was asked for.
 
     Returns
     -------
@@ -625,15 +636,23 @@ def get_concrete(concrete: str | Concrete) -> Concrete:
     Raises
     ------
     TypeError
-        If the input is not a str, Concrete, or ConcreteGrade.
+        If the input is not a str, Concrete, or ConcreteClass.
+    ValueError
+        If ``concrete`` is a ``Concrete`` of another edition than ``edition``.
 
     """
     if isinstance(concrete, Concrete):
+        if edition is not None and (dbase.resolve_edition("ec2", edition) or "2004") != concrete.edition:
+            msg = (f"the Concrete is of edition {concrete.edition!r}, not {edition!r}: "
+                   "build it with that edition")
+            raise ValueError(msg)
         return concrete
+    if isinstance(concrete, ConcreteClass):
+        concrete = concrete.value
     if isinstance(concrete, str):
-        return Concrete(concrete)
+        return Concrete(concrete, edition, situation, loading, k_cip, annex)
 
-    msg = "Input must be a str, Concrete, or ConcreteGrade"
+    msg = "Input must be a str, Concrete, or ConcreteClass"
     raise TypeError(msg)
 
 

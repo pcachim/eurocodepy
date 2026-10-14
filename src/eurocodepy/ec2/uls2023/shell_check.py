@@ -46,13 +46,19 @@ class ShellInput(PartialFactorsMixin):
     nu_mode: str = "simple"   # 'simple' (ν = 0,4, G.8) or 'strain' (G.9-G.11)
     lam: float = 1.0
     e_s: float = 200000.0
+    v_x: float = 0.0          # transverse shear forces [kN/m] (G.4(4))
+    v_y: float = 0.0
+    check_shear: bool = True
+    gamma_v: float = 1.4
 
 
 def eurocode2_shell_check(inp: ShellInput, trace=None) -> ShellResult:
     """Design the four orthogonal reinforcements of a shell element (Annex G.4(1)-(3)).
 
-    Returns a :class:`ShellResult` (``crushing``: a layer's strut exceeds ``ν·fcd``;
-    ``details`` as :func:`eurocodepy.ec2.uls2023.slab_design.eurocode2_slab_check`).
+    Returns a :class:`ShellResult` (``crushing``: a layer's strut, or the shear strut, exceeds its
+    limit; ``asw_s`` the shear reinforcement [m²/m²]; ``details`` as
+    :func:`eurocodepy.ec2.uls2023.slab_design.eurocode2_slab_check`, with ``details["shear"]``: the
+    transverse shears are verified with 8.2 (G.4(4)), see that function).
     """
     slab = _slab.SlabInput(
         m_x=inp.m_xx, m_y=inp.m_yy, m_xy=inp.m_xy, fck=inp.fck, fyk=inp.fyk,
@@ -60,8 +66,9 @@ def eurocode2_shell_check(inp: ShellInput, trace=None) -> ShellResult:
         cover_top_x=inp.cover, cover_top_y=inp.cover, gamma_c=inp.gamma_c,
         gamma_s=inp.gamma_s, alpha_cc=inp.alpha_cc, k_tc=inp.k_tc, annex=inp.annex,
         n_x=inp.n_xx, n_y=inp.n_yy, n_xy=inp.n_xy, method="sandwich",
-        nu_mode=inp.nu_mode, lam=inp.lam, e_s=inp.e_s)
+        nu_mode=inp.nu_mode, lam=inp.lam, e_s=inp.e_s, v_x=inp.v_x, v_y=inp.v_y,
+        check_shear=inp.check_shear, gamma_v=inp.gamma_v)
     r = _slab.eurocode2_slab_check(slab, trace=trace)
     return ShellResult(asx_bot=r.asx_bot, asy_bot=r.asy_bot, asx_top=r.asx_top,
                        asy_top=r.asy_top, crushing=bool(r.details["crushing"]),
-                       details=r.details)
+                       details=r.details, asw_s=r.asw_s)

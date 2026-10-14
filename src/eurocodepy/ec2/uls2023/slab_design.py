@@ -32,11 +32,13 @@ from __future__ import annotations
 
 import math
 import warnings
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from eurocodepy.ec2.materials import PartialFactorsMixin, concrete_strength_factors
 from eurocodepy.ec2.uls.slab_check import SlabResult, min_reinf_applies, strip_reinforcement
 from eurocodepy.ec2.uls2023 import annex_g as _g
+from eurocodepy.ec2.uls2023 import shear as _shear
+from eurocodepy.ec2.uls2023 import shear_check as _shear_check
 
 __all__ = ["SlabInput", "SlabResult", "eurocode2_slab_check"]
 
@@ -75,6 +77,10 @@ class SlabInput(PartialFactorsMixin):
     nu_mode: str = "simple"   # ν of the sandwich layers: 'simple' 0,4 (G.8) | 'strain' (G.9)
     lam: float = 1.0          # provided/required reinforcement, for ε1 (G.3(7)d)
     e_s: float = 200000.0     # modulus of the reinforcement [MPa]
+    v_x: float = 0.0          # transverse shear forces [kN/m] (out-of-plane shear, G.4(4))
+    v_y: float = 0.0
+    check_shear: bool = True  # verify v_x, v_y with 8.2 and add the chord force to the layers
+    gamma_v: float = 1.4      # γv of shear without shear reinforcement (Table 4.3)
 
 
 _METHODS = ("auto", "optimum", "sandwich")
@@ -82,7 +88,60 @@ _NU_MODES = ("simple", "strain")
 
 
 def eurocode2_slab_check(inp: SlabInput, trace=None) -> SlabResult:
-    """Design the four orthogonal reinforcements of a slab element (Annex G.4(5)).
+    """Design the four orthogonal reinforcements of a slab element (Annex G.4) and verify its shear.
+
+    The flexural design is :func:`_flexure` (Tables G.2/G.3 or the sandwich model). The transverse shears
+    ``v_x``, ``v_y`` are verified according to 8.2 (G.4(4)): ``vEd = √(vx² + vy²)`` (Eq. 8.21), the effective depth
+    ``d`` and ``ρl`` by the ratio ``vy/vx`` (Eqs. 8.22-8.26 and 8.38-8.40, from the larger of the bottom and top
+    bars of each direction), ``τRd,c`` (8.27), and the compression field of 8.2.3 where stirrups are needed
+    (:func:`eurocodepy.ec2.uls2023.shear_check.eurocode2_shear_check`, unit width, ``asw_s`` [m²/m²]; the
+    minimum of Eq. 12.4 is not required in slabs, 12.4.2(3)). The chord force of 8.2.3(8), ``NVd = VEd·cot θ``,
+    is taken to the outer layers in the principal shear direction as EN 1992-2 Annex LL does (Eqs. LL.124-LL.127;
+    G.4(4) itself does not say) and the layers are designed again with the sandwich model. ``check_shear=False``
+    ignores ``v_x``, ``v_y``. ``details["shear"]`` has the verification (``None`` without shear).
+    """
+    r = _flexure(inp, trace)
+    v0 = math.hypot(inp.v_x, inp.v_y)
+    if not inp.check_shear or v0 <= 0.0:
+        return r
+    alpha_cc = (inp.alpha_cc if inp.alpha_cc is not None
+                else concrete_strength_factors(inp.fck, "2023", annex=inp.annex)[0] * inp.k_tc)
+    dx = inp.thickness - max(inp.cover_bot_x, inp.cover_top_x)
+    dy = inp.thickness - max(inp.cover_bot_y, inp.cover_top_y)
+    d = _shear.planar_effective_depth(inp.v_x, inp.v_y, dx, dy)                 # (8.22)-(8.26)
+    rho_x = min(max(r.asx_bot, r.asx_top) / dx, 0.02)
+    rho_y = min(max(r.asy_bot, r.asy_top) / dy, 0.02)
+    rho_l = _shear.planar_rho_l(inp.v_x, inp.v_y, rho_x, rho_y)                 # (8.38)-(8.40)
+    sr = _shear_check.eurocode2_shear_check(_shear_check.ShearInput(
+        b=1.0, d=d, fck=inp.fck, fyk=inp.fyk, gamma_c=inp.gamma_c, gamma_s=inp.gamma_s,
+        gamma_v=inp.gamma_v, alpha_cc=alpha_cc, annex=inp.annex, as_long=rho_l * d,
+        asw_min_s=0.0), v0)
+    shear = {"v_ed": v0, "d": d, "rho_l": rho_l, "mode": sr.mode, "tau_ed": sr.details["tau_ed"],
+             "tau_rdc": sr.details["tau_rdc"], "vrd_c": sr.vrd_c, "vrd_max": sr.vrd_max, "cot": None,
+             "asw_s": 0.0, "crushing": bool(sr.crushing), "n_c": (0.0, 0.0, 0.0)}
+    asw_s = 0.0
+    if sr.mode in ("stirrups", "strut_crushing"):
+        cot = sr.cot
+        n_c = (inp.v_x**2 / v0 * cot, inp.v_y**2 / v0 * cot, inp.v_x * inp.v_y / v0 * cot)
+        asw_s = float(sr.asw_s)
+        shear.update({"cot": cot, "asw_s": asw_s, "n_c": n_c})
+        if inp.method == "optimum":
+            msg = "shear reinforcement adds in-plane forces: the optimum formulae of G.4(5) do not apply"
+            raise ValueError(msg)
+        inp2 = replace(inp, n_x=inp.n_x + n_c[0], n_y=inp.n_y + n_c[1], n_xy=inp.n_xy + n_c[2],
+                       method="sandwich", check_shear=False)
+        r = _flexure(inp2, trace)
+    if sr.crushing:
+        warnings.warn("shear: the concrete strut of the compression field exceeds ν·f_cd (8.2.3, Eq. 8.44): "
+                      "increase the thickness or the concrete strength", UserWarning, stacklevel=2)
+    r.details["shear"] = shear
+    r.details["crushing"] = bool(r.details.get("crushing")) or shear["crushing"]
+    r.asw_s = asw_s
+    return r
+
+
+def _flexure(inp: SlabInput, trace=None) -> SlabResult:
+    """Annex G.4 flexural design of a slab element, see :func:`eurocode2_slab_check`.
 
     Returns:
         A :class:`SlabResult`; ``details`` has the required capacities

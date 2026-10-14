@@ -1,3 +1,8 @@
+"""Shrinkage strain of EN 1992-1-1:2023 Annex B.
+
+``shrink_strain`` delegates to :mod:`eurocodepy.ec2.time_dependent2023`; the helper functions below (the
+individual ``beta`` and ``epsilon`` terms) are kept as they were, array-friendly, for compatibility.
+"""
 import numpy as np
 
 
@@ -12,7 +17,7 @@ def beta_RH(RH, RH_eq, variant=2):
     elif RH == 100:
         return 1.55 * (1 - (RH / RH_eq) ** 2) - 0.25
     else:
-        raise ValueError("Invalid RH. Shoukd be > 20%.")
+        raise ValueError("Invalid RH. It should be between 20 % and 100 %.")
 
 def beta_ds_t_ts(t, ts, hn):
     a = (t - ts) / (0.035 * hn**2 + (t - ts))
@@ -49,27 +54,30 @@ def epsilon_cds(t, ts, fcm28, RH, hn, alpha_ds, alpha_NDP_d):
     return eps_cds_fcm_val * beta_RH_val * beta_ds_val * alpha_NDP_d
 
 def shrink_strain(t, ts, fcm28, RH, hn, concrete_class, alpha_NDP_b, alpha_NDP_d):
-    """Calculates the total shrinkage and creep strain of concrete based on time, initial time, concrete compressive strength, relative humidity, effective height, concrete class, and coefficients for cement type.
-    This function computes the total strain by combining the basic creep strain and drying shrinkage strain, adjusted for the initial time and temperature.
-    The basic creep strain is calculated using the concrete compressive strength and the coefficients for the concrete class.
-    The drying shrinkage strain is calculated using the relative humidity, effective height, and coefficients for the concrete class.
-    The function returns the total strain as a float value. Uses EN1992-1:2025.
+    """Total shrinkage strain ``eps_cs(t, ts) = eps_cbs(t) + eps_cds(t - ts)``, Eq. (B.23).
+
+    Basic shrinkage (Eqs. B.24, B.26, B.27) and drying shrinkage (Eqs. B.25, B.28-B.33) of
+    EN 1992-1-1:2023 Annex B: it is :func:`eurocodepy.ec2.time_dependent2023.shrinkage_total`
+    (which also has the rest of Annex B), so the arguments are validated (RH 20-100 %,
+    12 <= fck <= 100 MPa, t >= ts, class CS, CN or CR) and ``t``, ``ts``, ``fcm28``, ``RH`` and ``hn``
+    may be arrays.
 
     Args:
-        t (_type_): _description_
-        ts (_type_): _description_
-        fcm28 (_type_): _description_
-        RH (_type_): _description_
-        hn (_type_): _description_
-        concrete_class (_type_): _description_
-        alpha_NDP_b (_type_): _description_
-        alpha_NDP_d (_type_): _description_
+        t: age of the concrete [days].
+        ts: age at the beginning of drying [days].
+        fcm28: mean compressive strength at 28 days [MPa].
+        RH: relative humidity [%] (20 to 100).
+        hn: notional size 2*Ac/u [mm].
+        concrete_class: strength development class, "CS", "CN" or "CR" (anything else is an error).
+        alpha_NDP_b: coefficient of the basic shrinkage, 1.0 unless the National Annex says otherwise.
+        alpha_NDP_d: coefficient of the drying shrinkage, 1.0 unless the National Annex says otherwise.
 
     Returns:
-        _type_: _description_
+        The total shrinkage strain (positive = shortening, dimensionless).
     """
-    alpha_bs, alpha_ds = get_alpha_bs_ds(concrete_class)
-    return epsilon_cbs(t, fcm28, alpha_bs, alpha_NDP_b) + epsilon_cds(t, ts, fcm28, RH, hn, alpha_ds, alpha_NDP_d)
+    from eurocodepy.ec2.time_dependent2023 import shrinkage_total
+    return shrinkage_total(t, ts, fcm28, RH, hn, concrete_class,
+                           alpha_ndp_b=alpha_NDP_b, alpha_ndp_d=alpha_NDP_d)
 
 
 if __name__ == "__main__":

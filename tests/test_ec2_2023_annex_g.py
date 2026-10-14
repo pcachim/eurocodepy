@@ -432,3 +432,61 @@ def test_sandwich_trace():
     sd.eurocode2_slab_check(_slab(method="sandwich"), trace=rep)
     symbols = {st.symbol for sec in rep.sections for st in sec.steps}
     assert {"t", "z", "layer bottom", "σ_cd (top)", "A_sx,bot"} <= symbols
+
+
+# ── out-of-plane shear of slabs and shells, G.4(4) with 8.2 ──────────────────
+
+def _shear23(v, d, rho_l, fck=30.0, fyk=500.0, gv=1.4):
+    return uls2023.eurocode2_shear_check(uls2023.ShearInput(
+        b=1.0, d=d, fck=fck, fyk=fyk, gamma_v=gv, as_long=rho_l * d, asw_min_s=0.0), v)
+
+
+def test_slab_shear_without_stirrups_leaves_the_flexural_design_alone():
+    base = sd.eurocode2_slab_check(_slab())
+    r = sd.eurocode2_slab_check(_slab(v_x=40.0, v_y=0.0))
+    s = r.details["shear"]
+    assert base.details.get("shear") is None and base.asw_s == 0.0
+    assert s["mode"] in ("no_verification", "no_shear_reinf") and s["asw_s"] == 0.0 and r.asw_s == 0.0
+    assert (r.asx_bot, r.asy_bot) == (base.asx_bot, base.asy_bot)
+    # d and ρl of the shear direction (8.22), (8.38): x only
+    assert s["d"] == pytest.approx(0.2 - 0.03) and s["v_ed"] == 40.0
+    assert s["rho_l"] == pytest.approx(max(base.asx_bot, base.asx_top) / 0.17)
+    ref = _shear23(40.0, 0.17, s["rho_l"])
+    assert s["vrd_c"] == pytest.approx(ref.vrd_c) and s["tau_ed"] == pytest.approx(ref.details["tau_ed"])
+
+
+def test_slab_shear_stirrups_add_the_chord_force_to_the_layers():
+    kw = {"m_x": 0.0, "m_y": 0.0, "m_xy": 0.0, "v_x": 250.0, "v_y": 0.0}
+    r = sd.eurocode2_slab_check(_slab(**kw))
+    s = r.details["shear"]
+    ref = _shear23(250.0, 0.17, 0.0)
+    assert s["mode"] == "stirrups" and r.asw_s == pytest.approx(ref.asw_s) and s["cot"] == ref.cot
+    assert s["n_c"] == pytest.approx((250.0 * ref.cot, 0.0, 0.0))                  # vx²/v0·cotθ
+    assert r.details["method"] == "sandwich"
+    assert r.asx_bot == r.asx_top == pytest.approx(0.5 * 250.0 * ref.cot / (500 / 1.15 * 1e3))
+    with pytest.raises(ValueError, match="optimum formulae"):
+        sd.eurocode2_slab_check(_slab(method="optimum", **kw))
+    off = sd.eurocode2_slab_check(_slab(check_shear=False, **kw))
+    assert off.details.get("shear") is None and off.asw_s == 0.0 and off.asx_bot == 0.0
+    # oblique shear: effective depth and ρl by the ratio of the shears (8.22)-(8.26), (8.38)-(8.40)
+    o = sd.eurocode2_slab_check(_slab(m_x=40.0, m_y=40.0, m_xy=0.0, v_x=30.0, v_y=30.0))
+    so = o.details["shear"]
+    assert so["d"] == pytest.approx(0.5 * (0.17 + 0.16))                               # 0,5 < vy/vx = 1 < 2
+    assert so["v_ed"] == pytest.approx(math.hypot(30.0, 30.0))
+    rx, ry = max(o.asx_bot, o.asx_top) / 0.17, max(o.asy_bot, o.asy_top) / 0.16
+    assert so["rho_l"] == pytest.approx(rx * 0.5**2 + ry * 0.5**2)                     # ρx cos⁴ + ρy sin⁴ at 45°
+
+
+def test_slab_shear_crushing_and_the_shell_wrapper():
+    with pytest.warns(UserWarning, match="shear: the concrete strut"):
+        c = sd.eurocode2_slab_check(_slab(m_x=0.0, m_y=0.0, m_xy=0.0, v_x=900.0, v_y=0.0))
+    assert c.details["crushing"] and c.details["shear"]["mode"] == "strut_crushing"
+    shell = uls2023.eurocode2_shell_check(uls2023.ShellInput(
+        n_xx=0.0, n_yy=0.0, n_xy=0.0, m_xx=0.0, m_yy=0.0, m_xy=0.0, fck=30.0, fyk=500.0,
+        thickness=0.2, cover=0.04, v_x=250.0, v_y=0.0))
+    assert shell.asw_s > 0 and shell.details["shear"]["mode"] == "stirrups"
+    assert shell.asx_bot == shell.asx_top > 0 and shell.asy_bot == 0.0
+    nov = uls2023.eurocode2_shell_check(uls2023.ShellInput(
+        n_xx=0.0, n_yy=0.0, n_xy=0.0, m_xx=10.0, m_yy=0.0, m_xy=0.0, fck=30.0, fyk=500.0,
+        thickness=0.2, cover=0.04))
+    assert nov.asw_s == 0.0 and nov.details.get("shear") is None

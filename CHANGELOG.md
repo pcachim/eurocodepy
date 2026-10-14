@@ -75,9 +75,29 @@ GNU Lesser General Public License v3.0 or later.
   element is cracked (Annex LL (107), Eqs. LL.101-LL.112, the Ottosen criterion on the principal stresses through the
   thickness, with the transverse shears `v_x`, `v_y`: `uls.shell.ottosen_phi`, `shell_stresses_at_level`, `shell_cracking`);
   an element that is not cracked has zero areas and only `σmin ≤ fcd` is checked (LL (103)); `check_cracking=False` designs it as
-  cracked. Not covered from Annex LL: the inner layer / out-of-plane shear ((109)-(111)) and the eccentric reinforcement of (115)c. `ec2.uls2023.eurocode2_shell_check` is the 2023 one (Annex G.4: Table G.1 per layer,
+  cracked. Out-of-plane shear (LL (106), (109)-(111), (114)b; `ShellInput.v_x`, `v_y`, `check_shear`): the principal shear
+  `vEd0 = √(vx² + vy²)` (LL.121-LL.122), the inner layer as a beam of unit width (6.2.2/6.2.3) with `ρl = ρx·cos²φ0 +
+  ρy·sin²φ0` (LL.123) and, where stirrups are needed (`ShellResult.asw_s`, m²/m²), the truss force `vEd0·cot θ` added to the outer
+  layers (LL.124-LL.127, LL.143-LL.148); `details["shear"]`. `uls2023.slab_design` / `eurocode2_shell_check` verify the shear
+  with 8.2 (G.4(4); Eqs. 8.21-8.26, 8.38-8.40, 8.27, 8.44) and add the chord force (8.2.3(8), as Annex LL) to the sandwich layers.
+  Not covered from Annex LL: the eccentric reinforcement of (115)c and the general `zn ≠ zt` of (108).
   `ν = 0,4` or Eq. G.9, `ηcc·ktc`), built on `slab_design`'s sandwich method. Tension and sagging moments are positive;
   `calc_reinf_shell` follows Annex LL (its "top" layer, `m` positive for tension on the top face).
+- `ec2.get_concrete(concrete, edition=None, situation=, loading=, k_cip=, annex=)` builds the `Concrete` of an edition from a
+  string or a `ConcreteClass` (it only accepted a string or a `Concrete`); a `Concrete` of another edition than the one
+  asked for is refused instead of being used silently.
+- **EN 1992-1-1:2023 Annex B (time-dependent behaviour)**: `ec2.time_dependent2023` — strength and stiffness development
+  (`βcc`, `fcm(t)`, `fctm(t)`, `Ecm(t)`, Table B.2, Eqs. B.1-B.4), temperature-adjusted age and `t0,adj` (B.17-B.18), creep
+  (`creep_basic`, `creep_drying`, `creep_coefficient`, non-linear B.19, characteristic values, `creep_strain`, creep function
+  and superposition B.40-B.41), shrinkage (`shrinkage_basic`, `shrinkage_drying`, `shrinkage_total`, `αNDP`), the test
+  calibration factors `ξ` (B.7), the simplified values after 50 years of Tables 5.2 and 5.3 (`creep_coefficient_50y`,
+  `shrinkage_50y`; data in `Editions.ec2["2023"].creep_shrinkage`, Table 5.3 is an NDP: `annex=`) and the relaxation of
+  prestressing steel (Table B.4, Eqs. B.43-B.44). Scalar and validated (RH 20-100 %, 12 ≤ fck ≤ 100 MPa, `t0 ≥ 1 d`, class
+  CS/CN/CR); the functions of ages, humidity and strength accept numpy arrays. The equations reproduce Tables 5.2 and 5.3.
+  `ec2.sls.creep_coef` / `shrink_strain` were already this Annex B model (array-friendly, without validation); they now
+  delegate to it, so the arguments are validated (RH 20-100 %, 12 ≤ fck ≤ 100 MPa, `t0 ≥ 1 d`, `t ≥ t0`) and a strength
+  development class other than CS/CN/CR is an error instead of a silent CN. The individual `beta`/`epsilon` helpers of
+  those modules are unchanged.
 - `ec2.concrete_strength_factors(fck, edition, loading)` returns `(η_cc, k_tc, k_tt)`.
 ### Deprecated
 - `eurocodepy.dbobj` (and `eurocodepy.dbase.dbobj`): it was a snapshot of `db` built at import that did not follow
@@ -107,6 +127,11 @@ GNU Lesser General Public License v3.0 or later.
 - `Editions.ec2["2023"].overrides["Concrete.Parameters"]`: `k_tc`/`k_tt` key `short_loading` renamed
   `late_loading` (the condition is a design loading not expected for 3 months after casting).
 ### Fixed
+- **EN 1992-1-1:2023 concrete grades** (`Editions.ec2["2023"]`, `Concrete(..., edition="2023")`): C55/67 to C90/105 had the
+  2004 values of `fctm` and `fctk,0.05` (e.g. C60/75 `fctm` 4,4 instead of 4,3) and the reduced `εc2`, `εcu2`, `n` of
+  high-strength concrete. They are now Table 5.1 (`fctm`, `fctk,0.05`, `fctk,0.95`, `fcm`) and 8.1.2(1) (`εc2` = 2,0 ‰,
+  `εcu` = 3,5 ‰, `n` = 2 for every class); C12/15 and C16/20 are added; `Concrete.from_fck(..., edition="2023")` follows.
+  The 2004 data and the creep/shrinkage functions (EN 1992-1-1:2004 3.1.4, Annex B: 2023 has Tables 5.2/5.3) are unchanged.
 - `ec2.uls.calc_reinf_shell` (sandwich model, 2004) always raised `TypeError` (it called `cal_reinf_shell_plan` with six
   scalars); it returns the 8 values of the two layers now (`nan` if the layers overlap). Its units and the layer labels
   (its "top" is Annex G's "bottom") are documented.

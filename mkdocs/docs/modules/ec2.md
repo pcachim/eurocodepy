@@ -154,6 +154,29 @@ Two layers of thickness `t = 2·cover` at `z = h − t` (EN 1992-2 Annex LL); ea
 `ftd·t/fyd` gives the area and the strut of each layer is checked against `ν·fcd`. Sagging moments put the
 bottom layer in tension.
 
+Out-of-plane shear: pass `v_x`, `v_y` (kN/m) to `ShellInput` (and to `SlabInput` in `uls2023`). The principal shear
+`vEd0 = √(vx² + vy²)` is verified as a beam of unit width — 2004: inner layer of Annex LL (109)–(111) with
+`ρl = ρx·cos²φ0 + ρy·sin²φ0`; 2023: clause 8.2 (G.4(4)). Where stirrups are needed (`r.asw_s`, m²/m²), the chord force
+`vEd0·cot θ` of the truss is added to the outer layers and the shell is redesigned; `r.details["shear"]` has the checks and
+a crushed shear strut sets `r.crushing`. `check_shear=False` skips it. `uls.slab_check` returns `asw_s` too, but the chord
+force is not added to the Wood-Armer bars.
+
+### Creep, shrinkage and relaxation, EN 1992-1-1:2023 (Annex B)
+
+```python
+from eurocodepy.ec2 import time_dependent2023 as td
+
+fcm = 38.0                                                      # C30/37, fcm,28
+td.creep_coefficient(18250 + 28, 28, fcm, rh=50, hn=200, cls="CN")   # φ(50 y, 28 d) ≈ 2,46
+td.shrinkage_total(18251, 1, fcm, rh=50, hn=200, cls="CN")           # εcs after 50 years of drying
+td.fcm_t(7, fcm, 30.0, "CN"); td.ecm_t(7, 33000.0, 30.0, "CN")       # strength and stiffness at 7 days
+td.creep_coefficient_50y(28, "CN", 50, 200, 30.0)                    # Table 5.2, any fck by (35/fck)^A
+td.relaxation_loss(18250, 1000.0, td.relaxation_rho1000(0.7, "wire"))  # Eq. (B.43), MPa
+```
+
+Ages in days, `hn = 2Ac/u` in mm, `RH` in %. `cls` is the strength development class CS, CN or CR (Table B.1).
+`ec2.sls.creep_coef` and `shrink_strain` are the same model without validation.
+
 ### Detailing, EN 1992-1-1:2023 (Clause 12)
 
 ```python
