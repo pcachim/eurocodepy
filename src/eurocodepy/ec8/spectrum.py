@@ -102,7 +102,7 @@ def get_spectrum_parameters(code: str, coef_imp: str, soil: str, zone: str) -> t
         coef_imp (str): importance coefficient (i, ii, iii, iv)
         soil (str): soil type (A, B, C, D, E)
         zone (str): zone (1_1, 1_2, 1_3, 1_4, 1_5, 1_6, 2.1, 2.2, 2.3, 2.4, 2.5, .1g,
-        .2g, .3g, .4g, .5g, .6g, .7g, .8g, .9g, 1_0g)
+            .2g, .3g, .4g, .5g, .6g, .7g, .8g, .9g, 1_0g)
 
     Returns:
         list: soil amplification factor, acceleration, T_B, T_C, T_D

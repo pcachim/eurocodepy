@@ -6,6 +6,8 @@ Units: kN, m, MPa.
 
 ### Shear, EN 1992-1-1:2023 (Clause 8.2)
 
+*Code reference:* [`uls2023.shear`][eurocodepy.ec2.uls2023.shear], [`uls2023.shear_check.eurocode2_shear_check`][eurocodepy.ec2.uls2023.shear_check.eurocode2_shear_check], [`uls2023.shear_check.ShearInput`][eurocodepy.ec2.uls2023.shear_check.ShearInput]
+
 ```python
 from eurocodepy.ec2 import uls2023
 
@@ -26,6 +28,8 @@ interfaces) are in `uls2023.shear`.
 
 ### Torsion and shear + torsion, EN 1992-1-1:2023 (Clause 8.3)
 
+*Code reference:* [`uls2023.torsion`][eurocodepy.ec2.uls2023.torsion], [`uls2023.shear_torsion.eurocode2_shear_torsion_check`][eurocodepy.ec2.uls2023.shear_torsion.eurocode2_shear_torsion_check]
+
 ```python
 from eurocodepy.ec2 import uls2023
 
@@ -44,6 +48,8 @@ Annex G: 0,60 at `cot θ = 1`, otherwise Eq. (G.9) with `ε1 = max(G.10, G.11)` 
 
 ### Creep, shrinkage and relaxation, EN 1992-1-1:2023 (Annex B)
 
+*Code reference:* [`time_dependent2023`][eurocodepy.ec2.time_dependent2023], [`sls.creep.creep_coef`][eurocodepy.ec2.sls.creep.creep_coef], [`sls.shrinkage.shrink_strain`][eurocodepy.ec2.sls.shrinkage.shrink_strain]
+
 ```python
 from eurocodepy.ec2 import time_dependent2023 as td
 
@@ -59,6 +65,8 @@ Ages in days, `hn = 2Ac/u` in mm, `RH` in %. `cls` is the strength development c
 `ec2.sls.creep.creep_coef` and `ec2.sls.shrinkage.shrink_strain` are this model (same results, arrays accepted).
 
 ### Detailing, EN 1992-1-1:2023 (Clause 12)
+
+*Code reference:* [`uls2023.detailing`][eurocodepy.ec2.uls2023.detailing]
 
 ```python
 from eurocodepy.ec2.uls2023 import detailing as dt

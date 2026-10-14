@@ -73,8 +73,9 @@ def bond_strength(fck: float, phi: float, good_bond: bool = True,
         fck: characteristic cylinder strength [MPa].
         phi: bar diameter [mm].
         good_bond: ``η1 = 1.0`` for good bond conditions, ``0.7`` otherwise.
-        gamma_c, alpha_ct: partial factor / long-term coefficient of ``f_ctd``.
-        trace: optional ``CalcReport``.
+        gamma_c: partial factor of ``f_ctd``.
+        alpha_ct: long-term coefficient of ``f_ctd``.
+        trace (CalcReport | None): optional ``CalcReport``.
 
     Returns:
         ``{"fctd", "eta1", "eta2", "fbd"}`` (MPa).

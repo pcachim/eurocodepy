@@ -81,7 +81,7 @@ def calc_asl_nm(
         alpha_cc (float, optional): long-term/loading coefficient on fcd.
             Defaults to 1.0 (EN 1992-1-1 recommended / Portuguese NA).
         iprint (bool, optional): print a summary. Defaults to False.
-        trace: optional ``CalcReport`` the steps are recorded into.
+        trace (CalcReport | None): optional ``CalcReport`` the steps are recorded into.
         method (str, optional): ``"simplified"`` (default) is the rectangular
             stress block / transferred-moment method described above.
             ``"strain"`` always uses :func:`calc_asl_nm_strain`.

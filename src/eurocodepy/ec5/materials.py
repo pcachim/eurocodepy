@@ -87,11 +87,10 @@ class Timber:
     Properties are derived from the database for the given type_label.
 
     Args:
-        type_label (str, optional): Timber grade label (e.g., 'C24').
-        Defaults to 'C24'.
+        type_label (str, optional): Timber grade label (e.g., 'C24'). Defaults to 'C24'.
         edition (str, optional): Edition of EN 1995-1-1 whose parameters
-        (``k_mod``, ``k_def``, ``k_h``, ``γ_M``, service classes) are used,
-        e.g. ``"2025"``. ``None`` (default) is the 2004 edition.
+            (``k_mod``, ``k_def``, ``k_h``, ``γ_M``, service classes) are used,
+            e.g. ``"2025"``. ``None`` (default) is the 2004 edition.
 
     Raises:
         ValueError: If the type_label is not found in the database.
@@ -195,8 +194,7 @@ class Timber:
             service_class (ServiceClass, optional): Service class (SC1, SC2, or SC3).
                 Defaults to ServiceClass.SC1.
             load_duration (LoadDuration, optional): Load duration (Perm, Long,
-            Medium, Short, Inst).
-                Defaults to LoadDuration.Medium.
+                Medium, Short, Inst). Defaults to LoadDuration.Medium.
 
         Returns:
             float: kmod value for the specified service class and load duration.
@@ -242,8 +240,7 @@ class Timber:
             service_class (ServiceClass, optional): Service class (SC1, SC2, or SC3).
                 Defaults to ServiceClass.SC1.
             load_duration (LoadDuration, optional): Load duration (Perm, Long,
-            Medium, Short, Inst).
-                Defaults to LoadDuration.Medium.
+                Medium, Short, Inst). Defaults to LoadDuration.Medium.
 
         Returns:
             A dict with the design values
@@ -357,8 +354,7 @@ class SolidTimber(Timber):
     Properties read from the database for the given type_label.
 
     Args:
-        type_label (str, optional): Timber grade label (e.g., 'C24', 'D30').
-        Defaults to 'C24'.
+        type_label (str, optional): Timber grade label (e.g., 'C24', 'D30'). Defaults to 'C24'.
 
     Raises:
         ValueError: If the type_label is not found in the database.
@@ -395,12 +391,11 @@ class Glulam(Timber):
     Properties read from the database for the given type_label.
 
     Args:
-        type_label (str, optional): Glulam type label (e.g., 'GL24h', 'GL28c').
-        Defaults to 'GL24h'.
+        type_label (str, optional): Glulam type label (e.g., 'GL24h', 'GL28c'). Defaults to 'GL24h'.
 
     Raises:
         ValueError: If the type_label does not start with 'GL' or
-        is not found in the database.
+            is not found in the database.
 
     """
 

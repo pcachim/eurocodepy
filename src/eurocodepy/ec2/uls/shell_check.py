@@ -126,7 +126,7 @@ def eurocode2_shell_check(inp: ShellInput, trace=None) -> ShellResult:
 
     Args:
         inp: The shell element data.
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport` (recording only).
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport` (recording only).
 
     Returns:
         A :class:`ShellResult`; ``details`` has, per layer (``"layers"``), the

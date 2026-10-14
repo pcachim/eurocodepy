@@ -88,7 +88,8 @@ def calc_k_m_alpha(alpha: float, f_md: float, f_vd: float, f_t90d: float,
     Args:
         alpha: angle at the tapered edge [rad] (Figure 8.9).
         tension: True for tensile stresses parallel to the tapered edge.
-        k_tau_t, k_tau_c: Eqs. 8.54 / 8.56 (see :func:`k_tau`).
+        k_tau_t: Eq. 8.54 (see :func:`k_tau`).
+        k_tau_c: Eq. 8.56 (see :func:`k_tau`).
 
     """
     t = math.tan(abs(alpha))

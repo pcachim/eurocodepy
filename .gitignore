@@ -230,6 +230,8 @@ pyrightconfig.json
 [Ll]ib64
 [Ll]ocal
 [Ss]cripts
+# the documentation build needs these (gen_ref_pages.py, gen_clause_map.py): not a virtualenv Scripts dir
+!/mkdocs/scripts/
 pyvenv.cfg
 pip-selfcheck.json
 

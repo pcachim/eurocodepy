@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 #
 # Release eurocodepy: tag the version in pyproject.toml, push, create the GitHub
-# release and upload the build to PyPI. Bump the version in pyproject.toml and
+# release, upload the build to PyPI and deploy the documentation (mkdocs
+# gh-deploy to the gh-pages branch). Bump the version in pyproject.toml and
 # commit it before running this.
 #
 # Usage:
 #   tools/publish_release.sh [--skip-tests] [--dry-run]
 #
 #   --skip-tests  do not run pytest before releasing.
-#   --dry-run     build and check everything, but push/release/upload nothing.
+#   --dry-run     build and check everything (package and documentation), but
+#                 push/release/upload/deploy nothing.
 #
 # Requirements: git, gh (authenticated), uv, and a PyPI token in
 # UV_PUBLISH_TOKEN (create one at https://pypi.org/manage/account/token/).
+# The documentation is built (--strict) before anything is tagged, so a broken site stops
+# the release; it is deployed last, once the release is out.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"  # this script lives in tools/
@@ -23,7 +27,7 @@ for arg in "$@"; do
   case "$arg" in
     --skip-tests) RUN_TESTS=0 ;;
     --dry-run)    DRY_RUN=1 ;;
-    -h|--help)    sed -n '2,15p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    -h|--help)    sed -n '2,18p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 0 ;;
     -*)           echo "ERROR: unknown option $arg" >&2; exit 1 ;;
     *)            echo "ERROR: unexpected argument $arg" >&2; exit 1 ;;
   esac
@@ -71,8 +75,15 @@ echo "Building ${VERSION}…"
 uv build --out-dir "$BUILD_DIR" >/dev/null
 ls "$BUILD_DIR"
 
+# The documentation must build without warnings before anything is tagged or pushed (--strict: a broken
+# link, a missing page or a malformed docstring stops the release). The site goes to a scratch dir
+# (the real one is made by gh-deploy at the end).
+echo "Building the documentation…"
+uv run mkdocs build --strict -f mkdocs/mkdocs.yml -d "$BUILD_DIR/site" \
+  || die "the documentation does not build cleanly (run: cd mkdocs && uv run mkdocs build --strict)"
+
 if [[ $DRY_RUN -eq 1 ]]; then
-  echo "Dry run: build OK, nothing pushed or uploaded."
+  echo "Dry run: package and documentation build OK, nothing pushed, uploaded or deployed."
   exit 0
 fi
 
@@ -89,4 +100,11 @@ if ! uv publish "$BUILD_DIR"/*; then
   exit 1
 fi
 
-echo "Done: ${TAG} released on GitHub and PyPI."
+echo "Deploying the documentation…"
+if ! uv run mkdocs gh-deploy --strict -f mkdocs/mkdocs.yml -m "Documentation for eurocodepy ${VERSION}"; then
+  echo "ERROR: ${TAG} is on GitHub and PyPI but the documentation deploy failed." >&2
+  echo "Retry with: cd mkdocs && uv run mkdocs gh-deploy" >&2
+  exit 1
+fi
+
+echo "Done: ${TAG} released on GitHub and PyPI, documentation deployed."

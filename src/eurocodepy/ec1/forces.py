@@ -190,10 +190,11 @@ class SlabForce(BaseForce):
 
     COMPONENTS = ("m_xx", "m_yy", "m_xy", "v_xz", "v_yz")
 
+    # m_xx, m_yy, m_xy are moments per unit width (kNm/m): the dimension of a force
     UNIT_TYPES = (
-        UnitType.MOMENT,
-        UnitType.MOMENT,
-        UnitType.MOMENT,
+        UnitType.FORCE,
+        UnitType.FORCE,
+        UnitType.FORCE,
         UnitType.FORCE_LENGTH,
         UnitType.FORCE_LENGTH,
     )
@@ -245,9 +246,9 @@ class ShellForce(BaseForce):
         UnitType.FORCE_LENGTH,
         UnitType.FORCE_LENGTH,
         UnitType.FORCE_LENGTH,
-        UnitType.MOMENT,
-        UnitType.MOMENT,
-        UnitType.MOMENT,
+        UnitType.FORCE,                  # m_xx, m_yy, m_xy: moments per unit width (kNm/m), a force
+        UnitType.FORCE,
+        UnitType.FORCE,
         UnitType.FORCE_LENGTH,
         UnitType.FORCE_LENGTH,
     )

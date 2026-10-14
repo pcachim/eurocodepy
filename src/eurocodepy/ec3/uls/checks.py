@@ -123,13 +123,12 @@ def eurocode3_combined_check(  # ruff: ignore[undocumented-param, too-many-argum
         N_Ed (float): Axial design force [kN]
         M_Ed (float): Bending moment design value [kNm]
         V_Ed (float): Shear force design value [kN]
-        section (SectionProperties): Section properties (A, W_el, fy)
-        gamma_M0 (float, optional): Partial safety factor for resistance of
-        cross-sections to yielding. Default is 1.0.
-        gamma_M1 (float, optional): Partial safety factor for resistance of members to
-        instability. Default is 1.0.
-        gamma_M2 (float, optional): Partial safety factor for resistance of
-        cross-sections to rupture. Default is 1.25.
+        area (float): Gross cross-section area.
+        area_v (float): Shear area.
+        W_el (float): Elastic section modulus.
+        fy (float): Yield strength [MPa].
+        gamma_M0 (float, optional): Partial safety factor for resistance of cross-sections to yielding. Default is 1.0.
+        gamma_M1 (float, optional): Partial safety factor for resistance of members to instability. Default is 1.0.
 
     Returns:
         dict: Dictionary with utilization ratios and pass/fail status.

@@ -39,10 +39,21 @@ class MassUnit(Enum):
 
 
 class TemperatureUnit(Enum):
-    K = 1.0
-    F = 5.0 / 9.0
-    C = 1.0
-    # Note: °C is offset; add separately if needed.
+    """Temperature scales. The value is ``(size of one degree in kelvin, name)``.
+
+    The name keeps ``C`` and ``K`` apart (both have a degree of the same size: with the bare
+    number ``Enum`` made one an alias of the other). The scales differ by an offset, which
+    :meth:`UnitSystem.convert_temperature` applies; differences of temperature need only the scale.
+    """
+
+    K = (1.0, "kelvin")
+    C = (1.0, "celsius")
+    F = (5.0 / 9.0, "fahrenheit")
+
+    @property
+    def scale(self) -> float:
+        """Size of one degree of this scale in kelvin."""
+        return self.value[0]
 
 
 class UnitType(Enum):
@@ -65,6 +76,22 @@ class UnitType(Enum):
     FORCE_VOLUME = 16
 
 
+def _to_kelvin(value: float, unit: TemperatureUnit) -> float:
+    if unit is TemperatureUnit.K:
+        return value
+    if unit is TemperatureUnit.C:
+        return value + 273.15
+    return (value - 32.0) * 5.0 / 9.0 + 273.15            # Fahrenheit
+
+
+def _from_kelvin(value: float, unit: TemperatureUnit) -> float:
+    if unit is TemperatureUnit.K:
+        return value
+    if unit is TemperatureUnit.C:
+        return value - 273.15
+    return (value - 273.15) * 9.0 / 5.0 + 32.0            # Fahrenheit
+
+
 # ---------------- Unit system ----------------
 
 @dataclass(frozen=True)
@@ -79,19 +106,12 @@ class UnitSystem:
     def convert_temperature(self,
             temperature: float,
             temp_to: TemperatureUnit) -> float:
+        """Convert a temperature (a point on the scale, not a difference) to another scale.
 
-        temp_from = self.temperature
-
-        if temp_from is TemperatureUnit.K:
-            out = temperature + 273.15
-            out = temperature * 9.0 / 5.0 - 32.0 if temp_to is TemperatureUnit.F else out
-        elif  temp_from is TemperatureUnit.C:
-            out = temperature * 9.0 / 5.0 - 32.0 if temp_to is TemperatureUnit.F else temperature - 273.15
-        else:  # F
-            out = (temperature - 32.0) * 5.0 / 9.0
-            out = out if temp_to is TemperatureUnit.C else out + 273.15
-
-        return out
+        ``temperature`` is in this system's ``temperature_unit``; the result is in ``temp_to``.
+        For differences of temperature use ``convert_to(..., UnitType.TEMPERATURE)``.
+        """
+        return _from_kelvin(_to_kelvin(temperature, self.temperature_unit), temp_to)
 
     # derived factors (your -> SI)
     @property
@@ -107,7 +127,7 @@ class UnitSystem:
     def mass(self) -> float: return self.mass_unit.value
 
     @property
-    def temperature(self) -> float: return self.temperature_unit.value
+    def temperature(self) -> float: return self.temperature_unit.scale
 
     @property
     def area(self) -> float: return self.distance_unit.value ** 2
@@ -136,6 +156,16 @@ class UnitSystem:
     def energy(self) -> float:
         """Alias of work (in mechanics, same unit)."""
         return self.work
+
+    @property
+    def power(self) -> float:
+        """Power factor: (your force * your length / your time) -> W."""
+        return self.force_unit.value * self.distance_unit.value / self.time_unit.value
+
+    @property
+    def density(self) -> float:
+        """Density factor: (your mass / your length^3) -> kg/m³."""
+        return self.mass_unit.value / (self.distance_unit.value ** 3)
 
     @property
     def velocity(self) -> float:
@@ -175,8 +205,17 @@ class UnitSystem:
                 return  from_system.force_length / self.force_length
             case UnitType.FORCE_VOLUME:
                 return  from_system.force_volume / self.force_volume
+            case UnitType.WORK | UnitType.ENERGY:
+                return  from_system.work / self.work
+            case UnitType.POWER:
+                return  from_system.power / self.power
+            case UnitType.DENSITY:
+                return  from_system.density / self.density
+            case UnitType.TEMPERATURE:                  # temperature *difference*
+                return  from_system.temperature / self.temperature
             case _:
-                return 0.0
+                msg = f"unit type {unit_type!r} is not supported"
+                raise ValueError(msg)
 
     def convert_to(self, to_system: "UnitSystem", unit_type: UnitType) -> float:
         # convert to SI
@@ -206,8 +245,17 @@ class UnitSystem:
                 return self.force_length / to_system.force_length
             case UnitType.FORCE_VOLUME:
                 return self.force_volume / to_system.force_volume
+            case UnitType.WORK | UnitType.ENERGY:
+                return self.work / to_system.work
+            case UnitType.POWER:
+                return self.power / to_system.power
+            case UnitType.DENSITY:
+                return self.density / to_system.density
+            case UnitType.TEMPERATURE:                  # temperature *difference*
+                return self.temperature / to_system.temperature
             case _:
-                return 0.0
+                msg = f"unit type {unit_type!r} is not supported"
+                raise ValueError(msg)
 
     def to_si(self, value: float, factor: float) -> float:
         return value * factor

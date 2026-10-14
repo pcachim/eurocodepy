@@ -79,7 +79,7 @@ def calc_section_T(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_E
     return prop_un, prop_cr
 
 
-def calc_section_rectangular(h, b, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display = False, label="SECÇÃO RETANGULAR"):
+def calc_section_rectangular(h, b, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display = False, label="SECÇÃO RETANGULAR") -> tuple:
     """Calculate the area, center of gravity, and moment of inertia of a rectangular section.
 
     Args:
@@ -126,7 +126,7 @@ def calc_section_rectangular(h, b, A_s, A_sc, A_p, ds, dsc, dp, alpha_Es, alpha_
 
 
 def calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp,
-                alpha_Es, alpha_Ep, M, P, display = False):
+                alpha_Es, alpha_Ep, M, P, display = False) -> dict:
     """Calculate the area, center of gravity, bending modulus and moment of inertia of a cracked T-section.
 
     Args:
@@ -199,7 +199,7 @@ def calc_section_T_crack(h, bw, bf, hf, A_s, A_sc, A_p, ds, dsc, dp,
     return {"Area": Aun, "Inertia": Iun, "zGi": zg, "zGs": zgs, "Wi": Wi, "Ws": Ws, "NeutralAxis": xi, "e_p": e_p}
 
 
-def calc_section_T_uncrack(h, bw, bf, hf, As, Asc, Ap, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display=False):
+def calc_section_T_uncrack(h, bw, bf, hf, As, Asc, Ap, ds, dsc, dp, alpha_Es, alpha_Ep, M, P, display=False) -> dict:
     """Calculate the area, center of gravity, bending modulus and moment of inertia of a cracked T-section.
 
     Args:
@@ -207,9 +207,9 @@ def calc_section_T_uncrack(h, bw, bf, hf, As, Asc, Ap, ds, dsc, dp, alpha_Es, al
         bw (float): Web width of the section.
         bf (float): Flange width of the section.
         hf (float): Flange height of the section.
-        A_s (float[]): Area of the tensioned reinforcement.
-        A_sc (float[]): Area of the compressed reinforcement.
-        A_p (float[]): Area of the prestressing tendon.
+        As (float[]): Area of the tensioned reinforcement.
+        Asc (float[]): Area of the compressed reinforcement.
+        Ap (float[]): Area of the prestressing tendon.
         ds (float[]): Distance to the tensioned reinforcement from the top.
         dsc (float[]): Distance to the compressed reinforcement from the top.
         dp (float[]): Distance to the prestressing tendon from the top.
@@ -320,8 +320,8 @@ def calc_neutral_axis_cracked_T(h, b, bw, hf, A_s, A_sc, A_p, ds, dsc, dp,
 
     Args:
         h (float): Total height of the section.
+        b (float): Flange width of the section.
         bw (float): Web width of the section.
-        bf (float): Flange width of the section.
         hf (float): Flange height of the section.
         A_s (float[]): Area of the tensioned reinforcement.
         A_sc (float[]): Area of the compressed reinforcement.
@@ -329,8 +329,8 @@ def calc_neutral_axis_cracked_T(h, b, bw, hf, A_s, A_sc, A_p, ds, dsc, dp,
         ds (float[]): Distance to the tensioned reinforcement from the top.
         dsc (float[]): Distance to the compressed reinforcement from the top.
         dp (float[]): Distance to the prestressing tendon from the top.
-        alpha_Es (float): Equivalence factor of the passive steel.
-        alpha_Ep (float): Equivalence factor of the prestressed steel.
+        alpha_E_s (float): Equivalence factor of the passive steel.
+        alpha_E_p (float): Equivalence factor of the prestressed steel.
         M (float): Bending moment.
         P (float): Prestressing normal force.
         display (bool, optional): If True, displays the calculated results. Defaults to False.

@@ -4,6 +4,8 @@ Units: kN, m, MPa. See the [conventions](index.md#conventions) for signs.
 
 ## EN 1992-1-1:2023, Annex G
 
+*Code reference:* [`uls2023.annex_g`][eurocodepy.ec2.uls2023.annex_g], [`uls2023.membrane_check.eurocode2_membrane_check`][eurocodepy.ec2.uls2023.membrane_check.eurocode2_membrane_check], [`uls2023.slab_design.eurocode2_slab_check`][eurocodepy.ec2.uls2023.slab_design.eurocode2_slab_check], [`uls2023.shell_check.eurocode2_shell_check`][eurocodepy.ec2.uls2023.shell_check.eurocode2_shell_check]
+
 ```python
 from eurocodepy.ec2 import uls2023
 from eurocodepy.ec2.uls2023 import annex_g as g
@@ -29,6 +31,8 @@ is not a drop-in for `uls.slab_check`, which takes Wood-Armer moments). `SlabInp
 
 ### Slabs and membranes
 
+*Code reference:* [`uls.slab_check.eurocode2_slab_check`][eurocodepy.ec2.uls.slab_check.eurocode2_slab_check], [`uls.membrane_check.eurocode2_membrane_check`][eurocodepy.ec2.uls.membrane_check.eurocode2_membrane_check], [`uls.shell.strut_limit`][eurocodepy.ec2.uls.shell.strut_limit]
+
 `uls.slab_check` takes Wood-Armer moments (`SlabInput.min_reinf="demand"` by default: a face with no
 tension gets zero reinforcement). `strip_reinforcement` is the underlying strip design. The 2004 code does not
 limit `mxy`; the Wood-Armer tables of EN 1992-1-1:2023 (G.4(5)) are valid for `|mxy| ≤ 0,07·d²·fcd`.
@@ -46,6 +50,8 @@ shell.deformation_capacity_ok_2004(1.0, 1.0, sx, sy, txy)  # 6.109(105) check of
 ```
 
 ### Shell elements (sandwich model, both editions)
+
+*Code reference:* [`uls.shell_check.eurocode2_shell_check`][eurocodepy.ec2.uls.shell_check.eurocode2_shell_check], [`uls2023.shell_check.eurocode2_shell_check`][eurocodepy.ec2.uls2023.shell_check.eurocode2_shell_check], [`uls.shell.calc_reinf_shell`][eurocodepy.ec2.uls.shell.calc_reinf_shell]
 
 ```python
 from eurocodepy.ec2 import uls, uls2023

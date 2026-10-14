@@ -30,7 +30,7 @@ def calc_perimeters(
         dv (float): Effective depth [mm].
         bxord (float): Dimension of the column or concentrated load in x direction [mm].
         by (float or object, optional): Dimension of the column or concentrated
-        load in y direction [mm]. If None, a square section is assumed. Default None.
+            load in y direction [mm]. If None, a square section is assumed. Default None.
         position (str, optional): Position of the load with respect to the slab. Can be
                 "center", "edge" or "corner". By default "center".
         dx (float, optional): Distance to x border [mm]. Defaults to 0.0.
@@ -162,14 +162,18 @@ def calc_vrdcp(dmax: float, rhol: float,  # noqa: PLR0913, PLR0917
     """Calculate punching shear resistance of concrete slab.
 
     Args:
-        dv (float):  Effective depth [mm].
-        b0 (float): Perimeter of the critical section [mm].
-        b05 (float): Perimeter of the section located at a distance of 0.5*d
-                    from the critical section [mm].
         dmax (float): Maximum aggregate size [mm].
         rhol (float): Longitudinal reinforcement ratio.
         fck (float): Characteristic compressive cylinder strength of concrete [MPa].
+        dv (float):  Effective depth [mm].
+        bxord (float): Dimension of the column or load in x direction [mm]; ``b0`` and ``b05``
+            (the perimeters of the control section and of the one at 0.5·d from it) follow from
+            the geometry, see :func:`calc_perimeters`.
+        by (float or object, optional): Dimension in y direction [mm]; ``None`` is a square section.
         gamma_v (float, optional): Partial safety factor for shear, by default 1.4.
+        position (str, optional): "center", "edge" or "corner". By default "center".
+        dx (float, optional): Distance of the column to the slab edge in x [mm].
+        dy (float, optional): Distance of the column to the slab edge in y [mm].
 
     Returns:
         float or np.ndarray: Punching shear resistance of concrete slab [MPa].

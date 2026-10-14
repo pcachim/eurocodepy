@@ -83,7 +83,8 @@ def calc_k_c(l_0y: float, l_0z: float, section: CrossSection,
         k_c = 1 / (k + √(k² − λ_rel²))          for λ_rel > 0.3, else 1.0
 
     Args:
-        l_0y, l_0z (float): Effective (buckling) lengths about y / z [mm].
+        l_0y (float): Effective (buckling) length about y [mm].
+        l_0z (float): Effective (buckling) length about z [mm].
         section (CrossSection): Cross-section object (radius of gyration in m).
         timber (Timber): Timber object (f_c,0,k and E_0,05 = ``E0k``).
 
@@ -185,10 +186,15 @@ def check_bending_with_normal(n_ed: float, m_ed_y: float, m_ed_z: float,  # noqa
 
     Args:
         n_ed (float): Axial force [kN] (negative = compression).
-        m_ed_y, m_ed_z (float): Bending moments about y / z [kNm].
-        section, timber: Cross-section / material objects.
-        l_0y, l_0z, l_0m (float): Effective lengths [mm].
-        service_class, load_duration: EN 1995-1-1 design conditions.
+        m_ed_y (float): Bending moment about y [kNm].
+        m_ed_z (float): Bending moment about z [kNm].
+        section (CrossSection): Cross-section object.
+        timber (Timber): Material object.
+        l_0y (float): Effective length about y [mm].
+        l_0z (float): Effective length about z [mm].
+        l_0m (float): Effective length for lateral-torsional buckling [mm].
+        service_class (ServiceClass): EN 1995-1-1 service class.
+        load_duration (LoadDuration): EN 1995-1-1 load duration class.
 
     Returns:
         dict with ``report``, ``is_ok``, ``utilization``, ``checks``, ``k_c``,

@@ -3,6 +3,7 @@
 
 """Eurocode 3 steel classes existing in the database."""
 import re
+from collections.abc import Iterator
 from dataclasses import dataclass
 from enum import Enum
 
@@ -317,8 +318,7 @@ class SteelSection:
 class ProfileI(SteelSection):
     """I-shaped steel profile according to Eurocode 3.
 
-    Args:
-        SteelSection (SteelSection): geometric and mechanical properties of the section.
+    The geometric and mechanical properties of the section are those of :class:`SteelSection`.
 
     """
 
@@ -407,9 +407,8 @@ class ProfileI(SteelSection):
         """Update the design strength based on a new yield strength.
 
         Args:
-            fyk (float): New characteristic yield strength (MPa).
-            gamma_M0 (float, optional): Partial safety factor for material strength.
-            Defaults to 1.0.
+            fyd (float): New design yield strength (MPa).
+            gamma_M0 (float, optional): Partial safety factor for material strength. Defaults to 1.0.
 
         """
         conversion_factor: float = fyd / self.fyd / gamma_M0
@@ -470,8 +469,7 @@ class ProfileI(SteelSection):
 class ProfileSHS(SteelSection):
     """SHS-shaped steel profile according to Eurocode 3.
 
-    Args:
-        SteelSection (SteelSection): geometric and mechanical properties of the section.
+    The geometric and mechanical properties of the section are those of :class:`SteelSection`.
 
     """
 
@@ -511,8 +509,7 @@ class ProfileSHS(SteelSection):
 class ProfileRHS(SteelSection):
     """RHS-shaped steel profile according to Eurocode 3.
 
-    Args:
-        SteelSection (SteelSection): geometric and mechanical properties of the section.
+    The geometric and mechanical properties of the section are those of :class:`SteelSection`.
 
     """
 
@@ -552,8 +549,7 @@ class ProfileRHS(SteelSection):
 class ProfileCHS(SteelSection):
     """CHS-shaped steel profile according to Eurocode 3.
 
-    Args:
-        SteelSection (SteelSection): geometric and mechanical properties of the section.
+    The geometric and mechanical properties of the section are those of :class:`SteelSection`.
 
     """
 
@@ -1543,11 +1539,11 @@ class WeldConnection:
         """
         return len(self.welds)
 
-    def __iter__(self):  # noqa: ANN204
+    def __iter__(self) -> "Iterator[Weld]":
         """Return an iterator over the welds in the connection.
 
         Returns:
-            iterator: An iterator over the welds list.
+            Iterator[Weld]: An iterator over the welds list.
 
         """
         return iter(self.welds)

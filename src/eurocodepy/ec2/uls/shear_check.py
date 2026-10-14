@@ -70,7 +70,7 @@ def eurocode2_shear_check(inp: ShearInput, v_ed: float,
     Args:
         inp: The section data.
         v_ed: Design shear force ``V_Ed`` [kN] (its magnitude is used).
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
             the check records its steps into it. ``None`` (default) is a no-op —
             the trace only *records* what was computed.
 

@@ -30,10 +30,13 @@ def check_shear_with_torsion(v_ed_y: float, v_ed_z: float, t_ed: float,  # noqa:
     """Shear + torsion check (EN 1995-1-1:2004 §6.1.7 / §6.1.8).
 
     Args:
-        v_ed_y, v_ed_z (float): Design shear forces [kN].
+        v_ed_y (float): Design shear force along y [kN].
+        v_ed_z (float): Design shear force along z [kN].
         t_ed (float): Design torsion moment [kNm].
-        section, timber: Cross-section / material objects.
-        service_class, load_duration: EN 1995-1-1 design conditions.
+        section (CrossSection): Cross-section object.
+        timber (Timber): Material object.
+        service_class (ServiceClass): EN 1995-1-1 service class.
+        load_duration (LoadDuration): EN 1995-1-1 load duration class.
 
     Returns:
         dict with ``report``, ``is_ok``, ``utilization``, ``util_shear``,

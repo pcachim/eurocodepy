@@ -7,6 +7,8 @@ Units differ between functions: see the [conventions](index.md#conventions). Sla
 
 ### Bending — `ec2.uls.beam`
 
+*Code reference:* [`uls.beam`][eurocodepy.ec2.uls.beam]
+
 ```python
 from eurocodepy.ec2 import Concrete, Reinforcement
 from eurocodepy.ec2.uls.beam import calc_mrd, calc_asl, get_bend_params
@@ -24,6 +26,8 @@ get_bend_params("C30/37")
 
 ### Shear — `ec2.uls.shear`
 
+*Code reference:* [`uls.shear`][eurocodepy.ec2.uls.shear]
+
 ```python
 from eurocodepy.ec2.uls.shear import calc_vrdc, calc_vrd, calc_vrdmax, calc_asws
 
@@ -37,6 +41,8 @@ asw_s, vrd_max = calc_asws(bw, d, fck, gc, fyk, gs, cot, ved=150.0)   # Asw/s [m
 
 ### Shell / plane reinforcement — `ec2.uls.shell`
 
+*Code reference:* [`uls.shell`][eurocodepy.ec2.uls.shell]
+
 ```python
 from eurocodepy.ec2.uls.shell import calc_reinf_plane, calc_reinf_shell
 
@@ -49,6 +55,8 @@ top_asx, top_asy, top_asc, top_cot, bot_asx, bot_asy, bot_asc, bot_cot = top   #
 ```
 
 ### Anchorage and lap lengths — `ec2.uls.anchorage`
+
+*Code reference:* [`uls.anchorage`][eurocodepy.ec2.uls.anchorage]
 
 Ribbed bars, EN 1992-1-1:2004 §8.4 and §8.7. **Units: mm, mm², MPa** (the units of
 the bond clauses themselves).
@@ -82,6 +90,8 @@ Every function accepts `trace=` (a `CalcReport`) to record the steps.
 
 ### Punching shear — `ec2.uls.punch`
 
+*Code reference:* [`uls.punch`][eurocodepy.ec2.uls.punch], [`uls.punch_check.eurocode2_punching_check`][eurocodepy.ec2.uls.punch_check.eurocode2_punching_check]
+
 ```python
 from eurocodepy.ec2.uls.punch import calc_perimeters, calc_vedp, calc_vrdcminp, calc_vrdcp
 ```
@@ -91,6 +101,8 @@ from eurocodepy.ec2.uls.punch import calc_perimeters, calc_vedp, calc_vrdcminp, 
 ## SLS checks
 
 ### Crack width — `ec2.sls.crack`
+
+*Code reference:* [`sls.crack`][eurocodepy.ec2.sls.crack]
 
 ```python
 import numpy as np

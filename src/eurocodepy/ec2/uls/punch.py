@@ -105,7 +105,11 @@ def calc_vedp(  # ruff: ignore[too-many-arguments, too-many-positional-arguments
         medx: Design moment about x [kNm].
         medy: Design moment about y [kNm].
         dv: Effective depth d [mm].
-        bxord, by, position, dx, dy: see :func:`calc_perimeters`.
+        bxord (float): column width, see :func:`calc_perimeters`.
+        by (float | None): column depth, see :func:`calc_perimeters`.
+        position (str): column position, see :func:`calc_perimeters`.
+        dx (float): edge distance in x, see :func:`calc_perimeters`.
+        dy (float): edge distance in y, see :func:`calc_perimeters`.
 
     Returns:
         Design punching shear stress [MPa].

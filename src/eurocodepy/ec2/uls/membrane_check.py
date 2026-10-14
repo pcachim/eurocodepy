@@ -88,7 +88,7 @@ def eurocode2_membrane_check(inp: MembraneInput, trace=None) -> MembraneResult:
 
     Args:
         inp: The membrane element data.
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
             the check records its steps into it. ``None`` (default) is a no-op —
             the trace only *records* what was computed.
 

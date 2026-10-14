@@ -55,7 +55,7 @@ def varphi_dc(t, t0, fcm28, RH, hn, t0_adj):
     
     return beta_fcm * beta_RH_val * beta_t0 * beta_t_t0
 
-def creep_coef(t, t0, fcm28, RH, hn, t0_T, concrete_class):
+def creep_coef(t, t0, fcm28, RH, hn, t0_T, concrete_class) -> "float | numpy.ndarray":
     """Calculates the creep coefficient based on time, initial time, concrete compressive strength, relative humidity, effective height, initial temperature, and concrete class.
     This function computes the creep coefficient using the coefficients defined for different concrete compressive strengths, relative humidity, and time.
     The creep coefficient is a measure of the time-dependent deformation of concrete under sustained load.
@@ -68,16 +68,16 @@ def creep_coef(t, t0, fcm28, RH, hn, t0_T, concrete_class):
     t >= t0, class CS, CN or CR) and ``t``, ``t0``, ``fcm28``, ``RH`` and ``hn`` may be arrays.
 
     Args:
-        t: age of the concrete [days].
-        t0: age at loading [days] (the duration of loading is ``t - t0``).
-        fcm28: mean compressive strength at 28 days [MPa].
-        RH: relative humidity [%].
-        hn: notional size 2*Ac/u [mm].
-        t0_T: age at loading adjusted for temperature (Eq. B.18), ``t0`` at 20 degrees C.
-        concrete_class: strength development class, "CS", "CN" or "CR" (anything else is an error).
+        t (float | numpy.ndarray): age of the concrete [days].
+        t0 (float | numpy.ndarray): age at loading [days] (the duration of loading is ``t - t0``).
+        fcm28 (float | numpy.ndarray): mean compressive strength at 28 days [MPa].
+        RH (float | numpy.ndarray): relative humidity [%].
+        hn (float | numpy.ndarray): notional size 2*Ac/u [mm].
+        t0_T (float | numpy.ndarray): age at loading adjusted for temperature (Eq. B.18), ``t0`` at 20 degrees C.
+        concrete_class (str): strength development class, "CS", "CN" or "CR" (anything else is an error).
 
     Returns:
-        The total creep coefficient phi(t, t0) = phi_bc + phi_dc.
+        float | numpy.ndarray: the total creep coefficient phi(t, t0) = phi_bc + phi_dc.
     """
     from eurocodepy.ec2.time_dependent2023 import creep_coefficient
     return creep_coefficient(t, t0, fcm28, RH, hn, concrete_class, t0_T=t0_T)

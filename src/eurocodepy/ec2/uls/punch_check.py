@@ -115,10 +115,11 @@ def eurocode2_punching_check(inp: PunchInput, n_ed: float,
     Args:
         inp: The column / slab data (and the EC2 edition).
         n_ed: Punching force ``V_Ed`` [kN] (its magnitude is used).
-        m_ed_x, m_ed_y: Transferred moments [kNm].
+        m_ed_x: Transferred moment about x [kNm].
+        m_ed_y: Transferred moment about y [kNm].
         rho_l: Longitudinal reinforcement ratio at the column (already resolved).
         beta_min: Floor on the eccentricity factor ``β`` (EC2 §6.4.3(6)).
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`; recording
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`; recording
             only — ``None`` leaves the result identical.
 
     Returns:

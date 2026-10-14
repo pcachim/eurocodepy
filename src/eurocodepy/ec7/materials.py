@@ -79,13 +79,13 @@ class Soil:
     Attributes:
         unit_weight (float): Unit weight of the soil in kN/m³.
         friction_angle (float): Effective angle of internal friction in degrees
-        (converted to radians).
+            (converted to radians).
         conc_friction_angle (float): Angle of soil/concrete friction in degrees
-        (converted to radians).
+            (converted to radians).
         sig_adm (float): Admissible stress in kPa. Defaults to 200 kPa.
         c (int or numpy.ndarray): effective cohesion. Defaults to 0.
-        drained (bool, optional): drained or undrained conditions.
-        if undrained c = cu. Defaults to True.
+        drained (bool, optional): drained or undrained conditions;
+            if undrained c = cu. Defaults to True.
 
     """
 
@@ -233,10 +233,9 @@ class SoilSeismicParameters:
     """Seismic parameters for soil based on Eurocode 8.
 
     Args:
-        spectrum (str): name of the seismic spectrum (e.g., "PT1", "PT2", "CEN1", ...)
-        agR (float): ground acceleration in m/s²
+        name (str): name of the seismic spectrum (e.g., "PT1", "PT2", "CEN1", ...)
+        agr (float): ground acceleration in m/s²
         s_max (float): maximum spectral acceleration
-        importance_coeff (float): importance coefficient for the structure
         avg_ahg (float): ratio vertical/horizontal acceleration
         r (float, optional): response reduction factor. Defaults to 1.0.
 
@@ -308,7 +307,6 @@ def get_soil_seismic_parameters(name: str, code: str, soil: str, imp_class: str,
                                     (for EU: CEN1, CEN2)
         zone (str): seismic zone 1 (for PT: 1_1, 1_2, 1_3, 2_4, 2_5, 2_6, ...)
                                     (for EU: _1g, _2g ...)
-        r (float, optional): response reduction factor. Defaults to 1.0.
 
     Returns:
         SoilSeismicParameters: object containing seismic parameters

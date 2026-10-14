@@ -191,13 +191,12 @@ def pressure_coefficients(phi: float, delta: float, theta: float,
         phi (float): friction angle of the soil (radians).
         delta (float): friction angle of the wall (radians).
         theta (float): slope angle of the backfill (radians).
-        betha (float): slope angle of the wall (radians).
-        method (str, optional): calculation method for earth pressures.
-        Defaults to "ec7".
+        beta (float): slope angle of the wall (radians).
+        method (str, optional): calculation method for earth pressures. Defaults to "ec7".
         seismic (SoilSeismicParameters, optional): Seismic horizontal/vertical seismic
-        coefficients. Defaults to None.
+            coefficients. Defaults to None.
         k_quake_water (float, optional): water earthquake coefficient (g_d/(g-g_w)).
-        Defaults to 1.0: no water.
+            Defaults to 1.0: no water.
 
     Raises:
         ValueError: Method not found.

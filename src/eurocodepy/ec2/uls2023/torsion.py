@@ -202,15 +202,18 @@ def calc_torsion(ted: float, b: float, h: float,
 
     Args:
         ted: design torsion moment ``TEd`` [kNm].
-        b, h: section width and height [m].
-        fck, g_c, fyk, g_s: concrete strength [MPa] and partial factor, steel
-            strength [MPa] and partial factor.
+        b: section width [m].
+        h: section height [m].
+        fck: concrete strength [MPa].
+        g_c: partial factor of the concrete.
+        fyk: steel strength [MPa].
+        g_s: partial factor of the steel.
         cott: ``cot θ``, ``1/2,5 ≤ cot θ ≤ 2,5`` (Eq. 8.85).
         cover: distance from the surface to the centre of the longitudinal
             bars [m] (``t_eff ≥ 2·cover``).
         alpha_cc: ``ηcc·ktc`` of ``fcd`` (Eq. 5.3); ``None`` is ``ηcc`` of ``fck``
             with ``ktc = 1`` (late loading). Pass ``0.85·ηcc`` for ``ktc = 0,85``.
-        trace: optional :class:`eurocodepy.calc_report.CalcReport` (recording only).
+        trace (CalcReport | None): optional :class:`eurocodepy.calc_report.CalcReport` (recording only).
         nu: ``ν`` of Eq. (8.84); ``None`` follows :func:`torsion_nu`.
         annex: national annex country code for ``ηcc``.
 

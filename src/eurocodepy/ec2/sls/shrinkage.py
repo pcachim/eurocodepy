@@ -53,7 +53,7 @@ def epsilon_cds(t, ts, fcm28, RH, hn, alpha_ds, alpha_NDP_d):
     
     return eps_cds_fcm_val * beta_RH_val * beta_ds_val * alpha_NDP_d
 
-def shrink_strain(t, ts, fcm28, RH, hn, concrete_class, alpha_NDP_b, alpha_NDP_d):
+def shrink_strain(t, ts, fcm28, RH, hn, concrete_class, alpha_NDP_b, alpha_NDP_d) -> "float | numpy.ndarray":
     """Total shrinkage strain ``eps_cs(t, ts) = eps_cbs(t) + eps_cds(t - ts)``, Eq. (B.23).
 
     Basic shrinkage (Eqs. B.24, B.26, B.27) and drying shrinkage (Eqs. B.25, B.28-B.33) of
@@ -63,17 +63,17 @@ def shrink_strain(t, ts, fcm28, RH, hn, concrete_class, alpha_NDP_b, alpha_NDP_d
     may be arrays.
 
     Args:
-        t: age of the concrete [days].
-        ts: age at the beginning of drying [days].
-        fcm28: mean compressive strength at 28 days [MPa].
-        RH: relative humidity [%] (20 to 100).
-        hn: notional size 2*Ac/u [mm].
-        concrete_class: strength development class, "CS", "CN" or "CR" (anything else is an error).
-        alpha_NDP_b: coefficient of the basic shrinkage, 1.0 unless the National Annex says otherwise.
-        alpha_NDP_d: coefficient of the drying shrinkage, 1.0 unless the National Annex says otherwise.
+        t (float | numpy.ndarray): age of the concrete [days].
+        ts (float | numpy.ndarray): age at the beginning of drying [days].
+        fcm28 (float | numpy.ndarray): mean compressive strength at 28 days [MPa].
+        RH (float | numpy.ndarray): relative humidity [%] (20 to 100).
+        hn (float | numpy.ndarray): notional size 2*Ac/u [mm].
+        concrete_class (str): strength development class, "CS", "CN" or "CR" (anything else is an error).
+        alpha_NDP_b (float): coefficient of the basic shrinkage, 1.0 unless the National Annex says otherwise.
+        alpha_NDP_d (float): coefficient of the drying shrinkage, 1.0 unless the National Annex says otherwise.
 
     Returns:
-        The total shrinkage strain (positive = shortening, dimensionless).
+        float | numpy.ndarray: the total shrinkage strain (positive = shortening, dimensionless).
     """
     from eurocodepy.ec2.time_dependent2023 import shrinkage_total
     return shrinkage_total(t, ts, fcm28, RH, hn, concrete_class,
@@ -98,20 +98,20 @@ if __name__ == "__main__":
 
     import matplotlib.pyplot as plt
 
-    def generate_chart_data(fcm28, RH, hn, concrete_class, alpha_NDP_b, alpha_NDP_d):
+    def generate_chart_data(fcm28, RH, hn, concrete_class, alpha_NDP_b, alpha_NDP_d) -> dict:
         """
         Generates data for charts related to creep and shrinkage of concrete.
 
         Args:
-            fcm28: Characteristic compressive strength of concrete at 28 days (MPa).
-            RH: Relative humidity (%).
-            hn: Notional size of the concrete member (mm).
-            concrete_class: Class of concrete ('CS', 'CN', or 'CR').
-            alpha_NDP_b: Coefficient depending on type of cement.
-            alpha_NDP_d: Coefficient depending on type of cement.
+            fcm28 (float): Mean compressive strength of concrete at 28 days (MPa).
+            RH (float): Relative humidity (%).
+            hn (float): Notional size of the concrete member (mm).
+            concrete_class (str): Class of concrete ('CS', 'CN', or 'CR').
+            alpha_NDP_b (float): Coefficient of the basic shrinkage (NDP).
+            alpha_NDP_d (float): Coefficient of the drying shrinkage (NDP).
 
         Returns:
-            A dictionary containing the data for the charts.
+            dict: the data for the charts.
         """
 
         t_values = np.linspace(0, 365 * 50, 500)  # Time in days, up to 50 years
@@ -140,7 +140,7 @@ if __name__ == "__main__":
         Draws charts related to creep and shrinkage of concrete.
 
         Args:
-            chart_data: A dictionary containing the data for the charts.
+            chart_data (dict): the data for the charts.
         """
 
         t_values = chart_data["t_values"]
@@ -212,18 +212,18 @@ if __name__ == "__main__":
     plt.grid(True)
     plt.show()
 
-    def generate_table_data(fcm28, concrete_class, alpha_NDP_b, alpha_NDP_d):
+    def generate_table_data(fcm28, concrete_class, alpha_NDP_b, alpha_NDP_d) -> dict:
         """
         Generates data for the table related to creep and shrinkage of concrete.
 
         Args:
-            fcm28: Characteristic compressive strength of concrete at 28 days (MPa).
-            concrete_class: Class of concrete ('CS', 'CN', or 'CR').
-            alpha_NDP_b: Coefficient depending on type of cement.
-            alpha_NDP_d: Coefficient depending on type of cement.
+            fcm28 (float): Mean compressive strength of concrete at 28 days (MPa).
+            concrete_class (str): Class of concrete ('CS', 'CN', or 'CR').
+            alpha_NDP_b (float): Coefficient of the basic shrinkage (NDP).
+            alpha_NDP_d (float): Coefficient of the drying shrinkage (NDP).
 
         Returns:
-            A dictionary containing the data for the table.
+            dict: the data for the table.
         """
 
         RH_values = [50, 65, 80]
@@ -255,7 +255,7 @@ if __name__ == "__main__":
         Prints the table related to creep and shrinkage of concrete.
 
         Args:
-            table_data: A dictionary containing the data for the table.
+            table_data (dict): the data for the table.
         """
 
         RH_values = sorted(table_data.keys())

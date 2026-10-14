@@ -109,8 +109,7 @@ def get_national_params(local: locale = locale.PT,
     """Get Portuguese data for municipalities.
 
     Args:
-        local (locale, optional): Locale to use for national parameters.
-        Defaults to locale.PT.
+        local (locale, optional): Locale to use for national parameters. Defaults to locale.PT.
         concelho (str, optional): Municipality name. Defaults to "Lisboa".
 
     Returns:

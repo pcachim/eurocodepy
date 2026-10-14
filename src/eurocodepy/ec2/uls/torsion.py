@@ -35,22 +35,23 @@ def calc_torsion(ted: float, b: float, h: float,
             lower bound of 2·cover is applied to the effective wall thickness
             (EC2 §6.3.2(1)). Defaults to 0.0 (no lower bound).
         alpha_cc (float): long-term/loading coefficient on f_cd. Defaults to 1.0.
-        trace: optional :class:`eurocodepy.calc_report.CalcReport`. When given,
+        trace (CalcReport | None): optional :class:`eurocodepy.calc_report.CalcReport`. When given,
             the design records its steps into it. ``None`` (default) is a no-op —
             the trace only *records* what was computed, so the result is
             unchanged.
 
     Returns:
-        dict with keys:
-          t_ef  [m]     — effective wall thickness A/u (≥ 2·cover).
-          A_k   [m²]    — area enclosed by the wall centre-line.
-          u_k   [m]     — centre-line perimeter.
-          TRd_max [kN·m]— crushing torsion resistance (Eq. 6.30).
-          Asw_tor_s [m²/m] — closed torsion stirrups, area per unit length,
-                             per single leg (add to the per-leg shear stirrups).
-          Asl_tor [m²]  — total longitudinal torsion steel, to distribute
-                          around u_k.
-          util          — T_Ed / T_Rd,max (the torsion side of Eq. 6.29).
+        dict: with the keys
+
+            * ``t_ef`` [m]: effective wall thickness A/u (≥ 2·cover).
+            * ``A_k`` [m²]: area enclosed by the wall centre-line.
+            * ``u_k`` [m]: centre-line perimeter.
+            * ``TRd_max`` [kN·m]: crushing torsion resistance (Eq. 6.30).
+            * ``Asw_tor_s`` [m²/m]: closed torsion stirrups, area per unit length,
+              per single leg (add to the per-leg shear stirrups).
+            * ``Asl_tor`` [m²]: total longitudinal torsion steel, to distribute
+              around u_k.
+            * ``util``: T_Ed / T_Rd,max (the torsion side of Eq. 6.29).
 
     """
     ted = abs(ted)

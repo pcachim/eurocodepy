@@ -81,7 +81,7 @@ def eurocode2_shear_torsion_check(inp: ShearTorsionInput, v_ed: float, t_ed: flo
         t_ed: Design torsion moment ``T_Ed`` [kN·m] (its magnitude is used).
         distribution_mode: ``"top_bottom"`` (default) or ``"perimeter"``, passed to
             :func:`distribute_torsion_longitudinal`.
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`; recording only.
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`; recording only.
 
     Returns:
         A :class:`ShearTorsionResult` (``interaction`` is Eq. 8.86).

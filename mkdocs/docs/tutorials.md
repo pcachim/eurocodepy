@@ -37,7 +37,6 @@ print(f"As   = {As:.1f} mm²")
 # 3. Calculate design bending resistance (simplified rectangular stress block)
 Mrd, eps_s, x = ec.ec2.calc_mrd(b / 1000, d / 1000, As / 100, concrete.fcd, reinf.fyd)   # m, cm²
 print(f"MRd  = {Mrd:.1f} kNm")
-```
 
 # 4. The same section with the second-generation code (EN 1992-1-1:2023)
 concrete23 = ec.ec2.get_concrete('C30/37', edition='2023')   # fcd = η_cc·k_tc·fck/γc, Eq. 5.3
@@ -125,6 +124,9 @@ print(sum(f * values[k] for k, (_, f) in combo.factors.items()))
 
 ## Tutorial 4 — Timber bending check (EN 1995)
 
+This tutorial gets the design bending strength of a solid timber member from its strength class, the
+service class and the load duration.
+
 ```python
 from eurocodepy.ec5.materials import SolidTimber, ServiceClass, LoadDuration
 
@@ -153,6 +155,10 @@ print(timber.design_values(ServiceClass.SC1, LoadDuration.MediumDuration)["fmd"]
 ---
 
 ## Tutorial 5 — Steel section and bearing capacity (EN 1993 / EN 1997)
+
+A rolled I section is checked under bending and shear (EN 1993-1-1) and the bearing resistance of a
+shallow foundation is computed (EN 1997-1). Profile properties are in cm, the bearing function takes
+angles in radians.
 
 ```python
 import numpy as np

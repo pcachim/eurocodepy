@@ -51,8 +51,13 @@ class BaseStress:
 
     """
 
-    def convert_to(self, unit_system: UnitSystem) -> "BaseStress":
-        return self
+    def convert_to(self, unit_system: UnitSystem) -> Self:
+        """Return a copy with every stress component in ``unit_system`` (force / length²)."""
+        if self.u == unit_system:
+            return self
+        factor = self.u.convert_to(unit_system, UnitType.PRESSURE)
+        data = {name: getattr(self, name) * factor for name in self._numeric_field_names()}
+        return replace(self, u=unit_system, **data)
 
     # --------------------
     # Internal helpers
@@ -68,9 +73,7 @@ class BaseStress:
             raise ValueError("Unit systems must match before operations.")
 
     def _match_units(self, other):
-        if self.u != other.u:
-            other.convert_to(self.u)
-        return other
+        return other.convert_to(self.u) if self.u != other.u else other
 
     def _operate(self, other, op):
         data = {}
@@ -90,11 +93,11 @@ class BaseStress:
     # Operators
     # --------------------
     def __add__(self, other: Self) -> Self:
-        self._match_units(other)
+        other = self._match_units(other)
         return self._operate(other, operator.add)
 
     def __sub__(self, other: Self) -> Self:
-        self._match_units(other)
+        other = self._match_units(other)
         return self._operate(other, operator.sub)
 
     def __mul__(self, scalar: float) -> Self:
@@ -127,14 +130,6 @@ class Stresses3d(BaseStress):
     def __post_init__(self) -> None:
         self.invariants: None | dict = None
         self.n: int = 3
-
-    def convert_to(self, unit_system: UnitSystem) -> "Stresses3d":
-        ffactor = self.u.convert_to(unit_system, unit_type=UnitType.FORCE_LENGTH)
-        self.n_xx *= ffactor
-        self.n_yy *= ffactor
-        self.n_xy *= ffactor
-        self.u = unit_system
-        return self
 
     def to_numpy(self) -> np.ndarray:
         return np.array([
@@ -244,14 +239,6 @@ class Stresses2d(Stresses3d):
         self.sig_zz = 0.0
         self.tau_yz = 0.0
         self.tau_zx = 0.0
-
-    def convert_to(self, unit_system: UnitSystem) -> "Stresses2d":
-        ffactor = self.u.convert_to(unit_system, unit_type=UnitType.FORCE_LENGTH)
-        self.sig_xx *= ffactor
-        self.sig_yy *= ffactor
-        self.sig_xy *= ffactor
-        self.u = unit_system
-        return self
 
 
 def principals(sigxx: float, sigyy: float, sigzz: float,  # noqa: PLR0913, PLR0917

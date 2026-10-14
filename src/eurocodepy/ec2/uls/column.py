@@ -309,7 +309,7 @@ def effective_length(length_m: float, k: float) -> float:
 
 
 def slenderness_limit(n: float, phi_ef: float, omega: float,
-                       rm=None) -> float:
+                       rm: float | None = None) -> float:
     """Simplified slenderness limit lambda_lim (Eq. 5.13N).
 
     Args:
@@ -385,11 +385,11 @@ def nominal_stiffness_moment(n_ed: float, m0_ed: float, ac: float, ic: float,
                               phi_ef: float, es_mpa=None,
                               i_s=None,
                               include_steel: bool = False,
-                              ):
+                              ) -> tuple[float, float, bool]:
     """Nominal-stiffness alternative (§5.8.7, Eqs. 5.20-5.24).
 
     Returns:
-        (n_b, m_total, stable): the Euler critical load N_B [kN], the
+        tuple: ``(n_b, m_total, stable)``: the Euler critical load N_B [kN], the
         amplified total moment [kNm], and whether N_Ed < N_B (``stable``);
         when ``stable`` is False the section is unstable at this stiffness
         estimate and M_total is returned as +inf rather than dividing by a

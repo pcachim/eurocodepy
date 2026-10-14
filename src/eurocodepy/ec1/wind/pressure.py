@@ -114,7 +114,7 @@ def c_r(z: float, z_min: float, z_0: float, z_0II: float) -> float:
         z (float): vertical distance.
         z_min (float, optional): minimum height.
         z_0 (float, optional): roughness length.
-        z_OII (float, optional): roughness length for terrain II.
+        z_0II (float, optional): roughness length for terrain II.
 
     Returns:
         float: the roughness factor

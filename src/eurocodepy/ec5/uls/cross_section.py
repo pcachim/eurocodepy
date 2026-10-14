@@ -151,7 +151,7 @@ def eurocode5_section_check(inp: TimberSectionInput,
         inp: The section, material, service class / load duration and the
             effective lengths for the compression and LTB stability factors.
         f: The design forces (kN / kNm; negative ``n_ed`` is compression).
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
             the check records its steps into it (recording only — the result is
             identical to ``trace=None``).
 

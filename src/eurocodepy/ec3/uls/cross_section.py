@@ -210,7 +210,7 @@ def eurocode3_section_check(inp: SectionResistanceInput,
     Args:
         inp: The cross-section data.
         f: The design forces.
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
             the check records its steps (clause, expression, substitution,
             value) into it. ``None`` (default) is a no-op and leaves the result
             identical — the trace only *records* what was computed.
@@ -407,11 +407,11 @@ def section_check_profile(profile, fy: float, forces: SectionForces, *,  # ruff:
     profile / classification. Geometry is read from the profile (cm → mm).
 
     Args:
-        profile: A eurocodepy profile object.
+        profile (object): A eurocodepy profile object.
         fy: Yield strength [N/mm²].
         forces: The design forces.
         gamma_M0: Partial factor γ_M0.
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When
             given, both the §5.5 classification derivation and the §6.2
             resistance steps are recorded into it. ``None`` (default) is a
             no-op.

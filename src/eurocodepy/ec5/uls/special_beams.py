@@ -96,7 +96,7 @@ def check_tapered_edge(m_ed: float, b: float, h: float, alpha: float,
     of the depth, as in the cross-section check.
 
     Args:
-        trace: optional :class:`eurocodepy.calc_report.CalcReport` recording the
+        trace (CalcReport | None): optional :class:`eurocodepy.calc_report.CalcReport` recording the
             steps; the result is identical with or without it.
 
     """

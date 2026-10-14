@@ -117,7 +117,8 @@ def distribute_torsion_longitudinal(b: float, h: float, asl_tor_total: float,
     available as an explicit opt-in ahead of that phase.
 
     Args:
-        b, h: outer section dimensions [m].
+        b: outer section width [m].
+        h: outer section height [m].
         asl_tor_total: total longitudinal torsion steel [m²] (e.g. from
             ``calc_torsion``'s ``Asl_tor``).
         cover: mechanical cover [m], used to reproduce the same effective
@@ -185,7 +186,7 @@ def eurocode2_shear_torsion_check(inp: ShearTorsionInput, v_ed: float, t_ed: flo
             :func:`distribute_torsion_longitudinal` -- ``"top_bottom"``
             (default, matches xdfem2D's pre-migration behaviour) or
             ``"perimeter"``.
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`; recording
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`; recording
             only — ``None`` leaves the result identical. Passed through to
             both the shear check and the torsion design, so both sets of
             steps land in the same report, plus a final interaction section.

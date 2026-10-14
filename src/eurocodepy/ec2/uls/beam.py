@@ -149,10 +149,8 @@ class RCBeam:
             h (float): height of the beam in m.
             conc (str, optional): concrete class. Defaults to "C25/30".
             reinf (str, optional): reinforcement lass. Defaults to "B500B".
-            at (float, optional): tensile reinforcement mechanical cover.
-            Defaults to 0.05 m.
-            ac (float, optional): compressive reinforcement mechanical cover.
-            Defaults to 0.05 m.
+            at (float, optional): tensile reinforcement mechanical cover. Defaults to 0.05 m.
+            ac (float, optional): compressive reinforcement mechanical cover. Defaults to 0.05 m.
 
         """
         self.concrete = get_concrete(conc)
@@ -177,8 +175,7 @@ class RCBeam:
 
         Args:
             ved (float): Design shear force.
-            cott (float, optional): Truss inclination (cotangent of theta).
-            Defaults to 2.5.
+            cott (float, optional): Truss inclination (cotangent of theta). Defaults to 2.5.
 
         Returns:
             Tuple[float, float, float, float, float, float, float]:
@@ -208,8 +205,6 @@ class RCBeam:
 
         Args:
             med (float): design bending moment in kNm.
-            delta (float, optional): redistribution ratio (0.7 to 1.0). Defaults to 1.0
-            (no redistribution).
             iprint (bool, optional): prints results to stdout. Defaults to False.
 
         Returns:

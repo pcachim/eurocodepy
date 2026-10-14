@@ -85,7 +85,7 @@ def classify_internal_part(c_over_t: float, eps: float,
         eps: Material factor ε.
         psi: Elastic end-stress ratio σ2/σ1 of the part.
         alpha: Plastic compressed length fraction of the part (0…1).
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When
             given, records the three class limits the part is checked
             against and which one governs. ``None`` (default) is a no-op.
         name: Label used in the trace step symbols (e.g. ``"web"``).
@@ -159,7 +159,7 @@ def classify_outstand_part(c_over_t: float, eps: float,
         alpha: Plastic compressed length fraction of the outstand (0…1).
         tip_in_compression: True if the free edge (tip) is the more compressed
             one; False if the maximum compression is at the supported (web) edge.
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When
             given, records the three class limits the part is checked
             against and which one governs. ``None`` (default) is a no-op.
         name: Label used in the trace step symbols (e.g. ``"flange"``).
@@ -226,7 +226,7 @@ def classify_chs_part(d_over_t: float, eps: float,
     Args:
         d_over_t: Outer-diameter-to-thickness ratio d/t.
         eps: Material factor ε.
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When
             given, records the three class limits the tube is checked
             against and which one governs. ``None`` (default) is a no-op.
         name: Label used in the trace step symbols.
@@ -492,7 +492,7 @@ def classify_section(section, fy: float,  # ruff: ignore[missing-type-function-a
     """Classify a steel cross-section under N + M (EN 1993-1-1 §5.5).
 
     Args:
-        section: A eurocodepy profile object (``ProfileI`` / ``ProfileRHS`` /
+        section (object): A eurocodepy profile object (``ProfileI`` / ``ProfileRHS`` /
             ``ProfileSHS`` / ``ProfileCHS``) or any object exposing
             ``type, h, b, tw, tf, r, A, Iy, Iz``.
         fy: Yield strength [N/mm²].
@@ -500,7 +500,7 @@ def classify_section(section, fy: float,  # ruff: ignore[missing-type-function-a
         m_ed: Bending moment [kNm] about the chosen axis.
         axis: ``"y"`` for major-axis bending (default) or ``"z"`` for minor-axis
             bending.
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When
             given, the classification records the c/t ratio and the three
             class limits of every part it checks (not just the resulting
             class) — the derivation behind EN 1993-1-1 §5.5, Table 5.2.
@@ -730,7 +730,7 @@ def effective_properties(section, fy: float) -> EffectiveProperties:  # ruff: ig
     by shell buckling (EN 1993-1-6) and are not handled here.
 
     Args:
-        section: A eurocodepy profile object or compatible.
+        section (object): A eurocodepy profile object or compatible.
         fy: Yield strength [N/mm²].
 
     Returns:

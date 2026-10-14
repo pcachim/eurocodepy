@@ -448,7 +448,7 @@ def eurocode3_member_check(inp: MemberInput, trace=None) -> MemberCheckResult:
     Args:
         inp: A :class:`MemberInput` with the forces, section properties, member
             geometry, buckling curves, moment factors and material.
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
             the check records its steps (clause, expression, substitution, value)
             into it for a full calculation report. ``None`` (default) is a no-op
             and leaves the computed result identical — the trace only *records*.

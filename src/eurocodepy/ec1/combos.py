@@ -174,8 +174,7 @@ class Loads(UserDict):
     in the collection.
     It is initialized with an empty dictionary to store Load objects.
 
-    Args:
-        UserDict (Load): Load objects collection.
+    The collection is a ``UserDict`` of :class:`Load` objects (by name).
 
     """
 
@@ -489,7 +488,7 @@ class LoadCombinations:
             "abs"  -> maximum absolute value
 
         Raises:
-            ValueError
+            ValueError: if ``mode`` is not one of the above.
 
         Returns:
             Worst cases

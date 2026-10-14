@@ -46,6 +46,8 @@ as tension on the *top* face. `uls.shell_check` hides this by returning `asx_bot
 
 ### `Concrete`
 
+*Code reference:* [`materials.Concrete`][eurocodepy.ec2.materials.Concrete], [`materials.get_concrete`][eurocodepy.ec2.materials.get_concrete]
+
 ```python
 from eurocodepy.ec2 import Concrete
 
@@ -89,6 +91,8 @@ Convenience instances are pre-created: `C20_25`, `C25_30`, `C30_37`, …, `C90_1
 
 ### `Reinforcement`
 
+*Code reference:* [`materials.Reinforcement`][eurocodepy.ec2.materials.Reinforcement]
+
 ```python
 from eurocodepy.ec2 import Reinforcement
 
@@ -102,6 +106,8 @@ Available grades: B400A/B/C, B500A/B/C, B600A/B/C, B700A/B/C, A400NR, A500NR,
 A400NRSD, A500NRSD, A500EL.
 
 ### `Prestress`
+
+*Code reference:* [`materials.Prestress`][eurocodepy.ec2.materials.Prestress]
 
 ```python
 from eurocodepy.ec2 import Prestress

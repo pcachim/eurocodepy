@@ -562,7 +562,10 @@ class Concrete:
                 For 2023, ``fctm`` follows Table 5.1 and ``Ecm`` Eq. (5.1)
                 (``kE`` = 9500) and the parabola-rectangle diagram has ``εc2`` = 2,0 ‰,
                 ``εcu`` = 3,5 ‰ and ``n`` = 2 for every class (8.1.2(1)).
-            situation, loading, k_cip, annex: see :class:`Concrete`.
+            situation (str): design situation, see :class:`Concrete`.
+            loading (str): loading case, see :class:`Concrete`.
+            k_cip (float): cast-in-place factor, see :class:`Concrete`.
+            annex (str | None): National Annex code, see :class:`Concrete`.
 
         Returns:
             Concrete: Concrete instance.

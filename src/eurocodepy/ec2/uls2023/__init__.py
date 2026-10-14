@@ -20,8 +20,78 @@ drop-in swappable.
 """
 
 # Re-export the whole EN 1992-1-1:2004 ULS surface…
-from eurocodepy.ec2.uls import *  # ruff: ignore[undefined-local-with-import-star]
+from eurocodepy.ec2.uls import (  # the whole EN 1992-1-1:2004 ULS surface, listed so that it is visible to tools
+    Concrete as Concrete,
+    ConcreteClass as ConcreteClass,
+    Prestress as Prestress,
+    PrestressClass as PrestressClass,
+    Reinforcement as Reinforcement,
+    ReinforcementClass as ReinforcementClass,
+    RCBeam as RCBeam,
+    calc_asl as calc_asl,
+    calc_mrd as calc_mrd,
+    get_bend_params as get_bend_params,
+    calc_asl_nm as calc_asl_nm,
+    calc_asl_nm_strain as calc_asl_nm_strain,
+    design_rcbeam_nm as design_rcbeam_nm,
+    anchorage_coefficients as anchorage_coefficients,
+    basic_anchorage_length as basic_anchorage_length,
+    beam_cover_distance as beam_cover_distance,
+    bond_conditions_beam as bond_conditions_beam,
+    bond_strength as bond_strength,
+    design_anchorage_length as design_anchorage_length,
+    lap_coefficient_alpha6 as lap_coefficient_alpha6,
+    lap_length as lap_length,
+    calc_asws as calc_asws,
+    calc_vrd as calc_vrd,
+    calc_vrdc as calc_vrdc,
+    calc_vrdmax as calc_vrdmax,
+    calc_torsion as calc_torsion,
+    eurocode2_column_check as eurocode2_column_check,
+    ColumnInput as ColumnInput,
+    ColumnResult as ColumnResult,
+    RebarLayout as RebarLayout,
+    slenderness_limit as slenderness_limit,
+    effective_length as effective_length,
+    biaxial_interaction_exponent as biaxial_interaction_exponent,
+    nominal_curvature_e2 as nominal_curvature_e2,
+    nominal_stiffness_moment as nominal_stiffness_moment,
+    uniaxial_moment_resistance as uniaxial_moment_resistance,
+    design_column_reinforcement as design_column_reinforcement,
+    minimum_column_reinforcement_m2 as minimum_column_reinforcement_m2,
+    maximum_column_reinforcement_m2 as maximum_column_reinforcement_m2,
+    eurocode2_shear_check as eurocode2_shear_check,
+    ShearInput as ShearInput,
+    ShearResult as ShearResult,
+    calc_perimeters as calc_perimeters,
+    calc_vedp as calc_vedp,
+    calc_vrdcminp as calc_vrdcminp,
+    calc_vrdcp as calc_vrdcp,
+    eurocode2_punching_check as eurocode2_punching_check,
+    PunchInput as PunchInput,
+    PunchResult as PunchResult,
+    calc_reinf_plane as calc_reinf_plane,
+    calc_reinf_shell as calc_reinf_shell,
+    eurocode2_membrane_check as eurocode2_membrane_check,
+    MembraneInput as MembraneInput,
+    MembraneResult as MembraneResult,
+    eurocode2_shell_check as eurocode2_shell_check,
+    ShellInput as ShellInput,
+    ShellResult as ShellResult,
+    eurocode2_slab_check as eurocode2_slab_check,
+    SlabInput as SlabInput,
+    SlabResult as SlabResult,
+    eurocode2_shear_torsion_check as eurocode2_shear_torsion_check,
+    ShearTorsionInput as ShearTorsionInput,
+    ShearTorsionResult as ShearTorsionResult,
+    distribute_torsion_longitudinal as distribute_torsion_longitudinal,
+)
 from eurocodepy.ec2.uls import __all__ as _uls_all
+from eurocodepy.ec2.uls import (  # modules that have no 2023 counterpart
+    anchorage as anchorage,
+    beam as beam,
+    shell as shell,
+)
 
 # …then override the punching submodule and its functions with the 2023 model.
 from eurocodepy.ec2.uls2023 import punch as punch
@@ -38,14 +108,10 @@ from eurocodepy.ec2.uls2023.punch import (
     calc_vrdcp as calc_vrdcp,
 )
 
-# …the shear formulae and the shear check (EN 1992-1-1:2023 Clause 8.2)…
-import importlib as _importlib
-
-# (the submodule is imported by name so that it replaces the 2004 ``shear`` that the
-# star import above put in this namespace)
-shear = _importlib.import_module("eurocodepy.ec2.uls2023.shear")
-shear_check = _importlib.import_module("eurocodepy.ec2.uls2023.shear_check")
-detailing = _importlib.import_module("eurocodepy.ec2.uls2023.detailing")  # Clause 12
+# …the shear formulae and the shear check (EN 1992-1-1:2023 Clause 8.2), and the detailing rules (Clause 12)…
+from eurocodepy.ec2.uls2023 import detailing as detailing
+from eurocodepy.ec2.uls2023 import shear as shear
+from eurocodepy.ec2.uls2023 import shear_check as shear_check
 from eurocodepy.ec2.uls2023.shear_check import (
     ShearInput as ShearInput,
     ShearResult as ShearResult,
@@ -73,10 +139,10 @@ from eurocodepy.ec2.uls2023.column import (
 # …the Annex G design of membrane, shell and slab elements (``slab_design`` is not a drop-in
 # for ``slab_check``: it takes the design moments of the element, not Wood-Armer moments,
 # so it keeps its own module and names)…
-annex_g = _importlib.import_module("eurocodepy.ec2.uls2023.annex_g")
-membrane_check = _importlib.import_module("eurocodepy.ec2.uls2023.membrane_check")
-slab_design = _importlib.import_module("eurocodepy.ec2.uls2023.slab_design")
-shell_check = _importlib.import_module("eurocodepy.ec2.uls2023.shell_check")
+from eurocodepy.ec2.uls2023 import annex_g as annex_g
+from eurocodepy.ec2.uls2023 import membrane_check as membrane_check
+from eurocodepy.ec2.uls2023 import shell_check as shell_check
+from eurocodepy.ec2.uls2023 import slab_design as slab_design
 from eurocodepy.ec2.uls2023.shell_check import (
     ShellInput as ShellInput,
     ShellResult as ShellResult,
@@ -89,8 +155,8 @@ from eurocodepy.ec2.uls2023.membrane_check import (
 )
 
 # …the torsion design (EN 1992-1-1:2023 8.3) and the combined shear+torsion check.
-torsion = _importlib.import_module("eurocodepy.ec2.uls2023.torsion")
-shear_torsion = _importlib.import_module("eurocodepy.ec2.uls2023.shear_torsion")
+from eurocodepy.ec2.uls2023 import shear_torsion as shear_torsion
+from eurocodepy.ec2.uls2023 import torsion as torsion
 from eurocodepy.ec2.uls2023.torsion import calc_torsion as calc_torsion
 from eurocodepy.ec2.uls2023.shear_torsion import (
     ShearTorsionInput as ShearTorsionInput,

@@ -56,3 +56,14 @@ def test_documentation_examples_run(page, tmp_path, monkeypatch):
     assert failed == expected, (
         f"{page.relative_to(DOCS)}: blocks that fail {sorted(failed)}, expected {sorted(expected)} "
         "(update KNOWN_BROKEN if a block was fixed)")
+
+
+@pytest.mark.parametrize("page", _pages(), ids=lambda p: str(p.relative_to(DOCS)))
+def test_code_fences_are_balanced(page):
+    """An unclosed or stray fence turns the prose into code (and the code into prose) without any block failing."""
+    fences = [(n, line.strip()) for n, line in enumerate(page.read_text(encoding="utf-8").splitlines(), 1)
+              if line.lstrip().startswith("```")]
+    for i, (n, text) in enumerate(fences):
+        if text != "```":                       # a fence with a language can only open a block
+            assert i % 2 == 0, f"{page.relative_to(DOCS)}:{n}: {text!r} where a block is still open"
+    assert len(fences) % 2 == 0, f"{page.relative_to(DOCS)}: unclosed code fence"

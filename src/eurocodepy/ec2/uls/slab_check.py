@@ -135,7 +135,7 @@ def eurocode2_slab_check(inp: SlabInput, trace=None) -> SlabResult:
 
     Args:
         inp: The slab element data (Wood-Armer design moments + geometry).
-        trace: Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
+        trace (CalcReport | None): Optional :class:`eurocodepy.calc_report.CalcReport`. When given,
             the check records its steps into it. ``None`` (default) is a no-op —
             the trace only *records* what was computed.
 
