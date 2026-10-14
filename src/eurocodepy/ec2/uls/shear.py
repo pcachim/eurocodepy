@@ -19,14 +19,14 @@ def calc_vrd(bw: float, d: float, fck: float, g_c: float, fyk: float, g_s: float
         asw_s (float): steel transverse area (Asw/s)
 
     Returns:
-        float: (shear reinforcement max(Asw/s), Vrd.max)
+        float: ``VRd = min(VRd,s, VRd,max)`` (EN 1992-1-1:2004, 6.2.3) [kN]
 
     """
     z = 0.9 * d
     vrd_s = asw_s * z * fyk / g_s * cott * 1000.0
     niu = 0.6 * (1.0 - fck / 250)
     vrd_max = bw * z * niu * fck / g_c * 1000.0 / (cott + 1.0 / cott)
-    return max(vrd_s, vrd_max)
+    return min(vrd_s, vrd_max)
 
 
 def calc_vrdmax(bw: float, d: float, fck: float, g_c: float, cott: float) -> float:

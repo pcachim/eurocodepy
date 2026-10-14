@@ -35,8 +35,20 @@ print(f"d    = {d:.1f} mm")
 print(f"As   = {As:.1f} mm²")
 
 # 3. Calculate design bending resistance (simplified rectangular stress block)
-Mrd = ec.ec2.calc_mrd(b, d, As, concrete, reinf)
-print(f"MRd  = {Mrd / 1e6:.2f} kNm")
+Mrd, eps_s, x = ec.ec2.calc_mrd(b / 1000, d / 1000, As / 100, concrete.fcd, reinf.fyd)   # m, cm²
+print(f"MRd  = {Mrd:.1f} kNm")
+```
+
+# 4. The same section with the second-generation code (EN 1992-1-1:2023)
+concrete23 = ec.ec2.get_concrete('C30/37', edition='2023')   # fcd = η_cc·k_tc·fck/γc, Eq. 5.3
+reinf23 = ec.ec2.Reinforcement('B500B', edition='2023')
+print(f"fcd (2023) = {concrete23.fcd:.2f} MPa,  fyd (2023) = {reinf23.fyd:.2f} MPa")
+Mrd23, eps_s, x = ec.ec2.calc_mrd(b / 1000, d / 1000, As / 100, concrete23.fcd, reinf23.fyd)
+print(f"MRd (2023) = {Mrd23:.1f} kNm")
+
+# For fck > 40 MPa the 2023 design strength is reduced by η_cc, and k_tc depends on the loading
+c50 = ec.ec2.get_concrete('C50/60', edition='2023', loading='other')
+print(f"C50/60: η_cc = {c50.eta_cc:.3f}, k_tc = {c50.k_tc}, fcd = {c50.fcd:.2f} MPa")
 ```
 
 ---
@@ -51,7 +63,7 @@ import eurocodepy as ec
 
 # Spectrum parameters
 # locale   : 'PT'  — Portuguese national annex
-# code     : 'PT-1' — type 1 spectrum (continental Portugal)
+# code     : 'PT1' — type 1 spectrum (continental Portugal)
 # imp_class: 'II'   — importance class II (ordinary buildings)
 # soil     : 'C'    — medium-dense soil (Vs,30 = 180–360 m/s)
 # zone     : '1_2'  — seismic zone 1.2
@@ -59,7 +71,7 @@ import eurocodepy as ec
 
 spec = ec.spectrum.get_spectrum_ec8(
     locale='PT',
-    code='PT-1',
+    code='PT1',
     imp_class='II',
     soil='C',
     zone='1_2',
@@ -67,14 +79,12 @@ spec = ec.spectrum.get_spectrum_ec8(
 )
 
 # Print a few values
-print("ag   =", spec['ag'], "g")     # reference peak ground acceleration
-print("S    =", spec['S'])           # soil factor
-print("T_B  =", spec['TB'], "s")
-print("T_C  =", spec['TC'], "s")
-print("T_D  =", spec['TD'], "s")
+print("ag   =", spec.attrs['a_g'], "m/s2")   # design ground acceleration
+print("S    =", spec.attrs['S'])             # soil factor
+print("peak =", spec['value'].max(), "m/s2") # largest ordinate of the design spectrum
 
-# Plot
-ec.spectrum.draw_spectrum_ec8(spec, show=True)
+# Plot (show=True opens the window)
+ec.spectrum.draw_spectrum_ec8(spec, show=False)
 
 # Export to CSV for use in structural analysis software
 ec.spectrum.write_spectrum_ec8(spec, filename='spectrum_PT1_II_C_1_2.csv')
@@ -87,26 +97,28 @@ ec.spectrum.write_spectrum_ec8(spec, filename='spectrum_PT1_II_C_1_2.csv')
 This tutorial builds a set of ULS and SLS load combinations from individual loads.
 
 ```python
-from eurocodepy.ec1 import (
-    Load, LoadType, LoadCombinations, CombinationType
-)
+from eurocodepy.ec1 import Load, LoadType, Loads
 
-# Define individual characteristic loads
-G1 = Load('Self-weight', LoadType.PERMANENT, gk=10.0)   # [kN/m²]
-Q1 = Load('Live load',   LoadType.LIVE,      qk=5.0)
-W1 = Load('Wind',        LoadType.WIND,      qk=3.0)
-S1 = Load('Snow',        LoadType.SNOW,      qk=1.5)
+# Each load carries its partial factors (γ favourable and unfavourable) and ψ0, ψ1, ψ2
+loads = Loads()
+loads.add(Load("Self-weight", LoadType.PERMANENT, 1.0, 1.35, 0.0, 0.0, 0.0))
+loads.add(Load("Live load",   LoadType.LIVE,      0.0, 1.50, 0.7, 0.5, 0.3))
+loads.add(Load("Wind",        LoadType.WIND,      0.0, 1.50, 0.6, 0.2, 0.0))
+loads.add(Load("Snow",        LoadType.SNOW,      0.0, 1.50, 0.5, 0.2, 0.0))
 
-# Build all combinations
-combos = LoadCombinations([G1, Q1, W1, S1])
+# ULS combinations (EN 1990 expression 6.10): {name: LoadCombination}
+for name in loads.get_ULS_combos():
+    print(name)
 
-# Retrieve ULS combinations (EN 1990 expression 6.10)
-for combo in combos.get(CombinationType.ULS):
-    print(combo)
+# SLS combinations: characteristic (SLS-K), frequent (SLS-FR) and quasi-permanent (SLS-QP)
+for name, combo in loads.get_SLS_combos().items():
+    if combo.type.value == "SLS-QP":
+        print(name)
 
-# Retrieve SLS quasi-permanent combinations
-for combo in combos.get(CombinationType.SLS_QP):
-    print(combo)
+# Apply a combination to the values of the loads (here kN/m²)
+values = {"Self-weight": 10.0, "Live load": 5.0, "Wind": 3.0, "Snow": 1.5}
+combo = next(iter(loads.get_ULS_combos().values()))
+print(sum(f * values[k] for k, (_, f) in combo.factors.items()))
 ```
 
 ---
@@ -126,14 +138,16 @@ print(f"E0,mean = {timber.E0mean} MPa")   # mean modulus of elasticity
 # Modification factor for Service Class 1, Medium-term loading
 kmod = timber.k_mod(
     service_class=ServiceClass.SC1,
-    load_duration=LoadDuration.Medium,
+    load_duration=LoadDuration.MediumDuration,
 )
 print(f"kmod  = {kmod}")
 
 # Design bending strength
-gamma_m = 1.3   # partial factor for solid timber (Table 2.3 EN 1995)
-fm_d = kmod * timber.fmk / gamma_m
+fm_d = kmod * timber.fmk / timber.safety     # γM = 1.3 for solid timber (Table 2.3 EN 1995)
 print(f"fm,d  = {fm_d:.2f} MPa")
+
+# The same, in one call
+print(timber.design_values(ServiceClass.SC1, LoadDuration.MediumDuration)["fmd"])
 ```
 
 ---
@@ -141,23 +155,67 @@ print(f"fm,d  = {fm_d:.2f} MPa")
 ## Tutorial 5 — Steel section and bearing capacity (EN 1993 / EN 1997)
 
 ```python
+import numpy as np
 import eurocodepy as ec
 
-# Steel section
+# Steel section (catalogue units: cm, cm², cm⁴)
 steel   = ec.Steel('S355')
-profile = ec.ec3.materials.ProfileI('IPE300')
+profile = ec.ec3.ProfilesI['IPE300']
 
-print(f"fy   = {steel.fy} MPa")
-print(f"A    = {profile.A} mm²")
-print(f"Iy   = {profile.Iy:.0f} mm⁴")
+print(f"fy   = {steel.fyk} MPa")
+print(f"A    = {profile.A} cm²")
+print(f"Iy   = {profile.Iy:.0f} cm⁴")
 
-# Shallow foundation bearing capacity (EN 1997)
-soil = ec.ec7.Soil('Sand-medium')
-bc   = ec.ec7.bearing_resistance(
-    B=1.5, L=2.0, D=0.8,
-    phi=30.0, c=0.0, gamma=18.0,
-    Vd=200.0, Hd=20.0,
+# Section check under MEd = 100 kNm and VEd = 80 kN
+check = ec.ec3.section_check_profile(
+    profile, steel.fyk, ec.ec3.SectionForces(my_ed=100.0, vz_ed=80.0))
+print(f"utilization = {check.utilization:.2f}")
+
+# Shallow foundation bearing capacity (EN 1997): angles in radians
+phi = np.radians(30.0)
+R = ec.ec7.bearing_resistance(
+    Bx=1.5, By=2.0, Hx=20.0, Hy=0.0, N=200.0,    # m, kN
+    phi=phi, gamma=18.0, q=0.8 * 18.0, c=0.0,
 )
-print(f"R/A  = {bc:.1f} kPa")
+print(f"Rd   = {R:.1f}")
 ```
 
+---
+
+## Tutorial 6 — Slab or shell with shear: sandwich model, 2004 and 2023
+
+A 200 mm slab-shell with membrane forces, bending, torsion and out-of-plane shear is designed with the
+sandwich model of EN 1992-2 Annex LL (2004) and of EN 1992-1-1:2023, Annex G. Forces are per metre
+(kN/m, kNm/m), lengths in m and strengths in MPa.
+
+```python
+from eurocodepy.ec2 import uls, uls2023
+
+forces = dict(n_xx=100.0, n_yy=50.0, n_xy=20.0,         # membrane [kN/m]
+              m_xx=20.0, m_yy=10.0, m_xy=5.0,           # bending and torsion [kNm/m]
+              v_x=250.0, v_y=80.0)                      # out-of-plane shear [kN/m]
+section = dict(fck=30.0, fyk=500.0, thickness=0.20, cover=0.04)
+
+r04 = uls.eurocode2_shell_check(uls.ShellInput(**forces, **section))
+r23 = uls2023.eurocode2_shell_check(uls2023.ShellInput(**forces, **section))
+
+for name, r in (("2004", r04), ("2023", r23)):
+    areas = [r.asx_bot, r.asy_bot, r.asx_top, r.asy_top]
+    print(name, [f"{a * 1e4:.2f}" for a in areas], "cm²/m;",
+          f"stirrups {r.asw_s * 1e4:.2f} cm²/m²;", "crushing:", r.crushing)
+```
+
+The four areas are the bars of the bottom and top faces in each direction; `asw_s` is the shear
+reinforcement. Faces without tension give zero: no minimum reinforcement is added.
+
+```python
+# What each edition checked
+r04.details["cracked"]          # LL (107): is the element cracked? (an uncracked one is not designed)
+r04.details["shear"]["mode"]    # inner layer of Annex LL, with the chord force added to the outer layers
+r23.details["method"]           # 'sandwich' (G.4(1)); 'optimum' (Tables G.2/G.3) when only moments act
+r23.details["shear"]["tau_ed"], r23.details["shear"]["tau_rdc"]    # clause 8.2
+```
+
+Where the strut limits differ (`ν`, `fcd`) is where the editions part: try `fck=60.0`, or ask 2004 for the
+refined EN 1992-2 6.109 limit with `strut_model="6.109"`. See
+[Membranes, slabs and shells](modules/ec2/shells.md) for the clauses.

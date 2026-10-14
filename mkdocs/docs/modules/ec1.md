@@ -39,24 +39,40 @@ Classifies an individual load for combination purposes.
 
 ### `Load` (dataclass)
 
-```python
-Load(name: str, load_type: LoadType, gk: float = 0.0, qk: float = 0.0)
+```text
+Load(name, load_type, gamma_fav, gamma_unf, psi0, psi1, psi2, incombo=True)
 ```
 
-### `LoadCombinations`
+A load carries its partial factors (favourable and unfavourable effect, EN 1990 Table A1.2) and its
+combination coefficients; it does not carry a value. `incombo=False` leaves it out of the combinations.
+
+### `Loads` and the combinations
 
 ```python
-from eurocodepy.ec1 import Load, LoadType, LoadCombinations, CombinationType
+from eurocodepy.ec1 import Load, LoadType, Loads
 
-loads = [
-    Load('G', LoadType.PERMANENT, gk=10.0),
-    Load('Q', LoadType.LIVE,      qk=5.0),
-    Load('W', LoadType.WIND,      qk=3.0),
-]
-combos = LoadCombinations(loads)
-for c in combos.get(CombinationType.ULS):
-    print(c)
+loads = Loads()
+#                  name  type                 γ fav  γ unf  ψ0   ψ1   ψ2
+loads.add(Load("G", LoadType.PERMANENT, 1.0, 1.35, 0.0, 0.0, 0.0))
+loads.add(Load("Q", LoadType.LIVE,      0.0, 1.50, 0.7, 0.5, 0.3))
+loads.add(Load("W", LoadType.WIND,      0.0, 1.50, 0.6, 0.2, 0.0))
+
+values = {"G": 20.0, "Q": 8.0, "W": 4.0}                 # characteristic values [kN/m²]
+
+# ULS (EN 1990 Eq. 6.10): a dict {name: LoadCombination}; factors = {load name: (Load, factor)}
+for name, combo in loads.get_ULS_combos().items():
+    total = sum(factor * values[k] for k, (_, factor) in combo.factors.items())
+    print(f"{name:34s} {total:7.2f}")
+
+# SLS characteristic, frequent and quasi-permanent
+for name, combo in loads.get_SLS_combos().items():
+    print(name)
 ```
+
+`get_ULS_combos()` and `get_SLS_combos()` return a dictionary `{name: LoadCombination}`. A
+`LoadCombination` has `name`, `type` (a `CombinationType`) and `factors`, a dictionary
+`{load name: (Load, factor)}`. `LoadCombinations` is a container of `LoadCombination` objects
+(`add`, `remove`, iteration).
 
 ---
 
@@ -66,9 +82,15 @@ for c in combos.get(CombinationType.ULS):
 |-------|-------------|
 | `BaseForce` | Abstract base class |
 | `PlaneForce` | In-plane forces (Nx, Ny, Nxy) |
-| `ShellForce` | Shell resultants (Mx, My, Mxy, Vx, Vy, Nx, Ny, Nxy) |
-| `SlabForce` | Slab resultants (Mx, My, Mxy, Vx, Vy) |
-| `FrameForce` | 1-D frame member forces (N, Vy, Vz, Mx, My, Mz) |
+| `ShellForce` | Shell resultants (`n_xx`, `n_yy`, `n_xy`, `m_xx`, `m_yy`, `m_xy`, `v_xz`, `v_yz`) |
+| `SlabForce` | Slab resultants (`m_xx`, `m_yy`, `m_xy`, `v_xz`, `v_yz`) |
+| `FrameForce` | 1-D frame member forces (`n_x`, `v_y`, `v_z`, `m_y`, `m_z`, `t_x`) |
+
+```python
+from eurocodepy.ec1 import ShellForce
+f = ShellForce(n_xx=100.0, m_xx=20.0)     # kN, m by default: the unit system `u`
+f.forces.shape, f.n_cases                 # (8, 1), 1
+```
 
 ---
 
@@ -76,12 +98,22 @@ for c in combos.get(CombinationType.ULS):
 
 ### `ec1.wind`
 
-Functions for wind load calculation following EN 1991-1-4. Exposed via
-`from eurocodepy.ec1 import wind` or `from eurocodepy import wind`.
+Functions of EN 1991-1-4 (4.2 to 4.5): `v_b`, `c_r`, `c_o`, `s_coef`, `v_m`, `I_v`, `v_p`, `q_p`.
+Heights and roughness lengths in m, velocities in m/s, pressures in N/m².
+
+```python
+from eurocodepy.ec1 import wind
+
+vb = wind.v_b(27.0)                                  # vb,0 = 27 m/s, cseason = cdir = 1
+cr = wind.c_r(z=10, z_min=2, z_0=0.05, z_0II=0.05)   # terrain category II
+co = wind.c_o(z=10)                                  # flat terrain
+vm = wind.v_m(10, vb, cr, co)                        # mean wind velocity
+qp = wind.q_p(10, vb, 2, 0.05, cr, co)               # peak velocity pressure [N/m²]
+```
 
 ### `ec1.snow`
 
-Functions for snow load calculation following EN 1991-1-3.
+Placeholder: the snow loads of EN 1991-1-3 are not implemented yet.
 
 ---
 

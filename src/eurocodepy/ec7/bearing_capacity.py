@@ -109,7 +109,8 @@ def seismic_bearing_resistance(ag: float, avg_ahg: float, S: float, B: float, H:
         soil_type (str, optional): type of soil.
 
     Returns:
-        np.ndarray: values of the bearing capacity ratio
+        np.ndarray: ``True`` where the bearing capacity is verified, one value for each
+        direction of the vertical acceleration (incoherent soil) or one value (coherent soil).
 
     """
     g = 9.80665
@@ -136,7 +137,7 @@ def seismic_bearing_resistance(ag: float, avg_ahg: float, S: float, B: float, H:
         F_ = gamma_s * ag * S * B / cu
         Nq = np.exp(np.pi*tanphi)*np.tan(np.pi/4 + phi/2)**2
         Ng = 2.0*(Nq-1.0)*tanphi
-        Nmax = np.array([(np.pi+2.0) * c * B / gamma_c])
+        Nmax = np.array([(np.pi+2.0) * cu * B / gamma_c])
 
     elif soil_type == "incoherent":
         a = 0.92
@@ -160,7 +161,7 @@ def seismic_bearing_resistance(ag: float, avg_ahg: float, S: float, B: float, H:
         Nmax = np.array([   0.5 * gamma_s * g * (1.0 + avg_ahg * ag / g) * B**2 * Ng,
                             0.5 * gamma_s * g * (1.0 - avg_ahg * ag / g) * B**2 * Ng])
 
-    ratio = np.array([])
+    ratio = []
     for n in Nmax:
         N_ = gamma_rd * N / n
         V_ = gamma_rd * H / n
@@ -169,7 +170,7 @@ def seismic_bearing_resistance(ag: float, avg_ahg: float, S: float, B: float, H:
         if (N_ < 0.0 or (
             (soil_type == "incoherent" and (1.0 - m * F_)**k_ <= N_) or
             (soil_type == "coherent" and N_ >= 1.0))):
-            ratio.append(-1)
+            ratio.append(1.0)         # outside the domain of the criterion: not verified
             continue
 
         val1 = (1.0 - e * F_)**ct * (beta * V_)**ct
@@ -179,7 +180,7 @@ def seismic_bearing_resistance(ag: float, avg_ahg: float, S: float, B: float, H:
 
         ratio.append(val1 / val2 + val3 / val4 - 1.0)
 
-    return np.where(ratio < 0.0, True, False)  # noqa: FBT003
+    return np.array(ratio) < 0.0
 
 
 if __name__ == "__main__":

@@ -3,8 +3,12 @@
 ## Overview
 
 The `ec3` module provides tools for the design of steel structures according to
-EN 1993-1-1. It covers material properties, standard steel profiles, bolted and
-welded connections, and ULS member checks.
+EN 1993-1-1: material properties, standard rolled profiles, bolted and welded connections,
+section classification and the ULS section and member checks.
+
+Profile properties are those of the catalogue: **dimensions in cm, areas in cm², inertia in cm⁴**.
+The checks take strengths in N/mm², forces in kN and moments in kNm, and read the geometry of a
+profile converting cm to mm.
 
 ---
 
@@ -16,81 +20,75 @@ welded connections, and ULS member checks.
 from eurocodepy.ec3 import Steel
 
 steel = Steel('S355')
-steel.fy   # yield strength [MPa]
-steel.fu   # ultimate tensile strength [MPa]
-steel.E    # elastic modulus [MPa]
-steel.G    # shear modulus [MPa]
-steel.nu   # Poisson's ratio
+steel.fyk        # yield strength [MPa] (t ≤ 40 mm)
+steel.fuk        # ultimate tensile strength [MPa]
+steel.fyk40      # yield strength, 40 mm < t ≤ 80 mm
+steel.Es         # elastic modulus [MPa]
+steel.fyd        # design yield strength fyk/γM0
+steel.gamma_M0, steel.gamma_M1, steel.gamma_M2
 ```
 
-Available grades (enum `SteelEnum`): S235, S275, S355, S450.
-
-### `Weld`
-
-```python
-from eurocodepy.ec3 import Weld, WeldTypeEnum
-
-weld = Weld(grade='S355', weld_type=WeldTypeEnum.fillet)
-```
+Grades (enum `SteelEnum`): S235, S275, S355, S450, and the others of the database.
 
 ### Bolts
 
 ```python
-from eurocodepy.ec3 import Bolt, BoltGrade, BoltGrades, BoltsEnum
+from eurocodepy.ec3 import Bolt, BoltGrade
 
-bolt = Bolt(diameter=20, grade=BoltGrade('8.8'))
-bolt.fub    # ultimate tensile strength [MPa]
-bolt.fyb    # yield strength [MPa]
+bolt = Bolt(20, '8.8')             # M20, grade 8.8
+bolt.fub, bolt.fyb                 # ultimate and yield strength [MPa]
+bolt.d, bolt.d0                    # nominal and hole diameter [mm]
+bolt.A, bolt.Athread               # gross and tensile stress area As [cm²]
 ```
 
-Available bolt grades (enum `BoltsEnum`): 4.6, 5.6, 6.8, 8.8, 10.9.
+Grades: 4.6, 5.6, 6.6, 6.8, 8.8, 9.8, 10.9, 12.9 (`BoltGrades`, `BoltsEnum`). `Bolt('M20', '8.8')` reads the areas of the
+database; `Bolt(20, '8.8')` uses those of the standard size when it exists, `0,78·A` otherwise, or the `athread=` you give.
+
+### `Weld`
+
+```python
+from eurocodepy.ec3 import Weld, WeldConnection, WeldTypeEnum
+
+weld = Weld(a=5.0, length=200.0, steel_grade='S355')     # throat thickness a, length
+group = WeldConnection()
+group.add(weld)
+group.total_length()
+group.area, group.xg, group.yg                      # throat area and centroid [mm², mm]
+group.inertia_xx, group.inertia_yy, group.inertia_xy  # about the centroid [mm⁴]
+group.w_el_xx_sup, group.w_el_xx_inf                  # elastic moduli to the extreme welds [mm³]
+```
+
+`WeldTypeEnum`: `SLIDE`, `SHEAR`, `NORMAL`, `SHEARNORMAL`, `SLIDENORMAL`, `SLIDESHEAR`, `SLINESHEARNORMAL`.
 
 ---
 
 ## Steel profiles
 
-All profile classes expose standard geometric properties (`A`, `Iy`, `Iz`,
-`Wely`, `Welz`, `Wply`, `Wplz`, `iy`, `iz`, `It`, `Iw`, …).
-
-### I-profiles — `ProfileI`
+`ProfilesI`, `ProfilesCHS`, `ProfilesRHS` and `ProfilesSHS` are dictionaries of the rolled profiles of the
+database, keyed by name; the profile classes hold the catalogue values.
 
 ```python
-from eurocodepy.ec3 import ProfileI, ProfilesIEnum
+from eurocodepy.ec3 import ProfilesI, ProfilesCHS, ProfilesRHS, ProfilesSHS
 
-section = ProfileI('IPE300')
-section.A    # cross-sectional area [mm²]
-section.Iy   # second moment of area about y-axis [mm⁴]
-section.h    # total height [mm]
-section.bf   # flange width [mm]
-section.tf   # flange thickness [mm]
-section.tw   # web thickness [mm]
+section = ProfilesI['IPE300']
+section.h, section.b, section.tw, section.tf        # [cm]
+section.A, section.Iy, section.Iz                   # [cm², cm⁴]
+section.Wel_y, section.Wpl_y, section.Wel_z, section.Wpl_z    # [cm³]
+section.IT, section.Iw, section.Av_z                # torsion, warping, shear area
+section.Npl_Rd, section.Mpl_Rd_y, section.Vpl_Rd_z  # S235 resistances of the catalogue
+
+list(ProfilesI)[:3]                                  # 'HEA100', 'HEA1000', 'HEA120'
 ```
 
-Available profiles (enum `ProfilesIEnum`): IPE80 to IPE600; HEA100 to HEA1000;
-HEB100 to HEB1000; HEM100 to HEM1000.
+I profiles: IPE, HEA, HEB, HEM; hollow sections: circular (CHS), rectangular (RHS) and square (SHS), with the
+enums `ProfilesIEnum`, `ProfilesCHSEnum`, `ProfilesRHSEnum`, `ProfilesSHSEnum`.
 
-### Hollow sections
-
-```python
-from eurocodepy.ec3 import ProfileCHS, ProfileRHS, ProfileSHS
-
-chs = ProfileCHS('CHS114.3x6')    # circular hollow section
-rhs = ProfileRHS('RHS200x100x8')  # rectangular hollow section
-shs = ProfileSHS('SHS150x150x8')  # square hollow section
-```
-
-Enums: `ProfilesCHSEnum`, `ProfilesRHSEnum`, `ProfilesSHSEnum`.
-
-### `SteelSection` and `SteelPlate`
+### `SteelPlate`
 
 ```python
-from eurocodepy.ec3 import SteelSection, SteelPlate
+from eurocodepy.ec3 import SteelPlate
 
-# Generic section combining a profile and a steel grade
-sec = SteelSection(profile=ProfileI('IPE300'), steel=Steel('S355'))
-
-# Flat plate
-plate = SteelPlate(b=200, t=12, steel=Steel('S275'))
+plate = SteelPlate(thickness=10.0, steel=steel, width=200.0)     # mm
 ```
 
 ---
@@ -100,29 +98,54 @@ plate = SteelPlate(b=200, t=12, steel=Steel('S275'))
 ### Bolted connections
 
 ```python
-from eurocodepy.ec3 import BoltedConnection, PinnedConnection, PinnedConnectionDouble
+import numpy as np
+from eurocodepy.ec3 import BoltedConnection
 
-conn = BoltedConnection(bolt=bolt, n_bolts=4, t=10.0, steel=steel)
+conn = BoltedConnection(bolt, outer_plate=plate)
+conn.Fv_Rd(), conn.Ft_Rd(), conn.Bp_Rd()           # shear, tension and punching resistance per bolt [kN]
+r = conn.check(Fv_Ed=np.array([100.0]), Ft_Ed=np.array([0.0]))
+r['ShearRatio'], r['BearingRatio'], r['TensileRatio'], r['PunchingRatio']
 ```
 
-### Welded connections
-
-```python
-from eurocodepy.ec3 import WeldConnection, WeldTypeEnum
-
-weld_conn = WeldConnection(
-    weld=weld,
-    length=200.0,  # weld length [mm]
-    throat=8.0,    # throat thickness [mm]
-)
-```
+`PinnedConnection` and `PinnedConnectionDouble` add the bending of the pin (`gap`, `M_Rd`).
 
 ---
 
-## ULS checks — `ec3.uls`
+## ULS checks — `ec3`
 
-The `ec3.uls` sub-module exposes cross-section and member-level resistance checks.
-Import directly from `eurocodepy.ec3.uls`.
+### Classification (EN 1993-1-1, 5.5)
+
+```python
+from eurocodepy.ec3 import classify_section
+
+c = classify_section(section, fy=355.0, n_ed=0.0, m_ed=100.0)     # kN, kNm
+c.section_class
+```
+
+### Section resistance (6.2)
+
+```python
+from eurocodepy.ec3 import section_check_profile, SectionForces
+
+r = section_check_profile(section, 355.0, SectionForces(n_ed=0.0, my_ed=100.0, vz_ed=80.0))
+r.utilization
+```
+
+`eurocode3_section_check(SectionResistanceInput(...), SectionForces(...))` is the same check for
+a section described by its dimensions instead of a profile.
+
+### Member buckling (6.3, Eqs. 6.61 and 6.62)
+
+```python
+from eurocodepy.ec3 import member_check_profile
+
+r = member_check_profile(section, 355.0, n_ed=-200.0, my_ed=80.0,
+                         lcr_y=4000.0, lcr_z=4000.0, l_lt=4000.0)      # buckling lengths [mm]
+r.utilization
+```
+
+`eurocode3_member_check(MemberInput(...))` takes the section properties directly. All the checks accept
+`trace=` (a `CalcReport`) to record the steps.
 
 ---
 
@@ -133,4 +156,3 @@ Calculations follow EN 1993-1-1:2005 and EN 1993-1-8 (connections).
 ## Further reading
 
 - [EN 1993-1-1 — Design of steel structures](https://eurocodes.jrc.ec.europa.eu/EN-Eurocodes/eurocode-3-design-steel-structures)
-

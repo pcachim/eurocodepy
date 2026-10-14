@@ -103,6 +103,23 @@ class LoadCombination:
         self.factors = factors
         self.attributes = kwargs if kwargs is not None else {}
 
+    def evaluate(self, loads: Mapping[str, float | np.ndarray]) -> float | np.ndarray:
+        """Combine the values of the loads: ``sum(factor * loads[name])``.
+
+        Args:
+            loads: the value (or array of values) of each load, by name. A load that is
+                not in the combination is ignored; one that is in it must be present.
+
+        Returns:
+            The value of the combination.
+
+        """
+        total = 0.0
+        for name, entry in self.factors.items():
+            factor = entry[1] if isinstance(entry, tuple) else entry
+            total = total + factor * np.asarray(loads[name], dtype=float)
+        return total
+
     def __repr__(self) -> str:  # noqa: D105
         return f"{self.name} ({self.type}): {self.factors}"
 

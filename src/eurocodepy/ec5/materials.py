@@ -265,7 +265,7 @@ class Timber:
             "fvd": self.fvd,
             "fc90d": self.fc90d,
             "ft90d": self.ft90d,
-            "kmod": self.ft90d,
+            "kmod": kmod,
             "safety": self.safety,
         }
 
@@ -556,37 +556,50 @@ def TimberClass(timber: str = "C24", edition: str | None = None) -> Timber:  # n
     return Timber(timber, edition)
 
 
-def GetTimberDesignValues(timber: Timber, combos: LoadCombinations) -> dict:  # noqa: N802
-    """Get the design values for a timber class dependending on load combination type.
+def GetTimberDesignValues(timber: Timber, combos: LoadCombinations,  # noqa: N802
+                          service_class: ServiceClass | str = ServiceClass.SC1) -> dict:
+    """Get the design values of a timber for each load combination.
+
+    ``kmod`` of a combination is that of the action of shortest duration in it
+    (EN 1995-1-1, 3.1.3(2)); the durations of the load types are those of
+    :func:`GetLoadDurations`. A combination whose ``attributes`` have ``"loadduration"``
+    (a :class:`LoadDuration` or its name) uses that value instead. Serviceability
+    combinations have no design strengths: they give ``{"design": False}``.
 
     Args:
         timber (Timber): the timber class (C18, GL24c, ...)
-        combos (LoadCombinations): the collection of load combinations
+        combos (LoadCombinations): the collection of load combinations, or any
+            iterable of :class:`~eurocodepy.ec1.LoadCombination`
+        service_class (ServiceClass | str): service class of the member. Defaults to SC1.
 
     Returns:
-        dict: the design strength values for each combination
+        dict: ``{combination name: design values}``, see :meth:`Timber.design_values`
+
+    Raises:
+        ValueError: if the load duration of a combination cannot be determined.
 
     """
+    durations = GetLoadDurations()
     design_values: dict = {}
     for combo in combos:
-        try:
-            service_class = combo.attributes["loadduration"]
-            load_duration: "LoadDuration" = combo.attributes["loadduration"]  # noqa: UP037
-            name: str = combo.name
-            if combo.type in {
-                CombinationType.SLS_K,
-                CombinationType.SLS_FR,
-                CombinationType.SLS_QP}:
-                values = {
-                    "design": False,
-                }
-            else:
-                values = timber.design_values(service_class.name, load_duration)
-                values["design"] = True
-            design_values[name] = values
-        except ValueError as e:
-            print(f"Combination does not have timber indicators: {e}")  # noqa: T201
-            return {}
+        if combo.type in {CombinationType.SLS_K, CombinationType.SLS_FR, CombinationType.SLS_QP}:
+            design_values[combo.name] = {"design": False}
+            continue
+        duration = combo.attributes.get("loadduration")
+        if isinstance(duration, str):
+            duration = LoadDuration[duration]
+        if duration is None:
+            found = [durations[entry[0].load_type] for entry in combo.factors.values()
+                     if isinstance(entry, tuple)]
+            if not found:
+                msg = (f"combination '{combo.name}': no load types to take the load duration from; "
+                       "give attributes['loadduration']")
+                raise ValueError(msg)
+            duration = max(found, key=lambda d: d.value)       # the shortest action governs
+        values = timber.design_values(service_class, duration)
+        values["design"] = True
+        values["loadduration"] = duration
+        design_values[combo.name] = values
     return design_values
 
 

@@ -71,7 +71,8 @@ class Bolt:
     Attributes:
         diameter (str | float): Bolt diameter designation (e.g., 'M16' or 16.0).
         grade (str): Bolt steel grade (e.g., '8.8').
-        athread (float, optional): Area of the thread (cm^2). Defaults to None.
+        athread (float, optional): Tensile stress area As (cm^2). Defaults to None: the area of the standard
+            size M<d> when ``diameter`` is a whole number of mm that has one, else 0.78·A.
         dnut (float, optional): Diameter of the nut (mm). Defaults to None.
         name (str): Bolt diameter designation (e.g., 'M16').
         steel (str): Bolt steel grade (e.g., '8.8').
@@ -113,7 +114,14 @@ class Bolt:
             self.d0 = diameter + folga
             self.dnut = dnut if dnut is not None else self.d0  # Optional nut diameter
             self.A = np.pi * diameter**2 / 4 / 100.0
-            self.Athread = athread if athread is not None else self.A
+            if athread is not None:
+                self.Athread = athread
+            else:
+                # tensile stress area As: that of the standard size when there is one, else the usual
+                # ratio As/A ≈ 0.78 of the ISO metric threads (never the gross area: it overestimates
+                # the shear in the thread and the tension resistance by about 28 %)
+                standard = dbase.BoltDiameters.get(f"M{int(diameter)}") if float(diameter).is_integer() else None
+                self.Athread = standard["Athread"] if standard else 0.78 * self.A
         else:
             if diameter not in dbase.BoltDiameters:
                 msg = (
@@ -1433,11 +1441,16 @@ class WeldConnection:
     welds : list
         List of Weld objects in the connection.
     inertia_xx : float
-        Second moment of inertia about x-axis (mm^4).
+        Second moment of area of the throat sections about the x-axis through the centroid (mm^4).
     inertia_yy : float
-        Second moment of inertia about y-axis (mm^4).
+        Second moment of area about the y-axis through the centroid (mm^4).
     inertia_xy : float
-        Product of inertia (mm^4).
+        Product of inertia about the centroidal axes (mm^4).
+    xg, yg : float
+        Centroid of the throat areas (mm).
+    w_el_xx_sup, w_el_xx_inf, w_el_yy_sup, w_el_yy_inf : float
+        Elastic moduli ``I/distance`` to the extreme fibres of the welds (mm^3); ``inf`` is
+        ``inf`` when a weld group has no extent in that direction.
     area_xx : float
         Effective area in x-direction (mm^2).
     area_yy : float
@@ -1462,19 +1475,9 @@ class WeldConnection:
 
     """
 
-    inertia_xx = 0.0
-    inertia_yy = 0.0
-    inertia_xy = 0.0
-    area_xx = 0.0
-    area_yy = 0.0
-    area = 0.0
-    max_x = -np.inf
-    max_y = -np.inf
-    min_x = np.inf
-    min_y = np.inf  
-
     def __init__(self, welds: list | None = None):  # noqa: ANN204, D107
-        self.welds = welds if welds is not None else []
+        self.welds = list(welds) if welds is not None else []
+        self._update()
 
     def add(self, weld: Weld) -> None:
         """Add a weld to the connection.
@@ -1485,24 +1488,37 @@ class WeldConnection:
             The weld object to add to the connection.
 
         """
-        self.__update_weld(weld)
         self.welds.append(weld)
+        self._update()
 
-    def __update_weld(self, weld: Weld) -> None:
-        self.inertia_xx += weld.inertia_xx
-        self.inertia_yy += weld.inertia_yy
-        self.inertia_xy += weld.inertia_xy
-        self.area_xx += weld.area_xx
-        self.area_yy += weld.area_yy
-        self.area += weld.area
-        self.max_x = max(self.max_x, weld.x_max)
-        self.max_y = max(self.max_y, weld.y_max)
-        self.min_x = min(self.min_x, weld.x_min)
-        self.min_y = min(self.min_y, weld.y_min)
-        self.w_el_xx_sup = self.inertia_xx / self.max_x
-        self.w_el_yy_sup = self.inertia_yy / self.max_y
-        self.w_el_xx_inf = np.abs(self.inertia_xx / self.min_x)
-        self.w_el_yy_inf = np.abs(self.inertia_yy / self.min_y)
+    def _update(self) -> None:
+        """Recompute the properties of the group: sums, centroid and centroidal inertia."""
+        self.area = sum(w.area for w in self.welds)
+        self.area_xx = sum(w.area_xx for w in self.welds)
+        self.area_yy = sum(w.area_yy for w in self.welds)
+        self.max_x = max((w.x_max for w in self.welds), default=-np.inf)
+        self.max_y = max((w.y_max for w in self.welds), default=-np.inf)
+        self.min_x = min((w.x_min for w in self.welds), default=np.inf)
+        self.min_y = min((w.y_min for w in self.welds), default=np.inf)
+        if self.area <= 0.0:
+            self.xg = self.yg = 0.0
+            self.inertia_xx = self.inertia_yy = self.inertia_xy = 0.0
+            self.w_el_xx_sup = self.w_el_xx_inf = self.w_el_yy_sup = self.w_el_yy_inf = np.inf
+            return
+        self.xg = sum(w.area * w.x for w in self.welds) / self.area
+        self.yg = sum(w.area * w.y for w in self.welds) / self.area
+        # own inertia of each weld plus the parallel-axis terms to the centroid of the group
+        self.inertia_xx = sum(w.inertia_xx + w.area * (w.y - self.yg) ** 2 for w in self.welds)
+        self.inertia_yy = sum(w.inertia_yy + w.area * (w.x - self.xg) ** 2 for w in self.welds)
+        self.inertia_xy = sum(w.inertia_xy + w.area * (w.x - self.xg) * (w.y - self.yg) for w in self.welds)
+
+        def modulus(inertia: float, distance: float) -> float:
+            return inertia / distance if distance > 0.0 else np.inf
+
+        self.w_el_xx_sup = modulus(self.inertia_xx, self.max_y - self.yg)
+        self.w_el_xx_inf = modulus(self.inertia_xx, self.yg - self.min_y)
+        self.w_el_yy_sup = modulus(self.inertia_yy, self.max_x - self.xg)
+        self.w_el_yy_inf = modulus(self.inertia_yy, self.xg - self.min_x)
 
     def total_length(self) -> float:
         """Calculate the total length of all welds in the connection.

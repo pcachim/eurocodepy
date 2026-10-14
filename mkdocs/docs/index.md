@@ -6,7 +6,7 @@ engineering-focused building blocks — reusable calculations, material database
 combinations, and section utilities — that you can drop into your own scripts and notebooks.
 
 > Source code: <https://github.com/pcachim/eurocodepy>  
-> Current version: **2026.2.1**
+> [![PyPI](https://img.shields.io/pypi/v/eurocodepy)](https://pypi.org/project/eurocodepy/) — the version is the one of `pyproject.toml`
 
 ---
 
@@ -19,7 +19,7 @@ through typed Python classes. Supported materials:
 
 | Material | Grades / Types |
 |----------|---------------|
-| Concrete | C20/25 to C90/105 |
+| Concrete | C12/15 to C100/115 (EN 1992-1-1:2004 and 2023) |
 | Reinforcement | B400A/B/C, B500A/B/C, B600–B700, A400NR, A500NR, A500EL |
 | Prestressing steel | Y1770, Y1860, and others |
 | Structural steel | S235, S275, S355, S450 |
@@ -38,17 +38,18 @@ European hot-rolled profiles are available as named enumerations and dataclasses
 | Module | Standard | Coverage |
 |--------|----------|----------|
 | `ec1` | EN 1991 | Load combinations (ULS, SLS, ALS), wind, snow, load types |
-| `ec2` | EN 1992 | Concrete materials, ULS beam/shear/shell/punching, SLS crack/creep/shrinkage, fire |
+| `ec2` | EN 1992 | Concrete materials (2004 and 2023), ULS beam/shear/torsion/shell/slab/punching, detailing, Annex B creep and shrinkage, SLS crack, fire |
 | `ec3` | EN 1993 | Steel materials, profiles, bolted and welded connections, ULS checks |
 | `ec5` | EN 1995 | Timber materials, ULS bending/shear, SLS vibration/deformation |
 | `ec7` | EN 1997 | Bearing resistance, earth pressures, soil materials |
-| `ec8` | EN 1998 | Design response spectra, national annex parameters (EU, PT) |
+| `ec8` | EN 1998 | Design response spectra, national annex parameters |
 | `utils` | — | Section properties, principal stresses, stress invariants |
 
-### National Annex support
+### Editions and National Annex support
 
-Portuguese municipal data (seismic zones, wind zones) is bundled and accessible via the
-`NationalParams` class and helper functions `seismic_get_params` / `wind_get_params`.
+Functions take `edition=` (2004 or 2023) and `annex=` (country code). Portuguese data (seismic and wind zones,
+live loads) is bundled and further annexes are registered with `register_annex`; see
+[Editions and National Annexes](modules/editions.md).
 
 ---
 
@@ -64,7 +65,7 @@ print(concrete.fcd)   # design compressive strength [MPa]
 
 # --- Steel material (EN 1993) ---
 steel = ec.Steel('S355')
-print(steel.fy)   # yield strength [MPa]
+print(steel.fyk)   # yield strength [MPa]
 
 # --- Timber material (EN 1995) ---
 timber = ec.Timber('C24')
@@ -72,20 +73,18 @@ print(timber.fmk)  # characteristic bending strength [MPa]
 
 # --- Design response spectrum (EN 1998, Portuguese NA) ---
 spec = ec.spectrum.get_spectrum_ec8(
-    locale='PT', code='PT-1', imp_class='II',
+    locale='PT', code='PT1', imp_class='II',
     soil='C', zone='1_2', behaviour=3.0
 )
-ec.spectrum.draw_spectrum_ec8(spec, show=True)
+ec.spectrum.draw_spectrum_ec8(spec, show=False)   # show=True opens the window
 
 # --- Load combinations (EN 1990) ---
-from eurocodepy.ec1 import Load, LoadType, LoadCombinations, CombinationType
-loads = [
-    Load('G1', LoadType.PERMANENT, 10.0),
-    Load('Q1', LoadType.LIVE, 5.0),
-    Load('W1', LoadType.WIND, 3.0),
-]
-combos = LoadCombinations(loads)
-uls = combos.get(CombinationType.ULS)
+from eurocodepy.ec1 import Load, LoadType, Loads
+loads = Loads()
+loads.add(Load('G1', LoadType.PERMANENT, 1.0, 1.35, 0.0, 0.0, 0.0))   # γ fav, γ unf, ψ0, ψ1, ψ2
+loads.add(Load('Q1', LoadType.LIVE, 0.0, 1.5, 0.7, 0.5, 0.3))
+loads.add(Load('W1', LoadType.WIND, 0.0, 1.5, 0.6, 0.2, 0.0))
+uls = loads.get_ULS_combos()
 ```
 
 ---

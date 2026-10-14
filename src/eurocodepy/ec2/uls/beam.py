@@ -36,8 +36,8 @@ def calc_asl(b: float, d: float, med: float, fcd: float = 13.7,
         iprint (bool, optional): print results. Defaults to False.
 
     Returns:
-        Tuple[float, float, float, float]: reinforcement area in cm2,
-        strain in reinforcement, neutral axis depth, omega.
+        Tuple[float, float, float]: reinforcement area in cm2,
+        strain in reinforcement [permille], neutral axis depth ratio x/d.
 
     """
     mmed = med

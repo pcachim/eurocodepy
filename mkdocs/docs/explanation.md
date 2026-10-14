@@ -33,16 +33,19 @@ The design philosophy is:
 
 ```
 eurocodepy/
-├── dbase       ← JSON-backed material & section database
+├── dbase       ← JSON-backed material & section database; editions (`Editions`) and annex-aware lookups
+├── annex       ← National Annexes: one JSON per country (data/national_annexes), `register_annex`
 ├── units       ← Unit system abstractions (SI, kN/mm, N/mm)
-├── national_parameters  ← Portuguese / EU national annex data
-├── ec1         ← EN 1991: load types, forces, combinations (ULS/SLS/ALS)
-├── ec2         ← EN 1992: concrete, reinforcement, prestress; ULS + SLS
-├── ec3         ← EN 1993: steel materials, profiles, connections
-├── ec5         ← EN 1995: timber materials, ULS checks, SLS vibration
+├── calc_report ← `CalcReport`: the steps of a check (`trace=`), as dict, JSON or Markdown
+├── national_parameters  ← Portuguese municipal data (seismic, wind, snow, temperature)
+├── ec1         ← EN 1991: load types, forces, combinations (ULS/SLS/ALS), wind
+├── ec2         ← EN 1992: concrete, reinforcement, prestress; ULS and SLS of 2004 (uls, sls)
+│                  and of 2023 (uls2023, time_dependent2023); slabs, membranes and shells
+├── ec3         ← EN 1993: steel materials, profiles, connections, classification, section and member checks
+├── ec5         ← EN 1995: timber materials, ULS checks (2004 and 2025), SLS vibration
 ├── ec7         ← EN 1997: soils, bearing resistance, earth pressures
 ├── ec8         ← EN 1998: response spectra, national annex parameters
-└── utils       ← Section properties, stress calculations
+└── utils       ← Cross sections, section properties, stress calculations
 ```
 
 Each Eurocode module follows a consistent internal layout where it makes sense:
@@ -51,9 +54,13 @@ Each Eurocode module follows a consistent internal layout where it makes sense:
 ecN/
 ├── __init__.py   ← public exports
 ├── materials.py  ← material classes and grade enumerations
-├── uls/          ← Ultimate Limit State check functions
+├── uls/          ← Ultimate Limit State check functions (edition 2004)
+├── uls2023/      ← the same for the second generation where it changed (ec2; ec5 has uls2025)
 └── sls/          ← Serviceability Limit State check functions
 ```
+
+The functions of the second generation mirror the old ones (`ec2.uls` / `ec2.uls2023`), so a check can be
+swapped by changing the import or the `edition=` argument.
 
 ---
 
@@ -119,8 +126,8 @@ as the library matures. Contributions are welcome — see
 
 Areas actively being developed:
 
-- EN 1992-1-1:2025 (second generation Eurocode 2) compatibility
-- EN 1993 cross-section classification and member buckling
-- EN 1995 connection design
-- Expanded national annex support (Spain, France, Germany)
+- EN 1992-1-1:2023 (second generation Eurocode 2): concrete done (materials, shear, torsion, detailing, Annex B and G); columns, crack width and anchorage still 2004
+- Second-generation code for EC3 and for the rest of EC2 (columns, crack width, anchorage)
+- EN 1995 connection design and snow loads (EN 1991-1-3)
+- National annexes: the Portuguese NDPs of EN 1992-1-1:2023, and other countries
 

@@ -10,20 +10,23 @@ standard Eurocode and the Portuguese National Annex, and exports spectra to CSV.
 
 ## Response spectra — `ec8.spectrum`
 
+Accelerations are in m/s² (`a_g`, and the ordinates of the spectra); periods in s.
+
 ### `get_spec_params`
 
-Returns the raw spectrum shape parameters for a given locale, code, importance class,
-soil type, and seismic zone.
+Returns the spectrum parameters `(S, a_g, T_B, T_C, T_D)` for a locale, code, importance class,
+soil type and seismic zone. `a_g = a_gR·γI`; `S` is interpolated between `S_max` and `S_min`
+with `a_g`.
 
 ```python
 from eurocodepy.ec8 import get_spec_params
 
-S, ag, TB, TC, TD = get_spec_params(
-    locale='PT',        # 'EU' (standard CEN) or 'PT' (Portuguese NA)
-    code='PT-1',        # see table below
-    class_imp='II',     # importance class: 'i', 'ii', 'iii', 'iv'
-    soil='C',           # soil type: A, B, C, D, E
-    zone='1_2',         # seismic zone (code-dependent)
+s_val, a_g, t_b, t_c, t_d = get_spec_params(
+    locale="PT",        # "EU" (CEN) or "PT" (Portuguese National Annex)
+    code="PT1",         # see the table below
+    class_imp="II",     # importance class: I, II, III, IV
+    soil="C",           # soil type: A, B, C, D, E
+    zone="1_2",         # seismic zone (code-dependent)
 )
 ```
 
@@ -31,92 +34,92 @@ S, ag, TB, TC, TD = get_spec_params(
 
 | `locale` | `code` | Description |
 |----------|--------|-------------|
-| `EU` | `CEN-1` | Standard Eurocode type 1 spectrum |
-| `EU` | `CEN-2` | Standard Eurocode type 2 spectrum |
-| `PT` | `PT-1` | Portuguese NA — continental Portugal (type 1) |
-| `PT` | `PT-2` | Portuguese NA — continental Portugal + Madeira (type 2) |
-| `PT` | `PT-A` | Portuguese NA — Azores |
+| `EU` | `CEN_1` | Standard Eurocode type 1 spectrum |
+| `EU` | `CEN_2` | Standard Eurocode type 2 spectrum |
+| `PT` | `PT1` | Portuguese NA — type 1 (continental Portugal) |
+| `PT` | `PT2` | Portuguese NA — type 2 |
+| `PT` | `PTA` | Portuguese NA — Azores |
 
 #### Seismic zones
 
-- `PT-1`: `1_1`, `1_2`, `1_3`, `1_4`, `1_5`, `1_6`
-- `PT-2` / `PT-A`: `2_1`, `2_2`, `2_3`, `2_4`, `2_5`
-- `CEN-1` / `CEN-2`: `.1g`, `.2g`, `.3g`, `.4g`, `.5g`, `.6g`, `.7g`, `.8g`, `.9g`, `1_0g`
+- `PT1`: `1_1`, `1_2`, `1_3`, `1_4`, `1_5`, `1_6`
+- `PT2` / `PTA`: `2_1`, `2_2`, `2_3`, `2_4`, `2_5`
+- `CEN_1` / `CEN_2`: `.1g`, `.2g`, … `.9g`, `1_0g` (the reference acceleration as a fraction of g)
 
 ---
 
 ### `get_spectrum_ec8`
 
-Builds the full horizontal design spectrum as a dict of arrays.
+Builds the horizontal design spectrum as a `pandas.DataFrame` with columns `period` and `value`.
 
 ```python
-from eurocodepy.ec8 import get_spectrum_ec8   # also: ec8.spectrum.get_spectrum_ec8
+from eurocodepy.ec8 import get_spectrum_ec8
 
 spec = get_spectrum_ec8(
-    locale='PT',
-    code='PT-1',
-    imp_class='II',
-    soil='C',
-    zone='1_2',
-    behaviour=3.0,   # behaviour factor q (1.0 for elastic spectrum)
+    locale="PT",
+    code="PT1",
+    imp_class="II",
+    soil="C",
+    zone="1_2",
+    behaviour=3.0,   # behaviour factor q
 )
-
-# Keys in the returned dict:
-# 'T'   — period array [s]
-# 'Sd'  — design spectral acceleration [g]
-# 'Se'  — elastic spectral acceleration [g]
-# 'ag'  — reference peak ground acceleration [g]
-# 'S'   — soil factor
-# 'TB', 'TC', 'TD' — corner periods [s]
+spec.columns.tolist()       # ['period', 'value']
+spec["value"].max()         # largest design ordinate [m/s²]
 ```
 
 ---
 
-### `get_spectrum_user`
+### `get_spectrum_user` and `get_elastic_spectrum_user`
 
-Generate a spectrum from arbitrary user-supplied parameters without needing a
-national annex entry.
+Spectra from arbitrary parameters, without a National Annex entry.
 
 ```python
-from eurocodepy.ec8.spectrum import get_spectrum_user
+from eurocodepy.ec8 import get_spectrum_user, get_elastic_spectrum_user
 
-spec = get_spectrum_user(ag=0.2, S=1.15, TB=0.1, TC=0.6, TD=2.0, behaviour=4.0)
+# a_g [m/s²], S, q, T_B, T_C, T_D
+design = get_spectrum_user(a_g=2.0, s_val=1.15, q=4.0, t_b=0.1, t_c=0.6, t_d=2.0)
+elastic = get_elastic_spectrum_user(a_g=2.0, s_val=1.15, t_b=0.1, t_c=0.6, t_d=2.0, damping=5.0)
 ```
 
 ---
 
-### `get_spectrum_parameters`
+### `calc_spectrum`, `calc_elastic_spectrum`, `damping_correction`
 
-Low-level function; returns the parameter dict for a given combination.
+Ordinates of one period, from already-extracted parameters (EN 1998-1, Eqs. 3.2 to 3.5 and 3.13 to 3.16).
 
----
+```python
+from eurocodepy.ec8 import calc_spectrum, calc_elastic_spectrum, damping_correction
 
-### `calc_spectrum`
+sd = calc_spectrum(0.3, a_g=2.0, s_val=1.15, q=3.0, t_b=0.1, t_c=0.6, t_d=2.0)   # design
+se = calc_elastic_spectrum(0.3, 2.0, 1.15, 0.1, 0.6, 2.0)                       # elastic, 5 % damping
+eta = damping_correction(5.0)                                                    # 1.0
+```
 
-Computes the spectral ordinates from already-extracted parameters.
+`get_spectrum_parameters(code, coef_imp, soil, zone)` is the same lookup as `get_spec_params` with the
+tables inside the function (codes `CEN-1`, `CEN-2`, `PT-1`, `PT-2`, `PT-A`, hyphenated); prefer `get_spec_params`.
 
 ---
 
 ### `draw_spectrum_ec8`
 
-Plots the spectrum using matplotlib.
+Plots the spectrum with matplotlib.
 
 ```python
 from eurocodepy.ec8 import draw_spectrum_ec8
 
-draw_spectrum_ec8(spec, show=True, title='Design spectrum — Lisbon')
+draw_spectrum_ec8(spec, show=False, save=True, filename="spectrum.png")
 ```
 
 ---
 
 ### `write_spectrum_ec8`
 
-Exports the spectrum to a CSV file (two columns: `T [s]`, `Sd [g]`).
+Exports the spectrum to a text file (two columns, `period` and `value`).
 
 ```python
 from eurocodepy.ec8 import write_spectrum_ec8
 
-write_spectrum_ec8(spec, filename='spectrum_PT1_II_C_1_2.csv')
+write_spectrum_ec8(spec, filename="spectrum_PT1_II_C_1_2.csv", separator=",")
 ```
 
 ---

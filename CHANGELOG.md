@@ -5,6 +5,9 @@ GNU Lesser General Public License v3.0 or later.
 
 ## 2027.0.10 — 2026-10-13
 ### Added
+- Documentation: `modules/ec2` split into an index with the unit and sign conventions, EN 1992-1-1:2004, EN 1992-1-1:2023 and membranes/slabs/shells
+  pages; a generated clause map of `uls2023` (`mkdocs/scripts/gen_clause_map.py`); a page on editions, national annexes and the `dbobj`
+  migration; EC2 examples corrected. `tests/test_docs_examples.py` runs the code blocks of every page.
 - **EN 1992-1-1:2023 Clause 4 (basis of design) in the database** (`Editions.ec2["2023"].partial_factors`):
   Table 4.3 (`γs`, `γc`, `γce` incl. the tested-`Ecm` value 1,3, `γv` for persistent/transient, fatigue,
   accidental and serviceability), `γSH` (4.3.1), `k_cip` (4.3.3(4)), Table 4.2 (`γP,fav/unfav`,
@@ -127,6 +130,24 @@ GNU Lesser General Public License v3.0 or later.
 - `Editions.ec2["2023"].overrides["Concrete.Parameters"]`: `k_tc`/`k_tt` key `short_loading` renamed
   `late_loading` (the condition is a design loading not expected for 3 months after casting).
 ### Fixed
+- `ec8.get_spectrum_parameters` raised `NameError` (a stray `import pandas` had landed inside the docstring) and had `1_3` and `1_4` as the
+  integers 15 and 10 instead of 1,5 and 1,0 m/s²; `ec8.draw_spectrum_ec8` raised `NameError` (`plt`) for the same reason.
+- `ec5.Timber.design_values` returned `ft90d` under the key `kmod`.
+- `ec5.GetTimberDesignValues` could not run (it read the service class and the load duration from the same combination attribute,
+  which nothing sets). It now takes `service_class=` and uses the shortest action of each combination for `kmod` (EN 1995-1-1, 3.1.3(2)),
+  with `attributes["loadduration"]` as an override; it raises `ValueError` instead of printing when the duration is unknown.
+- `ec7.seismic_bearing_resistance` raised `AttributeError` on every call (`append` on an array); for coherent soil `Nmax` used a
+  numerical constant instead of `cu`; the cases outside the domain of the criterion (uplift, `N ≥ Nmax`) counted as verified and now do not.
+- `ec3.Bolt(d, grade)` with a numeric diameter used the gross area as the thread area, overestimating the tension resistance and the shear
+  in the thread by about 28 % (M20: 120,6 kN instead of 94,1 kN). It takes the area of the standard size, else `0,78·A`.
+- `ec3.WeldConnection` added the inertia of each weld without the parallel-axis term and not about the centroid of the group (two welds
+  100 mm apart gave `Iyy` 2083 instead of 2,5·10⁶ mm⁴), the elastic moduli divided by the wrong coordinate, and ignored the welds passed to
+  the constructor. It now has `xg`, `yg` and centroidal `inertia_*` and `w_el_*`.
+- `ec1.LoadCombinations.evaluate_all` and `worst_case` called a `LoadCombination.evaluate` that did not exist; it now does.
+- Documentation: every example of every page now runs (module pages for EC1, EC3, EC5, EC7, EC8 and utils rewritten to the current API,
+  tutorials and how-to guides fixed); `tests/test_docs_examples.py` keeps it so.
+- `ec2.uls.shear.calc_vrd` returned `max(VRd,s, VRd,max)`; EN 1992-1-1:2004, 6.2.3 asks for the minimum, so the resistance was overestimated
+  whenever the stirrups governed. `calc_asl` docstring: it returns three values (the area in cm², the steel strain and x/d).
 - **EN 1992-1-1:2023 concrete grades** (`Editions.ec2["2023"]`, `Concrete(..., edition="2023")`): C55/67 to C90/105 had the
   2004 values of `fctm` and `fctk,0.05` (e.g. C60/75 `fctm` 4,4 instead of 4,3) and the reduced `εc2`, `εcu2`, `n` of
   high-strength concrete. They are now Table 5.1 (`fctm`, `fctk,0.05`, `fctk,0.95`, `fcm`) and 8.1.2(1) (`εc2` = 2,0 ‰,

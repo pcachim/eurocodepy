@@ -95,7 +95,6 @@ def get_spectrum_parameters(code: str, coef_imp: str, soil: str, zone: str) -> t
     """Get the spectrum parameters.
 
     Args:
-    import pandas as pd
         code (str): code to be used (CEN-1, CEN-2, PT-1, PT-2, PT-A)
                 CEN-1, CEN-2: standard Eurocode spectrums
                 PT-1, PT-2, PT-A: Portuguese National Annex spectrums
@@ -109,8 +108,10 @@ def get_spectrum_parameters(code: str, coef_imp: str, soil: str, zone: str) -> t
         list: soil amplification factor, acceleration, T_B, T_C, T_D
 
     """
+    import pandas as pd
+
     # accelarations
-    a_gr = {"1_1": 2.5, "1_2": 2.0, "1_3": 1_5, "1_4": 1_0, "1_5": 0.6, "1_6": 0.35,
+    a_gr = {"1_1": 2.5, "1_2": 2.0, "1_3": 1.5, "1_4": 1.0, "1_5": 0.6, "1_6": 0.35,
             "2.1": 2.5, "2.2": 2.0, "2.3": 1.7, "2.4": 1.1, "2.5": 0.8,
             ".1g": 0.980665, ".2g": 1.96133, ".3g":  2.941995, ".4g": 3.92266,
             ".5g": 4.903325, ".6g": 5.88399, ".7g": 6.864655, ".8g": 7.84532,
@@ -411,8 +412,6 @@ def draw_spectrum_ec8(spectrum: pd.DataFrame, save: bool = False,  # noqa: FBT00
     """Draw the spectrum using matplotlib.
 
     Args:
-    import pandas as pd
-    import matplotlib.pyplot as plt
         spectrum (pd.DataFrame): a pandas DataFrame with the
             spectrum data (columns: period, value)
         save (bool): whether to save the plot as an image file
@@ -421,6 +420,8 @@ def draw_spectrum_ec8(spectrum: pd.DataFrame, save: bool = False,  # noqa: FBT00
         show (bool): whether to display the plot window
 
     """
+    import matplotlib.pyplot as plt
+
     # plot the spectrum
     plt.plot(spectrum["period"].to_numpy(), spectrum["value"].to_numpy())
     s = (
