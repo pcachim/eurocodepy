@@ -323,6 +323,35 @@ def _concrete_block_v(x, h, w, fcd, eps_c2, eps_cu2, n):
     return k, fcd * w * f_per_fcd * 1000.0, fcd * w * (0.5 * h * f_per_fcd - s_per_fcd) * 1000.0
 
 
+def _illinois(fun, lo, hi, flo, fhi, positive):
+    """Root of ``fun`` bracketed by ``[lo, hi]`` (Illinois / modified false position).
+
+    ``positive(v)`` tells the side of a value; ``flo`` and ``fhi`` are on opposite
+    sides. Converges superlinearly and keeps the bracket, so it reaches the 1e-13
+    relative width the bisection it replaces gave in a few steps instead of ~50.
+    Returns the final ``(lo, hi)``.
+    """
+    side = 0
+    for _ in range(100):
+        x = (lo * fhi - hi * flo) / (fhi - flo)
+        if not lo < x < hi:
+            x = 0.5 * (lo + hi)
+        fx = fun(x)
+        if positive(fx) == positive(fhi):
+            hi, fhi = x, fx
+            if side == 1:
+                flo *= 0.5
+            side = 1
+        else:
+            lo, flo = x, fx
+            if side == -1:
+                fhi *= 0.5
+            side = -1
+        if hi - lo <= 1.0e-13 * hi:
+            break
+    return lo, hi
+
+
 def calc_asl_nm_strain(
     b: float,
     h: float,
@@ -407,14 +436,29 @@ def calc_asl_nm_strain(
 
     def capacity_ok(as1, as2):
         """Is (N, |M|) inside the M-N diagram of this layout?"""
+        def g(x):
+            fc, _mc, s1, s2 = state(x)
+            return fc + 0.1 * (as1 * s1 + as2 * s2) - ned
+
         lo, hi = 1.0e-4 * h, 500.0 * h
-        for _ in range(48):
-            mid = math.sqrt(lo * hi)
-            fc, _mc, s1, s2 = state(mid)
-            if fc + 0.1 * (as1 * s1 + as2 * s2) < ned:
-                lo = mid
-            else:
-                hi = mid
+        if grid is not None:
+            # The grid already holds the concrete force and steel stresses, so
+            # the crossing is bracketed by one vector operation.
+            gg = grid[1] + 0.1 * (as1 * grid[3] + as2 * grid[4]) - ned
+            j = int(np.argmax(gg >= 0.0))
+            if gg[j] >= 0.0 and j > 0:
+                lo, hi = float(grid[0][j - 1]), float(grid[0][j])
+        glo, ghi = g(lo), g(hi)
+        if glo < 0.0 <= ghi:
+            _lo, hi = _illinois(g, lo, hi, glo, ghi, positive=lambda v: v >= 0.0)
+        else:                                  # no crossing in range: as before
+            lo, hi = 1.0e-4 * h, 500.0 * h
+            for _ in range(60):
+                mid = math.sqrt(lo * hi)
+                if g(mid) < 0.0:
+                    lo = mid
+                else:
+                    hi = mid
         fc, mc, s1, s2 = state(hi)
         if abs(fc + 0.1 * (as1 * s1 + as2 * s2) - ned) > 1.0e-3 * max(abs(ned), 1.0) + 1.0e-6:
             return False, hi
@@ -422,16 +466,17 @@ def calc_asl_nm_strain(
         return mrd >= m_abs - 1.0e-9, hi
 
     def root(fun, lo, hi):
-        """Bisection of a continuous ``fun`` that changes sign on [lo, hi]."""
-        flo = fun(lo)
-        for _ in range(48):
-            mid = 0.5 * (lo + hi)
-            fm = fun(mid)
-            if (fm > 0.0) == (flo > 0.0):
-                lo, flo = mid, fm
-            else:
-                hi = mid
+        """Root of a continuous ``fun`` that changes sign on [lo, hi]."""
+        lo, hi = _illinois(fun, lo, hi, fun(lo), fun(hi), positive=lambda v: v > 0.0)
         return 0.5 * (lo + hi)
+
+    grid = None            # (x, Fc, Mc, s1, s2) on the search grid, set below
+    x_lo, x_hi, n_grid = 0.005 * h, 200.0 * h, 400
+    xa = np.geomspace(x_lo, x_hi, n_grid)
+    ka, fca, mca = _concrete_block_v(xa, h, b, fcd, eps_c2, eps_cu2, n_exp)
+    s1a = np.clip(_ES_MPA * ka * (xa - u1), -fyd, fyd)
+    s2a = np.clip(_ES_MPA * ka * (xa - u2), -fyd, fyd)
+    grid = (xa, fca, mca, s1a, s2a)
 
     ok, x_sol = capacity_ok(as_min, 0.0)
     as1, as2 = as_min, 0.0
@@ -442,46 +487,47 @@ def calc_asl_nm_strain(
         # feasible set (a1 = 0 or a2 = 0, i.e. P1 = 0 or P2 = 0: continuous in x,
         # no division by the steel stress) or in its interior; so collect the
         # roots of P1 and P2 plus every feasible grid point, and keep the best.
-        x_lo, x_hi, n_grid = 0.005 * h, 200.0 * h, 400
-        ratio = (x_hi / x_lo) ** (1.0 / (n_grid - 1))
-        xs = [x_lo * ratio ** i for i in range(n_grid)]
-        xa = np.asarray(xs)
-        ka, fca, mca = _concrete_block_v(xa, h, b, fcd, eps_c2, eps_cu2, n_exp)
-        s1a = np.clip(_ES_MPA * ka * (xa - u1), -fyd, fyd)
-        s2a = np.clip(_ES_MPA * ka * (xa - u2), -fyd, fyd)
         p1m = 0.1 * as_min * s1a
         nra = ned - fca - p1m
         mra = m_abs - mca - p1m * z1
         p2a = (mra - nra * z1) / (z2 - z1)
-        fs = list(zip((nra - p2a).tolist(), p2a.tolist(), s1a.tolist(), s2a.tolist()))
-        best = None                                      # (total, a1, a2, x)
+        p1a = nra - p2a
 
-        def consider(x, f=None):
-            nonlocal best
-            p1, p2, s1, s2 = f if f is not None else forces(x)
-            ar = areas(p1, p2, s1, s2)
-            if ar is None:
-                return
-            a1_, a2_ = ar
-            if a1_ < -1.0e-6 or a2_ < -1.0e-6:
-                return
-            a1_ = a1_ if a1_ > 1.0e-9 else 0.0           # drop round-off
-            a2_ = a2_ if a2_ > 1.0e-9 else 0.0
-            if best is None or a1_ + a2_ < best[0]:
-                best = (a1_ + a2_, a1_, a2_, x)
-
-        for i, x in enumerate(xs):
-            consider(x, fs[i])
-            if i == 0:
-                continue
-            for idx in (0, 1):                           # P1 and P2 sign changes
-                if (fs[i - 1][idx] > 0.0) != (fs[i][idx] > 0.0):
-                    consider(root(lambda t, j=idx: forces(t)[j], xs[i - 1], x))
-        if best is None:
+        # Required areas [cm2] on the whole grid at once; None-equivalent (inf)
+        # where a steel is unstressed or an area is negative.
+        with np.errstate(divide="ignore", invalid="ignore"):
+            a1g = p1a / (0.1 * s1a)
+            a2g = p2a / (0.1 * s2a)
+        valid = ((np.abs(s1a) >= 1.0e-9) & (np.abs(s2a) >= 1.0e-9)
+                 & (a1g >= -1.0e-6) & (a2g >= -1.0e-6))
+        a1g = np.where(a1g > 1.0e-9, a1g, 0.0)           # drop round-off
+        a2g = np.where(a2g > 1.0e-9, a2g, 0.0)
+        tot = np.where(valid, a1g + a2g, np.inf)
+        ib = int(np.argmin(tot))                         # first minimum on ties
+        # candidates in the order the scan visits them: grid point i, then the
+        # roots found between i-1 and i (ties keep the earliest)
+        cands = []
+        if valid[ib]:
+            cands.append((2 * ib, float(tot[ib]), float(a1g[ib]), float(a2g[ib]),
+                          float(xa[ib])))
+        for idx, parr in ((0, p1a), (1, p2a)):
+            for i in np.nonzero((parr[:-1] > 0.0) != (parr[1:] > 0.0))[0] + 1:
+                x = root(lambda t, j=idx: forces(t)[j],
+                         float(xa[i - 1]), float(xa[i]))
+                p1, p2, s1, s2 = forces(x)
+                if abs(s1) < 1.0e-9 or abs(s2) < 1.0e-9:
+                    continue
+                a1_, a2_ = p1 / (0.1 * s1), p2 / (0.1 * s2)
+                if a1_ < -1.0e-6 or a2_ < -1.0e-6:
+                    continue
+                a1_ = a1_ if a1_ > 1.0e-9 else 0.0
+                a2_ = a2_ if a2_ > 1.0e-9 else 0.0
+                cands.append((2 * int(i) + 1 + 0.5 * idx, a1_ + a2_, a1_, a2_, x))
+        if not cands:
             feasible = False
-            x_sol = xs[0]
+            x_sol = float(xa[0])
         else:
-            _tot, a1, a2, x_sol = best
+            _key, _tot, a1, a2, x_sol = min(cands, key=lambda c: (c[1], c[0]))
             as1, as2 = as_min + a1, a2
             ok2, _ = capacity_ok(as1, as2)
             if not ok2:                                  # numerical guard: safe side

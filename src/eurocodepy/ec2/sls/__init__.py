@@ -12,6 +12,8 @@ from eurocodepy.ec2.sls import (
 )
 from eurocodepy.ec2.sls.crack import (
     crack_opening as crack_opening,
+    crack_opening_rect as crack_opening_rect,
+    is_cracked_rect as is_cracked_rect,
     is_cracked as is_cracked,
     iscracked_annexLL as iscracked_annexLL,
 )
@@ -23,6 +25,8 @@ __all__ = [
     "creep",
     "shrinkage",
     "crack_opening",
+    "crack_opening_rect",
+    "is_cracked_rect",
     "is_cracked",
     "iscracked_annexLL",
     "creep_coef",

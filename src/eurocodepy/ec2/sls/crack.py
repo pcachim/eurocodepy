@@ -273,3 +273,103 @@ if __name__ == "__main__":
     wk_max = np.max(wk)
     print(f"{wk}")
     print(f"w_cr_max = {wk_max}")
+
+
+# ---------------------------------------------------------------------------
+# Vectorised versions for a rectangular section with one tension and one
+# compression layer, evaluated at many stations at once (a design loop calls the
+# scalar functions tens of thousands of times; each call is ~0.1 ms).
+# They give the same numbers as :func:`crack_opening` / :func:`is_cracked` called
+# with one-element arrays -- same formulae, the same rounding of the eccentricity
+# and the same root selection -- and fall back to those functions for the rare
+# stations where the neutral-axis cubic degenerates.
+# ---------------------------------------------------------------------------
+
+_ALPHA_ES = 15.0
+
+
+def _first_root_in_section(a1, a2, a3, h):
+    """Per row, the first real root of x^3 + a1 x^2 + a2 x + a3 in (0, h), else NaN.
+
+    Same selection as ``np.roots`` + "first real root in (0, h)": the roots come
+    from the eigenvalues of the companion matrix, in the order LAPACK returns them.
+    """
+    n = a1.shape[0]
+    comp = np.zeros((n, 3, 3))
+    comp[:, 0, 0] = -a1
+    comp[:, 0, 1] = -a2
+    comp[:, 0, 2] = -a3
+    comp[:, 1, 0] = 1.0
+    comp[:, 2, 1] = 1.0
+    ev = np.linalg.eigvals(comp)
+    re, im = ev.real, ev.imag
+    ok = (im == 0) & (re > 0) & (re < h)
+    first = np.argmax(ok, axis=1)
+    return np.where(ok.any(axis=1), re[np.arange(n), first], np.nan)
+
+
+def crack_opening_rect(b: float, h: float, phi: float, As, ds: float, Asc, dsc: float,
+                       conc, reinf, M, N, k_t: float = 0.4) -> np.ndarray:
+    """Crack opening wk [mm] at many stations of one rectangular section.
+
+    ``As`` / ``Asc`` / ``M`` / ``N`` are arrays with one entry per station
+    (``As`` tension steel, ``Asc`` compression steel, ``M`` the moment magnitude,
+    ``N`` the axial force, compression positive); ``ds`` / ``dsc`` are the depths
+    of the two layers. Equivalent to calling :func:`crack_opening` at each station
+    with one-element arrays.
+    """
+    conc = get_concrete(conc)
+    reinf = get_reinforcement(reinf)
+    As, Asc, M, N = (np.atleast_1d(np.asarray(v, dtype=float)) for v in (As, Asc, M, N))
+    Es = reinf.Es * 1000.0
+    fctm = conc.fctm * 1000.0
+    al = _ALPHA_ES
+    dp = h / 2.0
+    Nv = np.where(np.abs(N) < 1e-3, 1e-3, N)
+
+    es = -M / Nv - (ds - dp)
+    a1 = -3.0 * (ds + es)
+    a2 = (-6.0 / b) * ((al - 1.0) * Asc * (ds + es - dsc) + al * As * es)
+    a3 = (6.0 / b) * ((al - 1.0) * Asc * dsc * (ds + es - dsc) + al * As * ds * es)
+    x = _first_root_in_section(a1, a2, a3, h)
+
+    Aun = x * b + (al - 1.0) * Asc + al * As
+    zgs = (0.5 * x * x * b + (al - 1.0) * dsc * Asc + al * ds * As) / Aun
+    Iun = (b * x ** 3 / 12.0 + b * x * (zgs - x / 2.0) ** 2
+           + (al - 1.0) * Asc * (dsc - zgs) ** 2 + al * As * (ds - zgs) ** 2)
+    e_p = np.round(dp - zgs, 4)
+    sig_s = al * (-Nv / Aun + (M - Nv * e_p) / Iun * (ds - zgs))
+
+    d = (As * ds) / As
+    ac_eff = np.minimum(np.minimum(2.5 * (h - d), (h - x) / 3.0), h / 2.0) * b
+    rho = As / ac_eff
+    wk = eps_sm(sig_s, Es, rho, fctm, al, k_t=k_t) * sr_max(h - d, phi, rho, k1, k2) * 1000.0
+
+    # Degenerate cubic (a3 == 0 drops a root in np.roots) or a non-finite input:
+    # use the scalar reference for those stations.
+    bad = ~np.isfinite(a3) | (a3 == 0.0)
+    for i in np.nonzero(bad)[0]:
+        wk[i] = float(np.max(crack_opening(
+            b, h, phi, np.array([As[i]]), np.array([ds]), np.array([Asc[i]]),
+            np.array([dsc]), conc, reinf, np.array([M[i]]), np.array([N[i]]), k_t)))
+    return wk
+
+
+def is_cracked_rect(b: float, h: float, As, ds: float, Asc, dsc: float,
+                    conc, M, N) -> np.ndarray:
+    """Boolean array: is the section cracked at each station (see :func:`is_cracked`)."""
+    conc = get_concrete(conc)
+    As, Asc, M, N = (np.atleast_1d(np.asarray(v, dtype=float)) for v in (As, Asc, M, N))
+    fctm = conc.fctm * 1000.0
+    al = _ALPHA_ES
+    dp = h / 2.0
+    Nv = np.where(np.abs(N) < 1e-3, 1e-3, N)
+    Aun = h * b + (al - 1.0) * (As + Asc)
+    zgs = (0.5 * h * h * b + (al - 1.0) * (ds * As + dsc * Asc)) / Aun
+    Iun = (b * h ** 3 / 12.0 + b * h * (0.5 * h - zgs) ** 2
+           + (al - 1.0) * (Asc * (dsc - zgs) ** 2 + As * (ds - zgs) ** 2))
+    e_p = np.round(dp - zgs, 4)
+    axial = -Nv / Aun
+    bend = M - Nv * e_p
+    sig_max = np.maximum(axial + bend / (Iun / (h - zgs)), axial - bend / (Iun / zgs))
+    return sig_max >= fctm
