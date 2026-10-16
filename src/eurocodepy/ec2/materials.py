@@ -79,7 +79,8 @@ def material_partial_factors(edition: str | None = None,
             msg = (f"edition {dbase.resolve_edition('ec2', edition) or '2004'!r} "
                    f"has only the 'persistent' partial factors in the database")
             raise ValueError(msg)
-        mats = dbase.get_edition_data("ec2", edition, annex)
+        mats = dbase.get_edition_data_ro(
+            "ec2", edition, annex, ("Reinforcement", "Concrete"))
         return {"gamma_s": mats["Reinforcement"]["Parameters"]["gamma_s"],
                 "gamma_c": mats["Concrete"]["Parameters"]["gamma_cc"],
                 "gamma_ce": None, "gamma_ce_tested": None, "gamma_v": None}
@@ -98,7 +99,7 @@ def concrete_strength_factors(fck: float, edition: str | None = None,
     if loading not in LOADING_KEYS:
         msg = f"loading must be one of {tuple(LOADING_KEYS)}, got '{loading}'"
         raise ValueError(msg)
-    params = dbase.get_edition_data("ec2", edition, annex)["Concrete"]["Parameters"]
+    params = dbase.get_edition_data_ro("ec2", edition, annex, ("Concrete",))["Concrete"]["Parameters"]
     if "k_tc" not in params:
         return 1.0, 1.0, 1.0
     key = LOADING_KEYS[loading]
@@ -456,7 +457,7 @@ class Concrete:
         self.annex = annex
 
         class_name = class_name.replace("/", "_").upper()
-        mats = dbase.get_edition_data("ec2", edition, annex)["Concrete"]
+        mats = dbase.get_edition_data_ro("ec2", edition, annex, ("Concrete",))["Concrete"]
         grades = mats["Grade"]
         if class_name not in grades:
             grades_list = [item.replace("_", "/") for item in grades]
@@ -606,7 +607,7 @@ class Concrete:
             concrete.grade = f"C{f_ck}"
 
         concrete._set_design_values(
-            dbase.get_edition_data("ec2", edition, annex)["Concrete"]["Parameters"])
+            dbase.get_edition_data_ro("ec2", edition, annex, ("Concrete",))["Concrete"]["Parameters"])
 
         return concrete
 
@@ -869,7 +870,7 @@ class Prestress:
         else:
             _check_situation(situation)
             gamma_p = dbase.get_edition_data(
-                "ec2", edition, annex)["Prestress"]["Parameters"]["gamma_p"]
+                "ec2", edition, annex, ("Prestress",))["Prestress"]["Parameters"]["gamma_p"]
         self.gamma_P = gamma_p
         self.fpd = round(self.fp0_1k / gamma_p, 0)  # Design yield strength (MPa)
 

@@ -25,6 +25,8 @@ This reduces exactly to the pure-bending result of :func:`calc_asl` when
 
 import math
 
+import numpy as np
+
 from eurocodepy.ec2.materials import Concrete, GammaC, GammaS
 from eurocodepy.ec2.uls.beam import calc_asl
 
@@ -303,6 +305,24 @@ def _steel_stress(k, x, u, fyd):
     return max(-fyd, min(fyd, _ES_MPA * k * (x - u)))
 
 
+def _concrete_block_v(x, h, w, fcd, eps_c2, eps_cu2, n):
+    """Array version of :func:`_concrete_block` (same maths, ``x`` an ndarray)."""
+    k = np.where(x <= h, eps_cu2 / x, eps_c2 / (x - h * (1.0 - eps_c2 / eps_cu2)))
+    hh = np.minimum(x, h)
+    u1 = x - eps_c2 / k
+    ua = np.minimum(np.maximum(u1, 0.0), hh)
+    a = 1.0 - k * x / eps_c2
+    c = k / eps_c2
+    t_hh = np.maximum(a + c * hh, 0.0)
+    t_a = np.maximum(a + c * ua, 0.0)
+    i0 = (t_hh ** (n + 1) - t_a ** (n + 1)) / (c * (n + 1))
+    j0 = ((t_hh ** (n + 2) - t_a ** (n + 2)) / (n + 2)
+          - a * (t_hh ** (n + 1) - t_a ** (n + 1)) / (n + 1)) / (c * c)
+    f_per_fcd = hh - i0
+    s_per_fcd = 0.5 * hh * hh - j0
+    return k, fcd * w * f_per_fcd * 1000.0, fcd * w * (0.5 * h * f_per_fcd - s_per_fcd) * 1000.0
+
+
 def calc_asl_nm_strain(
     b: float,
     h: float,
@@ -388,7 +408,7 @@ def calc_asl_nm_strain(
     def capacity_ok(as1, as2):
         """Is (N, |M|) inside the M-N diagram of this layout?"""
         lo, hi = 1.0e-4 * h, 500.0 * h
-        for _ in range(80):
+        for _ in range(48):
             mid = math.sqrt(lo * hi)
             fc, _mc, s1, s2 = state(mid)
             if fc + 0.1 * (as1 * s1 + as2 * s2) < ned:
@@ -404,7 +424,7 @@ def calc_asl_nm_strain(
     def root(fun, lo, hi):
         """Bisection of a continuous ``fun`` that changes sign on [lo, hi]."""
         flo = fun(lo)
-        for _ in range(60):
+        for _ in range(48):
             mid = 0.5 * (lo + hi)
             fm = fun(mid)
             if (fm > 0.0) == (flo > 0.0):
@@ -425,12 +445,20 @@ def calc_asl_nm_strain(
         x_lo, x_hi, n_grid = 0.005 * h, 200.0 * h, 400
         ratio = (x_hi / x_lo) ** (1.0 / (n_grid - 1))
         xs = [x_lo * ratio ** i for i in range(n_grid)]
-        fs = [forces(x) for x in xs]
+        xa = np.asarray(xs)
+        ka, fca, mca = _concrete_block_v(xa, h, b, fcd, eps_c2, eps_cu2, n_exp)
+        s1a = np.clip(_ES_MPA * ka * (xa - u1), -fyd, fyd)
+        s2a = np.clip(_ES_MPA * ka * (xa - u2), -fyd, fyd)
+        p1m = 0.1 * as_min * s1a
+        nra = ned - fca - p1m
+        mra = m_abs - mca - p1m * z1
+        p2a = (mra - nra * z1) / (z2 - z1)
+        fs = list(zip((nra - p2a).tolist(), p2a.tolist(), s1a.tolist(), s2a.tolist()))
         best = None                                      # (total, a1, a2, x)
 
-        def consider(x):
+        def consider(x, f=None):
             nonlocal best
-            p1, p2, s1, s2 = forces(x)
+            p1, p2, s1, s2 = f if f is not None else forces(x)
             ar = areas(p1, p2, s1, s2)
             if ar is None:
                 return
@@ -443,7 +471,7 @@ def calc_asl_nm_strain(
                 best = (a1_ + a2_, a1_, a2_, x)
 
         for i, x in enumerate(xs):
-            consider(x)
+            consider(x, fs[i])
             if i == 0:
                 continue
             for idx in (0, 1):                           # P1 and P2 sign changes

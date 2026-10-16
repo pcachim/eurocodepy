@@ -216,6 +216,7 @@ def register_annex(source: object, *, replace: bool = False) -> str:
     ``annex=`` argument. Returns the country code.
     """
     country = _annex.register_annex(source, replace=replace)
+    _edition_ro_cache.clear()
     _remove_annex_loads(country)
     _merge_annex_loads(country, _annex.get_annex(country).get("loads", {}))
     return country
@@ -225,14 +226,39 @@ def unregister_annex(country: str) -> None:
     """Remove a national annex and its loads from the database."""
     _annex.unregister_annex(country)
     _remove_annex_loads(str(country).strip().upper())
+    _edition_ro_cache.clear()
 
 
 available_annexes = _annex.available_annexes
 get_annex = _annex.get_annex
 
 
+_edition_ro_cache: dict = {}
+
+
+def get_edition_data_ro(eurocode: str, edition: str | None,
+                        annex: str | None, sections: tuple[str, ...]) -> dict:
+    """Cached, **read-only** :func:`get_edition_data` for the requested ``sections``.
+
+    The result is shared between calls: the caller must not modify it (use
+    :func:`get_edition_data` for a copy it may edit). It exists for hot paths --
+    a design loop builds a material per section and combination, and copying the
+    data each time dominated the run time. The cache follows the database: it is
+    keyed on the identity of ``Materials`` and ``Editions`` and is cleared when an
+    annex is registered or removed.
+    """
+    key = (eurocode, edition, annex, sections,
+           id(db.get("Materials")), id(db.get("Editions")))
+    hit = _edition_ro_cache.get(key)
+    if hit is None:
+        hit = _edition_ro_cache[key] = get_edition_data(
+            eurocode, edition, annex, sections)
+    return hit
+
+
 def get_edition_data(eurocode: str, edition: str | None = None,
-                     annex: str | None = None) -> dict:
+                     annex: str | None = None,
+                     sections: tuple[str, ...] | None = None) -> dict:
     """Return the ``Materials`` dict resolved for the requested edition and annex.
 
     Applies the deltas in ``Editions.<eurocode>.<edition>.overrides`` on top
@@ -255,6 +281,11 @@ def get_edition_data(eurocode: str, edition: str | None = None,
     annex:
         Country code of a national annex (``"PT"``); ``None`` is the values
         recommended by the Eurocode. An unknown code raises ``ValueError``.
+    sections:
+        Top-level keys of ``Materials`` the caller needs (e.g. ``("Concrete",)``).
+        Only those are copied and patched, ~25x cheaper than copying every
+        material -- use it on hot paths (the design loops call this once per
+        section and combination). ``None`` returns all of them.
 
     Returns
     -------
@@ -262,17 +293,29 @@ def get_edition_data(eurocode: str, edition: str | None = None,
         A standalone deep copy of ``Materials`` with the requested
         edition's overrides (and the annex's) applied (if any).
     """
-    base = copy.deepcopy(db["Materials"])
+    src = db["Materials"]
+    if sections is None:
+        base = copy.deepcopy(src)
+    else:
+        base = {k: copy.deepcopy(src[k]) for k in sections if k in src}
+
+    def wanted(path: str) -> bool:
+        return sections is None or path.split(".", 1)[0] in sections
+
     editions = db.get("Editions", {}).get(eurocode, {})
     edition = resolve_edition(eurocode, edition)
     if edition is not None and edition in editions:
         for path, value in editions[edition].get("overrides", {}).items():
+            if not wanted(path):
+                continue
             # a copy: lists and dicts of the override must not be shared with the
             # global database, or editing the result would edit it
             _set_by_dotpath(base, path, copy.deepcopy(value))
     if annex is not None:
         patch = _annex.get_edition_patch(annex, eurocode, edition)
         for path, value in patch.get("overrides", {}).items():
+            if not wanted(path):
+                continue
             _set_by_dotpath(base, path, value)
     return base
 
