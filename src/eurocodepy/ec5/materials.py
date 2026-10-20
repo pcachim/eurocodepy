@@ -137,9 +137,11 @@ class Timber:
 
         params = self._params
         self.safety = params["safety"][self.type]
-        self.kmods = params["kmod"][self.type]
-        self.kh = params["kh"][self.type]
-        self.kdef = params["kdef"][self.type]
+        # CLT has no k_mod/k_def/k_h in EN 1995-1-1:2004; they are then empty
+        # and ``k_mod`` reports the missing value instead of failing on load.
+        self.kmods = params["kmod"].get(self.type, {})
+        self.kh = params["kh"].get(self.type, {})
+        self.kdef = params["kdef"].get(self.type, {})
         self.kmod = 0.0
 
         self.fmd = 0.0
@@ -363,8 +365,8 @@ class SolidTimber(Timber):
 
     def __init__(self, type_label: str = "C24",  # noqa: D107
                  edition: str | None = None) -> None:
-        grades_list = [item for item in dbase.TimberGrades
-                    if (item.startswith(("C", "D")))]
+        grades_list = [item for item, g in dbase.TimberGrades.items()
+                    if g["Type"] == "timber"]
         if type_label not in grades_list:
             msg = (
                 f"Softwood type '{type_label}' not found in database. "
@@ -455,18 +457,23 @@ class Glulam(Timber):
 
 
 class CLT(Timber):
-    """Eurocode 5 Cross-Laminated Timber (CLT) properties. Not implemented."""
+    """Eurocode 5 Cross-Laminated Timber (CLT) properties (EN 1995-1-1:2025 Annex N).
 
-    def __init__(self, type_label: str = "CLT30",  # noqa: D107
+    Besides the :class:`Timber` attributes (``fmk`` out of plane, ``fvk`` out of
+    plane), it has ``fm_edge_k`` (in-plane bending), ``frk`` (rolling shear),
+    ``fvxyk`` (in-plane shear), ``Grmean`` and ``Gvxymean``. The grade is read
+    from the base database, so it is available in every edition.
+
+    Args:
+        type_label (str, optional): CLT strength category. Defaults to 'CL24'.
+        edition (str, optional): Edition of EN 1995-1-1 (``None`` is 2004).
+
+    """
+
+    def __init__(self, type_label: str = "CL24",  # noqa: D107
                  edition: str | None = None) -> None:
-        grades_list = [item for item in dbase.TimberGrades if item.startswith("GL")]
-
-        if not type_label.startswith("CLT"):
-            msg = (
-                f"CLT type '{type_label}' must start with 'CLT'. "
-                f"CLT type must be one of {grades_list}"
-            )
-            raise ValueError(msg)
+        grades_list = [item for item, g in dbase.TimberGrades.items()
+                       if g["Type"] == "clt"]
         if type_label not in grades_list:
             msg = (
                 f"CLT type '{type_label}' not found in database. "
@@ -475,23 +482,38 @@ class CLT(Timber):
             raise ValueError(msg)
 
         super().__init__(type_label, edition)
+        timber = dbase.TimberGrades[type_label]
+        self.fm_edge_k = timber["fm_edge_k"]
+        self.frk = timber["frk"]
+        self.fvxyk = timber["fvxyk"]
+        self.Gk = timber["Gk"]
+        self.Grmean = timber["Grmean"]
+        self.Gvxymean = timber["Gvxymean"]
         self.material = TimberType.CLT
         self.timber_product = TimberProduct.CLT
 
 
 class LVL(Timber):
-    """Eurocode 5 Laminated Veneer Lumber (LVL) properties. Not implemented."""
+    """Eurocode 5 Laminated Veneer Lumber (LVL) properties (EN 1995-1-1:2025 Annex N).
 
-    def __init__(self, type_label: str = "LVL30P",  # noqa: D107
+    Covers LVL-P (``LVL32P`` ... ``LVL80P``) and LVL-C (``LVL22C`` ... ``LVL75C``).
+    ``fmk`` is the flatwise bending strength, ``fm_edge_k`` the edgewise one;
+    ``ft90k``, ``fc90k``, ``fvk``, ``E90mean``, ``E90k``, ``Gmean`` and ``Gk``
+    are the edgewise values. The remaining database entries (flatwise shear and
+    compression, flatwise shear moduli, ...) are in :attr:`props`; a ``None``
+    is a manufacturer's declared value (MDV) or a property not produced.
+    The grade is read from the base database, so it is available in every edition.
+
+    Args:
+        type_label (str, optional): LVL strength category. Defaults to 'LVL32P'.
+        edition (str, optional): Edition of EN 1995-1-1 (``None`` is 2004).
+
+    """
+
+    def __init__(self, type_label: str = "LVL32P",  # noqa: D107
                  edition: str | None = None) -> None:
-        grades_list = [item for item in dbase.TimberGrades if item.startswith("GL")]
-
-        if not type_label.startswith("LVL"):
-            msg = (
-                f"LVL type '{type_label}' must start with 'LVL'. "
-                f"LVL type must be one of {grades_list}"
-            )
-            raise ValueError(msg)
+        grades_list = [item for item, g in dbase.TimberGrades.items()
+                       if g["Type"] == "lvl"]
         if type_label not in grades_list:
             msg = (
                 f"LVL type '{type_label}' not found in database. "
@@ -500,8 +522,15 @@ class LVL(Timber):
             raise ValueError(msg)
 
         super().__init__(type_label, edition)
+        timber = dbase.TimberGrades[type_label]
+        self.props = timber
+        self.fm_edge_k = timber["fm_edge_k"]
+        self.s_size = timber["s_size"]
+        self.E90k = timber["E90k"]
+        self.Gk = timber["Gk"]
         self.material = TimberType.LVL
-        self.timber_product = TimberProduct.LVL_P
+        self.timber_product = (TimberProduct.LVL_C if timber["Product"] == "LVL-C"
+                               else TimberProduct.LVL_P)
 
 
 class WoodBasedPanels(Timber):
@@ -536,17 +565,20 @@ def TimberClass(timber: str = "C24", edition: str | None = None) -> Timber:  # n
             or generic Timber instance for other grades.
 
     """
+    grade = dbase.TimberGrades.get(timber)
+    kind = grade["Type"] if grade else None
+
+    if kind == "clt":
+        return CLT(timber, edition)
+
+    if kind == "lvl":
+        return LVL(timber, edition)
+
     if timber.startswith(("C", "D")):
         return SolidTimber(timber, edition)
 
     if timber.startswith("GL"):
         return Glulam(timber, edition)
-
-    if timber.startswith("LVL"):
-        return LVL(timber, edition)
-
-    if timber.startswith("CLT"):
-        return CLT(timber, edition)
 
     return Timber(timber, edition)
 

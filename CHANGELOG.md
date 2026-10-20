@@ -4,9 +4,24 @@ Versions up to 2026.7.28 are MIT-licensed; from 2027.0.0 on the package is licen
 GNU Lesser General Public License v3.0 or later.
 
 ## Unreleased
+
+## 2027.0.12 — 2026-10-20
 ### Added
+- `ec2.sls.crack_opening_rect` and `is_cracked_rect`: the crack width (EN 1992-1-1 §7.3.4) and the cracking check of a rectangular
+  section for arrays of stations at once (`As`, `Asc`, `M`, `N` as arrays), with the same numbers as `crack_opening` / `is_cracked`
+  one station at a time (`tests/test_crack_rect_vs_scalar.py`). Releases before this one do not have them.
+- CLT and LVL strength categories of EN 1995-1-1:2025 Annex N (Tables N.1-N.3) in `Materials.Timber.Grade`, so they exist in every
+  edition: `CL24`, `LVL32P`/`35P`/`48P`/`50P`/`80P` and `LVL22C`/`25C`/`32C`/`36C`/`70C`/`75C` (a manufacturer's declared value
+  or a property not produced is `null`). `TimberClass` returns `CLT`/`LVL` for them; `CLT` and `LVL` now work (the grade lists
+  looked for `GL` labels). CLT has no `k_mod` in 2004, so `k_mod` raises `KeyError` there.
 - Logo (`mkdocs/docs/assets/logo-mark.svg`, `logo.svg`): the symbol is the logo and favicon of the documentation site, and the logo with
   the name is at the top of the README (not on the site home page, which already has it in the header).
+
+### Changed
+- The M-N solver of `ec2.uls.bend_axial` is faster and vectorised (Illinois root finder instead of bisection, the concrete
+  block force evaluated for arrays); same results (`tests/test_strain_vs_reference.py` compares with the previous solver).
+- Less copying of the database: `dbase.get_edition_data_ro` returns the edition data without a copy for read-only use, and
+  `ec2.materials` uses it.
 
 ## 2027.0.11 — 2026-10-14
 ### Added
