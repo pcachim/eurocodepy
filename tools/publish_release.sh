@@ -105,10 +105,13 @@ if ! uv publish "$BUILD_DIR"/*; then
   exit 1
 fi
 
+# The message must start with the MkDocs version ({version} is filled in by mkdocs): the next
+# gh-deploy takes the first version-like number in the last commit message as the MkDocs version
+# of the previous deploy, and aborts if it is newer than the one installed.
 echo "Deploying the documentation…"
-if ! uv run mkdocs gh-deploy --strict -f mkdocs/mkdocs.yml -m "Documentation for eurocodepy ${VERSION}"; then
+if ! uv run mkdocs gh-deploy --strict -f mkdocs/mkdocs.yml -m "Deployed with MkDocs version: {version} (docs for eurocodepy ${VERSION})"; then
   echo "ERROR: ${TAG} is on GitHub and PyPI but the documentation deploy failed." >&2
-  echo "Retry with: cd mkdocs && uv run mkdocs gh-deploy" >&2
+  echo "Retry with: uv run mkdocs gh-deploy -f mkdocs/mkdocs.yml -m \"Deployed with MkDocs version: {version}\"" >&2
   exit 1
 fi
 
