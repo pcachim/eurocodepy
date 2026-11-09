@@ -15,7 +15,7 @@
         <link rel="next" href="materials/">
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/logo-mark.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
@@ -82,8 +82,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../../.." title="Documentation for EurocodePy" class="md-header__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../../assets/logo-mark.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -180,8 +179,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../../.." title="Documentation for EurocodePy" class="md-nav__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../../assets/logo-mark.svg" alt="logo">
 
     </a>
     Documentation for EurocodePy
@@ -3663,7 +3661,58 @@ it also includes vibration and deformation calculations.</p>
               Bases: <code><a class="autorefs autorefs-internal" title="Timber (eurocodepy.ec5.materials.Timber)" href="materials/#eurocodepy.ec5.materials.Timber">Timber</a></code></p>
 
 
-        <p>Eurocode 5 Cross-Laminated Timber (CLT) properties. Not implemented.</p>
+        <p>Eurocode 5 Cross-Laminated Timber (CLT) properties (EN 1995-1-1:2025 Annex N).</p>
+<p>Besides the :class:<code>Timber</code> attributes (<code>fmk</code> out of plane, <code>fvk</code> out of
+plane), it has <code>fm_edge_k</code> (in-plane bending), <code>frk</code> (rolling shear),
+<code>fvxyk</code> (in-plane shear), <code>Grmean</code> and <code>Gvxymean</code>. The grade is read
+from the base database, so it is available in every edition.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>type_label</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>CLT strength category. Defaults to 'CL24'.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;CL24&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>edition</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Edition of EN 1995-1-1 (<code>None</code> is 2004).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
 
@@ -3672,10 +3721,8 @@ it also includes vibration and deformation calculations.</p>
 
 
               <details class="quote">
-                <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">457</span>
-<span class="normal">458</span>
-<span class="normal">459</span>
+                <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">459</span>
 <span class="normal">460</span>
 <span class="normal">461</span>
 <span class="normal">462</span>
@@ -3695,19 +3742,38 @@ it also includes vibration and deformation calculations.</p>
 <span class="normal">476</span>
 <span class="normal">477</span>
 <span class="normal">478</span>
-<span class="normal">479</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CLT</span><span class="p">(</span><span class="n">Timber</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Eurocode 5 Cross-Laminated Timber (CLT) properties. Not implemented.&quot;&quot;&quot;</span>
+<span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span>
+<span class="normal">482</span>
+<span class="normal">483</span>
+<span class="normal">484</span>
+<span class="normal">485</span>
+<span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CLT</span><span class="p">(</span><span class="n">Timber</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Eurocode 5 Cross-Laminated Timber (CLT) properties (EN 1995-1-1:2025 Annex N).</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">type_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CLT30&quot;</span><span class="p">,</span>  <span class="c1"># noqa: D107</span>
+<span class="sd">    Besides the :class:`Timber` attributes (``fmk`` out of plane, ``fvk`` out of</span>
+<span class="sd">    plane), it has ``fm_edge_k`` (in-plane bending), ``frk`` (rolling shear),</span>
+<span class="sd">    ``fvxyk`` (in-plane shear), ``Grmean`` and ``Gvxymean``. The grade is read</span>
+<span class="sd">    from the base database, so it is available in every edition.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        type_label (str, optional): CLT strength category. Defaults to &#39;CL24&#39;.</span>
+<span class="sd">        edition (str, optional): Edition of EN 1995-1-1 (``None`` is 2004).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">type_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CL24&quot;</span><span class="p">,</span>  <span class="c1"># noqa: D107</span>
                  <span class="n">edition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">grades_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">dbase</span><span class="o">.</span><span class="n">TimberGrades</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;GL&quot;</span><span class="p">)]</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">type_label</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;CLT&quot;</span><span class="p">):</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;CLT type &#39;</span><span class="si">{</span><span class="n">type_label</span><span class="si">}</span><span class="s2">&#39; must start with &#39;CLT&#39;. &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;CLT type must be one of </span><span class="si">{</span><span class="n">grades_list</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">grades_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">dbase</span><span class="o">.</span><span class="n">TimberGrades</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                       <span class="k">if</span> <span class="n">g</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;clt&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">type_label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grades_list</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;CLT type &#39;</span><span class="si">{</span><span class="n">type_label</span><span class="si">}</span><span class="s2">&#39; not found in database. &quot;</span>
@@ -3716,6 +3782,13 @@ it also includes vibration and deformation calculations.</p>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">type_label</span><span class="p">,</span> <span class="n">edition</span><span class="p">)</span>
+        <span class="n">timber</span> <span class="o">=</span> <span class="n">dbase</span><span class="o">.</span><span class="n">TimberGrades</span><span class="p">[</span><span class="n">type_label</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fm_edge_k</span> <span class="o">=</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;fm_edge_k&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frk</span> <span class="o">=</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;frk&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fvxyk</span> <span class="o">=</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;fvxyk&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Gk</span> <span class="o">=</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;Gk&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Grmean</span> <span class="o">=</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;Grmean&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Gvxymean</span> <span class="o">=</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;Gvxymean&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">material</span> <span class="o">=</span> <span class="n">TimberType</span><span class="o">.</span><span class="n">CLT</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timber_product</span> <span class="o">=</span> <span class="n">TimberProduct</span><span class="o">.</span><span class="n">CLT</span>
 </code></pre></div></td></tr></table></div>
@@ -3822,10 +3895,8 @@ is not found in the database.</p>
 
 
               <details class="quote">
-                <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">388</span>
-<span class="normal">389</span>
-<span class="normal">390</span>
+                <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">390</span>
 <span class="normal">391</span>
 <span class="normal">392</span>
 <span class="normal">393</span>
@@ -3889,7 +3960,9 @@ is not found in the database.</p>
 <span class="normal">451</span>
 <span class="normal">452</span>
 <span class="normal">453</span>
-<span class="normal">454</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Glulam</span><span class="p">(</span><span class="n">Timber</span><span class="p">):</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Glulam</span><span class="p">(</span><span class="n">Timber</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Eurocode 5 glulam properties.</span>
 
 <span class="sd">    Properties read from the database for the given type_label.</span>
@@ -3995,7 +4068,61 @@ is not found in the database.</p>
               Bases: <code><a class="autorefs autorefs-internal" title="Timber (eurocodepy.ec5.materials.Timber)" href="materials/#eurocodepy.ec5.materials.Timber">Timber</a></code></p>
 
 
-        <p>Eurocode 5 Laminated Veneer Lumber (LVL) properties. Not implemented.</p>
+        <p>Eurocode 5 Laminated Veneer Lumber (LVL) properties (EN 1995-1-1:2025 Annex N).</p>
+<p>Covers LVL-P (<code>LVL32P</code> ... <code>LVL80P</code>) and LVL-C (<code>LVL22C</code> ... <code>LVL75C</code>).
+<code>fmk</code> is the flatwise bending strength, <code>fm_edge_k</code> the edgewise one;
+<code>ft90k</code>, <code>fc90k</code>, <code>fvk</code>, <code>E90mean</code>, <code>E90k</code>, <code>Gmean</code> and <code>Gk</code>
+are the edgewise values. The remaining database entries (flatwise shear and
+compression, flatwise shear moduli, ...) are in :attr:<code>props</code>; a <code>None</code>
+is a manufacturer's declared value (MDV) or a property not produced.
+The grade is read from the base database, so it is available in every edition.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>type_label</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>LVL strength category. Defaults to 'LVL32P'.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;LVL32P&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>edition</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Edition of EN 1995-1-1 (<code>None</code> is 2004).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
 
@@ -4004,22 +4131,8 @@ is not found in the database.</p>
 
 
               <details class="quote">
-                <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">482</span>
-<span class="normal">483</span>
-<span class="normal">484</span>
-<span class="normal">485</span>
-<span class="normal">486</span>
-<span class="normal">487</span>
-<span class="normal">488</span>
-<span class="normal">489</span>
-<span class="normal">490</span>
-<span class="normal">491</span>
-<span class="normal">492</span>
-<span class="normal">493</span>
-<span class="normal">494</span>
-<span class="normal">495</span>
-<span class="normal">496</span>
+                <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">496</span>
 <span class="normal">497</span>
 <span class="normal">498</span>
 <span class="normal">499</span>
@@ -4027,19 +4140,56 @@ is not found in the database.</p>
 <span class="normal">501</span>
 <span class="normal">502</span>
 <span class="normal">503</span>
-<span class="normal">504</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LVL</span><span class="p">(</span><span class="n">Timber</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Eurocode 5 Laminated Veneer Lumber (LVL) properties. Not implemented.&quot;&quot;&quot;</span>
+<span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span>
+<span class="normal">511</span>
+<span class="normal">512</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span>
+<span class="normal">516</span>
+<span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span>
+<span class="normal">526</span>
+<span class="normal">527</span>
+<span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span>
+<span class="normal">532</span>
+<span class="normal">533</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LVL</span><span class="p">(</span><span class="n">Timber</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Eurocode 5 Laminated Veneer Lumber (LVL) properties (EN 1995-1-1:2025 Annex N).</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">type_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;LVL30P&quot;</span><span class="p">,</span>  <span class="c1"># noqa: D107</span>
+<span class="sd">    Covers LVL-P (``LVL32P`` ... ``LVL80P``) and LVL-C (``LVL22C`` ... ``LVL75C``).</span>
+<span class="sd">    ``fmk`` is the flatwise bending strength, ``fm_edge_k`` the edgewise one;</span>
+<span class="sd">    ``ft90k``, ``fc90k``, ``fvk``, ``E90mean``, ``E90k``, ``Gmean`` and ``Gk``</span>
+<span class="sd">    are the edgewise values. The remaining database entries (flatwise shear and</span>
+<span class="sd">    compression, flatwise shear moduli, ...) are in :attr:`props`; a ``None``</span>
+<span class="sd">    is a manufacturer&#39;s declared value (MDV) or a property not produced.</span>
+<span class="sd">    The grade is read from the base database, so it is available in every edition.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        type_label (str, optional): LVL strength category. Defaults to &#39;LVL32P&#39;.</span>
+<span class="sd">        edition (str, optional): Edition of EN 1995-1-1 (``None`` is 2004).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">type_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;LVL32P&quot;</span><span class="p">,</span>  <span class="c1"># noqa: D107</span>
                  <span class="n">edition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">grades_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">dbase</span><span class="o">.</span><span class="n">TimberGrades</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;GL&quot;</span><span class="p">)]</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">type_label</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;LVL&quot;</span><span class="p">):</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;LVL type &#39;</span><span class="si">{</span><span class="n">type_label</span><span class="si">}</span><span class="s2">&#39; must start with &#39;LVL&#39;. &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;LVL type must be one of </span><span class="si">{</span><span class="n">grades_list</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">grades_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">dbase</span><span class="o">.</span><span class="n">TimberGrades</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                       <span class="k">if</span> <span class="n">g</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;lvl&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">type_label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grades_list</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;LVL type &#39;</span><span class="si">{</span><span class="n">type_label</span><span class="si">}</span><span class="s2">&#39; not found in database. &quot;</span>
@@ -4048,8 +4198,15 @@ is not found in the database.</p>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">type_label</span><span class="p">,</span> <span class="n">edition</span><span class="p">)</span>
+        <span class="n">timber</span> <span class="o">=</span> <span class="n">dbase</span><span class="o">.</span><span class="n">TimberGrades</span><span class="p">[</span><span class="n">type_label</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="o">=</span> <span class="n">timber</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fm_edge_k</span> <span class="o">=</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;fm_edge_k&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s_size</span> <span class="o">=</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;s_size&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E90k</span> <span class="o">=</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;E90k&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Gk</span> <span class="o">=</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;Gk&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">material</span> <span class="o">=</span> <span class="n">TimberType</span><span class="o">.</span><span class="n">LVL</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">timber_product</span> <span class="o">=</span> <span class="n">TimberProduct</span><span class="o">.</span><span class="n">LVL_P</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timber_product</span> <span class="o">=</span> <span class="p">(</span><span class="n">TimberProduct</span><span class="o">.</span><span class="n">LVL_C</span> <span class="k">if</span> <span class="n">timber</span><span class="p">[</span><span class="s2">&quot;Product&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;LVL-C&quot;</span>
+                               <span class="k">else</span> <span class="n">TimberProduct</span><span class="o">.</span><span class="n">LVL_P</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -4154,10 +4311,8 @@ Properties read from the database for the given type_label.</p>
 
 
               <details class="quote">
-                <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">350</span>
-<span class="normal">351</span>
-<span class="normal">352</span>
+                <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">352</span>
 <span class="normal">353</span>
 <span class="normal">354</span>
 <span class="normal">355</span>
@@ -4190,7 +4345,9 @@ Properties read from the database for the given type_label.</p>
 <span class="normal">382</span>
 <span class="normal">383</span>
 <span class="normal">384</span>
-<span class="normal">385</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SolidTimber</span><span class="p">(</span><span class="n">Timber</span><span class="p">):</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SolidTimber</span><span class="p">(</span><span class="n">Timber</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class represents Eurocode 5 solid timber properties.</span>
 
 <span class="sd">    It includes both softwood and hardwood types.</span>
@@ -4206,8 +4363,8 @@ Properties read from the database for the given type_label.</p>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">type_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;C24&quot;</span><span class="p">,</span>  <span class="c1"># noqa: D107</span>
                  <span class="n">edition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">grades_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">dbase</span><span class="o">.</span><span class="n">TimberGrades</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">)))]</span>
+        <span class="n">grades_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">dbase</span><span class="o">.</span><span class="n">TimberGrades</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">g</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;timber&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">type_label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grades_list</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Softwood type &#39;</span><span class="si">{</span><span class="n">type_label</span><span class="si">}</span><span class="s2">&#39; not found in database. &quot;</span>
@@ -4345,7 +4502,7 @@ e.g. <code>"2025"</code>. <code>None</code> (default) is the 2004 edition.</p>
 
 
               <details class="quote">
-                <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
+                <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
                 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 84</span>
 <span class="normal"> 85</span>
 <span class="normal"> 86</span>
@@ -4609,7 +4766,9 @@ e.g. <code>"2025"</code>. <code>None</code> (default) is the 2004 edition.</p>
 <span class="normal">344</span>
 <span class="normal">345</span>
 <span class="normal">346</span>
-<span class="normal">347</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Timber</span><span class="p">:</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Timber</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize Timber object.</span>
 
 <span class="sd">    Properties are derived from the database for the given type_label.</span>
@@ -4665,9 +4824,11 @@ e.g. <code>"2025"</code>. <code>None</code> (default) is the 2004 edition.</p>
 
         <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safety</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;safety&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kmods</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;kmod&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kh</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;kh&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kdef</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;kdef&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+        <span class="c1"># CLT has no k_mod/k_def/k_h in EN 1995-1-1:2004; they are then empty</span>
+        <span class="c1"># and ``k_mod`` reports the missing value instead of failing on load.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kmods</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;kmod&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kh</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;kh&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kdef</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;kdef&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="p">{})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kmod</span> <span class="o">=</span> <span class="mf">0.0</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">fmd</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -5002,10 +5163,8 @@ Medium, Short, Inst). Defaults to LoadDuration.Medium.</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">232</span>
-<span class="normal">233</span>
-<span class="normal">234</span>
+              <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">234</span>
 <span class="normal">235</span>
 <span class="normal">236</span>
 <span class="normal">237</span>
@@ -5038,7 +5197,9 @@ Medium, Short, Inst). Defaults to LoadDuration.Medium.</p>
 <span class="normal">264</span>
 <span class="normal">265</span>
 <span class="normal">266</span>
-<span class="normal">267</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">design_values</span><span class="p">(</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">design_values</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">service_class</span><span class="p">:</span> <span class="n">ServiceClass</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">,</span>
     <span class="n">load_duration</span><span class="p">:</span> <span class="n">LoadDuration</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">LoadDuration</span><span class="o">.</span><span class="n">MediumDuration</span><span class="p">,</span>
@@ -5099,10 +5260,8 @@ It is <strong>not</strong> applied automatically by :meth:<code>design_values</c
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">282</span>
-<span class="normal">283</span>
-<span class="normal">284</span>
+              <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">284</span>
 <span class="normal">285</span>
 <span class="normal">286</span>
 <span class="normal">287</span>
@@ -5111,7 +5270,9 @@ It is <strong>not</strong> applied automatically by :meth:<code>design_values</c
 <span class="normal">290</span>
 <span class="normal">291</span>
 <span class="normal">292</span>
-<span class="normal">293</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fc0k_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_class</span><span class="p">:</span> <span class="n">ServiceClass</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">,</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fc0k_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_class</span><span class="p">:</span> <span class="n">ServiceClass</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">,</span>
                 <span class="n">optional</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Factor on ``f_c,0,k`` for the service class (EN 1995-1-1:2025 5.2.1(3)-(4)):</span>
 <span class="sd">    ``0.83`` for LVL in SC2/SC3 and GLVL in SC2 (a requirement), and ``1.2``</span>
@@ -5199,10 +5360,8 @@ Defaults to ServiceClass.SC1.</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">269</span>
-<span class="normal">270</span>
-<span class="normal">271</span>
+              <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">271</span>
 <span class="normal">272</span>
 <span class="normal">273</span>
 <span class="normal">274</span>
@@ -5211,7 +5370,9 @@ Defaults to ServiceClass.SC1.</p>
 <span class="normal">277</span>
 <span class="normal">278</span>
 <span class="normal">279</span>
-<span class="normal">280</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">k_def</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_class</span><span class="p">:</span> <span class="n">ServiceClass</span> <span class="o">=</span> <span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">k_def</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_class</span><span class="p">:</span> <span class="n">ServiceClass</span> <span class="o">=</span> <span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the kdef value for serviceability limit state.</span>
 
 <span class="sd">    Args:</span>
@@ -5267,10 +5428,8 @@ Defaults to ServiceClass.SC1.</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">295</span>
-<span class="normal">296</span>
-<span class="normal">297</span>
+              <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">297</span>
 <span class="normal">298</span>
 <span class="normal">299</span>
 <span class="normal">300</span>
@@ -5302,7 +5461,9 @@ Defaults to ServiceClass.SC1.</p>
 <span class="normal">326</span>
 <span class="normal">327</span>
 <span class="normal">328</span>
-<span class="normal">329</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">k_h</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">k_h</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">forcetype</span><span class="p">:</span> <span class="n">TimberForcesType</span> <span class="o">=</span> <span class="n">TimberForcesType</span><span class="o">.</span><span class="n">Bending</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the kh value for serviceability limit state.</span>
 
@@ -5430,10 +5591,8 @@ Medium, Short, Inst). Defaults to LoadDuration.Medium.</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">186</span>
-<span class="normal">187</span>
-<span class="normal">188</span>
+              <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">188</span>
 <span class="normal">189</span>
 <span class="normal">190</span>
 <span class="normal">191</span>
@@ -5475,7 +5634,9 @@ Medium, Short, Inst). Defaults to LoadDuration.Medium.</p>
 <span class="normal">227</span>
 <span class="normal">228</span>
 <span class="normal">229</span>
-<span class="normal">230</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">k_mod</span><span class="p">(</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">k_mod</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">service_class</span><span class="p">:</span> <span class="n">ServiceClass</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">,</span>
     <span class="n">load_duration</span><span class="p">:</span> <span class="n">LoadDuration</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">LoadDuration</span><span class="o">.</span><span class="n">MediumDuration</span><span class="p">,</span>
@@ -5572,15 +5733,15 @@ Medium, Short, Inst). Defaults to LoadDuration.Medium.</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">177</span>
-<span class="normal">178</span>
-<span class="normal">179</span>
+              <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">179</span>
 <span class="normal">180</span>
 <span class="normal">181</span>
 <span class="normal">182</span>
 <span class="normal">183</span>
-<span class="normal">184</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_product</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product</span><span class="p">:</span> <span class="n">TimberProduct</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_product</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product</span><span class="p">:</span> <span class="n">TimberProduct</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set product type.</span>
 
 <span class="sd">    Args:</span>
@@ -5627,7 +5788,7 @@ Medium, Short, Inst). Defaults to LoadDuration.Medium.</p>
 
 
               <details class="quote">
-                <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
+                <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
                 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">55</span>
 <span class="normal">56</span>
 <span class="normal">57</span>
@@ -5729,7 +5890,7 @@ Medium, Short, Inst). Defaults to LoadDuration.Medium.</p>
 
 
               <details class="quote">
-                <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
+                <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
                 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
 <span class="normal">45</span>
 <span class="normal">46</span>
@@ -5901,40 +6062,8 @@ iterable of :class:<code>~eurocodepy.ec1.LoadCombination</code></p>
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">554</span>
-<span class="normal">555</span>
-<span class="normal">556</span>
-<span class="normal">557</span>
-<span class="normal">558</span>
-<span class="normal">559</span>
-<span class="normal">560</span>
-<span class="normal">561</span>
-<span class="normal">562</span>
-<span class="normal">563</span>
-<span class="normal">564</span>
-<span class="normal">565</span>
-<span class="normal">566</span>
-<span class="normal">567</span>
-<span class="normal">568</span>
-<span class="normal">569</span>
-<span class="normal">570</span>
-<span class="normal">571</span>
-<span class="normal">572</span>
-<span class="normal">573</span>
-<span class="normal">574</span>
-<span class="normal">575</span>
-<span class="normal">576</span>
-<span class="normal">577</span>
-<span class="normal">578</span>
-<span class="normal">579</span>
-<span class="normal">580</span>
-<span class="normal">581</span>
-<span class="normal">582</span>
-<span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span>
-<span class="normal">586</span>
+              <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">586</span>
 <span class="normal">587</span>
 <span class="normal">588</span>
 <span class="normal">589</span>
@@ -5946,7 +6075,39 @@ iterable of :class:<code>~eurocodepy.ec1.LoadCombination</code></p>
 <span class="normal">595</span>
 <span class="normal">596</span>
 <span class="normal">597</span>
-<span class="normal">598</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">GetTimberDesignValues</span><span class="p">(</span><span class="n">timber</span><span class="p">:</span> <span class="n">Timber</span><span class="p">,</span> <span class="n">combos</span><span class="p">:</span> <span class="n">LoadCombinations</span><span class="p">,</span>  <span class="c1"># noqa: N802</span>
+<span class="normal">598</span>
+<span class="normal">599</span>
+<span class="normal">600</span>
+<span class="normal">601</span>
+<span class="normal">602</span>
+<span class="normal">603</span>
+<span class="normal">604</span>
+<span class="normal">605</span>
+<span class="normal">606</span>
+<span class="normal">607</span>
+<span class="normal">608</span>
+<span class="normal">609</span>
+<span class="normal">610</span>
+<span class="normal">611</span>
+<span class="normal">612</span>
+<span class="normal">613</span>
+<span class="normal">614</span>
+<span class="normal">615</span>
+<span class="normal">616</span>
+<span class="normal">617</span>
+<span class="normal">618</span>
+<span class="normal">619</span>
+<span class="normal">620</span>
+<span class="normal">621</span>
+<span class="normal">622</span>
+<span class="normal">623</span>
+<span class="normal">624</span>
+<span class="normal">625</span>
+<span class="normal">626</span>
+<span class="normal">627</span>
+<span class="normal">628</span>
+<span class="normal">629</span>
+<span class="normal">630</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">GetTimberDesignValues</span><span class="p">(</span><span class="n">timber</span><span class="p">:</span> <span class="n">Timber</span><span class="p">,</span> <span class="n">combos</span><span class="p">:</span> <span class="n">LoadCombinations</span><span class="p">,</span>  <span class="c1"># noqa: N802</span>
                           <span class="n">service_class</span><span class="p">:</span> <span class="n">ServiceClass</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ServiceClass</span><span class="o">.</span><span class="n">SC1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the design values of a timber for each load combination.</span>
 
@@ -6086,35 +6247,38 @@ or generic Timber instance for other grades.</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/materials.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">524</span>
-<span class="normal">525</span>
-<span class="normal">526</span>
-<span class="normal">527</span>
-<span class="normal">528</span>
-<span class="normal">529</span>
-<span class="normal">530</span>
-<span class="normal">531</span>
-<span class="normal">532</span>
-<span class="normal">533</span>
-<span class="normal">534</span>
-<span class="normal">535</span>
-<span class="normal">536</span>
-<span class="normal">537</span>
-<span class="normal">538</span>
-<span class="normal">539</span>
-<span class="normal">540</span>
-<span class="normal">541</span>
-<span class="normal">542</span>
-<span class="normal">543</span>
-<span class="normal">544</span>
-<span class="normal">545</span>
-<span class="normal">546</span>
-<span class="normal">547</span>
-<span class="normal">548</span>
-<span class="normal">549</span>
-<span class="normal">550</span>
-<span class="normal">551</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">TimberClass</span><span class="p">(</span><span class="n">timber</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;C24&quot;</span><span class="p">,</span> <span class="n">edition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Timber</span><span class="p">:</span>  <span class="c1"># noqa: N802</span>
+              <summary>Source code in <code>src/eurocodepy/ec5/materials.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">553</span>
+<span class="normal">554</span>
+<span class="normal">555</span>
+<span class="normal">556</span>
+<span class="normal">557</span>
+<span class="normal">558</span>
+<span class="normal">559</span>
+<span class="normal">560</span>
+<span class="normal">561</span>
+<span class="normal">562</span>
+<span class="normal">563</span>
+<span class="normal">564</span>
+<span class="normal">565</span>
+<span class="normal">566</span>
+<span class="normal">567</span>
+<span class="normal">568</span>
+<span class="normal">569</span>
+<span class="normal">570</span>
+<span class="normal">571</span>
+<span class="normal">572</span>
+<span class="normal">573</span>
+<span class="normal">574</span>
+<span class="normal">575</span>
+<span class="normal">576</span>
+<span class="normal">577</span>
+<span class="normal">578</span>
+<span class="normal">579</span>
+<span class="normal">580</span>
+<span class="normal">581</span>
+<span class="normal">582</span>
+<span class="normal">583</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">TimberClass</span><span class="p">(</span><span class="n">timber</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;C24&quot;</span><span class="p">,</span> <span class="n">edition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Timber</span><span class="p">:</span>  <span class="c1"># noqa: N802</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a Timber object of the appropriate subclass based on timber grade.</span>
 
 <span class="sd">    Args:</span>
@@ -6129,17 +6293,20 @@ or generic Timber instance for other grades.</p>
 <span class="sd">            or generic Timber instance for other grades.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">grade</span> <span class="o">=</span> <span class="n">dbase</span><span class="o">.</span><span class="n">TimberGrades</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timber</span><span class="p">)</span>
+    <span class="n">kind</span> <span class="o">=</span> <span class="n">grade</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">grade</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;clt&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">CLT</span><span class="p">(</span><span class="n">timber</span><span class="p">,</span> <span class="n">edition</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;lvl&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">LVL</span><span class="p">(</span><span class="n">timber</span><span class="p">,</span> <span class="n">edition</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">timber</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">)):</span>
         <span class="k">return</span> <span class="n">SolidTimber</span><span class="p">(</span><span class="n">timber</span><span class="p">,</span> <span class="n">edition</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">timber</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;GL&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Glulam</span><span class="p">(</span><span class="n">timber</span><span class="p">,</span> <span class="n">edition</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">timber</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;LVL&quot;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">LVL</span><span class="p">(</span><span class="n">timber</span><span class="p">,</span> <span class="n">edition</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">timber</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;CLT&quot;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">CLT</span><span class="p">(</span><span class="n">timber</span><span class="p">,</span> <span class="n">edition</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Timber</span><span class="p">(</span><span class="n">timber</span><span class="p">,</span> <span class="n">edition</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -6169,7 +6336,7 @@ or generic Timber instance for other grades.</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/sls/vibration.py</code></summary>
+              <summary>Source code in <code>src/eurocodepy/ec5/sls/vibration.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">70</span>
 <span class="normal">71</span>
 <span class="normal">72</span>
@@ -6226,7 +6393,7 @@ or generic Timber instance for other grades.</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/sls/vibration.py</code></summary>
+              <summary>Source code in <code>src/eurocodepy/ec5/sls/vibration.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">53</span>
 <span class="normal">54</span>
 <span class="normal">55</span>
@@ -6287,7 +6454,7 @@ m : float
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/sls/vibration.py</code></summary>
+              <summary>Source code in <code>src/eurocodepy/ec5/sls/vibration.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
@@ -6358,7 +6525,7 @@ EIt (float): Bending stiffness of the floor in the transverse direction (Nm^2).
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/sls/vibration.py</code></summary>
+              <summary>Source code in <code>src/eurocodepy/ec5/sls/vibration.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
@@ -6435,7 +6602,7 @@ damp : float
 
 
             <details class="quote">
-              <summary>Source code in <code>eurocodepy/ec5/sls/vibration.py</code></summary>
+              <summary>Source code in <code>src/eurocodepy/ec5/sls/vibration.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 87</span>
 <span class="normal"> 88</span>
 <span class="normal"> 89</span>

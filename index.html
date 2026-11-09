@@ -13,7 +13,7 @@
         <link rel="next" href="tutorials/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="assets/logo-mark.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
@@ -80,8 +80,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="." title="Documentation for EurocodePy" class="md-header__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="assets/logo-mark.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -178,8 +177,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="." title="Documentation for EurocodePy" class="md-nav__button md-logo" aria-label="Documentation for EurocodePy" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="assets/logo-mark.svg" alt="logo">
 
     </a>
     Documentation for EurocodePy
@@ -343,6 +341,15 @@
   <a href="#license" class="md-nav__link">
     <span class="md-ellipsis">
       License
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Citation
     </span>
   </a>
   
@@ -3531,6 +3538,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#citation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Citation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#disclaimer" class="md-nav__link">
     <span class="md-ellipsis">
       Disclaimer
@@ -3567,8 +3583,8 @@
 <h1 id="eurocodepy">eurocodepy</h1>
 <p><a href="https://pypi.org/project/eurocodepy/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/eurocodepy" /></a>
 <a href="https://www.python.org/"><img alt="Python 3.12+" src="https://img.shields.io/badge/python-3.12%2B-blue" /></a>
-<a href="https://github.com/pcachim/eurocodepy/blob/master/LICENSE.md"><img alt="License: LGPL v3" src="https://img.shields.io/badge/License-LGPL%20v3-blue.svg" /></a>
-<a href="https://doi.org/10.5281/zenodo.23371032"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.23371032.svg" /></a></p>
+<a href="https://github.com/pcachim/eurocodepy/blob/master/LICENSE.md"><img alt="License: LGPL v3+" src="https://img.shields.io/badge/License-LGPL%20v3%2B-blue.svg" /></a>
+<a href="https://doi.org/10.5281/zenodo.23371031"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.23371031.svg" /></a></p>
 <p>A Python library for structural design calculations according to the <strong>Eurocode</strong> standards.
 <code>eurocodepy</code> provides composable, engineering-focused building blocks — material databases,
 load combinations, section utilities, and code-compliant design checks — that you can drop
@@ -3577,7 +3593,8 @@ into scripts, notebooks, or larger analysis tools.</p>
 <p><strong>Documentation:</strong> <a href="https://pcachim.github.io/eurocodepy/">https://pcachim.github.io/eurocodepy/</a><br />
 <strong>Source:</strong> <a href="https://github.com/pcachim/eurocodepy">https://github.com/pcachim/eurocodepy</a><br />
 <strong>PyPI:</strong> <a href="https://pypi.org/project/eurocodepy/">https://pypi.org/project/eurocodepy/</a><br />
-<strong>Changelog:</strong> <a href="https://github.com/pcachim/eurocodepy/blob/master/CHANGELOG.md">https://github.com/pcachim/eurocodepy/blob/master/CHANGELOG.md</a></p>
+<strong>Changelog:</strong> <a href="https://github.com/pcachim/eurocodepy/blob/master/CHANGELOG.md">https://github.com/pcachim/eurocodepy/blob/master/CHANGELOG.md</a><br />
+<strong>Cite:</strong> <a href="#citation">see Citation</a></p>
 </blockquote>
 <hr />
 <h2 id="whats-included">What's included</h2>
@@ -3797,7 +3814,26 @@ discuss the approach.</p>
 applicable. See <a href="https://github.com/pcachim/eurocodepy/blob/master/CONTRIBUTING_GUIDELINES.md">CONTRIBUTING_GUIDELINES.md</a> for more detail.</p>
 <hr />
 <h2 id="license">License</h2>
-<p>GNU Lesser General Public License v3.0 (LGPLv3) — see <a href="https://github.com/pcachim/eurocodepy/blob/master/LICENSE.md">LICENSE.md</a> and <a href="https://github.com/pcachim/eurocodepy/blob/master/COPYING">COPYING</a> for the full text.</p>
+<p>GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later) — see <a href="https://github.com/pcachim/eurocodepy/blob/master/LICENSE.md">LICENSE.md</a> and <a href="https://github.com/pcachim/eurocodepy/blob/master/COPYING">COPYING</a> for the full text.</p>
+<hr />
+<h2 id="citation">Citation</h2>
+<p>If you use <code>eurocodepy</code> in your work, please cite it. The DOI below is the <em>concept</em> DOI: it always
+resolves to the latest release; to cite an exact version, use the version DOI listed on
+<a href="https://doi.org/10.5281/zenodo.23371031">Zenodo</a>.</p>
+<blockquote>
+<p>Cachim, P. <em>eurocodepy: a Python library for structural design calculations according to the
+Eurocode standards</em> [Software]. Zenodo. <a href="https://doi.org/10.5281/zenodo.23371031">https://doi.org/10.5281/zenodo.23371031</a></p>
+</blockquote>
+<pre><code class="language-bibtex">@software{cachim_eurocodepy,
+  author    = {Cachim, Paulo},
+  title     = {eurocodepy: a Python library for structural design calculations
+               according to the Eurocode standards},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23371031},
+  url       = {https://doi.org/10.5281/zenodo.23371031}
+}
+</code></pre>
+<p>GitHub's "Cite this repository" button reads <a href="https://github.com/pcachim/eurocodepy/blob/master/CITATION.cff"><code>CITATION.cff</code></a>.</p>
 <hr />
 <h2 id="disclaimer">Disclaimer</h2>
 <p>This software is intended for <strong>educational and research</strong> purposes only. It is not a
