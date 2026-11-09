@@ -9,12 +9,12 @@ version = "2027.0.12"
 authors = [
     { name="Paulo Cachim", email="pcachim@ua.pt" },
 ]
-description = "A package for eurocode calculations"
+description = "A Python library for structural design calculations according to the Eurocode standards"
 readme = "README.md"
 requires-python = ">=3.12"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
     "Operating System :: OS Independent",
 ]
 dependencies = [

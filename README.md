@@ -6,8 +6,8 @@
 <!-- docs:skip-end -->
 [![PyPI version](https://img.shields.io/pypi/v/eurocodepy)](https://pypi.org/project/eurocodepy/)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/)
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](LICENSE.md)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23371032.svg)](https://doi.org/10.5281/zenodo.23375457)
+[![License: LGPL v3+](https://img.shields.io/badge/License-LGPL%20v3%2B-blue.svg)](LICENSE.md)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23371031.svg)](https://doi.org/10.5281/zenodo.23371031)
 
 A Python library for structural design calculations according to the **Eurocode** standards.
 `eurocodepy` provides composable, engineering-focused building blocks — material databases,
@@ -17,7 +17,8 @@ into scripts, notebooks, or larger analysis tools.
 > **Documentation:** <https://pcachim.github.io/eurocodepy/>  
 > **Source:** <https://github.com/pcachim/eurocodepy>  
 > **PyPI:** <https://pypi.org/project/eurocodepy/>  
-> **Changelog:** <https://github.com/pcachim/eurocodepy/blob/master/CHANGELOG.md>
+> **Changelog:** <https://github.com/pcachim/eurocodepy/blob/master/CHANGELOG.md>  
+> **Cite:** [see Citation](#citation)
 
 ---
 
@@ -194,7 +195,31 @@ applicable. See [CONTRIBUTING_GUIDELINES.md](CONTRIBUTING_GUIDELINES.md) for mor
 
 ## License
 
-GNU Lesser General Public License v3.0 (LGPLv3) — see [LICENSE.md](LICENSE.md) and [COPYING](COPYING) for the full text.
+GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later) — see [LICENSE.md](LICENSE.md) and [COPYING](COPYING) for the full text.
+
+---
+
+## Citation
+
+If you use `eurocodepy` in your work, please cite it. The DOI below is the *concept* DOI: it always
+resolves to the latest release; to cite an exact version, use the version DOI listed on
+[Zenodo](https://doi.org/10.5281/zenodo.23371031).
+
+> Cachim, P. *eurocodepy: a Python library for structural design calculations according to the
+> Eurocode standards* [Software]. Zenodo. <https://doi.org/10.5281/zenodo.23371031>
+
+```bibtex
+@software{cachim_eurocodepy,
+  author    = {Cachim, Paulo},
+  title     = {eurocodepy: a Python library for structural design calculations
+               according to the Eurocode standards},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23371031},
+  url       = {https://doi.org/10.5281/zenodo.23371031}
+}
+```
+
+GitHub's "Cite this repository" button reads [`CITATION.cff`](CITATION.cff).
 
 ---
 

@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "eurocodepy: a Python library for structural design calculations according to the Eurocode standards"
+type: software
+authors:
+  - family-names: Cachim
+    given-names: Paulo
+    orcid: "https://orcid.org/0000-0002-0556-1056"
+    affiliation: "Universidade de Aveiro"
+doi: 10.5281/zenodo.23371031
+repository-code: "https://github.com/pcachim/eurocodepy"
+url: "https://pcachim.github.io/eurocodepy/"
+license: LGPL-3.0-or-later
+keywords:
+  - eurocode
+  - structural engineering
+  - reinforced concrete
+  - steel
+  - timber
